@@ -23,7 +23,7 @@
 ## 주요 기능  
 ## 개발 규칙  
 ### Git  
-#### Commit message  
+*Commit message*  
 ```
 Feat   : 코드나 테스트를 추가했을 때
 Fix    : 버그를 수정했을 때
@@ -35,7 +35,7 @@ Rename : 이름을 변경했을 때
 Move   : 코드를 이동할 때
 Refac  : 코드 리팩토링
 ```  
-#### Branch  
+*Branch*  
 * master  
 * develop  
 * feature  
