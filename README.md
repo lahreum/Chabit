@@ -71,27 +71,27 @@ Refac  : 코드 리팩토링
 
 ```mermaid
 gantt
-    dateFormat  MM-DD
+    dateFormat  YYYY-MM-DD
     title       CHABIT 2-3주차 진행상황
-    excludes    01-23, 01-24
+    excludes    2021-01-23,2021-01-24
     %% (`excludes` accepts specific dates in YYYY-MM-DD format, days of the week ("sunday") or "weekends", but not the word "weekdays".)
 
     section 프로젝트 기획
-    기능 목록 상세 도출			:active, plan1, 01-18, 2d
-    화면 정의서				  : plan2, 01-19, 2d
-    와이어 프레임             : plan3, 01-20, 2d
+    기능 목록 상세 도출			:active, plan1, 2021-01-18, 2d
+    화면 정의서				  : plan2, 2021-01-19, 2d
+    와이어 프레임             : plan3, 2021-01-20, 2d
 
 	section Front end
-    UI 설계      	 :crit, front1, 01-21, 2d
-    디렉토리 구조 짜기		  	:  front2, 01-22, 1d
+    UI 설계      	 :crit, front1, 2021-01-21, 2d
+    디렉토리 구조 짜기		  	:  front2, 2021-01-22, 1d
     메인 화면 컴포넌트		 	 : front3, after front2, 3d
-    헤더 컴포넌트   	  : front4, 01-25, 2d
-    푸터 컴포넌트         : front5, 01-26, 1d
+    헤더 컴포넌트   	  : front4, 2021-01-25, 2d
+    푸터 컴포넌트         : front5, 2021-01-26, 1d
     회원 가입 컴포넌트  : front6, after front5, 2d
 
     section Back end
-    MySQL & Spring Boot 환경 설정     	 : back1, 01-22, 1d
-    ER 다이어그램 작성     	 : back2, 01-25, 1d
+    MySQL & Spring Boot 환경 설정     	 : back1, 2021-01-22, 1d
+    ER 다이어그램 작성     	 : back2, 2021-01-25, 1d
     DB 테이블 설계		:crit, back3, after back2, 3d
 
     section 배포
