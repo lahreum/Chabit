@@ -77,9 +77,9 @@ gantt
     %% (`excludes` accepts specific dates in YYYY-MM-DD format, days of the week ("sunday") or "weekends", but not the word "weekdays".)
 
     section 프로젝트 기획
-    기능 목록 상세 도출			:active, plan1, 2021-01-18, 2d
-    화면 정의서				  : plan2, 2021-01-19, 2d
-    와이어 프레임             : plan3, 2021-01-20, 2d
+    기능 목록 상세 도출			:done, plan1, 2021-01-18, 2d
+    화면 정의서				  :active, plan2, 2021-01-19, 2d
+    와이어 프레임             :active, plan3, 2021-01-20, 2d
 
 	section Front end
     UI 설계      	 :crit, front1, 2021-01-21, 2d
