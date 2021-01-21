@@ -103,7 +103,7 @@ gantt
     회원 가입 컴포넌트  : front6, after front4, 1d
 
     section Back end
-    ER 다이어그램 작성     	 : back1, 2021-01-25, 1d
+    ER 다이어그램 작성     	 :active back1, 2021-01-25, 1d
     DB 테이블 설계		:crit, back2, after back1, 3d
     MySQL & Spring Boot 환경 설정     	 : back3, after back2, 1d
 
