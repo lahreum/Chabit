@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 @SpringBootTest
 @Transactional
-
 class UserServiceIntegrationTest {
     @Autowired
     UserService userService;
