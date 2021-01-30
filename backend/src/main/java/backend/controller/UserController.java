@@ -30,21 +30,19 @@ public class UserController {
     }
 
     @PostMapping
-    public BaseResponse<JoinUserResponse> signIn(@RequestBody JoinUserRequest request) {
+    public BaseResponse signIn(@RequestBody JoinUserRequest request) {
         User user = new User();
         user.setUserEmail(request.getUserEmail());
         user.setUserPassword(request.getUserPassword());
         user.setUserNickname(request.getUserNickname());
         user.setUserPhone(request.getUserPhone());
 
-        BaseResponse<JoinUserResponse> response = new BaseResponse<>();
+        BaseResponse response = null;
         try {
             userService.signIn(user);
-            response.setStatus("success");
-            response.setData(new JoinUserResponse("success", "회원가입 성공"));
+            response = new BaseResponse("success", new JoinUserResponse("success", "회원가입 성공"));
         } catch (IllegalStateException e) {
-            response.setStatus("success");
-            response.setData(new JoinUserResponse("fail", "이미 존재하는 이메일 입니다."));
+            response = new BaseResponse("success", new JoinUserResponse("fail", "이미 존재하는 이메일 입니다."));
         }
 
         return response;
