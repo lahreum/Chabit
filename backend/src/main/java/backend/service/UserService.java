@@ -41,6 +41,14 @@ public class UserService {
     }
 
     /**
+     * 회원 1명 조회
+     */
+    public User findUser(String userEmail) {
+        return userRepository.findByUserEmail(userEmail)
+                .orElseThrow(() -> new IllegalStateException("잘못된 유저 이메일입니다"));
+    }
+
+    /**
      * 회원 탈퇴
      */
     @Transactional

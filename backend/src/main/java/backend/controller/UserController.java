@@ -30,6 +30,21 @@ public class UserController {
         return new BaseResponse("success", collect);
     }
 
+    @GetMapping("/{userEmail}")
+    public BaseResponse user(@PathVariable String userEmail) {
+        BaseResponse response = null;
+        try {
+            User findUser = userService.findUser(userEmail);
+            // 엔티티 -> DTO 변환
+            UserDto userDto = new UserDto(findUser);
+
+            response = new BaseResponse("success", userDto);
+        } catch (IllegalStateException e) {
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
     @PostMapping
     public BaseResponse signIn(@RequestBody UserRequest request) {
         User user = new User();
