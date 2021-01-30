@@ -1,5 +1,6 @@
 package backend.service;
 
+import backend.controller.UserRequest;
 import backend.domain.User;
 import backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -49,6 +50,24 @@ public class UserService {
             userRepository.deleteUser(deleteUser.get());
         } else {
             throw new IllegalStateException("이미 삭제된 유저입니다");
+        }
+    }
+
+    /**
+     * 회원 정보 수정
+     * 이메일, 비밀번호, 닉네임
+     */
+    @Transactional
+    public void updateUser(UserRequest request) {
+        Optional<User> findUser = userRepository.findByUserEmail(request.getUserEmail());
+
+        if (findUser.isPresent()) {
+            User updateUser = findUser.get();
+            updateUser.setUserPassword(request.getUserPassword());
+            updateUser.setUserNickname(request.getUserNickname());
+            updateUser.setUserPhone(request.getUserPhone());
+        } else {
+            throw new IllegalStateException("잘못된 유저 이메일입니다");
         }
     }
 }

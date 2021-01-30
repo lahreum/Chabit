@@ -5,7 +5,6 @@ import backend.domain.UserDto;
 import backend.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +31,7 @@ public class UserController {
     }
 
     @PostMapping
-    public BaseResponse signIn(@RequestBody JoinUserRequest request) {
+    public BaseResponse signIn(@RequestBody UserRequest request) {
         User user = new User();
         user.setUserEmail(request.getUserEmail());
         user.setUserPassword(request.getUserPassword());
@@ -45,6 +44,20 @@ public class UserController {
             response = new BaseResponse("success", new JoinUserResponse("success", "회원가입 성공"));
         } catch (IllegalStateException e) {
             response = new BaseResponse("success", new JoinUserResponse("fail", e.getMessage()));
+        }
+
+        return response;
+    }
+
+    @PutMapping("/{userEmail}")
+    public BaseResponse updateUser(@PathVariable String userEmail, @RequestBody UserRequest request) {
+        BaseResponse response = null;
+        try {
+            request.setUserEmail(userEmail);
+            userService.updateUser(request);
+            response = new BaseResponse("success", "수정 성공");
+        } catch (IllegalStateException e) {
+            response = new BaseResponse("fail", e.getMessage());
         }
 
         return response;
@@ -77,14 +90,7 @@ public class UserController {
             this.message = message;
         }
     }
-    
-    @Data
-    static class JoinUserRequest {
-        private String userEmail;
-        private String userPassword;
-        private String userNickname;
-        private String userPhone;
-    }
+
     // 회원 탈퇴
     @Data
     @AllArgsConstructor
@@ -92,4 +98,5 @@ public class UserController {
         private String deleteResult; // 삭제 결과
         private String message;
     }
+
 }
