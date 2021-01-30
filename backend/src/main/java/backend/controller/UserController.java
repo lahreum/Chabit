@@ -1,12 +1,14 @@
 package backend.controller;
 
 import backend.domain.User;
+import backend.domain.UserDto;
 import backend.service.UserService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -14,6 +16,18 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+
+    @GetMapping
+    public BaseResponse users() {
+        List<User> findUsers = userService.findUsers();
+
+        // 엔티티 -> DTO 변환
+        List<UserDto> collect = findUsers.stream()
+                .map(m -> new UserDto(m.getUserEmail(), m.getUserNickname(), m.getUserName(), m.getUserPhone()))
+                .collect(Collectors.toList());
+
+        return new BaseResponse("success", collect);
+    }
 
     @PostMapping
     public BaseResponse<JoinUserResponse> signIn(@RequestBody JoinUserRequest request) {
@@ -36,6 +50,8 @@ public class UserController {
         return response;
     }
 
+
+    // ======= Response & Request 클래스 =======
     @Data
     static class JoinUserResponse {
         private String joinResult; // 회원가입 결과
