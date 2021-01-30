@@ -57,6 +57,11 @@ public class JPAUserRepository implements UserRepository{
     }
 
     @Override
+    public void deleteUser(User user) {
+        entityManager.remove(user);
+    }
+
+    @Override
     public void clearStore() {
 
     }

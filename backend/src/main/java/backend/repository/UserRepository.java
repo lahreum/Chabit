@@ -11,5 +11,6 @@ public interface UserRepository {
     Optional<User> findByUserEmail(String userEmail);
     Optional<User> findByUserEmailAndUserUserPassword(String userEmail, String userPassword);
     List<User> findAll();
+    void deleteUser(User user);
     void clearStore();
 }
