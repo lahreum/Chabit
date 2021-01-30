@@ -1,25 +1,25 @@
 package backend.service;
 
+import backend.controller.UserRequest;
 import backend.domain.User;
 import backend.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
-@Transactional
 @Service
+@RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+
     /**
      * 회원가입
      */
-    public Long signIn(User user){
+    @Transactional
+    public Long signIn(User user) throws IllegalStateException {
         //같은 이메일은 중복X
         validateDuplicateUserEmail(user);
         userRepository.save(user);
@@ -29,7 +29,7 @@ public class UserService {
     private void validateDuplicateUserEmail(User user) {
         userRepository.findByUserEmail(user.getUserEmail())
             .ifPresent(u -> {
-            throw new IllegalStateException("이미 존재하는 이메일 입니다.");
+                throw new IllegalStateException("이미 존재하는 이메일 입니다.");
             });
     }
 
@@ -40,5 +40,42 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    /**
+     * 회원 1명 조회
+     */
+    public User findUser(String userEmail) {
+        return userRepository.findByUserEmail(userEmail)
+                .orElseThrow(() -> new IllegalStateException("잘못된 유저 이메일입니다"));
+    }
 
+    /**
+     * 회원 탈퇴
+     */
+    @Transactional
+    public void deleteUser(String userEmail) {
+        Optional<User> deleteUser = userRepository.findByUserEmail(userEmail);
+        if (deleteUser.isPresent()) {
+            userRepository.deleteUser(deleteUser.get());
+        } else {
+            throw new IllegalStateException("이미 삭제된 유저입니다");
+        }
+    }
+
+    /**
+     * 회원 정보 수정
+     * 이메일, 비밀번호, 닉네임
+     */
+    @Transactional
+    public void updateUser(UserRequest request) {
+        Optional<User> findUser = userRepository.findByUserEmail(request.getUserEmail());
+
+        if (findUser.isPresent()) {
+            User updateUser = findUser.get();
+            updateUser.setUserPassword(request.getUserPassword());
+            updateUser.setUserNickname(request.getUserNickname());
+            updateUser.setUserPhone(request.getUserPhone());
+        } else {
+            throw new IllegalStateException("잘못된 유저 이메일입니다");
+        }
+    }
 }
