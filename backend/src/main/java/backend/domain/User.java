@@ -23,6 +23,7 @@ public class User {
     private String userName;
     private String userNickname;
     private String userPhone;
+    private String userImage;
 
     @Column
     private int userPoints;
