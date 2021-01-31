@@ -21,3 +21,65 @@
 #calender .v-btn--active {
   opacity: 0.4;
 }
+
+/* Navbar */
+.v-navigation-drawer {
+  border-radius: 0 20px 20px 0;
+}
+.v-list-item__title {
+  color: white;
+}
+#nav-top {
+  margin: 10% 5% 10% 5%;
+}
+#nav-top .v-list-item__title {
+  line-height: 1.5;
+}
+#nav-top .v-list-item__content {
+  display: contents;
+  flex: 1 1;
+}
+#nav-top .v-list-item__content * {
+  flex: 0;
+}
+#nav-top .v-avatar {
+  border-radius: 100%;
+}
+#nav-mid {
+  padding-left: 10px;
+}
+#nav-mid .v-list-item {
+  width: 70%;
+}
+#nav-mid .v-list-item:hover {
+  background-color: white;
+  border-radius: 0 15px 15px 0;
+  box-shadow: 2px 2px 7px #3c0903;
+}
+#nav-mid .theme--light.v-list-item--active::before {
+  background-color: white;
+  border-radius: 0 15px 15px 0;
+  box-shadow: 2px 2px 7px #3c0903;
+  opacity: 0.8;
+  color: #a62f22;
+}
+#nav-mid .v-list-item .v-list-item__title {
+  font-size: 20px;
+  line-height: normal;
+}
+#nav-mid .v-list-item .v-list-item__title:hover {
+  color: #a62f22;
+}
+#nav-mid .v-list .v-list-item--active {
+  color: #a62f22;
+}
+#nav-bottom {
+  width: 90%;
+  margin: 0 auto;
+  position: fixed;
+  bottom: 10%;
+}
+#nav-bottom .v-list-item {
+  width: fit-content;
+  margin: 0 auto;
+}
