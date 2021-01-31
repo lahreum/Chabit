@@ -8,9 +8,12 @@
             <v-list-item>
               <v-list-item-content>
                 <div class="nav-top-avatar">
-                  <v-list-item-avatar style="height: 60px; min-width: 60px; width: 60px">
+                  <v-list-item-avatar style="height: 63px; width: 63px; background-color: white">
                     <!-- 프로필 사진 입력 -->
-                    <!-- <v-img src=></v-img> -->
+                    <!-- <v-img
+                      style="height:60px; min-width: 60px; width:60px;"
+                      src=""
+                    ></v-img> -->
                     <v-icon>mdi-account-circle</v-icon>
                   </v-list-item-avatar>
                 </div>
@@ -136,7 +139,7 @@ export default {
   width: 90%;
   margin: 0 auto;
   position: fixed;
-  bottom: 10%;
+  bottom: 20%;
 }
 #nav-bottom .v-list-item {
   width: fit-content;
