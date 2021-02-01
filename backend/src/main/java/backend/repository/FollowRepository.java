@@ -2,10 +2,12 @@ package backend.repository;
 
 import backend.domain.Follow;
 import backend.domain.FollowId;
+import backend.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -27,4 +29,17 @@ public class FollowRepository {
         return Optional.ofNullable(findFollow);
     }
 
+    public List<Follow> findByUserId(User user) {
+        List<Follow> followingList = entityManager.createQuery("select f from Follow f where f.userId = :userId", Follow.class)
+                .setParameter("userId", user)
+                .getResultList();
+        return followingList;
+    }
+
+    public List<Follow> findByFollowingId(User user) {
+        List<Follow> followerList = entityManager.createQuery("select f from Follow f where f.followingId = :userId", Follow.class)
+                .setParameter("userId", user)
+                .getResultList();
+        return followerList;
+    }
 }
