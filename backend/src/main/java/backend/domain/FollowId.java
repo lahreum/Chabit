@@ -1,11 +1,21 @@
 package backend.domain;
 
+import lombok.AllArgsConstructor;
+
 import java.io.Serializable;
 import java.util.Objects;
 
 public class FollowId implements Serializable {
     private User userId;
     private User followingId;
+
+    public FollowId() {
+    }
+
+    public FollowId(User userId, User followingId) {
+        this.userId = userId;
+        this.followingId = followingId;
+    }
 
     @Override
     public boolean equals(Object o) {
