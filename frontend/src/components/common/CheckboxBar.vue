@@ -6,14 +6,7 @@
       v-model="selected"
       label="A"
       value="A"
-      color="dark red"
-      hide-details
-    ></v-checkbox>
-    <v-checkbox
-      v-model="selected"
-      label="B"
-      value="B"
-      color="red"
+      color="grey darken-3"
       hide-details
     ></v-checkbox>
   </v-container>
@@ -24,7 +17,7 @@
   export default {
     data () {
       return {
-        selected: ['A'],
+        selected: [],
       }
     },
   }
