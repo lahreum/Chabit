@@ -8,7 +8,9 @@
             <img src="../../assets/img/chabit.jpg" alt="">
             <span>공식챌린지</span>
           </div>
-          <p>하루 5분 플랭크 챌린지</p>
+          <div class="challenge-title">
+            <p>하루 5분 플랭크 챌린지</p>
+          </div>
           <div class="hash-tag">
             <span>다이어트</span>
             <span>주2회</span>
@@ -24,7 +26,9 @@
             <img src="../../assets/img/chabit.jpg" alt="">
             <span>공식챌린지</span>
           </div>
-          <p>하루 5분 플랭크 챌린지</p>
+          <div class="challenge-title">
+            <p>하루 5분 플랭크 챌린지</p>
+          </div>
           <div class="hash-tag">
             <span>다이어트</span>
             <span>주2회</span>
@@ -40,7 +44,9 @@
             <img src="../../assets/img/chabit.jpg" alt="">
             <span>공식챌린지</span>
           </div>
-          <p>하루 5분 플랭크 챌린지</p>
+          <div class="challenge-title">
+            <p>하루 5분 플랭크 챌린지</p>
+          </div>
           <div class="hash-tag">
             <span>다이어트</span>
             <span>주2회</span>
@@ -56,7 +62,9 @@
             <img src="../../assets/img/chabit.jpg" alt="">
             <span>공식챌린지</span>
           </div>
-          <p>하루 5분 플랭크 챌린지</p>
+          <div class="challenge-title">
+            <p>하루 5분 플랭크 챌린지</p>
+          </div>
           <div class="hash-tag">
             <span>다이어트</span>
             <span>주2회</span>
@@ -72,7 +80,9 @@
             <img src="../../assets/img/chabit.jpg" alt="">
             <span>공식챌린지</span>
           </div>
-          <p>하루 5분 플랭크 챌린지</p>
+          <div class="challenge-title">
+            <p>하루 5분 플랭크 챌린지</p>
+          </div>
           <div class="hash-tag">
             <span>다이어트</span>
             <span>주2회</span>
