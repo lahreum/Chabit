@@ -1,13 +1,14 @@
 package backend.domain;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @IdClass(FollowId.class)
-@Getter
+@Getter @Setter
 public class Follow {
     @Id
     @ManyToOne(fetch = FetchType.LAZY)

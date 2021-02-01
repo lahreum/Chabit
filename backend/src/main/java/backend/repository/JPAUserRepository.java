@@ -1,8 +1,7 @@
 package backend.repository;
 
 import backend.domain.User;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.Persistent;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -10,15 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@RequiredArgsConstructor
 public class JPAUserRepository implements UserRepository{
 
-    @Persistent
     private final EntityManager entityManager;
-
-    @Autowired
-    public JPAUserRepository(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
 
     @Override
     public User save(User user) {
