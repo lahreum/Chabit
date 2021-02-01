@@ -42,4 +42,8 @@ public class FollowRepository {
                 .getResultList();
         return followerList;
     }
+
+    public void deleteFollow(Follow follow) {
+        entityManager.remove(follow);
+    }
 }

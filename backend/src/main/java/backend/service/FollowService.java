@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,5 +53,16 @@ public class FollowService {
                 .map(m -> new FollowDto(m.getUserId().getUserEmail(), m.getUserId().getUserNickname(), m.getUserId().getUserImage()))
                 .collect(Collectors.toList());
         return collect;
+    }
+
+    // 언팔로우
+    @Transactional
+    public void deleteOne(Follow follow) {
+        Optional<Follow> following = followRepository.findByUserIdAndFollowingId(follow);
+        if (following.isPresent()) {
+            followRepository.deleteFollow(following.get());
+        } else {
+            throw new IllegalStateException("이미 처리된 요청입니다.");
+        }
     }
 }

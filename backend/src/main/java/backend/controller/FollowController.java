@@ -58,6 +58,23 @@ public class FollowController {
         return response;
     }
 
+    @DeleteMapping
+    public BaseResponse unfollow(@RequestBody FollowRequest request) {
+        BaseResponse response = null;
+        try {
+            Follow follow = new Follow();
+            follow.setUserId(userService.findUser(request.getUserEmail()));
+            follow.setFollowingId(userService.findUser(request.getFollowingEmail()));
+            followService.deleteOne(follow);
+
+            response = new BaseResponse("success", "삭제 성공");
+        } catch (IllegalStateException e) {
+            response = new BaseResponse("fail", e.getMessage());
+        }
+
+        return response;
+    }
+
     // ======= Response & Request 클래스 =======
     // 팔로우 요청
     @Data
