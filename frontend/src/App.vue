@@ -1,6 +1,5 @@
 <template>
-  <Home />
-  <!-- <v-app>
+  <v-app>
     <v-app-bar
       app
       color="primary"
@@ -41,16 +40,16 @@
     <v-main>
       
     </v-main>
-  </v-app> -->
+  </v-app>
 </template>
 
 <script>
-import Home from "./views/home/Home.vue"
+
 export default {
   name: 'App',
 
   components: {
-    Home
+    
   },
 
   data: () => ({
