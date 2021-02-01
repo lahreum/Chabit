@@ -1,0 +1,106 @@
+/* top */
+.top-toggle-alarm {
+  color: #942706;
+  height: 70px;
+  width: 100%;
+  position: fixed;
+}
+
+.fa-grip-lines {
+  font-size: xx-large;
+  position: fixed;
+  top: 17px;
+  left: 20px;
+}
+
+.fa-bell {
+  font-size: x-large;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+}
+
+.fa-circle {
+  font-size: x-small;
+  position: fixed;
+  top: 25px;
+  right: 19px;
+}
+
+/* 전체 랭킹 */
+.all-ranking {
+  position: absolute;
+  margin: 0 6%;
+  top: 70px;
+}
+
+span {
+  font-size: large;
+  font-weight: bold;
+  margin-right: 7px;
+}
+
+.fa-plus {
+  font-size: large;
+  color: #942706;
+}
+
+.all-ranking-list {
+  border: 1px solid #942706;
+  margin-top: 15px;
+  border-radius: 10px;
+}
+
+/* 홈랭킹 */
+.home-ranking {
+  list-style: none;
+  padding: 5px 10px;
+  font-size: 15px;
+  border-collapse: separate;
+  border-spacing: 15px 0px;
+  text-align: left;
+}
+
+.home-ranking > tbody > tr > .point {
+  text-align: right;
+  color: #942706;
+  font-weight: bold;
+}
+
+/* HOT 챌린지 */
+.hot-challenge {
+  position: absolute;
+  margin: 0 6%;
+  top: 210px;
+  height: 300px;
+}
+
+.hot-popular {
+  color: #942706;
+}
+
+.hot-challenge-list {
+  margin-top: 15px;
+}
+
+.challenge-container {
+  width: 150px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  box-shadow: 1px 1px 4px gray;
+  margin-top: 4px;
+}
+
+.challenge-content {
+  margin-top: -20px;
+}
+
+.challenge-content > img {
+  width: 120px;
+  height: 120px;
+  margin: 0 15px;
+  border-radius: 10px;
+}
