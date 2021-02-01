@@ -4,7 +4,15 @@
       <div class="challenge-container">
         <div class="challenge-content">
           <img src="../../assets/img/running.jpg" alt="">
+          <div class="official">
+            <img src="../../assets/img/chabit.jpg" alt="">
+            <span>공식챌린지</span>
+          </div>
           <p>하루 5분 플랭크 챌린지</p>
+          <div class="hash-tag">
+            <span>다이어트</span>
+            <span>주2회</span>
+          </div>
         </div>
       </div>
     </slide>
@@ -12,7 +20,15 @@
       <div class="challenge-container">
         <div class="challenge-content">
           <img src="../../assets/img/running.jpg" alt="">
+          <div class="official">
+            <img src="../../assets/img/chabit.jpg" alt="">
+            <span>공식챌린지</span>
+          </div>
           <p>하루 5분 플랭크 챌린지</p>
+          <div class="hash-tag">
+            <span>다이어트</span>
+            <span>주2회</span>
+          </div>
         </div>
       </div>
     </slide>
@@ -20,7 +36,15 @@
       <div class="challenge-container">
         <div class="challenge-content">
           <img src="../../assets/img/running.jpg" alt="">
+          <div class="official">
+            <img src="../../assets/img/chabit.jpg" alt="">
+            <span>공식챌린지</span>
+          </div>
           <p>하루 5분 플랭크 챌린지</p>
+          <div class="hash-tag">
+            <span>다이어트</span>
+            <span>주2회</span>
+          </div>
         </div>
       </div>
     </slide>
@@ -28,7 +52,15 @@
       <div class="challenge-container">
         <div class="challenge-content">
           <img src="../../assets/img/running.jpg" alt="">
+          <div class="official">
+            <img src="../../assets/img/chabit.jpg" alt="">
+            <span>공식챌린지</span>
+          </div>
           <p>하루 5분 플랭크 챌린지</p>
+          <div class="hash-tag">
+            <span>다이어트</span>
+            <span>주2회</span>
+          </div>
         </div>
       </div>
     </slide>
@@ -36,7 +68,15 @@
       <div class="challenge-container">
         <div class="challenge-content">
           <img src="../../assets/img/running.jpg" alt="">
+          <div class="official">
+            <img src="../../assets/img/chabit.jpg" alt="">
+            <span>공식챌린지</span>
+          </div>
           <p>하루 5분 플랭크 챌린지</p>
+          <div class="hash-tag">
+            <span>다이어트</span>
+            <span>주2회</span>
+          </div>
         </div>
       </div>
     </slide>

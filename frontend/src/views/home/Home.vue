@@ -19,18 +19,34 @@
         <UpcomingChallengeList />
       </div>
     </div>
+    <div class="hot-review">
+      <span class="hot-popular">인기</span><span>리뷰</span>
+      <div class="hot-review-list">
+        <HotReviewList />
+      </div>
+    </div>
+    <div class="deadline-challenge">
+      <span class="hot-popular">마감임박</span><span>챌린지</span>
+      <div class="deadline-challenge-list">
+        <DeadlineChallengeList />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import "./home.css"
 import HomeRanking from "./HomeRanking.vue"
+import HotReviewList from './HotReviewList.vue'
 import UpcomingChallengeList from "./UpcomingChallengeList.vue"
+import DeadlineChallengeList from "./DeadlineChallengeList.vue"
 
 export default {
   components: {
     HomeRanking,
-    UpcomingChallengeList
+    UpcomingChallengeList,
+    HotReviewList,
+    DeadlineChallengeList
   }
 }
 </script>

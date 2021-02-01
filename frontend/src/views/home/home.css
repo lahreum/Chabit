@@ -1,9 +1,11 @@
 /* top */
 .top-toggle-alarm {
+  background-color: white;
   color: #942706;
   height: 70px;
   width: 100%;
   position: fixed;
+  z-index: 1;
 }
 
 .fa-grip-lines {
@@ -30,8 +32,9 @@
 /* 전체 랭킹 */
 .all-ranking {
   position: absolute;
-  margin: 0 6%;
+  margin: 0 6.2%;
   top: 70px;
+  z-index: 0;
 }
 
 span {
@@ -73,6 +76,7 @@ span {
   margin: 0 6%;
   top: 210px;
   height: 300px;
+  z-index: 0;
 }
 
 .hot-popular {
@@ -91,7 +95,7 @@ span {
   justify-content: center;
   border-radius: 10px;
   box-shadow: 1px 1px 4px gray;
-  margin-top: 4px;
+  margin: 4px 4px 0 4px;
 }
 
 .challenge-content {
@@ -103,4 +107,132 @@ span {
   height: 120px;
   margin: 0 15px;
   border-radius: 10px;
+}
+
+.challenge-content > p {
+  font-size: 11px;
+  font-weight: bold;
+  margin-left: 15px;
+  margin-bottom: 10px;
+}
+
+.official {
+  margin-left: 15px;
+}
+
+.official > img {
+  width: 13px;
+}
+
+.official > span {
+  margin-left: 3px;
+  font-size: x-small;
+  color: gray;
+}
+
+.hash-tag {
+  margin-left: 15px;
+  height: 3px;
+}
+
+.hash-tag > span {
+  background-color: #942706;
+  color: white;
+  font-size: 9px;
+  font-weight: lighter;
+  padding: 2px 6px;
+  border-radius: 5px;
+}
+
+
+/* 인기 리뷰 */
+.hot-review {
+  position: absolute;
+  margin: 0 5%;
+  top: 510px;
+  height: 300px;
+  z-index: 0;
+}
+
+.hot-review-list {
+  margin-top: 15px;
+}
+
+.review-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.review-content {
+  margin: 0 3.5px;
+}
+
+.review-content > img {
+  width: 130px;
+  height: 90px;
+  border-radius: 10px;
+  box-shadow: 1px 1px 4px gray;
+}
+
+.id-like {
+  margin: -1px 0 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.id-like > span {
+  font-size: small;
+  margin: 0 3px;
+}
+
+.id-like > .number {
+  color: #942706;
+  text-align: right;
+}
+
+.id-like > .number > img {
+  width: 15px;
+  height: 15px;
+  margin-bottom: -3px;
+}
+
+
+/* 마감임박 챌린지 */
+.deadline-challenge {
+  position: absolute;
+  margin: 0 5%;
+  top: 815px;
+  height: 300px;
+  z-index: 0;
+}
+
+.deadline-challenge-list {
+  margin-top: 15px;
+}
+
+.deadline-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.deadline-content {
+  margin: 0 3.5px;
+}
+
+.deadline-content > .official {
+  margin-left: 5px;
+}
+
+.deadline-content > img {
+  width: 130px;
+  height: 90px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 4px gray;
+}
+
+.deadline-content > p {
+  font-size: 11px;
+  font-weight: 900;
+  margin-left: 5px;
+  margin-bottom: 10px;
 }
