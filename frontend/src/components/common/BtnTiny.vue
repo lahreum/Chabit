@@ -1,20 +1,22 @@
 <template>
-  <v-btn
-    class="text-center mx-auto rounded white--text"
-    width="70px"
-    height="25px"
-    color="#B71C1C"
-  >
-    업로드
-  </v-btn>
+  <button class="btn-tiny">
+    {{text}}
+  </button>
 </template>
 
 <script>
 export default {
-  
+  name: "BtnTiny",
+  props: ['text'],
 }
 </script>
 
-<style>
-
+<style scoped>
+.btn-tiny {
+  background-color: #942706;
+  color: white;
+  border-radius: 8px;
+  width: 70px;
+  height: 25px;
+}
 </style>
