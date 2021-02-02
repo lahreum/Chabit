@@ -11,14 +11,16 @@
             <v-divider></v-divider>
             <v-card-actions class="rounded-xl">
               <v-spacer></v-spacer>
+              <!-- <v-btn text @click="$router.push({{pathLeft}})"> -->
               <v-btn text @click="dialog = false">
-                No
+                {{ btnLeft }}
               </v-btn>
               <v-spacer></v-spacer>
               <v-divider vertical></v-divider>
               <v-spacer></v-spacer>
+              <!-- <v-btn color="red darken-4" text @click="$router.push({ {pathRight} })"> -->
               <v-btn color="red darken-4" text @click="dialog = false">
-                Yes
+                {{ btnRight }}
               </v-btn>
               <v-spacer></v-spacer> </v-card-actions
           ></v-card>
@@ -30,7 +32,8 @@
 
 <script>
 export default {
-  props: ["title", "text"],
+  name: "PopUp",
+  props: ["title", "text", "btnLeft", "btnRight", "pathLeft", "pathRight"],
   data() {
     return {
       dialog: true,
