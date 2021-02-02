@@ -1,3 +1,8 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+
 /* 개인 챌린지 목록 페이지(참가중, 개설, 완료된) */
 .top-personal-challenge-type {
   background-color:white;
@@ -80,4 +85,158 @@
   font-size: 12px;
   font-weight: 900;
   margin: 25px 0 20px 8px;
+}
+
+
+/* 챌린지 검색 페이지 */
+.top-toggle-alarm {
+  background-color: white;
+  color: #942706;
+  height: 70px;
+  width: 100%;
+  position: fixed;
+  z-index: 1;
+}
+
+.fa-grip-lines {
+  font-size: xx-large;
+  position: fixed;
+  top: 17px;
+  left: 20px;
+}
+
+.search-bar {
+  background-color: white;
+  position: fixed;
+  z-index: 1;
+  top: 60px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 35px;
+}
+
+.search-bar > input {
+  background-color: #dedede;
+  border-radius: 5px;
+  width: 245px;
+  height: 25px;
+}
+
+.fa-filter {
+  color: #942706;
+  font-size: large;
+  margin-left: 5px;
+}
+
+
+/* 인기 챌린지 슬라이드 */
+.challenge-hot {
+  top: 10px;
+  z-index: 0;
+}
+
+.hot-challenge-slide {
+  display: flex;
+  justify-content: center;
+}
+
+.hot-challenge-slide > img {
+  width: 260px;
+  height: 180px;
+  border-radius: 10px;
+  box-shadow: 1px 1px 7px gray;
+}
+
+.hot-challenge-title > p {
+  margin-top: -90px;
+  text-align: right;
+  color: white;
+  text-shadow: 1px 0.5px #dedede;
+}
+
+.hot-challenge-hash-tag > p {
+  margin-top: 0px;
+  text-align: right;
+  color: white;
+  text-shadow: 1px 0.5px #dedede;
+}
+
+
+/* 새로운 챌린지 */
+.new-challenge {
+  position: absolute;
+  margin: 0 6.2%;
+  top: 330px;
+  z-index: 0;
+}
+
+.new-challenge > 
+
+.new-challenge-card-list {
+  margin-top: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.new-challenge-card-container {
+  width: 130px;
+  height: 180px;
+  box-shadow: 1px 1px 6px gray;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.new-challenge-card-content {
+  margin: 0 3.5px;
+}
+
+.new-challenge-card-content > .hash-tag {
+  margin-left: 8px;
+  height: 3px;
+}
+
+.new-challenge-card-content > .hash-tag > span {
+  background-color: #942706;
+  color: white;
+  font-size: 9px;
+  font-weight: lighter;
+  padding: 2px 6px;
+  border-radius: 5px;
+}
+
+.new-challenge-card-content > img {
+  width: 105px;
+  height: 105px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 6px gray;
+  margin: 10px 0 0 8px;
+}
+
+.new-challenge-card-content > .challenge-title {
+  width: 125px;
+}
+
+.new-challenge-card-content > .challenge-title > p {
+  font-size: 12px;
+  font-weight: 900;
+  margin: 25px 0 20px 8px;
+}
+
+.new-challenge-title > span {
+  font-size: large;
+  font-weight: bold;
+  margin-right: 7px;
+}
+
+.new-challenge-title > .hot-popular {
+  color: #942706;
+}
+
+.create-challenge-btn {
+  position: fixed;
+  z-index: 1;
+  top: 570px;
+  margin-right: -70%;
 }
