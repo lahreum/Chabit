@@ -3,7 +3,9 @@ package backend.repository;
 import backend.domain.Category;
 import backend.domain.Challenge;
 import backend.domain.User;
+import backend.service.CategoryService;
 import backend.service.ChallengeService;
+import backend.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,6 +26,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class JPAChallengeRepositoryTest {
 
     @Autowired
+    UserService userService;
+    @Autowired
+    CategoryService categoryService;
+
+    @Autowired
     ChallengeService challengeService;
     @Autowired
     ChallengeRepoistory challengeRepoistory;
@@ -35,8 +42,10 @@ class JPAChallengeRepositoryTest {
         User user = new User();
         user.setUserEmail("asd@naver.com");// 이메일을 넣었을때
         user.setUserPassword("abc");
+        userService.signIn(user);
         Category category = new Category();
         category.setCategoryName("카테고리");
+        categoryService.makeCategory(category);
         Challenge challenge =  new Challenge();
         challenge.setChallengeName("챌린지 테스트");
         challenge.setChallengeDesc("챌린지 설명");
@@ -50,7 +59,6 @@ class JPAChallengeRepositoryTest {
         challengeService.makeChallenge(challenge);
         //then
         org.assertj.core.api.Assertions.assertThat(challenge.getAuthFrequency()).isEqualTo("주 2회인증");
-//        org.assertj.core.api.Assertions.assertThat(challenge.getChallengeOnGoing()).isEqualTo("READY");
     }
     @Test
     void findAll(){
@@ -82,7 +90,10 @@ class JPAChallengeRepositoryTest {
         challenge2.setChallengeEndDate(LocalDateTime.now().plusDays(1));
         challenge2.setAuthFrequency("주 3회인증");
         challenge2.setAuthHoliday(3);
-
+        userService.signIn(user);
+        userService.signIn(user2);
+        categoryService.makeCategory(category);
+        categoryService.makeCategory(category2);
         challengeService.makeChallenge(challenge);
         challengeService.makeChallenge(challenge2);
 
@@ -137,6 +148,14 @@ class JPAChallengeRepositoryTest {
         challenge3.setChallengeEndDate(LocalDateTime.now().plusDays(1));
         challenge3.setAuthFrequency("주 3회인증");
         challenge3.setAuthHoliday(3);
+
+        userService.signIn(user);
+        userService.signIn(user2);
+        userService.signIn(user3);
+        categoryService.makeCategory(category);
+        categoryService.makeCategory(category2);
+        categoryService.makeCategory(category3);
+
         challengeService.makeChallenge(challenge);
         challengeService.makeChallenge(challenge2);
         challengeService.makeChallenge(challenge3);
@@ -166,7 +185,7 @@ class JPAChallengeRepositoryTest {
         challenge.setAuthHoliday(1);
         Challenge challenge2 =  new Challenge();
         User user2 = new User();
-        user2.setUserEmail("asd2@naver.com");// 이메일을 넣었을때
+        user2.setUserEmail("asd3@naver.com");// 이메일을 넣었을때
         user2.setUserPassword("abc2");
         Category category2 = new Category();
         category2.setCategoryName("카테고리2");
@@ -195,7 +214,12 @@ class JPAChallengeRepositoryTest {
         challenge3.setAuthFrequency("주 3회인증");
         challenge3.setAuthHoliday(3);
 
-
+        userService.signIn(user);
+        userService.signIn(user2);
+        userService.signIn(user3);
+        categoryService.makeCategory(category);
+        categoryService.makeCategory(category2);
+        categoryService.makeCategory(category3);
         challengeService.makeChallenge(challenge);
         challengeService.makeChallenge(challenge2);
         challengeService.makeChallenge(challenge3);
