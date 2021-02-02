@@ -25,27 +25,21 @@ public class Challenge { // Challenge 코드리뷰 필수.
     @Column
     private String challengeDesc;
 
-    // 방향성 고려해서 매핑하기 위해 OneToOne, OneToMany, ManyToOne,ManyToMany인지 고려해보자.
-    // OneToMany이라 생각.
-    //Userid가 있는 User측이 원 주인.
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name ="USER_ID", nullable = false)
+    private User challengeOwner;
 
-    @Column(nullable = false, name = "USER_ID") // 참조대신 외래키 그대로 사용.
-    private Long challengeOwner;
-
-//    @ManyToOne(fetch = FetchType.LAZY)//지연로딩 : JPA가 persist 시
-//    @JoinColumn(name = "")
-//    private User user; // user entity 생성.
-
-//    @Column(name = "CATEGORY_ID") // 참조대신 왜래키 그대로 사용.
-    @Column
-    private Long challengeCategory;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CATEGORY_ID")
+    private Category challengeCategory;
 
 
     @Column(nullable = false)
     private LocalDateTime challengeStartDate;
     @Column(nullable = false)
     private LocalDateTime challengeEndDate;
-    @Column
+
+    @Column(columnDefinition = "TEXT")
     private String challengeThumbnail;
     @Column
     @ColumnDefault("100")

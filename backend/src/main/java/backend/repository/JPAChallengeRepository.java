@@ -1,6 +1,7 @@
 package backend.repository;
 
 import backend.domain.Challenge;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Persistent;
 import org.springframework.data.domain.Example;
@@ -15,9 +16,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@RequiredArgsConstructor
 public class JPAChallengeRepository implements ChallengeRepoistory{
 
-    @Persistent
     private final EntityManager entityManager;
 
     @Autowired
@@ -44,6 +45,8 @@ public class JPAChallengeRepository implements ChallengeRepoistory{
     public List<Challenge> findAllOrderByChallengeUserCount() {
         List<Challenge> result = entityManager.createQuery
                 ("select c from Challenge c order by c.challengeUserCount desc", Challenge.class)
+                .setFirstResult(0)
+                .setMaxResults(4)
                 .getResultList();
         return result;
     }
