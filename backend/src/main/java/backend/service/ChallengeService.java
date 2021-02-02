@@ -13,7 +13,6 @@ import java.util.List;
 public class ChallengeService {
     private final ChallengeRepoistory challengeRepoistory;
 
-
     /**
      * 챌린지 생성.
      * @param challenge
@@ -31,5 +30,21 @@ public class ChallengeService {
      */
     public List<Challenge> findChallenges(){
         return challengeRepoistory.findAll();
+    }
+
+    /**
+     * 챌린지 이름 검색
+     * @return 챌린지 이름이 포함된 List 정보
+     */
+    public List<Challenge> findByChallengeNameLikeContaining(String challengeName) throws IllegalStateException {
+        return challengeRepoistory.findByChallengeNameLikeContaining(challengeName);
+    }
+
+    /**
+     * HOT 챌린지
+     * @return 인원수를 기준으로 정렬한 List 정보
+     */
+    public List<Challenge> findAllOrderByChallengeUserCount() {
+        return challengeRepoistory.findAllOrderByChallengeUserCount();
     }
 }
