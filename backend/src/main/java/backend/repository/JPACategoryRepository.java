@@ -14,9 +14,6 @@ public class JPACategoryRepository implements CategoryRepository{
 
     private final EntityManager entityManager;
 
-    @Autowired
-    public JPACategoryRepository(EntityManager entityManager){this.entityManager = entityManager;}
-
     @Override
     public Category save(Category category) {
         entityManager.persist(category);

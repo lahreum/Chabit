@@ -25,7 +25,7 @@ public class Challenge { // Challenge 코드리뷰 필수.
     @Column
     private String challengeDesc;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY) // casecade 확인바람.
     @JoinColumn(name ="USER_ID", nullable = false)
     private User challengeOwner;
 

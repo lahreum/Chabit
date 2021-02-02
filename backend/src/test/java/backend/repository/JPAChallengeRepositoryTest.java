@@ -1,8 +1,11 @@
 package backend.repository;
 
+import backend.domain.Category;
 import backend.domain.Challenge;
+import backend.domain.User;
+import backend.service.CategoryService;
 import backend.service.ChallengeService;
-import org.junit.jupiter.api.Assertions;
+import backend.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,6 +26,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class JPAChallengeRepositoryTest {
 
     @Autowired
+    UserService userService;
+    @Autowired
+    CategoryService categoryService;
+
+    @Autowired
     ChallengeService challengeService;
     @Autowired
     ChallengeRepoistory challengeRepoistory;
@@ -30,11 +38,19 @@ class JPAChallengeRepositoryTest {
     @Test
     void save() {
         //given
+
+        User user = new User();
+        user.setUserEmail("asd@naver.com");// 이메일을 넣었을때
+        user.setUserPassword("abc");
+        userService.signIn(user);
+        Category category = new Category();
+        category.setCategoryName("카테고리");
+        categoryService.makeCategory(category);
         Challenge challenge =  new Challenge();
         challenge.setChallengeName("챌린지 테스트");
         challenge.setChallengeDesc("챌린지 설명");
-        challenge.setChallengeOwner(1L);
-        challenge.setChallengeCategory(1L);
+        challenge.setChallengeOwner(user);
+        challenge.setChallengeCategory(category);
         challenge.setChallengeStartDate(LocalDateTime.now());
         challenge.setChallengeEndDate(LocalDateTime.now().plusDays(1));
         challenge.setAuthFrequency("주 2회인증");
@@ -43,29 +59,41 @@ class JPAChallengeRepositoryTest {
         challengeService.makeChallenge(challenge);
         //then
         org.assertj.core.api.Assertions.assertThat(challenge.getAuthFrequency()).isEqualTo("주 2회인증");
-//        org.assertj.core.api.Assertions.assertThat(challenge.getChallengeOnGoing()).isEqualTo("READY");
     }
     @Test
     void findAll(){
+        User user = new User();
+        user.setUserEmail("asd@naver.com");// 이메일을 넣었을때
+        user.setUserPassword("abc");
+        Category category = new Category();
+        category.setCategoryName("카테고리");
         Challenge challenge =  new Challenge();
         challenge.setChallengeName("챌린지 테스트2");
         challenge.setChallengeDesc("챌린지 설명2");
-        challenge.setChallengeOwner(1L);
-        challenge.setChallengeCategory(1L);
+        challenge.setChallengeOwner(user);
+        challenge.setChallengeCategory(category);
         challenge.setChallengeStartDate(LocalDateTime.now());
         challenge.setChallengeEndDate(LocalDateTime.now().plusDays(1));
         challenge.setAuthFrequency("주 3회인증");
         challenge.setAuthHoliday(1);
         Challenge challenge2 =  new Challenge();
+        User user2 = new User();
+        user2.setUserEmail("asd2@naver.com");// 이메일을 넣었을때
+        user2.setUserPassword("abc2");
+        Category category2 = new Category();
+        category2.setCategoryName("카테고리2");
         challenge2.setChallengeName("챌린지 테스트");
         challenge2.setChallengeDesc("챌린지 설명");
-        challenge2.setChallengeOwner(1L);
-        challenge2.setChallengeCategory(1L);
+        challenge2.setChallengeOwner(user2);
+        challenge2.setChallengeCategory(category2);
         challenge2.setChallengeStartDate(LocalDateTime.now());
         challenge2.setChallengeEndDate(LocalDateTime.now().plusDays(1));
         challenge2.setAuthFrequency("주 3회인증");
         challenge2.setAuthHoliday(3);
-
+        userService.signIn(user);
+        userService.signIn(user2);
+        categoryService.makeCategory(category);
+        categoryService.makeCategory(category2);
         challengeService.makeChallenge(challenge);
         challengeService.makeChallenge(challenge2);
 
@@ -79,32 +107,55 @@ class JPAChallengeRepositoryTest {
     void findByChallengeNameLikeContaining(){
         //given
         Challenge challenge =  new Challenge();
+        User user = new User();
+        user.setUserEmail("asd@naver.com");// 이메일을 넣었을때
+        user.setUserPassword("abc");
+        Category category = new Category();
+        category.setCategoryName("카테고리2");
         challenge.setChallengeName("챌린지 테스트2");
         challenge.setChallengeDesc("챌린지 설명2");
-        challenge.setChallengeOwner(1L);
-        challenge.setChallengeCategory(1L);
+        challenge.setChallengeOwner(user);
+        challenge.setChallengeCategory(category);
         challenge.setChallengeStartDate(LocalDateTime.now());
         challenge.setChallengeEndDate(LocalDateTime.now().plusDays(1));
         challenge.setAuthFrequency("주 3회인증");
         challenge.setAuthHoliday(1);
         Challenge challenge2 =  new Challenge();
+        User user2 = new User();
+        user2.setUserEmail("asd2@naver.com");// 이메일을 넣었을때
+        user2.setUserPassword("abc2");
+        Category category2 = new Category();
+        category2.setCategoryName("카테고리2");
         challenge2.setChallengeName("챌린지 테스트");
         challenge2.setChallengeDesc("챌린지 설명");
-        challenge2.setChallengeOwner(1L);
-        challenge2.setChallengeCategory(1L);
+        challenge2.setChallengeOwner(user2);
+        challenge2.setChallengeCategory(category2);
         challenge2.setChallengeStartDate(LocalDateTime.now());
         challenge2.setChallengeEndDate(LocalDateTime.now().plusDays(1));
         challenge2.setAuthFrequency("주 3회인증");
         challenge2.setAuthHoliday(3);
         Challenge challenge3 =  new Challenge();
+        User user3 = new User();
+        user3.setUserEmail("asd3@naver.com");// 이메일을 넣었을때
+        user3.setUserPassword("abc3");
+        Category category3 = new Category();
+        category3.setCategoryName("카테고리2");
         challenge3.setChallengeName("테스트만");
         challenge3.setChallengeDesc("챌린지 설명");
-        challenge3.setChallengeOwner(1L);
-        challenge3.setChallengeCategory(1L);
+        challenge3.setChallengeOwner(user3);
+        challenge3.setChallengeCategory(category3);
         challenge3.setChallengeStartDate(LocalDateTime.now());
         challenge3.setChallengeEndDate(LocalDateTime.now().plusDays(1));
         challenge3.setAuthFrequency("주 3회인증");
         challenge3.setAuthHoliday(3);
+
+        userService.signIn(user);
+        userService.signIn(user2);
+        userService.signIn(user3);
+        categoryService.makeCategory(category);
+        categoryService.makeCategory(category2);
+        categoryService.makeCategory(category3);
+
         challengeService.makeChallenge(challenge);
         challengeService.makeChallenge(challenge2);
         challengeService.makeChallenge(challenge3);
@@ -118,37 +169,57 @@ class JPAChallengeRepositoryTest {
     @Test
     void findAllOrderByChallengeUserCount() {
         Challenge challenge =  new Challenge();
+        User user = new User();
+        user.setUserEmail("asd@naver.com");// 이메일을 넣었을때
+        user.setUserPassword("abc");
+        Category category = new Category();
+        category.setCategoryName("카테고리2");
         challenge.setChallengeName("챌린지 테스트2");
         challenge.setChallengeDesc("챌린지 설명2");
-        challenge.setChallengeOwner(1L);
-        challenge.setChallengeCategory(1L);
+        challenge.setChallengeOwner(user);
+        challenge.setChallengeCategory(category);
         challenge.setChallengeUserCount(1000);
         challenge.setChallengeStartDate(LocalDateTime.now());
         challenge.setChallengeEndDate(LocalDateTime.now().plusDays(1));
         challenge.setAuthFrequency("주 3회인증");
         challenge.setAuthHoliday(1);
         Challenge challenge2 =  new Challenge();
+        User user2 = new User();
+        user2.setUserEmail("asd3@naver.com");// 이메일을 넣었을때
+        user2.setUserPassword("abc2");
+        Category category2 = new Category();
+        category2.setCategoryName("카테고리2");
         challenge2.setChallengeName("챌린지 테스트");
         challenge2.setChallengeDesc("챌린지 설명");
-        challenge2.setChallengeOwner(1L);
-        challenge2.setChallengeCategory(1L);
+        challenge2.setChallengeOwner(user);
+        challenge2.setChallengeCategory(category);
         challenge2.setChallengeUserCount(2000);
         challenge2.setChallengeStartDate(LocalDateTime.now());
         challenge2.setChallengeEndDate(LocalDateTime.now().plusDays(1));
         challenge2.setAuthFrequency("주 3회인증");
         challenge2.setAuthHoliday(3);
         Challenge challenge3 =  new Challenge();
+        User user3 = new User();
+        Category category3 = new Category();
+        user3.setUserEmail("asd2@naver.com");// 이메일을 넣었을때
+        user3.setUserPassword("abc2");
+        category3.setCategoryName("카테고리2");
         challenge3.setChallengeName("테스트만");
         challenge3.setChallengeDesc("챌린지 설명");
-        challenge3.setChallengeOwner(1L);
-        challenge3.setChallengeCategory(1L);
+        challenge3.setChallengeOwner(user3);
+        challenge3.setChallengeCategory(category3);
         challenge3.setChallengeUserCount(1500);
         challenge3.setChallengeStartDate(LocalDateTime.now());
         challenge3.setChallengeEndDate(LocalDateTime.now().plusDays(1));
         challenge3.setAuthFrequency("주 3회인증");
         challenge3.setAuthHoliday(3);
 
-
+        userService.signIn(user);
+        userService.signIn(user2);
+        userService.signIn(user3);
+        categoryService.makeCategory(category);
+        categoryService.makeCategory(category2);
+        categoryService.makeCategory(category3);
         challengeService.makeChallenge(challenge);
         challengeService.makeChallenge(challenge2);
         challengeService.makeChallenge(challenge3);
