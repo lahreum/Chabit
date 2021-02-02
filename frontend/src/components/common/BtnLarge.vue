@@ -1,21 +1,22 @@
 <template>
-  <v-btn
-    class="text-center mx-auto white--text"
-    width="220px"
-    height="40px"
-    rounded
-    color="#B71C1C"
-  >
-    Log in
-  </v-btn>
+  <button class="btn-large">
+    {{text}}
+  </button>
 </template>
 
 <script>
 export default {
-
+  name: "BtnLarge",
+  props: ['text'],
 }
 </script>
 
-<style>
-
+<style scoped>
+.btn-large {
+  background-color: #942706;
+  color: white;
+  border-radius: 30px;
+  width: 215px;
+  height: 40px;
+}
 </style>
