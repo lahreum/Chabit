@@ -15,7 +15,7 @@ public class UserHashtag {
     private User user;
 
     @Id
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="HASHTAG_ID")
     private Hashtag hashtag;
 }

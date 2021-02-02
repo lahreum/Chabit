@@ -2,23 +2,35 @@ server:
   port: 9999
 
 spring:
-  datasource:
-    # 개발용 H2
-    url: jdbc:h2:tcp://localhost/~/chabit;MODE=MySQL
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
-    # 실제 운영용 rds
-#    url: jdbc:mysql://chabit-mysql.cqwzhdgaabxu.ap-northeast-2.rds.amazonaws.com:3306/chabit?serverTimezone=UTC&useUniCode=yes&characterEncoding=UTF-8
-#    username: ssafy
-#    password: ssafyssafy
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-
-
+  profiles:
+    active: local
   jpa:
-    hibernate:
-      ddl-auto: create
     properties:
       hibernate:
         show_sql: true
         format_sql: true
+
+--- # 개발
+spring:
+  profiles: local
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/chabit;MODE=MySQL
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+
+--- # 배포 환경
+spring:
+  profiles: prod
+  datasource:
+    url: jdbc:mysql://chabit-mysql.cqwzhdgaabxu.ap-northeast-2.rds.amazonaws.com:3306/chabit?serverTimezone=UTC&useUniCode=yes&characterEncoding=UTF-8
+    username: ssafy
+    password: ssafyssafy
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
