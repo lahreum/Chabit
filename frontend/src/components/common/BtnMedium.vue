@@ -1,21 +1,22 @@
 <template>
-  <v-btn
-    class="text-center mx-auto white--text"
-    width="170px"
-    height="40px"
-    rounded
-    color="#B71C1C"
-  >
-    시작하기
-  </v-btn>
+  <button class="btn-medium">
+    {{text}}
+  </button>
 </template>
 
 <script>
 export default {
-
+  name: "BtnMedium",
+  props: ['text'],
 }
 </script>
 
-<style>
-
+<style scoped>
+.btn-medium {
+  background-color: #942706;
+  color: white;
+  border-radius: 30px;
+  width: 170px;
+  height: 40px;
+}
 </style>
