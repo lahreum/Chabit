@@ -21,9 +21,6 @@ public class JPAChallengeRepository implements ChallengeRepoistory{
 
     private final EntityManager entityManager;
 
-    @Autowired
-    public JPAChallengeRepository(EntityManager entityManager) {this.entityManager = entityManager;}
-
 
     @Override
     public Challenge save(Challenge challenge) {
