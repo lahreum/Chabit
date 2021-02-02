@@ -8,7 +8,6 @@
               <strong>{{ title }}</strong>
             </v-card-title>
             <v-card-text>{{ text }}</v-card-text>
-            <p>회원가입하시겠습니까?</p>
             <v-divider></v-divider>
             <v-card-actions class="rounded-xl">
               <v-spacer></v-spacer>
