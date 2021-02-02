@@ -6,7 +6,7 @@
       color="secondary"
       label="false"
     >
-      Secondary
+      {{ content }}
     </v-chip>
   </div>
   </v-app>
@@ -14,6 +14,8 @@
 
 <script>
   export default {
+    name: "HashTag",
+    props: ['content'],
   }
 </script>
 

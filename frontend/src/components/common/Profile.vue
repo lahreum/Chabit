@@ -1,15 +1,16 @@
 <template>
   <v-avatar>
       <img
-        src="https://cdn.vuetifyjs.com/images/john.jpg"
-        alt="John"
+        :src= src
+        :alt= alt
       >
     </v-avatar>
 </template>
 
 <script>
 export default {
-
+  name: "Profile",
+  props: ['src', 'alt'],
 }
 </script>
 
