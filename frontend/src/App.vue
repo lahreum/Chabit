@@ -65,13 +65,14 @@
         </v-list>
       </v-navigation-drawer>
 
-      <v-app-bar app>
+      <v-app-bar app flat color="transparent">
         <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-
-        <!-- <v-toolbar-title>{{ pageTitle }}</v-toolbar-title> -->
+        <!-- <v-toolbar-title  class="flex text-center">{{ pageTitle }}</v-toolbar-title> -->
       </v-app-bar>
 
       <v-main>
+        <!-- padding을 넣어 줄 경우 내용이 밀림. 선택 -->
+        <!-- <v-main style="padding:0"> -->
         <router-view />
       </v-main>
     </v-app>
@@ -94,7 +95,6 @@ export default {
 /* Navbar */
 #app .v-sheet.v-app-bar.v-toolbar {
   border-radius: 0 0 24px 24px;
-  opacity: 100%;
 }
 .v-navigation-drawer {
   border-radius: 0 20px 20px 0;
