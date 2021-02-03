@@ -1,15 +1,13 @@
 package backend.domain;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.LocalTime;
 
 @Entity
 @Getter @Setter
@@ -22,11 +20,11 @@ public class Challenge { // Challenge 코드리뷰 필수.
 
     @Column(nullable = false)
     private String challengeName;
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String challengeDesc;
 
-    @ManyToOne(fetch = FetchType.LAZY) // casecade 확인바람.
-    @JoinColumn(name ="USER_ID", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name ="challenge_owner", nullable = false)
     private User challengeOwner;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -35,9 +33,9 @@ public class Challenge { // Challenge 코드리뷰 필수.
 
 
     @Column(nullable = false)
-    private LocalDateTime challengeStartDate;
+    private LocalDateTime challengeStartdate;
     @Column(nullable = false)
-    private LocalDateTime challengeEndDate;
+    private LocalDateTime challengeEnddate;
 
     @Column(columnDefinition = "TEXT")
     private String challengeThumbnail;
@@ -46,20 +44,24 @@ public class Challenge { // Challenge 코드리뷰 필수.
     private int challengePoint;
     @Column
     @ColumnDefault("1")
-    private int challengeUserCount;
+    private int challengeUsercount;
+
     @Column
     private String authWay;
     @Column(nullable = false)
     private String authFrequency;
     @Column
-    private LocalDateTime authTime;
-    @Column(nullable = false)
-    private int authHoliday; //tinyint int로 했음.
+    private LocalTime authStarttime;
     @Column
+    private LocalTime authEndtime;
+
+    @Column(nullable = false, columnDefinition = "TINYINT")
+    private int authHoliday; //tinyint int로 했음.
+    @Column(columnDefinition = "TEXT")
     private String authExample;
 
     @Enumerated(EnumType.STRING) //저장할 때.. 정하자
-    private ChallengeOnGoing challengeOnGoing;
+    private ChallengeOngoing challengeOngoing;
 }
 /*
 CREATE TABLE IF NOT EXISTS `chabit`.`CHALLENGE` (
