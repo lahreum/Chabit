@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <div class="top-toggle-alarm">
       <i class="fas fa-grip-lines"></i>
       <i class="far fa-bell"></i>
