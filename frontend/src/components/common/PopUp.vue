@@ -2,7 +2,7 @@
   <div id="popup" class="popup">
     <v-app id="inspire">
       <v-row justify="center">
-        <v-dialog v-model="dialog" persistent max-width="290">
+        <v-dialog v-model="dialog" persistent max-width="290" content-class="rounded-xl">
           <v-card class="rounded-xl justify-center text-sm-center">
             <v-card-title class="headline justify-center rounded-xl">
               <strong>{{ title }}</strong>
