@@ -25,6 +25,7 @@ public class User {
     private String userName;
     private String userNickname;
     private String userPhone;
+    @Column(columnDefinition = "TEXT")
     private String userImage;
 
     @Column
@@ -35,5 +36,14 @@ public class User {
 
     @Column
     private LocalDateTime userJoindate;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserHashtag> hashtags = new ArrayList<>();
+
+    // 연관관계 메서드
+    public void addHashtag(UserHashtag hashtag) {
+        hashtags.add(hashtag);
+        hashtag.setUser(this);
+    }
 
 }

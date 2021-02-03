@@ -1,7 +1,10 @@
 package backend.service;
 
 import backend.controller.UserRequest;
+import backend.domain.Hashtag;
 import backend.domain.User;
+import backend.domain.UserHashtag;
+import backend.repository.HashtagRepository;
 import backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final HashtagRepository hashtagRepository;
 
     /**
      * 회원가입
@@ -76,6 +80,73 @@ public class UserService {
             updateUser.setUserPhone(request.getUserPhone());
         } else {
             throw new IllegalStateException("잘못된 유저 이메일입니다");
+        }
+    }
+
+    /**
+     * 해쉬태그 추가
+     */
+    @Transactional
+    public void addHashtag(String userEmail, String hashtagName) {
+        // 유저 검색
+        Optional<User> findUser = userRepository.findByUserEmail(userEmail);
+        if(!findUser.isPresent())
+            throw new IllegalStateException("잘못된 유저 이메일입니다.");
+        User user = findUser.get();
+
+        // 해쉬태그 검색
+        Optional<Hashtag> hashtag = hashtagRepository.findByHashtagName(hashtagName);
+        UserHashtag userHashtag = new UserHashtag();
+
+        if (hashtag.isPresent()) {
+            // 해쉬태그 이미 존재하는 경우
+            List<UserHashtag> userHashtagList = user.getHashtags();
+            for (UserHashtag tag : userHashtagList) {
+                // 유저가 이미 등록한 해쉬태그라면 무시
+                if (tag.getHashtag().getHashtagName().equals(hashtagName))
+                    return;
+            }
+            // 유저가 등록 안한 해쉬태그라면 추가
+            userHashtag.setUser(user);
+            userHashtag.setHashtag(hashtag.get());
+
+            user.addHashtag(userHashtag);
+        } else {
+            // 해쉬태그 존재하지 않는 경우 등록 후 저장
+            userHashtag = new UserHashtag();
+            userHashtag.setUser(user);
+            userHashtag.setHashtag(hashtagRepository.save(new Hashtag(hashtagName)));
+
+            user.addHashtag(userHashtag);
+        }
+    }
+
+    /**
+     * 유저 해쉬태그 목록 가져오기
+     */
+    public List<UserHashtag> findHashtag(String userEmail) {
+        // 유저 검색
+        Optional<User> findUser = userRepository.findByUserEmail(userEmail);
+        if(!findUser.isPresent())
+            throw new IllegalStateException("잘못된 유저 이메일입니다.");
+        User user = findUser.get();
+
+        return user.getHashtags();
+    }
+
+    /**
+     * 유저 해쉬태그 삭제
+     */
+    @Transactional
+    public void removeHashtag(String userEmail, String hashtagName) {
+        User user = findUser(userEmail);
+        Optional<Hashtag> findHashtag = hashtagRepository.findByHashtagName(hashtagName);
+
+        if (findHashtag.isPresent()) {
+            Hashtag target = findHashtag.get();
+            user.getHashtags().removeIf(h -> h.getHashtag().equals(target));
+        } else {
+            throw new IllegalStateException("잘못된 해쉬태그 이름입니다.");
         }
     }
 }
