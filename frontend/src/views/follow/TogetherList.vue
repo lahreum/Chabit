@@ -6,7 +6,7 @@
                 <v-list subheader>
                     <v-subheader>
                         <div class="text-darken-1 mb-2 font-weight-black black--text" id="title">
-                            <span>팔로우</span>
+                            함께하는 <span id="highlight">챌린저들</span>
                         </div>
                     </v-subheader>
                     <v-list-item v-for="user in users" :key="user.name">
@@ -84,6 +84,9 @@ export default {
 }
 .v-subheader{
     margin-bottom: 30px;
+}
+#highlight{
+    color: #B71C1C;
 }
 .name{
     font-weight: 500;

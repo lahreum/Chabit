@@ -2,15 +2,12 @@
   <div id="popup" class="popup">
     <v-app id="inspire">
       <v-row justify="center">
-        <v-dialog v-model="dialog" persistent max-width="290">
+        <v-dialog v-model="dialog" persistent max-width="290" content-class="rounded-xl">
           <v-card class="rounded-xl justify-center text-sm-center">
             <v-card-title class="headline justify-center rounded-xl">
-              <!-- <strong>{{popupTitle}}</strong> -->
-              <strong>회원가입</strong>
+              <strong>{{popupTitle}}</strong>
             </v-card-title>
-            <!-- <v-card-text>{{popupContent}}</v-card-text> -->
-            <!-- <v-card-text class="justify-center"><strong>회원가입하시겠습니까?</strong></v-card-text> -->
-            <p>회원가입하시겠습니까?</p>
+            <v-card-text class="justify-center">{{popupContent}}</v-card-text>
             <v-divider></v-divider>
             <v-card-actions class="rounded-xl">
               <v-spacer></v-spacer>

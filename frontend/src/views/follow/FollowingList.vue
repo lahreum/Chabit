@@ -6,7 +6,7 @@
                 <v-list subheader>
                     <v-subheader>
                         <div class="text-darken-1 mb-2 font-weight-black black--text" id="title">
-                            <span>팔로우</span>
+                            <span>팔로잉</span>
                         </div>
                     </v-subheader>
                     <v-list-item v-for="user in users" :key="user.name">
