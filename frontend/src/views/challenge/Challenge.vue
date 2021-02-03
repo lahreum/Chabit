@@ -1,12 +1,10 @@
 <template>
   <div class="container">
-    <div class="top-toggle-alarm">
-      <i class="fas fa-grip-lines"></i>
-    </div>
-    <div class="search-bar">
+    <!-- <div class="search-bar">
       <input @keyup.enter="onSearch" type="search" placeholder=" Search">
       <i class="fas fa-filter"></i>
-    </div>
+    </div> -->
+    <SearchBar />
     <div v-if="!isTrue">
       <div class="challenge-hot">
         <HotChallengeList />
@@ -44,13 +42,15 @@ import './challenge.css'
 import BtnCreateChallenge from '../../components/common/BtnCreateChallenge.vue'
 import HotChallengeList from './HotChallengeList.vue'
 import NewChallengeList from './NewChallengeList.vue'
+import SearchBar from '../../components/common/SearchBar.vue'
 // import SearchChallengeList from './SearchChallengeList.vue'
 
 export default {
   components: { 
     HotChallengeList, 
     NewChallengeList, 
-    BtnCreateChallenge, 
+    BtnCreateChallenge,
+    SearchBar,
     // SearchChallengeList 
   },
   data() {

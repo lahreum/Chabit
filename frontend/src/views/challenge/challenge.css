@@ -114,7 +114,7 @@
   justify-content: center;
   width: 100%;
   height: 35px;
-}
+} */
 
 .search-bar > input {
   background-color: #dedede;
@@ -241,7 +241,7 @@
 .create-challenge-btn {
   position: fixed;
   z-index: 1;
-  top: 570px;
+  top: 70%;
   margin-right: -70%;
 }
 

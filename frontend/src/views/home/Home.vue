@@ -1,10 +1,5 @@
 <template>
   <div class="container">
-    <div class="top-toggle-alarm">
-      <i class="fas fa-grip-lines"></i>
-      <i class="far fa-bell"></i>
-      <i class="fas fa-circle"></i>
-    </div>
     <div class="all-ranking">
       <span>전체 랭킹</span>
       <i class="fas fa-plus"></i>
