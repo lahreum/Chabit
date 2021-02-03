@@ -35,9 +35,18 @@ public class UserController {
     public BaseResponse user(@PathVariable String userEmail) {
         BaseResponse response = null;
         try {
+            // 유저 찾기
             User findUser = userService.findUser(userEmail);
-            // 엔티티 -> DTO 변환
+
+            // 해당 유저의 해쉬태그 가져오기
+            List<UserHashtag> findHashtagList = userService.findHashtag(userEmail);
+
+            // 엔티티 -> DTO
+            HashtagDto hashtagDto = new HashtagDto();
+            findHashtagList.forEach(h -> hashtagDto.addHashtag(h.getHashtag()));
+
             UserDto userDto = new UserDto(findUser);
+            userDto.addHashtags(hashtagDto);
 
             response = new BaseResponse("success", userDto);
         } catch (IllegalStateException e) {
