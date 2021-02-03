@@ -166,18 +166,16 @@
 /* 새로운 챌린지 */
 .new-challenge {
   position: absolute;
-  margin: 0 6.2%;
   top: 330px;
   z-index: 0;
+  width: 100%;
 }
-
-.new-challenge > 
 
 .new-challenge-card-list {
   margin-top: 15px;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: center;
 }
 
 .new-challenge-card-container {
@@ -185,7 +183,7 @@
   height: 180px;
   box-shadow: 1px 1px 6px gray;
   border-radius: 10px;
-  margin-bottom: 10px;
+  margin: 0 4% 10px 2%;
 }
 
 .new-challenge-card-content {
@@ -224,19 +222,35 @@
   margin: 25px 0 20px 8px;
 }
 
+.new-challenge-title {
+  margin: 0 5%;
+}
+
 .new-challenge-title > span {
   font-size: large;
   font-weight: bold;
-  margin-right: 7px;
+  
 }
 
 .new-challenge-title > .hot-popular {
   color: #942706;
 }
 
+
+/* 개설버튼 */
 .create-challenge-btn {
   position: fixed;
   z-index: 1;
   top: 570px;
   margin-right: -70%;
 }
+
+
+/* 검색 목록 */
+.search-result {
+  position: absolute;
+  top: 110px;
+  left: 6%;
+  z-index: 0;
+}
+
