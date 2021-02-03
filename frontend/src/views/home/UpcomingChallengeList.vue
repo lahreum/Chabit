@@ -1,5 +1,5 @@
 <template>
-  <hooper style="width: 270px; height: 270px" :itemsToShow="1.5" :centerMode="true">
+  <hooper style="width: 100%; height: 270px" :itemsToShow="1.5" :centerMode="true">
     <slide>
       <div class="challenge-container">
         <div class="challenge-content">

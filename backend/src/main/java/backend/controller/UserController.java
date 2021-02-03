@@ -1,13 +1,14 @@
 package backend.controller;
 
-import backend.domain.User;
-import backend.domain.UserDto;
+import backend.domain.*;
+import backend.repository.HashtagRepository;
 import backend.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +25,7 @@ public class UserController {
 
         // 엔티티 -> DTO 변환
         List<UserDto> collect = findUsers.stream()
-                .map(m -> new UserDto(m.getUserEmail(), m.getUserNickname(), m.getUserName(), m.getUserPhone()))
+                .map(m -> new UserDto(m.getUserEmail(), m.getUserNickname(), m.getUserName(), m.getUserPhone(), m.getUserPoints(), m.getUserJoindate()))
                 .collect(Collectors.toList());
 
         return new BaseResponse("success", collect);
@@ -34,9 +35,18 @@ public class UserController {
     public BaseResponse user(@PathVariable String userEmail) {
         BaseResponse response = null;
         try {
+            // 유저 찾기
             User findUser = userService.findUser(userEmail);
-            // 엔티티 -> DTO 변환
+
+            // 해당 유저의 해쉬태그 가져오기
+            List<UserHashtag> findHashtagList = userService.findHashtag(userEmail);
+
+            // 엔티티 -> DTO
+            HashtagDto hashtagDto = new HashtagDto();
+            findHashtagList.forEach(h -> hashtagDto.addHashtag(h.getHashtag()));
+
             UserDto userDto = new UserDto(findUser);
+            userDto.addHashtags(hashtagDto);
 
             response = new BaseResponse("success", userDto);
         } catch (IllegalStateException e) {
@@ -91,6 +101,47 @@ public class UserController {
         return response;
     }
 
+    @PostMapping("/hashtag/{userEmail}")
+    public BaseResponse saveHashtag(@PathVariable String userEmail, @RequestBody String hashtagName) {
+        BaseResponse response = null;
+        try {
+            userService.addHashtag(userEmail, hashtagName);
+            response = new BaseResponse("success", "추가 성공");
+        } catch (IllegalStateException e) {
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    @GetMapping("/hashtag/{userEmail}")
+    public BaseResponse getUserHashtag(@PathVariable String userEmail) {
+        BaseResponse response = null;
+        try {
+            List<UserHashtag> findHashtagList = userService.findHashtag(userEmail);
+
+            // 엔티티 -> DTO
+            HashtagDto hashtagDto = new HashtagDto();
+            findHashtagList.forEach(h -> hashtagDto.addHashtag(h.getHashtag()));
+            response = new BaseResponse("success", hashtagDto);
+        } catch (IllegalStateException e) {
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    @DeleteMapping("/hashtag/{userEmail}/{hashtagName}")
+    public BaseResponse deleteHashtag(@PathVariable String userEmail, @PathVariable String hashtagName) {
+        BaseResponse response = null;
+        try {
+            userService.removeHashtag(userEmail, hashtagName);
+            response = new BaseResponse("success", "삭제 성공");
+        } catch (IllegalStateException e) {
+            response = new BaseResponse("fail", e.getMessage());
+        }
+
+        return response;
+    }
+
     // ======= Response & Request 클래스 =======
     // 회원 가입
     @Data
@@ -98,7 +149,8 @@ public class UserController {
         private String joinResult; // 회원가입 결과
         private String message; // 성공 & 실패 메세지
 
-        public JoinUserResponse(){}
+        public JoinUserResponse() {
+        }
 
         public JoinUserResponse(String joinResult, String message) {
             this.joinResult = joinResult;

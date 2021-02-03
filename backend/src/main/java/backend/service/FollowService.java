@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class FollowService {
     private final FollowRepository followRepository;
-    private final UserRepository userRepository;
 
     /**
      * 팔로잉

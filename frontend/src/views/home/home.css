@@ -1,3 +1,8 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+
 /* top */
 .top-toggle-alarm {
   background-color: white;
@@ -35,6 +40,7 @@
   margin: 0 6.2%;
   top: 70px;
   z-index: 0;
+  width: 90%;
 }
 
 span {
@@ -77,6 +83,7 @@ span {
   top: 210px;
   height: 300px;
   z-index: 0;
+  width: 90%;
 }
 
 .hot-popular {
