@@ -51,8 +51,8 @@ class JPAChallengeRepositoryTest {
         challenge.setChallengeDesc("챌린지 설명");
         challenge.setChallengeOwner(user);
         challenge.setChallengeCategory(category);
-        challenge.setChallengeStartDate(LocalDateTime.now());
-        challenge.setChallengeEndDate(LocalDateTime.now().plusDays(1));
+        challenge.setChallengeStartdate(LocalDateTime.now());
+        challenge.setChallengeEnddate(LocalDateTime.now().plusDays(1));
         challenge.setAuthFrequency("주 2회인증");
         challenge.setAuthHoliday(1);
         //when
@@ -72,8 +72,8 @@ class JPAChallengeRepositoryTest {
         challenge.setChallengeDesc("챌린지 설명2");
         challenge.setChallengeOwner(user);
         challenge.setChallengeCategory(category);
-        challenge.setChallengeStartDate(LocalDateTime.now());
-        challenge.setChallengeEndDate(LocalDateTime.now().plusDays(1));
+        challenge.setChallengeStartdate(LocalDateTime.now());
+        challenge.setChallengeEnddate(LocalDateTime.now().plusDays(1));
         challenge.setAuthFrequency("주 3회인증");
         challenge.setAuthHoliday(1);
         Challenge challenge2 =  new Challenge();
@@ -86,8 +86,8 @@ class JPAChallengeRepositoryTest {
         challenge2.setChallengeDesc("챌린지 설명");
         challenge2.setChallengeOwner(user2);
         challenge2.setChallengeCategory(category2);
-        challenge2.setChallengeStartDate(LocalDateTime.now());
-        challenge2.setChallengeEndDate(LocalDateTime.now().plusDays(1));
+        challenge2.setChallengeStartdate(LocalDateTime.now());
+        challenge2.setChallengeEnddate(LocalDateTime.now().plusDays(1));
         challenge2.setAuthFrequency("주 3회인증");
         challenge2.setAuthHoliday(3);
         userService.signIn(user);
@@ -116,8 +116,8 @@ class JPAChallengeRepositoryTest {
         challenge.setChallengeDesc("챌린지 설명2");
         challenge.setChallengeOwner(user);
         challenge.setChallengeCategory(category);
-        challenge.setChallengeStartDate(LocalDateTime.now());
-        challenge.setChallengeEndDate(LocalDateTime.now().plusDays(1));
+        challenge.setChallengeStartdate(LocalDateTime.now());
+        challenge.setChallengeEnddate(LocalDateTime.now().plusDays(1));
         challenge.setAuthFrequency("주 3회인증");
         challenge.setAuthHoliday(1);
         Challenge challenge2 =  new Challenge();
@@ -130,8 +130,8 @@ class JPAChallengeRepositoryTest {
         challenge2.setChallengeDesc("챌린지 설명");
         challenge2.setChallengeOwner(user2);
         challenge2.setChallengeCategory(category2);
-        challenge2.setChallengeStartDate(LocalDateTime.now());
-        challenge2.setChallengeEndDate(LocalDateTime.now().plusDays(1));
+        challenge2.setChallengeStartdate(LocalDateTime.now());
+        challenge2.setChallengeEnddate(LocalDateTime.now().plusDays(1));
         challenge2.setAuthFrequency("주 3회인증");
         challenge2.setAuthHoliday(3);
         Challenge challenge3 =  new Challenge();
@@ -144,8 +144,8 @@ class JPAChallengeRepositoryTest {
         challenge3.setChallengeDesc("챌린지 설명");
         challenge3.setChallengeOwner(user3);
         challenge3.setChallengeCategory(category3);
-        challenge3.setChallengeStartDate(LocalDateTime.now());
-        challenge3.setChallengeEndDate(LocalDateTime.now().plusDays(1));
+        challenge3.setChallengeStartdate(LocalDateTime.now());
+        challenge3.setChallengeEnddate(LocalDateTime.now().plusDays(1));
         challenge3.setAuthFrequency("주 3회인증");
         challenge3.setAuthHoliday(3);
 
@@ -178,9 +178,9 @@ class JPAChallengeRepositoryTest {
         challenge.setChallengeDesc("챌린지 설명2");
         challenge.setChallengeOwner(user);
         challenge.setChallengeCategory(category);
-        challenge.setChallengeUserCount(1000);
-        challenge.setChallengeStartDate(LocalDateTime.now());
-        challenge.setChallengeEndDate(LocalDateTime.now().plusDays(1));
+        challenge.setChallengeUsercount(1000);
+        challenge.setChallengeStartdate(LocalDateTime.now());
+        challenge.setChallengeEnddate(LocalDateTime.now().plusDays(1));
         challenge.setAuthFrequency("주 3회인증");
         challenge.setAuthHoliday(1);
         Challenge challenge2 =  new Challenge();
@@ -193,9 +193,9 @@ class JPAChallengeRepositoryTest {
         challenge2.setChallengeDesc("챌린지 설명");
         challenge2.setChallengeOwner(user);
         challenge2.setChallengeCategory(category);
-        challenge2.setChallengeUserCount(2000);
-        challenge2.setChallengeStartDate(LocalDateTime.now());
-        challenge2.setChallengeEndDate(LocalDateTime.now().plusDays(1));
+        challenge2.setChallengeUsercount(2000);
+        challenge2.setChallengeStartdate(LocalDateTime.now());
+        challenge2.setChallengeEnddate(LocalDateTime.now().plusDays(1));
         challenge2.setAuthFrequency("주 3회인증");
         challenge2.setAuthHoliday(3);
         Challenge challenge3 =  new Challenge();
@@ -208,9 +208,9 @@ class JPAChallengeRepositoryTest {
         challenge3.setChallengeDesc("챌린지 설명");
         challenge3.setChallengeOwner(user3);
         challenge3.setChallengeCategory(category3);
-        challenge3.setChallengeUserCount(1500);
-        challenge3.setChallengeStartDate(LocalDateTime.now());
-        challenge3.setChallengeEndDate(LocalDateTime.now().plusDays(1));
+        challenge3.setChallengeUsercount(1500);
+        challenge3.setChallengeStartdate(LocalDateTime.now());
+        challenge3.setChallengeEnddate(LocalDateTime.now().plusDays(1));
         challenge3.setAuthFrequency("주 3회인증");
         challenge3.setAuthHoliday(3);
 
@@ -226,7 +226,7 @@ class JPAChallengeRepositoryTest {
         List<Challenge> result = new ArrayList<>();
         result = challengeService.findAllOrderByChallengeUserCount();
 
-        org.assertj.core.api.Assertions.assertThat(result.get(0).getChallengeUserCount()).isEqualTo(2000);
+        org.assertj.core.api.Assertions.assertThat(result.get(0).getChallengeUsercount()).isEqualTo(2000);
     }
 }
 

@@ -41,7 +41,7 @@ public class JPAChallengeRepository implements ChallengeRepoistory{
     @Override
     public List<Challenge> findAllOrderByChallengeUserCount() {
         List<Challenge> result = entityManager.createQuery
-                ("select c from Challenge c order by c.challengeUserCount desc", Challenge.class)
+                ("select c from Challenge c order by c.challengeUsercount desc", Challenge.class)
                 .setFirstResult(0)
                 .setMaxResults(4)
                 .getResultList();
