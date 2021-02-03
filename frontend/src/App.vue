@@ -1,6 +1,5 @@
 <template>
-  <challenge />
-  <!-- <v-app>
+  <v-app>
     <v-app-bar
       app
       color="primary"
@@ -41,18 +40,16 @@
     <v-main>
       
     </v-main>
-  </v-app> -->
+  </v-app>
 </template>
 
 <script>
-import Challenge from "./views/challenge/Challenge.vue"
-
 
 export default {
   name: 'App',
 
   components: {
-    Challenge
+
   },
 
   
