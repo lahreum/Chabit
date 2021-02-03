@@ -51,6 +51,7 @@
               <v-list-item>
                 <v-list-item-title>설정</v-list-item-title>
               </v-list-item>
+
             </v-list-item-group>
           </div>
           <!-- 로그인 되었을 때만 뜨도록 수정할 예정  -->

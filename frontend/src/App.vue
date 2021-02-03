@@ -9,11 +9,11 @@
                 <div class="nav-top-avatar">
                   <v-list-item-avatar style="height:63px; width:63px; background-color:white; ">
                     <!-- 프로필 사진 입력 -->
-                    <v-img
+                    <!-- <v-img
                       style="height:60px; min-width: 60px; width:60px;"
                       src="./assets/img/maja.png"
-                    ></v-img>
-                    <!-- <v-icon>mdi-account-circle</v-icon> -->
+                    ></v-img> -->
+                    <v-icon>mdi-account-circle</v-icon>
                   </v-list-item-avatar>
                 </div>
                 <div class="nav-top-content">
@@ -50,17 +50,22 @@
               <v-list-item @click="$router.push('/setting')">
                 <v-list-item-title>설정</v-list-item-title>
               </v-list-item>
+
+              <v-list-item class="logout-list">
+                <v-icon class="logout-icon" color="white">mdi-logout</v-icon>
+                <v-list-item-title>로그아웃</v-list-item-title>
+              </v-list-item>
             </v-list-item-group>
           </div>
           <!-- 로그인 되었을 때만 뜨도록 수정할 예정  -->
-          <div id="nav-bottom" class="nav-bottom">
+          <!-- <div id="nav-bottom" class="nav-bottom"> -->
             <!-- <v-list-item-group v-model="group" active-class="text--accent-4"> -->
-            <v-list-item class="logout-list">
+            <!-- <v-list-item class="logout-list">
               <v-icon class="logout-icon" color="white">mdi-logout</v-icon>
               <v-list-item-title>로그아웃</v-list-item-title>
-            </v-list-item>
+            </v-list-item> -->
             <!-- </v-list-item-group> -->
-          </div>
+          <!-- </div> -->
           <!-- 로그아웃 -->
         </v-list>
       </v-navigation-drawer>
@@ -122,7 +127,7 @@ export default {
   padding-left: 10px;
 }
 #nav-mid .v-list-item {
-  width: 80%;
+  width: 60%;
 }
 #nav-mid .v-list-item:hover {
   background-color: white;

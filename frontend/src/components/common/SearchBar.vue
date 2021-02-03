@@ -1,6 +1,6 @@
 <template>
   <!-- <v-form> -->
-    <div>
+    <div class="my-search-bar">
       <v-container>
         <v-text-field
               solo-inverted
@@ -45,7 +45,11 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.my-search-bar {
+  width: 100%;
+}
+
 .searchBtn {
   color: gray;
   vertical-align: middle;

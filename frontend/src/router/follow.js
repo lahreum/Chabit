@@ -26,7 +26,7 @@ export default[
             component: FollowingList
           },
           {
-            path: 'together-list',
+            path: '',
             name: 'TogetherList',
             component: TogetherList
           },

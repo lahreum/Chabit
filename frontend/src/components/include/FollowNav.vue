@@ -13,8 +13,8 @@
                     <v-list-item three-line>
                         <v-list-item-content>
                             <v-list-item-title class="headline mb-1 text-center">
-                            <strong style="margin-right:15px;"><router-link to="/follow-list">80</router-link></strong>
-                            <strong style="margin-left:15px;"><router-link to="/following-list">80</router-link></strong>
+                            <strong style="margin-right:15px;"><router-link :to="{ name: 'FollowList' }">80</router-link></strong>
+                            <strong style="margin-left:15px;"><router-link :to="{ name: 'FollowingList' }">80</router-link></strong>
                             </v-list-item-title>
                             <v-list-item-subtitle class="mb-1 text-center">
                                 <span style="margin:10px;">팔로우</span>
