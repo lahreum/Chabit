@@ -59,12 +59,12 @@
           </div>
           <!-- 로그인 되었을 때만 뜨도록 수정할 예정  -->
           <!-- <div id="nav-bottom" class="nav-bottom"> -->
-            <!-- <v-list-item-group v-model="group" active-class="text--accent-4"> -->
-            <!-- <v-list-item class="logout-list">
+          <!-- <v-list-item-group v-model="group" active-class="text--accent-4"> -->
+          <!-- <v-list-item class="logout-list">
               <v-icon class="logout-icon" color="white">mdi-logout</v-icon>
               <v-list-item-title>로그아웃</v-list-item-title>
             </v-list-item> -->
-            <!-- </v-list-item-group> -->
+          <!-- </v-list-item-group> -->
           <!-- </div> -->
           <!-- 로그아웃 -->
         </v-list>
@@ -101,10 +101,12 @@ export default {
 #app .v-sheet.v-app-bar.v-toolbar {
   border-radius: 0 0 24px 24px;
 }
-.v-navigation-drawer {
+#app .v-navigation-drawer {
   border-radius: 0 20px 20px 0;
 }
-.v-list-item__title {
+#nav-top .v-list-item__title,
+#nav-mid .v-list-item__title,
+#nav-bottom .v-list-item__title {
   color: white;
 }
 #nav-top {
