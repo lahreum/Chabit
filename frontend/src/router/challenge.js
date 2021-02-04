@@ -33,32 +33,32 @@ export default [
         ]
       },
       { 
-        path: 'create-challenge',
+        path: '/create-challenge',
         name: 'CreateChallenge',
         component: CreateChallenge
       },
       { 
-        path: 'challenge-detail',
+        path: '/challenge-detail',
         name: 'ChallengeDetail',
         component: ChallengeDetail
       },
       { 
-        path: 'write-challenge-review',
+        path: '/write-challenge-review',
         name: 'WriteChallengeReview',
         component: WriteChallengeReview
       },
       { 
-        path: 'proof',
+        path: '/proof',
         name: 'Proof',
         component: Proof
       },
       { 
-        path: 'finish-proof',
+        path: '/finish-proof',
         name: 'FinishProof',
         component: FinishProof
       },
       { 
-        path: 'proof-list',
+        path: '/proof-list',
         name: 'ProofList',
         component: ProofList
       },

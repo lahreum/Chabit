@@ -1,15 +1,15 @@
 <template>
-<v-app>
-  <div class="text-center">
-    <v-chip
-      class="ma-2"
-      color="secondary"
-      label="false"
-    >
-      {{ content }}
-    </v-chip>
+  <div class="custom-hash-tag">
+    <div class="text-center hash">
+      <v-chip
+        class="ma-2"
+        color="secondary"
+        label="false"
+      >
+        {{ content }}
+      </v-chip>
+    </div>
   </div>
-  </v-app>
 </template>
 
 <script>
@@ -19,6 +19,13 @@
   }
 </script>
 
-<style>
+<style scoped>
+.custom-hash-tag {
+  width: fit-content;
+}
 
+.hash {
+  width: fit-content;
+
+}
 </style>
