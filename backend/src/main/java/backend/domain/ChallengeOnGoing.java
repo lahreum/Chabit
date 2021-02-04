@@ -1,6 +1,6 @@
 package backend.domain;
 
 
-public enum ChallengeOnGoing {
+enum ChallengeOngoing {
     READY, ONGOING, END;
 }
