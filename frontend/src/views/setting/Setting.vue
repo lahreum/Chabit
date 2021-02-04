@@ -1,17 +1,60 @@
 <template>
   <v-app id="setting" class="setting">
     <v-list>
-      <v-list-item-group v-model="selectedItem" color="#B71C1C">
-        <v-list-item v-for="(item, i) in items" :key="i" router-link :to="{ name: item.path }">
-          <!-- <v-list-item v-for="(item, i) in items" :key="i" @click="$router.push(item.path)"> -->
+      <!-- 알림설정 -->
+      <v-list-group color="#B71C1C" no-action>
+        <template v-slot:activator>
+          <v-list-item-title class="font-weight-black">알림설정</v-list-item-title>
+        </template>
+        <v-list-item>
           <v-list-item-content>
-            <v-list-item-title color="black" v-text="item.text"></v-list-item-title>
+            <v-list-item-title class="font-weight-medium">관계</v-list-item-title>
+            <v-list-item-subtitle
+              >팔로우 신청, 팔로워 신청, 좋아요, 댓글 알림 등</v-list-item-subtitle
+            >
           </v-list-item-content>
-          <v-list-item-icon>
-            <v-icon>mdi-chevron-right</v-icon>
-          </v-list-item-icon>
+          <!-- <v-switch v-model="switch1"></v-switch> -->
+          <div><v-switch color="red darken-4primary"></v-switch></div>
         </v-list-item>
-      </v-list-item-group>
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title class="font-weight-medium">챌린지</v-list-item-title>
+            <v-list-item-subtitle>챌린지 시작 안내</v-list-item-subtitle>
+          </v-list-item-content>
+          <v-switch color="red darken-4primary"></v-switch>
+        </v-list-item>
+      </v-list-group>
+      <!-- 계정설정 -->
+      <v-list-group color="#B71C1C" no-action>
+        <template v-slot:activator>
+          <v-list-item-title class="font-weight-black">계정설정</v-list-item-title>
+        </template>
+        <v-list-item router-link :to="{ name: 'ModifyUser' }">
+          <v-list-item-content>
+            <v-list-item-title class="font-weight-medium">회원정보 수정</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title class="font-weight-medium" @click="openDialog = !openDialog"
+              >회원탈퇴</v-list-item-title
+            >
+            <p v-if="openDialog">
+              <PopUp
+                title="회원 탈퇴"
+                text="탈퇴시 3개월 동안 재가입할 수 없습니다."
+                btnLeft="취소"
+                btnRight="탈퇴"
+              /></p
+          ></v-list-item-content>
+        </v-list-item>
+      </v-list-group>
+      <!-- 회원관리 -->
+      <v-list-group color="#B71C1C" @click="$router.push('/manage-member')">
+        <template v-slot:activator>
+          <v-list-item-title class="font-weight-black">회원관리</v-list-item-title>
+        </template>
+      </v-list-group>
     </v-list>
     <Footer />
   </v-app>
@@ -20,16 +63,13 @@
 <script>
 import "./setting.css";
 import Footer from "../../components/include/Footer.vue";
+import PopUp from "../../components/common/PopUp.vue";
+
 export default {
-  components: { Footer },
+  components: { Footer, PopUp },
   data: () => ({
-    selectedItem: 1,
-    items: [
-      // { text: "알림설정", path: "alarm-setting" },
-      { text: "알림설정", path: "AlarmSetting" },
-      { text: "계정설정", path: "UserSetting" },
-      { text: "회원관리", path: "ManageMember" },
-    ],
+    // switch1: true,
+    openDialog: false,
   }),
 };
 </script>
