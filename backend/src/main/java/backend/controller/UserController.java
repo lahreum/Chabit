@@ -2,6 +2,7 @@ package backend.controller;
 
 import backend.domain.*;
 import backend.repository.HashtagRepository;
+import backend.service.LevelService;
 import backend.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-
+    private final LevelService levelService;
     @GetMapping
     public BaseResponse users() {
         List<User> findUsers = userService.findUsers();
@@ -47,6 +48,10 @@ public class UserController {
 
             UserDto userDto = new UserDto(findUser);
             userDto.addHashtags(hashtagDto);
+
+            // 해당 유저의 레벨 가져오기.
+            String userLevel = levelService.findUserLevel(userDto.getUserPoints());
+            userDto.addUserLevel(userLevel);
 
             response = new BaseResponse("success", userDto);
         } catch (IllegalStateException e) {

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,5 +22,17 @@ public class LevelService {
 
     public List<Level> findAll(){
         return levelRepository.findAll();
+    }
+
+    public String findUserLevel(int userPoints) {
+        List<Level> levelList = levelRepository.findAll();
+        if(0 < levelList.size()){
+            for (Level level: levelList) {
+                if(level.getLevelMinPoint() <= userPoints && userPoints <= level.getLevelMaxPoint()){
+                    return level.getLevel();
+                }
+            }
+        }
+        return null;
     }
 }
