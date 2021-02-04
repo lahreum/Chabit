@@ -1,6 +1,6 @@
 <template>
   <div>
-      reviewcomment page
+      review comment page
   </div>
 </template>
 
