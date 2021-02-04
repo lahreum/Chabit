@@ -29,25 +29,20 @@ export default[
         component: MyReview
       },
       {
-        path: 'my-review/review-list',
-        name: 'ReviewList',
-        component: ReviewList
-      },
-      {
-        path: 'my-review/review-detail',
-        name: 'ReviewDetail',
-        component: ReviewDetail
-      },
-      {
-        path: 'my-review/review-detail/review-comment',
-        name: 'ReviewComment',
-        component: ReviewComment
-      },
-      {
         path: 'reward',
         name: 'Reward',
         component: Reward
       },
     ]
-    }
+    },
+    {
+      path: '/review-detail',
+      name: 'ReviewDetail',
+      component: ReviewDetail
+    },
+    {
+      path: '/review-comment',
+      name: 'ReviewComment',
+      component: ReviewComment
+    },
 ]
