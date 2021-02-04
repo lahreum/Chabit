@@ -36,7 +36,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .top-text {
     font-size: 20px;
     font-weight: 600;

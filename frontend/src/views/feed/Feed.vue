@@ -1,8 +1,7 @@
 <template>
   <div>
-    <div><br><br></div>
       <MyInfo/>
-      <div id="tabs" class="container">
+      <div id="tabs" class="feedcontainer">
         <div class="tabs" style="text-align:center;">
             <a v-on:click="activetab=1" v-bind:class="[ activetab === 1 ? 'active' : '' ]">챌린지</a>
             <a v-on:click="activetab=2" v-bind:class="[ activetab === 2 ? 'active' : '' ]">마이리뷰</a>
@@ -41,8 +40,8 @@ export default {
 }
 </script>
 
-<style>
-.container {  
+<style scoped>
+.feedcontainer {  
   max-width: 620px; 
   min-width: 420px;
   margin: 40px auto;
@@ -56,21 +55,19 @@ export default {
   overflow: hidden;
   margin-left: 20px;
   margin-bottom: -2px; 
-  
 }
 
 .tabs ul {
   list-style-type: none;
   margin-left: 20px;
-}
+} 
 
 .tabs a{
   float: left;
   cursor: pointer;
   padding: 12px 24px;
   width: 33%;
-  transition: background-color 0.2s;
-  /* border: 1px solid #ccc; */
+  transition: background-color 0.2s; 
   border-right: none;
   background-color: #f1f1f1;
   border-radius: 10px 10px 0 0;
