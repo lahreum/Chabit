@@ -16,7 +16,7 @@ public class UserDto {
     private int userPoints;
     private LocalDateTime userJoindate;
     private HashtagDto hashtags;
-
+    private String userLevel;
     public UserDto(String userEmail, String userNickname, String userName, String userPhone) {
         this.userEmail = userEmail;
         this.userNickname = userNickname;
@@ -45,4 +45,5 @@ public class UserDto {
     public void addHashtags(HashtagDto hashtags) {
         this.hashtags = hashtags;
     }
+    public void addUserLevel(String userLevel) {this.userLevel = userLevel;}
 }
