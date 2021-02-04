@@ -38,7 +38,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .userid{
     font-size: 19px;
     margin: 20px;
