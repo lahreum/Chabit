@@ -1,7 +1,7 @@
 <template>
   <div id="calender" class="calender">
-    <v-app id="code">
-      <div>
+    <v-app id="code" style="height:50px;">
+      <div style="margin: 0 auto;">
         <v-date-picker
           v-model="picker"
           :events="arrayEvents"
@@ -35,3 +35,4 @@ export default {
   },
 };
 </script>
+
