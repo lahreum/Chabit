@@ -7,16 +7,16 @@ pipeline {
                 script {
                     try {
                         mattermostSend (
-                            color: "#2A42EE",
-                            message: "Build STARTED: ${env.JOB_NAME} #{env.BUILD_NUMBER} (<${env.BUILD_URL}|Link to build>)"
-                        )
+                            color: "#2A42EE", 
+                            message: "Build STARTED: ${env.JOB_NAME} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Link to build>)"
+                        ) 
                         sh 'docker-compose build'
                     } catch(e) {
                         currentBuild.result = "FAILURE"
                     } finally {
                         if(currentBuild.result != "FAILURE") {
                             mattermostSend (
-                                color: "danger",
+                                color: "danger", 
                                 message: "Build FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER} (<${env.BUILD_URL}|Link to build>)"
                             )
                         } else {
