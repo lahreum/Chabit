@@ -44,6 +44,7 @@ export default {
 .feedcontainer {  
   max-width: 620px; 
   min-width: 420px;
+  width: 90%;
   margin: 40px auto;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 0.9em;

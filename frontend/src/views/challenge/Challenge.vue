@@ -4,7 +4,7 @@
       <input @keyup.enter="onSearch" type="search" placeholder=" Search">
       <i class="fas fa-filter"></i>
     </div> -->
-    <SearchBar />
+    <!-- <SearchBar /> -->
     <div v-if="!isTrue">
       <div class="challenge-hot">
         <HotChallengeList />
@@ -42,7 +42,7 @@ import './challenge.css'
 import BtnCreateChallenge from '../../components/common/BtnCreateChallenge.vue'
 import HotChallengeList from './HotChallengeList.vue'
 import NewChallengeList from './NewChallengeList.vue'
-import SearchBar from '../../components/common/SearchBar.vue'
+// import SearchBar from '../../components/common/SearchBar.vue'
 // import SearchChallengeList from './SearchChallengeList.vue'
 
 export default {
@@ -50,7 +50,7 @@ export default {
     HotChallengeList, 
     NewChallengeList, 
     BtnCreateChallenge,
-    SearchBar,
+    // SearchBar,
     // SearchChallengeList 
   },
   data() {
