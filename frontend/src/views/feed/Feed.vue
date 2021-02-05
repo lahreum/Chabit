@@ -42,8 +42,8 @@ export default {
 
 <style scoped>
 .feedcontainer {  
-  max-width: 620px; 
-  min-width: 420px;
+  /* max-width: 620px; 
+  min-width: 420px; */
   width: 90%;
   margin: 40px auto;
   font-family: Arial, Helvetica, sans-serif;
@@ -54,7 +54,7 @@ export default {
 /* Style the tabs */
 .tabs {
   overflow: hidden;
-  margin-left: 20px;
+  /* margin-left: 20px; */
   margin-bottom: -2px; 
 }
 

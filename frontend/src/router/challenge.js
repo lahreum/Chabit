@@ -8,6 +8,7 @@ import Proof from '../views/challenge/Proof.vue'
 import FinishProof from '../views/challenge/FinishProof.vue'
 import ProofList from '../views/challenge/ProofList.vue'
 import WriteChallengeReview from '../views/challenge/WriteChallengeReview.vue'
+import PersonalChallenge from '../views/challenge/PersonalChallenge.vue'
 
 export default [
     {
@@ -61,5 +62,10 @@ export default [
         path: '/proof-list',
         name: 'ProofList',
         component: ProofList
+      },
+      {
+        path: '/personal-challenge',
+        name: 'PersonalChallenge',
+        component: PersonalChallenge
       },
 ]
