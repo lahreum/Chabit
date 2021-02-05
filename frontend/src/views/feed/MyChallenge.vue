@@ -15,7 +15,7 @@
                     <div style="float:right;width:30%;">개설</div>
                 </div>
             </v-list-item>
-        </v-card>
+        </v-card>  
         <v-card style="width:90%; margin-top:20px;height:350px;">          
             <Calendar style="padding-top:30px;"/>
         </v-card>
