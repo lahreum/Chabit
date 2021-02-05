@@ -1,7 +1,9 @@
 <template>
-  <button class="btn-create-challenge">
-    <i class="fas fa-plus"></i>
-  </button>
+  <router-link to="/create-challenge">
+    <button class="btn-create-challenge">
+      <i class="fas fa-plus"></i>  
+    </button>
+  </router-link>
 </template>
 
 <script>

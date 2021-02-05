@@ -1,7 +1,7 @@
 <template>
   <div id="calender" class="calender">
-    <v-app id="code">
-      <div>
+    <v-app id="code" style="height:50px;">
+      <div style="margin: 0 auto;">
         <v-date-picker
           v-model="picker"
           :events="arrayEvents"
@@ -9,23 +9,13 @@
           color="#a62f22"
         ></v-date-picker>
       </div>
-      <div>
-        <kakaoLogin :component="component" />
-        <GoogleLogin :component="component" />
-      </div>
     </v-app>
   </div>
 </template>
 
 <script>
-import KakaoLogin from "../user/snsLogin/Kakao.vue";
-import GoogleLogin from "../user/snsLogin/Google.vue";
 import "../../assets/css/alarm.css";
 export default {
-  components: {
-    KakaoLogin,
-    GoogleLogin,
-  },
   data: () => ({
     arrayEvents: null,
     date1: new Date().toISOString().substr(0, 10),
@@ -45,3 +35,4 @@ export default {
   },
 };
 </script>
+
