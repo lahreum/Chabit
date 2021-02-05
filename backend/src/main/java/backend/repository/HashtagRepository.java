@@ -31,4 +31,9 @@ public class HashtagRepository {
         entityManager.persist(hashtag);
         return hashtag;
     }
+
+    public Hashtag findByHashtagId(Long hashtagId) {
+        Hashtag findHashtag = entityManager.find(Hashtag.class, hashtagId);
+        return findHashtag;
+    }
 }
