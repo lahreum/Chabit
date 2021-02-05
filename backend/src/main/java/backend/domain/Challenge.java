@@ -1,13 +1,19 @@
 package backend.domain;
 
+import backend.service.ChallengeService;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import java.sql.Time;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -30,7 +36,6 @@ public class Challenge { // Challenge 코드리뷰 필수.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CATEGORY_ID")
     private Category challengeCategory;
-
 
     @Column(nullable = false)
     private LocalDateTime challengeStartdate;
@@ -62,37 +67,49 @@ public class Challenge { // Challenge 코드리뷰 필수.
 
     @Enumerated(EnumType.STRING) //저장할 때.. 정하자
     private ChallengeOngoing challengeOngoing;
+
+
+    // === 연관관계 ===
+    @OneToMany(mappedBy = "challenge", cascade = CascadeType.ALL)
+    private List<UserChallenge> challengers = new ArrayList<>();
+
+    // == 비즈니스 로직 ===
+    // 챌린지 참여시 참여인원 1 증가
+    public void join(UserChallenge userChallenge){
+        this.challengers.add(userChallenge);
+        userChallenge.setChallenge(this);
+        this.challengeUsercount += 1;
+    }
+
+    // 생성 메서드
+    public static Challenge createChallenge(User owner, ChallengeRequest request, Category category) {
+        Challenge challenge = new Challenge();
+        challenge.setChallengeName(request.getChallengeName());
+        challenge.setChallengeDesc(request.getChallengeDesc());
+        challenge.setChallengeOwner(owner);
+        challenge.setChallengeCategory(category);
+
+        LocalDate startdate= LocalDate.parse(request.getChallengeStartdate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        challenge.setChallengeStartdate(LocalDateTime.of(startdate, LocalDateTime.MIN.toLocalTime()));
+
+        LocalDate enddate= LocalDate.parse(request.getChallengeStartdate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        challenge.setChallengeEnddate(LocalDateTime.of(enddate, LocalDateTime.MIN.toLocalTime()));
+
+        challenge.setAuthWay(request.getAuthWay());
+        challenge.setAuthFrequency(request.getAuthFrequency());
+        challenge.setAuthStarttime(LocalTime.parse(request.getAuthStarttime(),
+                DateTimeFormatter.ofPattern("HH:mm:ss")));
+        challenge.setAuthEndtime(LocalTime.parse(request.getAuthEndtime(),
+                DateTimeFormatter.ofPattern("HH:mm:ss")));
+        challenge.setAuthHoliday(request.isAuthHoliday() ? 1 : 0);
+
+        if(challenge.challengeStartdate.toLocalDate().isEqual(LocalDateTime.now().toLocalDate())){
+            challenge.setChallengeOngoing(ChallengeOngoing.ONGOING);
+        } else {
+            challenge.setChallengeOngoing(ChallengeOngoing.READY);
+        }
+
+        // TODO : Hashtag 추가
+        return challenge;
+    }
 }
-/*
-CREATE TABLE IF NOT EXISTS `chabit`.`CHALLENGE` (
-  `CHALLENGE_ID` BIGINT NOT NULL, ㅇ
-  `CHALLENGE_NAME` VARCHAR(255) NOT NULL, ㅇ
-  `CHALLENGE_DESC` TEXT NULL, ㅇ
-  `CHALLENGE_OWNER` BIGINT NOT NULL, ㅇ
-  `CHALLENGE_CATEGORY` BIGINT NULL,ㅇ
-  `CHALLENGE_STARTDATE` DATETIME NOT NULL,ㅇ
-  `CHALLENGE_ENDDATE` DATETIME NOT NULL,ㅇ
-  `CHALLENGE_THUMBNAIL` TEXT NULL,ㅇ
-  `CHALLENGE_POINT` INT NULL DEFAULT 100,ㅇ
-  `CHALLENGE_USERCOUNT` INT NULL DEFAULT 1,ㅇ
-  `AUTH_WAY` VARCHAR(255) NULL,ㅇ
-  `AUTH_FREQUENCY` VARCHAR(255) NOT NULL,
-  `AUTH_TIME` TIME NULL,
-  `AUTH_HOLIDAY` TINYINT NOT NULL,
-  `AUTH_EXAMPLE` TEXT NULL,
-  `CHALLENGE_ONGOING` VARCHAR(45) NULL DEFAULT 'READY',
-  PRIMARY KEY (`CHALLENGE_ID`),
-  INDEX `CHALLENGE_USER_FK_idx` (`CHALLENGE_OWNER` ASC) VISIBLE,
-  INDEX `CHALLENGE_CATEGORY_FK_idx` (`CHALLENGE_CATEGORY` ASC) VISIBLE,
-  CONSTRAINT `CHALLENGE_USER_FK`
-    FOREIGN KEY (`CHALLENGE_OWNER`)
-    REFERENCES `chabit`.`USER` (`USER_ID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `CHALLENGE_CATEGORY_FK`
-    FOREIGN KEY (`CHALLENGE_CATEGORY`)
-    REFERENCES `chabit`.`CATEGORY` (`CATEGORY_ID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
- */

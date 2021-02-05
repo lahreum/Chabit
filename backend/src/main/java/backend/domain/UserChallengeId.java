@@ -3,11 +3,12 @@ package backend.domain;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserChallengeId {
+public class UserChallengeId implements Serializable {
     private User user;
     private Challenge challenge;
 

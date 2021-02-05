@@ -15,13 +15,11 @@ public class ChallengeService {
 
     /**
      * 챌린지 생성.
-     * @param challenge
-     * @return challengeId
      */
     @Transactional
-    public Long makeChallenge(Challenge challenge) throws IllegalStateException{
+    public Challenge makeChallenge(Challenge challenge) throws IllegalStateException{
         challengeRepoistory.save(challenge);
-        return challenge.getChallengeId();
+        return challenge;
     }
 
     /**

@@ -40,6 +40,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserHashtag> hashtags = new ArrayList<>();
 
+
     // 연관관계 메서드
     public void addHashtag(UserHashtag hashtag) {
         hashtags.add(hashtag);
