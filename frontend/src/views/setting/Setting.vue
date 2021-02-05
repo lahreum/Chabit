@@ -14,14 +14,14 @@
             >
           </v-list-item-content>
           <!-- <v-switch v-model="switch1"></v-switch> -->
-          <div><v-switch color="red darken-4primary"></v-switch></div>
+          <div><v-switch inset color="red darken-4primary"></v-switch></div>
         </v-list-item>
         <v-list-item>
           <v-list-item-content>
             <v-list-item-title class="font-weight-medium">챌린지</v-list-item-title>
             <v-list-item-subtitle>챌린지 시작 안내</v-list-item-subtitle>
           </v-list-item-content>
-          <v-switch color="red darken-4primary"></v-switch>
+          <v-switch inset color="red darken-4primary"></v-switch>
         </v-list-item>
       </v-list-group>
       <!-- 계정설정 -->
