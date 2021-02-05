@@ -9,11 +9,11 @@
                 <div class="nav-top-avatar">
                   <v-list-item-avatar style="height:63px; width:63px; background-color:white; ">
                     <!-- 프로필 사진 입력 -->
-                    <!-- <v-img
+                    <v-img
                       style="height:60px; min-width: 60px; width:60px;"
                       src="./assets/img/maja.png"
-                    ></v-img> -->
-                    <v-icon>mdi-account-circle</v-icon>
+                    ></v-img>
+                    <!-- <v-icon>mdi-account-circle</v-icon> -->
                   </v-list-item-avatar>
                 </div>
                 <div class="nav-top-content">
