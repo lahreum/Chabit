@@ -1,6 +1,6 @@
 <template>
   <div>
-        <v-card style="width:90%;">
+        <v-card style="width:100%;">
             <v-list-item>
                 <div class="top-text" style="width:90%; margin:10px auto;">
                     <div style="float:left;width:30%;">1</div>
@@ -16,10 +16,14 @@
                 </div>
             </v-list-item>
         </v-card>
-        <v-card style="width:90%; margin-top:20px;height:350px;">          
-            <Calendar style="padding-top:30px;"/>
+        <v-card style="width:100%; margin-top:20px;height:335px;">          
+            <div>
+                <Calendar style="padding-top:30px;width:200px;"/>
+            </div>
         </v-card>
+        <v-card>
         <TodayChallengeList />
+        </v-card>
   </div>
 </template>
 

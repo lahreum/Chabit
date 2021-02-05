@@ -1,7 +1,6 @@
 import Setting from "../views/setting/Setting.vue";
 import ModifyUser from "../views/setting/ModifyUser.vue";
 import ManageMember from "../views/setting/ManageMember.vue";
-import MemberList from "../views/setting/MemberList.vue";
 
 export default [
   {
@@ -18,12 +17,5 @@ export default [
     path: "/manage-member",
     name: "ManageMember",
     component: ManageMember,
-    children: [
-      {
-        path: "member-list",
-        name: "MemberList",
-        component: MemberList,
-      },
-    ],
   },
 ];
