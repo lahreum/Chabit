@@ -3,6 +3,7 @@ package backend.controller;
 import backend.domain.*;
 import backend.service.CategoryService;
 import backend.service.ChallengeService;
+import backend.service.HashtagService;
 import backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ public class ChallengeController {
     private final ChallengeService challengeService;
     private final UserService userService;
     private final CategoryService categoryService;
+    private final HashtagService hashtagService;
 
     // TODO: 인증샷 예시, 챌린지 썸네일 기능 추가시 변경 필요
     @PostMapping
@@ -28,7 +30,12 @@ public class ChallengeController {
             Challenge newChallenge = Challenge.createChallenge(user, request, category);
             newChallenge.join(new UserChallenge(user, newChallenge));
 
-            challengeService.makeChallenge(newChallenge);
+            Challenge makeChallenge = challengeService.makeChallenge(newChallenge);// 챌린지 생성
+
+            for (Hashtag hashtag : request.getHashtags()) {
+                Hashtag findHashtag = hashtagService.findByHashtagId(hashtag.getHashtagId());
+                challengeService.addHashtag(makeChallenge, findHashtag); // 챌린지에 해쉬태그 등록
+            }
 
             response = new BaseResponse("success", "챌린지 생성 성공");
         } catch (IllegalStateException e) {

@@ -1,6 +1,8 @@
 package backend.service;
 
 import backend.domain.Challenge;
+import backend.domain.ChallengeHashtag;
+import backend.domain.Hashtag;
 import backend.repository.ChallengeRepoistory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,7 @@ public class ChallengeService {
         challengeRepoistory.save(challenge);
         return challenge;
     }
+
 
     /**
      * 전체 챌린지 조회
@@ -44,5 +47,14 @@ public class ChallengeService {
      */
     public List<Challenge> findAllOrderByChallengeUserCount() {
         return challengeRepoistory.findAllOrderByChallengeUserCount();
+    }
+
+    /**
+     * 챌린지에 해쉬태그 추가
+     */
+    @Transactional
+    public Long addHashtag(Challenge challenge, Hashtag hashtag) {
+        challenge.addHashtag(new ChallengeHashtag(challenge, hashtag));
+        return challenge.getChallengeId();
     }
 }

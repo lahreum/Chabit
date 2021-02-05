@@ -1,13 +1,12 @@
 package backend.domain;
 
-import backend.service.ChallengeService;
+import backend.controller.ChallengeRequest;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -73,6 +72,10 @@ public class Challenge { // Challenge 코드리뷰 필수.
     @OneToMany(mappedBy = "challenge", cascade = CascadeType.ALL)
     private List<UserChallenge> challengers = new ArrayList<>();
 
+    @OneToMany(mappedBy = "challenge", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ChallengeHashtag> hashtags = new ArrayList<>();
+
+
     // == 비즈니스 로직 ===
     // 챌린지 참여시 참여인원 1 증가
     public void join(UserChallenge userChallenge){
@@ -80,6 +83,13 @@ public class Challenge { // Challenge 코드리뷰 필수.
         userChallenge.setChallenge(this);
         this.challengeUsercount += 1;
     }
+
+    // 해쉬태그 등록
+    public void addHashtag(ChallengeHashtag challengeHashtag){
+        this.hashtags.add(challengeHashtag);
+        challengeHashtag.setChallenge(this);
+    }
+
 
     // 생성 메서드
     public static Challenge createChallenge(User owner, ChallengeRequest request, Category category) {
@@ -109,7 +119,6 @@ public class Challenge { // Challenge 코드리뷰 필수.
             challenge.setChallengeOngoing(ChallengeOngoing.READY);
         }
 
-        // TODO : Hashtag 추가
         return challenge;
     }
 }

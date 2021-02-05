@@ -20,7 +20,10 @@ public class CategoryService {
      * @return categoryId
      */
      @Transactional
-     public Long makeCategory(Category category)throws IllegalStateException{
+     public Long makeCategory(Category category) {
+         Optional<Category> findCategory = categoryRepository.findByCategoryName(category.getCategoryName());
+         if (findCategory.isPresent())
+             throw new IllegalStateException("이미 존재하는 카테고리입니다");
          categoryRepository.save(category);
          return category.getCategoryId();
      }

@@ -1,5 +1,6 @@
-package backend.domain;
+package backend.controller;
 
+import backend.domain.Hashtag;
 import lombok.Data;
 
 import java.util.List;
