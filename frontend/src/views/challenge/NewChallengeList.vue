@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import './challenge.css'
 
 export default {
 
