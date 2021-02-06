@@ -125,7 +125,7 @@ class JPAChallengeRepositoryTest {
         user2.setUserEmail("asd2@naver.com");// 이메일을 넣었을때
         user2.setUserPassword("abc2");
         Category category2 = new Category();
-        category2.setCategoryName("카테고리2");
+        category2.setCategoryName("카테고리3");
         challenge2.setChallengeName("챌린지 테스트");
         challenge2.setChallengeDesc("챌린지 설명");
         challenge2.setChallengeOwner(user2);
@@ -139,7 +139,7 @@ class JPAChallengeRepositoryTest {
         user3.setUserEmail("asd3@naver.com");// 이메일을 넣었을때
         user3.setUserPassword("abc3");
         Category category3 = new Category();
-        category3.setCategoryName("카테고리2");
+        category3.setCategoryName("카테고리4");
         challenge3.setChallengeName("테스트만");
         challenge3.setChallengeDesc("챌린지 설명");
         challenge3.setChallengeOwner(user3);
@@ -188,7 +188,7 @@ class JPAChallengeRepositoryTest {
         user2.setUserEmail("asd3@naver.com");// 이메일을 넣었을때
         user2.setUserPassword("abc2");
         Category category2 = new Category();
-        category2.setCategoryName("카테고리2");
+        category2.setCategoryName("카테고리3");
         challenge2.setChallengeName("챌린지 테스트");
         challenge2.setChallengeDesc("챌린지 설명");
         challenge2.setChallengeOwner(user);
@@ -203,7 +203,7 @@ class JPAChallengeRepositoryTest {
         Category category3 = new Category();
         user3.setUserEmail("asd2@naver.com");// 이메일을 넣었을때
         user3.setUserPassword("abc2");
-        category3.setCategoryName("카테고리2");
+        category3.setCategoryName("카테고리4");
         challenge3.setChallengeName("테스트만");
         challenge3.setChallengeDesc("챌린지 설명");
         challenge3.setChallengeOwner(user3);

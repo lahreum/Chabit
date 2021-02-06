@@ -1,5 +1,6 @@
 package backend.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,4 +20,8 @@ public class Category {
 
     @Column(nullable = false)
     private String categoryName;
+
+    public Category(String categoryName) {
+        this.categoryName = categoryName;
+    }
 }
