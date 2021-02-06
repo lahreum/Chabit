@@ -2,49 +2,48 @@
   <v-card>
     <v-card-title color="white">
       <v-spacer></v-spacer>
-      <v-text-field
+      <v-autocomplete
         v-model="search"
         append-icon="mdi-magnify"
         label="Search"
         single-line
         hide-details
-      ></v-text-field>
+      ></v-autocomplete>
       <v-spacer></v-spacer>
-      <v-btn color="red darken-4 white--text">Forced</v-btn>
+      <v-btn elevation="1" rounded plain depressed color="error"> Forced</v-btn>
     </v-card-title>
     <v-data-table
+      v-model="selected"
       :headers="headers"
-      :single-select="singleSelect"
-      :search="search"
-      sort
+      :items="memberInfo"
       item-key="name"
       show-select
+      sort
+      :search="search"
       class="elevation-1"
       hide-default-footer
-      :items="memberInfo"
-      v-model="selected"
+      @toggle-select-all="selectAllToggle"
     >
+      <template v-slot:[`item.data-table-select`]="{ item, isSelected, select }">
+        <v-simple-checkbox
+          v-ripple
+          :value="isSelected"
+          :readonly="item.permission"
+          :disabled="item.permission"
+          @input="select($event)"
+        ></v-simple-checkbox>
+      </template>
     </v-data-table>
   </v-card>
 </template>
 
 <script>
 export default {
-  methods: {
-    onClick() {
-      console.log(this.withdraw);
-    },
-    test() {
-      if (this.memberInfo.withdraw) {
-        this.selected = this.memberInfo;
-      }
-    },
-  },
   data() {
     return {
       search: "",
-      singleSelect: false,
       selected: [],
+      disabledCount: 0,
       headers: [
         { text: "Name", value: "name" },
         {
@@ -63,31 +62,50 @@ export default {
           email: "hello@ssafy.com",
           nickName: "김미역",
           password: "asdf12345",
-          permission: "회원",
+          permission: true,
         },
         {
           name: "쟤이름",
           email: "saljjingae@help.com",
           nickName: "백찐개",
           password: "qwer5789",
-          permission: "관리자",
+          permission: false,
         },
         {
           name: "걔이름",
           email: "ssafy@ssafy.com",
           nickName: "어반동",
           password: "KDJfdjg!",
-          permission: "회원",
+          permission: false,
         },
         {
           name: "헐이름",
           email: "daejeon@ssafy.com",
           nickName: "어럼리",
           password: "sdfahiul654",
-          permission: "회원",
+          permission: false,
         },
       ],
     };
+  },
+  methods: {
+    selectAllToggle(props) {
+      if (this.selected.length != this.memberInfo.length - this.disabledCount) {
+        this.selected = [];
+        const self = this;
+        props.items.forEach((item) => {
+          if (!item.permission) {
+            self.selected.push(item);
+          }
+        });
+      } else this.selected = [];
+    },
+  },
+  created() {
+    const self = this;
+    this.memberInfo.map((item) => {
+      if (item.permission) self.disabledCount += 1;
+    });
   },
 };
 </script>
