@@ -13,7 +13,6 @@
                       style="height:60px; min-width: 60px; width:60px;"
                       src="./assets/img/maja.png"
                     ></v-img>
-                    <!-- <v-icon>mdi-account-circle</v-icon> -->
                   </v-list-item-avatar>
                 </div>
                 <div class="nav-top-content">
@@ -57,24 +56,19 @@
               </v-list-item>
             </v-list-item-group>
           </div>
-          <!-- 로그인 되었을 때만 뜨도록 수정할 예정  -->
-          <!-- <div id="nav-bottom" class="nav-bottom"> -->
-          <!-- <v-list-item-group v-model="group" active-class="text--accent-4"> -->
-          <!-- <v-list-item class="logout-list">
-              <v-icon class="logout-icon" color="white">mdi-logout</v-icon>
-              <v-list-item-title>로그아웃</v-list-item-title>
-            </v-list-item> -->
-          <!-- </v-list-item-group> -->
-          <!-- </div> -->
-          <!-- 로그아웃 -->
         </v-list>
       </v-navigation-drawer>
 
-      <v-app-bar app flat color="transparent">
-        <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-        <!-- <v-toolbar-title  class="flex text-center">{{ pageTitle }}</v-toolbar-title> -->
-      </v-app-bar>
-
+      <transition name="fade">
+        <v-app-bar app flat id="navbar" v-if="showNavbar">
+          <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+          <!-- <v-toolbar-title  class="flex text-center">{{ pageTitle }}</v-toolbar-title> -->
+        </v-app-bar>
+        <v-app-bar app flat id="navbar" color="transparent" v-else>
+          <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+          <!-- <v-toolbar-title  class="flex text-center">{{ pageTitle }}</v-toolbar-title> -->
+        </v-app-bar>
+      </transition>
       <v-main>
         <!-- padding을 넣어 줄 경우 내용이 밀림. 선택 -->
         <!-- <v-main style="padding:0"> -->
@@ -87,16 +81,28 @@
 <script>
 export default {
   name: "App",
-  data: () => ({ drawer: null, group: null }),
+  data: () => ({ drawer: null, group: null, showNavbar: false }),
   props: ["pageTitle"],
   watch: {
     group() {
       this.drawer = false;
     },
   },
+  methods: {
+    scroll() {
+      window.pageYOffset > 0 ? (this.showNavbar = true) : (this.showNavbar = false);
+    },
+  },
+  created() {
+    window.addEventListener("scroll", this.scroll);
+  },
+  destroyed() {
+    window.removeEventListener("scroll", this.scroll);
+  },
 };
 </script>
-<style>
+<style scoped>
+.showNavbar
 /* Navbar */
 #app .v-sheet.v-app-bar.v-toolbar {
   border-radius: 0 0 24px 24px;
@@ -160,5 +166,19 @@ export default {
 #nav-bottom .v-list-item {
   width: fit-content;
   margin: 0 auto;
+}
+#navbar {
+  overflow: hidden;
+  background-color: rgb(168, 164, 164, 0.5);
+}
+.fade-enter-active {
+  transition: all 1s;
+}
+.fade-leave-active {
+  transition: all 1s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

@@ -8,6 +8,9 @@
         label="Search"
         single-line
         hide-details
+        item-value="name"
+        item-text="name"
+        :items="memberInfo"
       ></v-autocomplete>
       <v-spacer></v-spacer>
       <v-btn elevation="1" rounded plain depressed color="error"> Forced</v-btn>
