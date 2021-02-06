@@ -25,12 +25,11 @@ public class ChallengeDto {
     private String authFrequency;
     private LocalTime authStarttime;
     private LocalTime authEndtime;
-    private int authHoliday;
+    private boolean authHoliday;
     private String authExample;
 
 
     ////////////추가적으로 생성하자.
-    // 간략한 정보
     public ChallengeDto (Challenge challenge){
         this.challengeID = challenge.getChallengeId();
         this.challengeName = challenge.getChallengeName();
@@ -42,7 +41,12 @@ public class ChallengeDto {
         this.challengeThumbnail = challenge.getChallengeThumbnail();
         this.challengePoint = challenge.getChallengePoint();
         this.challengeUserCount = challenge.getChallengeUsercount();
+        this.authWay = challenge.getAuthWay();
         this.authFrequency = challenge.getAuthFrequency();
+        this.authStarttime = challenge.getAuthStarttime();
+        this.authEndtime = challenge.getAuthEndtime();
+        this.authHoliday = challenge.getAuthHoliday() == 1;
+        this.authExample = challenge.getAuthExample();
     }
 
     // 메인화면 HOT 챌린지.

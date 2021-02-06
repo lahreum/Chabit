@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -53,6 +52,11 @@ public class JPAChallengeRepository implements ChallengeRepoistory{
         List<Challenge> result = entityManager.createQuery("select c from Challenge c",Challenge.class)
                 .getResultList();
         return result;
+    }
+
+    @Override
+    public Challenge findByChallengeId(Long challengeId) {
+        return entityManager.find(Challenge.class, challengeId);
     }
 
 }

@@ -24,6 +24,12 @@ public class ChallengeService {
         return challenge;
     }
 
+    /**
+     * 챌린지 1개 조회
+     */
+    public Challenge findByChallengeId(Long challengeId){
+        return challengeRepoistory.findByChallengeId(challengeId);
+    }
 
     /**
      * 전체 챌린지 조회

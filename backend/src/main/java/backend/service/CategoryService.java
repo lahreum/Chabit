@@ -31,7 +31,7 @@ public class CategoryService {
      * 카테고리 목록 전부.
      * @return categoryList정보
      */
-     public List<Category> findCategorys(){
+     public List<Category> findCategories(){
          return categoryRepository.findAll();
      }
 

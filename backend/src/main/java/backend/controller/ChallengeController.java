@@ -60,6 +60,18 @@ public class ChallengeController {
         return response;
     }
 
+    @GetMapping("/category")
+    public BaseResponse getCategories(){
+        BaseResponse response = null;
+        try {
+            List<Category> categories = categoryService.findCategories();
+            response = new BaseResponse("success", categories);
+        } catch (IllegalStateException e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
     @GetMapping
     public BaseResponse getChallenges(){
         BaseResponse response = null;
@@ -76,6 +88,20 @@ public class ChallengeController {
         return response;
     }
 
+    @GetMapping("/{challengeId}")
+    public BaseResponse getChallenge(@PathVariable Long challengeId) {
+        BaseResponse response = null;
+        try {
+            Challenge findChallenge = challengeService.findByChallengeId(challengeId);
+            if(findChallenge == null)
+                response = new BaseResponse("fail", "잘못된 챌린지 아이디 입니다");
+            else
+                response = new BaseResponse("success", new ChallengeDto(findChallenge));
+        } catch (IllegalStateException e) {
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
     // ======= Response & Request 클래스 =======
 
 }
