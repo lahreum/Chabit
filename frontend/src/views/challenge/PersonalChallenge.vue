@@ -1,19 +1,15 @@
 <template>
   <div>
-    <div class="top-personal-challenge-type">
-      <i class="fas fa-chevron-left"></i>
-      <span>Opened</span>
+    <div class="challenge-type">
+      <span style="color: #B71C1C">참가중인</span>
+      <span> 챌린지</span>
     </div>
-    <div class="challenge-card">
-      <div class="challenge-card-list">
-        <PersonalChallengeList />
-      </div>
-    </div>
+    <personal-challenge-list />
   </div>
 </template>
 
 <script>
-import PersonalChallengeList from "./PersonalChallengeList.vue"
+import PersonalChallengeList from './PersonalChallengeList.vue'
 
 export default {
   components: {
@@ -22,6 +18,15 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.challenge-type {
+  position: fixed;
+  z-index: 1;
+  top: 3rem;
+  width: 100%;
+  background-color: white;
+  text-align: center; 
+  font-size: 1.7rem; 
+  font-weight: bold;
+}
 </style>
