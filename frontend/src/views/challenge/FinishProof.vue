@@ -13,8 +13,9 @@
           dark
           width="30%"
           height="60px"
+          class="proof-btn"
         >
-          홈으로
+          <span>홈으로</span> 
         </v-btn>
         <v-spacer></v-spacer>
         <v-btn
@@ -22,8 +23,9 @@
           color="white"
           width="30%"
           height="60px"
+          class="proof-btn"
         >
-          인증 목록
+          <span>인증목록</span>
         </v-btn>
         <v-spacer></v-spacer>
       </v-card-actions>
@@ -55,5 +57,10 @@ export default {
 
 .finish-proof > p {
   margin-bottom: 50px;
+}
+
+.proof-btn > span {
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 </style>
