@@ -1,30 +1,32 @@
 <template>
   <div>
+    <p></p>
     <v-card
       class="mx-auto"
-      width="80%"
+      width="90%"
+      color="grey lighten-5"
     >
       <v-card-text>
-        <div>아침 6시에 일어나기 챌린지</div>
+        <div style="font-size: 1.3rem; font-weight: 600;">레고 만들기 챌린지</div>
       </v-card-text>
     </v-card>
     <p></p>
     <v-card
       class="mx-auto"
-      width="80%"
+      width="90%"
+      color="grey lighten-5"
     >
       <v-card-text>
-        <p>인증 방법</p>
-        <p>일어나서 세면대에서 물을 튼 사진을 오늘의 제스처 손동작이 나오도록 올려주세요.</p>
-        <br>
-        <p>예시</p>
+        <p style="font-size: 1.1rem; font-weight: 600;">인증 방법</p>
+        <p style="font-size: 1rem;">자신이 만든 레고 사진을 오늘의 제스처 손동작이 나오도록 올려주세요.</p>
+        <hr>
+        <p style="font-size: 1.1rem; font-weight: 600; margin-top: 1rem;">예시</p>
         <v-row>
           <v-col
             cols="6"
           >
             <v-img
-              src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
-              gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
+              src="http://files.ciokorea.com/archive/images/201801/GettyImages-459315505.jpg"
               class="rounded-lg"
             ></v-img>
           </v-col>
@@ -33,20 +35,20 @@
             cols="6"
           >
             <v-img 
-              src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYJ8oGOpLT8gltD-FyOJtaYL6ZPaMhay_U4Q&usqp=CAU"
               class="rounded-lg"
             ></v-img>
           </v-col>
         </v-row>
         <p></p>
-        <p>오늘의 손동작</p>
+        <hr>
+        <p style="font-size: 1.1rem; font-weight: 600; margin-top: 1rem;">오늘의 손동작</p>
         <v-row>
           <v-col
             cols="6"
           >
             <v-img
-              src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
-              gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
+              src="https://cdn.crowdpic.net/list-thumb/thumb_l_A9B6BC32AFCE767900378297235318FC.png"
               class="rounded-lg"
             ></v-img>
           </v-col>
@@ -54,7 +56,7 @@
       </v-card-text>
     </v-card>
     <p></p>
-    <v-container style="width: 80%;">
+    <v-container style="width: 90%;">
       <v-row>
         <v-col
           cols="8"
@@ -81,12 +83,12 @@
       </v-row>
       <v-row>
         <v-col
-          cols="4"
+          cols="12"
         >
           <v-img
-            src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
-            gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
+            src="https://image.freepik.com/free-photo/a-man-and-a-boy-assemble-from-a-constructor-of-a-robot-male-and-children-s-hands-collect-lego_96336-244.jpg"
             class="rounded-lg"
+            max-width="50%"
           ></v-img>
         </v-col>
       </v-row>
