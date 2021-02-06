@@ -8,6 +8,10 @@ import backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/v1/challenges")
 @CrossOrigin(origins = {"*"})
@@ -50,6 +54,22 @@ public class ChallengeController {
         try {
             categoryService.makeCategory(new Category(categoryName));
             response = new BaseResponse("success", "카테고리 추가 성공");
+        } catch (IllegalStateException e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    @GetMapping
+    public BaseResponse getChallenges(){
+        BaseResponse response = null;
+        try {
+            List<ChallengeDto> collect = challengeService.findChallenges().stream()
+                    .filter(m -> m.getChallengeOngoing().equals(ChallengeOngoing.READY))
+                    .sorted(Comparator.comparing(Challenge::getChallengeStartdate))
+                    .map(ChallengeDto::new)
+                    .collect(Collectors.toList());
+            response = new BaseResponse("success", collect);
         } catch (IllegalStateException e){
             response = new BaseResponse("fail", e.getMessage());
         }
