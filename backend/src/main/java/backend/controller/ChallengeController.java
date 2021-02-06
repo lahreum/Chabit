@@ -48,6 +48,25 @@ public class ChallengeController {
         return response;
     }
 
+    // 챌린지 참여
+    @GetMapping("/{challengeId}/{userEmail}")
+    public BaseResponse joinChallenge(@PathVariable Long challengeId, @PathVariable String userEmail){
+        BaseResponse response = null;
+        try {
+            // 유저 정보
+            User user = userService.findUser(userEmail);
+            // 챌린지 정보
+            Challenge challenge = challengeService.findByChallengeId(challengeId);
+            // 챌린지 참여
+            challengeService.joinChallenge(user, challenge);
+            
+            response = new BaseResponse("success", "챌린지 참가 완료");
+        } catch (IllegalStateException e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
     // 카테고리 추가
     @PostMapping("/category")
     public BaseResponse makeCategory(@RequestBody String categoryName){

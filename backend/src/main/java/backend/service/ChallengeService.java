@@ -1,8 +1,6 @@
 package backend.service;
 
-import backend.domain.Challenge;
-import backend.domain.ChallengeHashtag;
-import backend.domain.Hashtag;
+import backend.domain.*;
 import backend.repository.ChallengeRepoistory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -61,6 +59,21 @@ public class ChallengeService {
     @Transactional
     public Long addHashtag(Challenge challenge, Hashtag hashtag) {
         challenge.addHashtag(new ChallengeHashtag(challenge, hashtag));
+        return challenge.getChallengeId();
+    }
+
+    /**
+     * 챌린지 참가
+     */
+    @Transactional
+    public Long joinChallenge(User user, Challenge challenge){
+        // 이미 있는 유저인지 검토
+        for(UserChallenge userChallenge : challenge.getChallengers()) {
+            if (userChallenge.getUser().getUserId().equals(user.getUserId()))
+                return challenge.getChallengeId();
+        }
+        // 없으면 추가
+        challenge.join(new UserChallenge(user, challenge));
         return challenge.getChallengeId();
     }
 }
