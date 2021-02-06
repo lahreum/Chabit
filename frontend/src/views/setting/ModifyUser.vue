@@ -120,4 +120,7 @@ export default {
 .inside-btn {
   margin-bottom: 2rem;
 }
+img {
+  margin: 0;
+}
 </style>

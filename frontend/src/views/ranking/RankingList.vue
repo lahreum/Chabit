@@ -18,13 +18,44 @@
             </v-list-item>
           </v-list>
           <v-divider></v-divider>
-          <v-autocomplete
-            v-model="value"
-            :items="users"
-            item-value="name"
-            item-text="name"
-            append-icon="mdi-magnify"
-          ></v-autocomplete>
+          <div class="searchBox">
+            <v-autocomplete
+              v-model="search"
+              :items="users"
+              item-value="name"
+              item-text="name"
+              append-icon="mdi-magnify"
+              clearable
+              label="Search"
+              return-object
+              width="50%"
+            ></v-autocomplete>
+          </div>
+          <v-expand-transition>
+            <v-list v-if="search" rounded color="rgb(100, 100, 100,.1)">
+              <v-list-item :items="users" item-key="search" show-select sort :search="search">
+                <v-list-item-avatar class="avatar" size="60">
+                  <v-img :alt="`${search.name} avatar`" :src="search.avatar"></v-img>
+                </v-list-item-avatar>
+                <v-list-item-content>
+                  <v-list-item-title
+                    class="name black--text"
+                    v-text="search.name"
+                  ></v-list-item-title>
+                  <v-list-item-subtitle
+                    class="point gray--text"
+                    v-text="search.point"
+                  ></v-list-item-subtitle>
+                </v-list-item-content>
+                <v-icon v-if="search.rank == 1" color="yellow darken-2">mdi-crown</v-icon>
+                <v-icon v-if="search.rank == 2" color="grey lighten-2">mdi-crown</v-icon>
+                <v-icon v-if="search.rank == 3" color="brown lighten-2">mdi-crown</v-icon>
+                <v-footer color="transparent">
+                  <v-list-item class="name black--text" v-text="search.rank + `위`"></v-list-item>
+                </v-footer>
+              </v-list-item>
+            </v-list>
+          </v-expand-transition>
           <v-list>
             <v-list-item v-for="user in users" :key="user.name">
               <v-list-item-avatar class="avatar" size="60">
@@ -54,7 +85,7 @@
 <script>
 export default {
   data: () => ({
-    value: null,
+    search: null,
     users: [
       {
         avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
@@ -127,5 +158,12 @@ export default {
 }
 .myRank {
   position: sticky;
+}
+.v-input {
+  max-width: 50%;
+}
+.searchBox {
+  display: flex;
+  justify-content: center;
 }
 </style>
