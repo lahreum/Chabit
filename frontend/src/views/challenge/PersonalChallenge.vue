@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import "./challenge.css"
 import PersonalChallengeList from "./PersonalChallengeList.vue"
 
 export default {

@@ -61,7 +61,6 @@
 <script>
 import { Hooper, Slide } from 'hooper'
 import 'hooper/dist/hooper.css'
-import './challenge.css'
 
 
 export default {

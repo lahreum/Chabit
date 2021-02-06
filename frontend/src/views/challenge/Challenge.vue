@@ -38,7 +38,6 @@
 </template>
 
 <script>
-import './challenge.css'
 import BtnCreateChallenge from '../../components/common/BtnCreateChallenge.vue'
 import HotChallengeList from './HotChallengeList.vue'
 import NewChallengeList from './NewChallengeList.vue'

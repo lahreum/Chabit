@@ -4,7 +4,7 @@
       <v-chip
         class="ma-2"
         color="secondary"
-        label="false"
+        label
       >
         {{ content }}
       </v-chip>
