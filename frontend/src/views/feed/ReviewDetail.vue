@@ -14,8 +14,8 @@
     </v-carousel>
     <div style="margin: 15px;">
       <span style="font-size:12px;">
-        <i class="far fa-heart fa-2x" style="margin-right:10px;"  v-on:click="addgood" v-if="choose" ></i>
-        <i class="fa fa-heart fa-2x" style="margin-right:10px;"  v-on:click="addgood" v-if="!this.choose" ></i>
+        <i class="fa fa-heart fa-2x" style="margin-right:10px;"  v-on:click="addgood" v-if="choose" ></i>
+        <i class="far fa-heart fa-2x" style="margin-right:10px;"  v-on:click="addgood" v-if="!choose" ></i>
       </span>
       <span style="font-size:12px;">
         <router-link to="/review-comment" style="text-decoration:none;color:inherit;"><i class="far fa-comment fa-2x" style="margin-right:10px;" ></i></router-link>
