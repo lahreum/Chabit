@@ -48,6 +48,7 @@ public class ChallengeController {
         return response;
     }
 
+    // 카테고리 추가
     @PostMapping("/category")
     public BaseResponse makeCategory(@RequestBody String categoryName){
         BaseResponse response = null;
@@ -60,6 +61,7 @@ public class ChallengeController {
         return response;
     }
 
+    // 카테고리 목록 가져오기
     @GetMapping("/category")
     public BaseResponse getCategories(){
         BaseResponse response = null;
@@ -72,6 +74,7 @@ public class ChallengeController {
         return response;
     }
 
+    // 참여가능한 모든 챌린지 가져오기
     @GetMapping
     public BaseResponse getChallenges(){
         BaseResponse response = null;
@@ -88,6 +91,7 @@ public class ChallengeController {
         return response;
     }
 
+    // 특정 챌린지 1개 가져오기
     @GetMapping("/{challengeId}")
     public BaseResponse getChallenge(@PathVariable Long challengeId) {
         BaseResponse response = null;
@@ -102,6 +106,22 @@ public class ChallengeController {
         }
         return response;
     }
+
+    // 핫챌린지 4개 가져오기
+    @GetMapping("/hot")
+    public BaseResponse getHotChallenges(){
+        BaseResponse response = null;
+        try {
+            List<ChallengeDto> collect = challengeService.findAllOrderByChallengeUserCount().stream()
+                    .map(ChallengeDto::new)
+                    .collect(Collectors.toList());
+            response = new BaseResponse("success", collect);
+        } catch (IllegalStateException e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
     // ======= Response & Request 클래스 =======
 
 }
