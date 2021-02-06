@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="app">
     <v-app id="inspire">
       <v-navigation-drawer v-model="drawer" app temporary color="#a62f22">
         <v-list nav dense shaped>
@@ -102,8 +102,6 @@ export default {
 };
 </script>
 <style scoped>
-.showNavbar
-/* Navbar */
 #app .v-sheet.v-app-bar.v-toolbar {
   border-radius: 0 0 24px 24px;
 }
