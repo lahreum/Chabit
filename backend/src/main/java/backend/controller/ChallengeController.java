@@ -1,6 +1,7 @@
 package backend.controller;
 
 import backend.domain.*;
+import backend.exception.NotEnoughPointException;
 import backend.service.CategoryService;
 import backend.service.ChallengeService;
 import backend.service.HashtagService;
@@ -61,7 +62,7 @@ public class ChallengeController {
             challengeService.joinChallenge(user, challenge);
             
             response = new BaseResponse("success", "챌린지 참가 완료");
-        } catch (IllegalStateException e){
+        } catch (IllegalStateException | NotEnoughPointException e){
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;

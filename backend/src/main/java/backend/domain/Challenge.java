@@ -43,11 +43,9 @@ public class Challenge { // Challenge 코드리뷰 필수.
 
     @Column(columnDefinition = "TEXT")
     private String challengeThumbnail;
-    @Column
-    @ColumnDefault("100")
+    @Column(columnDefinition = "INT DEFAULT 100")
     private int challengePoint;
-    @Column
-    @ColumnDefault("1")
+    @Column(columnDefinition = "INT DEFAULT 0")
     private int challengeUsercount;
 
     @Column
@@ -60,11 +58,11 @@ public class Challenge { // Challenge 코드리뷰 필수.
     private LocalTime authEndtime;
 
     @Column(nullable = false, columnDefinition = "TINYINT")
-    private int authHoliday; //tinyint int로 했음.
+    private int authHoliday;
     @Column(columnDefinition = "TEXT")
     private String authExample;
 
-    @Enumerated(EnumType.STRING) //저장할 때.. 정하자
+    @Enumerated(EnumType.STRING)
     private ChallengeOngoing challengeOngoing;
 
 
