@@ -1,13 +1,13 @@
 package backend.service;
 
-import backend.domain.Challenge;
-import backend.domain.ChallengeHashtag;
-import backend.domain.Hashtag;
+import backend.domain.*;
+import backend.exception.NotEnoughPointException;
 import backend.repository.ChallengeRepoistory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -24,6 +24,12 @@ public class ChallengeService {
         return challenge;
     }
 
+    /**
+     * 챌린지 1개 조회
+     */
+    public Challenge findByChallengeId(Long challengeId){
+        return challengeRepoistory.findByChallengeId(challengeId);
+    }
 
     /**
      * 전체 챌린지 조회
@@ -55,6 +61,25 @@ public class ChallengeService {
     @Transactional
     public Long addHashtag(Challenge challenge, Hashtag hashtag) {
         challenge.addHashtag(new ChallengeHashtag(challenge, hashtag));
+        return challenge.getChallengeId();
+    }
+
+    /**
+     * 챌린지 참가
+     */
+    @Transactional
+    public Long joinChallenge(User user, Challenge challenge) throws NotEnoughPointException {
+        // 이미 있는 유저인지 검토
+        for(UserChallenge userChallenge : challenge.getChallengers()) {
+            if (userChallenge.getUser().getUserId().equals(user.getUserId()))
+                return challenge.getChallengeId();
+        }
+        // 포인트 감소
+        user.changePoint(-challenge.getChallengePoint());
+        user.addHistory(new PointHistory(user, challenge, LocalDateTime.now(), -challenge.getChallengePoint()));
+
+        // 없는 유저면 추가
+        challenge.join(new UserChallenge(user, challenge));
         return challenge.getChallengeId();
     }
 }
