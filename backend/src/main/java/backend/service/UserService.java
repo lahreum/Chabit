@@ -1,23 +1,29 @@
 package backend.service;
 
 import backend.controller.UserRequest;
-import backend.domain.Hashtag;
-import backend.domain.User;
-import backend.domain.UserHashtag;
+import backend.domain.*;
+import backend.repository.CategoryRepository;
+import backend.repository.FollowRepository;
 import backend.repository.HashtagRepository;
 import backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
     private final HashtagRepository hashtagRepository;
+    private final FollowRepository followRepository;
+    private final CategoryRepository categoryRepository;
 
     /**
      * 회원가입
@@ -149,4 +155,65 @@ public class UserService {
             throw new IllegalStateException("잘못된 해쉬태그 이름입니다.");
         }
     }
+
+    /**
+     * 조건에 따라 챌린지 조회
+     */
+    public List<User> findUserByRankingCondition(String userEmail, Long categoryId, boolean monthlyRanking){
+        List<User> result = new ArrayList<>();
+
+        // 팔로잉 유저 선택하면 팔로잉하는 유저 목록만 가져옴
+        // 아니면 전체 유저 목록 포인트로 정렬해서 가져옴
+        if(userEmail != null) {
+            User user = findUser(userEmail);
+            List<Follow> following = followRepository.findByUserId(user);
+            // following 하는 유저들 뽑아서 넣음
+            for(Follow follow : following)
+                result.add(follow.getFollowingId());
+        } else {
+            result = userRepository.findAll();
+        }
+
+        // 카테고리별 정렬 선택한 경우
+        if(categoryId != null) {
+            Optional<Category> findCategory = categoryRepository.findByCategoryId(categoryId);
+            if(!findCategory.isPresent())
+                throw new IllegalStateException("잘못된 카테고리입니다");
+            // 도전한 챌린지를 카테고리로 필터링 후 해당 챌린지들에서 잃고 얻은 포인트 합계를 통해 정렬
+            Category category = findCategory.get();
+            final Comparator<User> comp = (u1, u2) ->
+                Integer.compare(u1.getPointHistories().stream()
+                    .filter(h -> !monthlyRanking || h.getPointDate().getMonth().equals(LocalDate.now().getMonth()))
+                    .filter(h -> h.getChallenge().getChallengeCategory().equals(category))
+                    .mapToInt(PointHistory::getPointChange)
+                    .sum(),
+                    u2.getPointHistories().stream()
+                    .filter(h -> !monthlyRanking || h.getPointDate().getMonth().equals(LocalDate.now().getMonth()))
+                    .filter(h -> h.getChallenge().getChallengeCategory().equals(category))
+                    .mapToInt(PointHistory::getPointChange)
+                    .sum());
+
+            result = result.stream()
+                    .sorted(comp.reversed())
+                    .collect(Collectors.toList());
+        } else {
+            // 카테고리별 정렬 선택 안한 경우
+            final Comparator<User> comp = (u1, u2) ->
+                    Integer.compare(
+                            u1.getPointHistories().stream()
+                                .filter(h -> !monthlyRanking || h.getPointDate().getMonth().equals(LocalDate.now().getMonth()))
+                                .mapToInt(PointHistory::getPointChange)
+                                .sum(),
+                            u1.getPointHistories().stream()
+                                .filter(h -> !monthlyRanking || h.getPointDate().getMonth().equals(LocalDate.now().getMonth()))
+                                .mapToInt(PointHistory::getPointChange)
+                                .sum()
+                    );
+            result = result.stream()
+                    .sorted(comp.reversed())
+                    .collect(Collectors.toList());
+        }
+        return result;
+    }
+
 }

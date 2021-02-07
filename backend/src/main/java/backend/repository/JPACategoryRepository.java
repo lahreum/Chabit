@@ -21,6 +21,12 @@ public class JPACategoryRepository implements CategoryRepository{
     }
 
     @Override
+    public Optional<Category> findByCategoryId(Long categoryId) {
+        Category category = entityManager.find(Category.class, categoryId);
+        return Optional.ofNullable(category);
+    }
+
+    @Override
     public List<Category> findAll() {
         List<Category> result = entityManager.createQuery("select c from Category  c", Category.class).getResultList();
         return result;

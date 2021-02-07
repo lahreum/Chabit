@@ -82,4 +82,6 @@ public class ChallengeService {
         challenge.join(new UserChallenge(user, challenge));
         return challenge.getChallengeId();
     }
+
+
 }
