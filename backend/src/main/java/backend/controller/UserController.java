@@ -82,10 +82,9 @@ public class UserController {
     @ApiOperation(value="회원가입", notes="회원가입")
     @ApiImplicitParam(name = "UserRequest", value = "사용자 정보", required = true)
     public BaseResponse signIn(@RequestBody UserRequest request) {
-        User user = User.createUser(request);
-
         BaseResponse response = null;
         try {
+            User user = User.createUser(request);
             userService.signIn(user);
             response = new BaseResponse("success", new JoinUserResponse("success", "회원가입 성공"));
         } catch (IllegalStateException e) {
