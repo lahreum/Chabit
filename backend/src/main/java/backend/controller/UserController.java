@@ -68,11 +68,7 @@ public class UserController {
     @ApiOperation(value="회원가입", notes="회원가입")
     @ApiImplicitParam(name = "UserRequest", value = "사용자 정보", required = true)
     public BaseResponse signIn(@RequestBody UserRequest request) {
-        User user = new User();
-        user.setUserEmail(request.getUserEmail());
-        user.setUserPassword(request.getUserPassword());
-        user.setUserNickname(request.getUserNickname());
-        user.setUserPhone(request.getUserPhone());
+        User user = User.createUser(request);
 
         BaseResponse response = null;
         try {
