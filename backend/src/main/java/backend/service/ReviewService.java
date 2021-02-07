@@ -3,6 +3,7 @@ package backend.service;
 import backend.domain.Review;
 import backend.domain.ReviewImage;
 import backend.domain.User;
+import backend.repository.ReviewImageRepository;
 import backend.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,8 @@ import java.util.List;
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
+
+    private final ReviewImageRepository reviewImageRepository;
 
     /**
      * 리뷰 저장
@@ -39,5 +42,35 @@ public class ReviewService {
         return reviewRepository.findByReviewId(reviewId);
     }
 
-    public ReviewImage
+    /**
+     * 해당 리뷰에 대한 리뷰 사진 저장
+     * @return은 하나에 대한 리뷰 정보
+     */
+    @Transactional
+    public ReviewImage saveReviewImage(ReviewImage reviewImage){
+        return reviewImageRepository.saveReviewImage(reviewImage);
+    }
+
+    /**
+     * 해당 reivewId에 해당하는 리뷰 이미지들을 다 받아옴.
+     * @param reviewId
+     * @return
+     */
+    public List<ReviewImage> findReviewImageByReviewId(Review reviewId){
+        List<ReviewImage> reviewImageList = reviewImageRepository.findReviewImageByReviewId(reviewId);
+        return reviewImageList;
+    }
+
+
+    /**
+     * remove, findALl(0
+     */
+    public void deleteReview(Review review){ reviewRepository.deleteReview(review); }
+
+    public void deleteReviewImage(ReviewImage reviewImage){
+        reviewImageRepository.deleteReviewImage(reviewImage);
+    }
+
+
+    public List<Review> findAll() { return reviewRepository.findAll(); }
 }

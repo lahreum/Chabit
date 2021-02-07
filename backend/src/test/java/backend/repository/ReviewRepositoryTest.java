@@ -1,9 +1,6 @@
 package backend.repository;
 
-import backend.domain.Category;
-import backend.domain.Challenge;
-import backend.domain.Review;
-import backend.domain.User;
+import backend.domain.*;
 import backend.service.CategoryService;
 import backend.service.ChallengeService;
 import backend.service.ReviewService;
@@ -123,6 +120,49 @@ class ReviewRepositoryTest {
 
         Review result =  reviewService.findByReviewId(saveTest.getReviewId());
         Assertions.assertEquals(result.getReviewContent(),"test");
+
+    }
+
+    @Test
+    void deleteReview(){
+        User user6 = new User();
+        user6.setUserEmail("asd@naver.com");// 이메일을 넣었을때
+        user6.setUserPassword("abc");
+        Category category6 = new Category();
+        category6.setCategoryName("카테고리");
+        Challenge challenge6 =  new Challenge();
+        challenge6.setChallengeName("챌린지 테스트2");
+        challenge6.setChallengeDesc("챌린지 설명2");
+        challenge6.setChallengeOwner(user6);
+        challenge6.setChallengeCategory(category6);
+        challenge6.setChallengeStartdate(LocalDateTime.now());
+        challenge6.setChallengeEnddate(LocalDateTime.now().plusDays(1));
+        challenge6.setAuthFrequency("주 3회인증");
+        challenge6.setAuthHoliday(1);
+        userService.signIn(user6);
+        categoryService.makeCategory(category6);
+        challengeService.makeChallenge(challenge6);
+        //
+        Review review6 = new Review();
+        review6.setCommentCount(100);
+        review6.setReviewContent("test");
+        reviewService.saveReview(review6);
+//        Assertions.assertEquals(reviewService.findAll().size(), 1);
+        reviewService.deleteReview(review6);
+        Assertions.assertEquals(reviewService.findAll().size(), 0);
+    }
+
+    //Todo 테스트코드 진행 예정.
+    @Test
+    void saveReviewImage(){
+
+    }
+    @Test
+    void findReviewImageByReviewId(){
+
+    }
+    @Test
+    void deleteReviewImage(){
 
     }
 }

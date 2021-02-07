@@ -30,4 +30,13 @@ public class ReviewRepository {
         Review reviewResult = entityManager.find(Review.class, reviewId);
         return reviewResult;
     }
+    public List<Review> findAll(){
+        List<Review> reviewList = entityManager.createQuery(
+                "select r from Review r",Review.class)
+                .getResultList();
+        return reviewList;
+    }
+    public void deleteReview(Review review) {
+        entityManager.remove(review);
+    }
 }
