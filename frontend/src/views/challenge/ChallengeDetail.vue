@@ -1,20 +1,11 @@
 <template>
   <div>
     <v-card
-      :loading="loading"
       class="mx-auto"
     >
-      <template slot="progress">
-        <v-progress-linear
-          color="deep-purple"
-          height="10"
-          indeterminate
-        ></v-progress-linear>
-      </template>
-
       <v-img
         height="300"
-        src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+        :src="item.src"
         fixed
         top
       ></v-img>
@@ -22,53 +13,106 @@
     <v-card
       class="mx-auto rounded-t-xl challenge-content"
     >
-      <v-card-text>
-        <p>
-          도전! 파이 만들기
+      <v-card-text class="challenge-detail">
+        <p style="font-size: 1.4rem; font-weight: 600; margin-top: 1rem; margin-left: 0.5rem; color: black;">
+          {{item.title}}
         </p>
-        <i class="far fa-smile"></i>
-        <span>1,428명 참여 중</span>
+        <i class="far fa-smile" style="font-size: 1.2rem; margin-left: 0.6rem;"></i>
+        <span style="font-size: 1.1rem; margin-left: 0.5rem;"><span style="font-weight: 600">{{item.total}}</span>명 참여 중</span>
         <div class="hash-tag-bundle">
-          <hash-tag/>
-          <hash-tag/>
-          <hash-tag/>
+          <hash-tag :content="item.category"/>
+          <hash-tag :content="item.word"/>
         </div>
-        
-        <i class="far fa-clock"></i>
-        <span>2021/01/20 ~ 2021/02/03</span>
-        <br>
-        <i class="fas fa-book"></i>
-        <span>취미</span>
-        <br>
-        <i class="fas fa-gem"></i>
-        <span> 참가비: 1,000채빗</span>
-        <br>
-        <i class="fas fa-award"></i>
-        <span>인증서 수여</span>
-        <br>
-        <i class="far fa-star"></i>
-        <span>오븐에서 갓 꺼낸 상태의 사진 올리기</span>
-        <br>
-        <br>
-        <i class="fas fa-file"></i>
-        <span>맛있는 파이를 만들며, 요리 실력을 키워봅시다!</span>
-        <br>
-        <br>
-        <i class="fas fa-hourglass-half"></i>
-        <span>공휴일 인증 X</span>
-        <br>
-        <i class="fas fa-user-clock"></i>
-        <span>00:00 ~ 24:00 인증 가능</span>
-        <br>
-        <i class="fas fa-camera"></i>
-        <span>올바른 인증 예시</span>
-        <br>
-        <br>
-        <v-img
-          width="90%"
-          src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-        ></v-img>
-        <span>오늘의 제스처와 함께 사진을 찍어 올려주세요.</span>
+        <p style="margin-top: 2rem"></p>
+        <hr>
+        <p style="margin-top: 2rem"></p>
+        <v-row>
+          <v-col cols="4" class="py-1">
+            <span style="font-weight: 600;">챌린지 기간</span>
+          </v-col>
+          <v-col cols="8" class="py-1">
+            <span>{{item.startDate}} ~ {{item.endDate}}</span>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="4" class="py-1">
+            <span style="font-weight: 600;">카테고리</span>
+          </v-col>
+          <v-col cols="8" class="py-1">
+            <span>{{item.category}}</span>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="4" class="py-1">
+            <span style="font-weight: 600;">참가비</span>
+          </v-col>
+          <v-col cols="8" class="py-1">
+            <span>{{item.chabit}}채빗</span>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="4" class="py-1">
+            <span style="font-weight: 600;">보상</span>
+          </v-col>
+          <v-col cols="8" class="py-1">
+            <span>인증서 수여</span>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="4" class="py-1">
+            <span style="font-weight: 600;">공휴일 인증</span>
+          </v-col>
+          <v-col cols="8" class="py-1">
+            <span v-if="item.holiday">O</span>
+            <span v-else>X</span>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="4" class="py-1">
+            <span style="font-weight: 600;">인증시간</span>
+          </v-col>
+          <v-col cols="8" class="py-1">
+            <span>{{item.startPossible}} ~ {{item.endPossible}} 인증 가능</span>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="4" class="py-1">
+            <span style="font-weight: 600;">인증 방법</span>
+          </v-col>
+          <v-col cols="8" class="py-1">
+            <span>{{item.proofType}}</span>
+          </v-col>
+        </v-row>
+        <p style="margin-top: 2rem"></p>
+        <hr>
+        <p style="margin-top: 2rem"></p>
+        <v-row>
+          <v-col cols="4" class="py-1">
+            <span style="font-weight: 600;">챌린지 설명</span>
+          </v-col>
+          <v-col cols="8" class="py-1">
+            <span>{{item.describeChallenge}}</span>
+          </v-col>
+        </v-row>
+        <p style="margin-top: 2rem"></p>
+        <hr>
+        <p style="margin-top: 2rem"></p>
+        <div>
+          <span style="font-size: 1.1rem; margin-left: 1.1rem; font-weight: 600;">올바른 인증 예시</span>
+        </div>
+        <p></p>
+        <div style="display: flex; flex-direction: column; align-items: center;">
+          <v-img
+            class="rounded-lg"
+            width="90%"
+            :src="item.photoExample"
+          ></v-img>
+        </div>
+        <p></p>
+        <div style="text-align: center;">
+          <span>오늘의 제스처와 함께 사진을 찍어 올려주세요.</span>
+        </div>
+        <p style="margin: 1rem 0 7rem 0"></p>
         <div style="margin-left: 7%;">
           <v-btn
             rounded
@@ -91,7 +135,31 @@
 import HashTag from '../../components/common/HashTag.vue'
 export default {
   components: { HashTag },
-
+  data() {
+    return {
+      item: {
+        src: 'https://cdn.vuetifyjs.com/images/cards/cooking.png',
+        title: '도전! 파이 만들기 챌린지',
+        official: true,
+        category: '취미',
+        proof: 1,
+        word: '',
+        total: 1428,
+        startDate: "2021/01/20",
+        endDate: "2021/02/03",
+        chabit: 1000,
+        proofType: "오븐에서 갓 꺼낸 상태의 사진 올리기",
+        describeChallenge: "맛있는 파이를 만들며, 요리 실력을 키워봅시다!",
+        holiday: false,
+        startPossible: '00:00',
+        endPossible: '24:00',
+        photoExample: 'http://storage.enuri.info/pic_upload/knowbox2/202006/03591085720200613575bf006-c900-4a5d-b2d2-985893e0530b.JPG'
+      }
+    }
+  },
+  mounted() {
+    this.item.word = "주 " + this.item.proof + "회 인증"
+  }
 }
 </script>
 
@@ -105,4 +173,7 @@ export default {
   align-items: flex-start;
 }
 
+.challenge-detail {
+  font-size: 1.1rem;
+}
 </style>
