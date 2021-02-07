@@ -94,13 +94,14 @@ public class ChallengeController {
         return response;
     }
 
-    // 참여가능한 모든 챌린지 가져오기
+    // 진행 예정, 진행중인 모든 챌린지 가져오기
     @GetMapping
-    public BaseResponse getChallenges(){
+    public BaseResponse getChallenges(@RequestParam(required = false) String challengeName){
         BaseResponse response = null;
         try {
             List<ChallengeDto> collect = challengeService.findChallenges().stream()
-                    .filter(m -> m.getChallengeOngoing().equals(ChallengeOngoing.READY))
+                    .filter(m -> (challengeName == null || m.getChallengeName().contains(challengeName)) &&
+                            (m.getChallengeOngoing().equals(ChallengeOngoing.READY) || m.getChallengeOngoing().equals(ChallengeOngoing.ONGOING)))
                     .sorted(Comparator.comparing(Challenge::getChallengeStartdate))
                     .map(ChallengeDto::new)
                     .collect(Collectors.toList());
@@ -110,6 +111,8 @@ public class ChallengeController {
         }
         return response;
     }
+
+
 
     // 특정 챌린지 1개 가져오기
     @GetMapping("/{challengeId}")
