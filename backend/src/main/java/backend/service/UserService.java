@@ -168,8 +168,9 @@ public class UserService {
             User user = findUser(userEmail);
             List<Follow> following = followRepository.findByUserId(user);
             // following 하는 유저들 뽑아서 넣음
-            for(Follow follow : following)
+            for(Follow follow : following) {
                 result.add(follow.getFollowingId());
+            }
         } else {
             result = userRepository.findAll();
         }
@@ -194,6 +195,9 @@ public class UserService {
                     .sum());
 
             result = result.stream()
+                    .filter(u ->
+                            u.getPointHistories().stream()
+                                    .anyMatch(h -> h.getChallenge().getChallengeCategory().equals(category)))
                     .sorted(comp.reversed())
                     .collect(Collectors.toList());
         } else {
@@ -210,6 +214,9 @@ public class UserService {
                                 .sum()
                     );
             result = result.stream()
+                    .filter(u ->
+                            !monthlyRanking || u.getPointHistories().stream()
+                                    .anyMatch(h -> h.getPointDate().getMonth().equals(LocalDate.now().getMonth())))
                     .sorted(comp.reversed())
                     .collect(Collectors.toList());
         }

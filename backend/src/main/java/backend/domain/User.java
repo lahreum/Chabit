@@ -30,7 +30,7 @@ public class User {
     private String userImage;
 
     @Column(columnDefinition = "INT DEFAULT 1000")
-    private int userPoints;
+    private int userPoints = 1000;
 
     @Enumerated(EnumType.STRING)
     private UserRole userRole;

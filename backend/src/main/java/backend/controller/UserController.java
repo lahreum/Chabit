@@ -157,11 +157,14 @@ public class UserController {
     @GetMapping("/ranking")
     public BaseResponse getRanking(@RequestParam(required = false) String userEmail,
                                    @RequestParam(required = false) Long categoryId,
-                                   @RequestParam(required = false) Boolean monthlyRanking) {
+                                   @RequestParam(required = false, defaultValue = "false") Boolean monthlyRanking) {
         BaseResponse response = null;
         try {
-            boolean monthly = monthlyRanking != null;
-            userService.findUserByRankingCondition(userEmail, categoryId, monthly);
+            List<User> ranking = userService.findUserByRankingCondition(userEmail, categoryId, monthlyRanking);
+            List<UserDto> collect = ranking.stream()
+                    .map(UserDto::new)
+                    .collect(Collectors.toList());
+            response = new BaseResponse("success", collect);
         } catch (IllegalStateException e) {
             response = new BaseResponse("fail", e.getMessage());
         }
