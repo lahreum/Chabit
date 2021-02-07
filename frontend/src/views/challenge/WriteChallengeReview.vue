@@ -1,68 +1,45 @@
 <template>
   <div>
+    <p></p>
     <v-card
       class="mx-auto"
-      width="80%"
+      width="90%"
+      color="grey lighten-5"
     >
       <v-card-text>
-        <div>아침 6시에 일어나기 챌린지</div>
+        <div style="font-size: 1.3rem; font-weight: 600;">레고 만들기 챌린지</div>
       </v-card-text>
     </v-card>
     <p></p>
     <v-card
       class="mx-auto"
-      width="80%"
+      width="90%"
+      color="grey lighten-5"
     >
       <v-card-text>
-        <p>인증 방법</p>
-        <p>일어나서 세면대에서 물을 튼 사진을 오늘의 제스처 손동작이 나오도록 올려주세요.</p>
-        <br>
-        <p>예시</p>
-        <v-row>
-          <v-col
-            cols="6"
-          >
-            <v-img
-              src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
-              gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
-              class="rounded-lg"
-            ></v-img>
-          </v-col>
-
-          <v-col
-            cols="6"
-          >
-            <v-img 
-              src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
-              class="rounded-lg"
-            ></v-img>
-          </v-col>
-        </v-row>
-        <p></p>
-        <p>오늘의 손동작</p>
-        <v-row>
-          <v-col
-            cols="6"
-          >
-            <v-img
-              src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
-              gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
-              class="rounded-lg"
-            ></v-img>
-          </v-col>
-        </v-row>
+        <p style="font-size: 1.1rem; font-weight: 600;">리뷰 쓰기</p>
+        <v-textarea
+          flat
+          solo
+          name="input-7-4"
+          label="리뷰를 작성하세요(최대 1000자)"
+          :rules="textRules"
+          v-model="texts"
+        ></v-textarea>
       </v-card-text>
     </v-card>
     <p></p>
-    <v-container style="width: 80%;">
+    <v-container style="width: 90%;">
       <v-row>
         <v-col
           cols="8"
         >
           <v-file-input
-            label="인증 사진"
             outlined
             dense
+            multiple
+            :rules="fileRules"
+            v-model="files"
             accept="image/png, image/jpeg, image/bmp"
           ></v-file-input>
         </v-col>
@@ -74,6 +51,7 @@
             color="red darken-4"
             dark
             height="40px"
+            @click="upload"
           >
             업로드
           </v-btn>
@@ -82,10 +60,11 @@
       <v-row>
         <v-col
           cols="4"
+          v-for="(item, idx) in items"
+          :key="idx"
         >
           <v-img
-            src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
-            gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
+            :src="item.src"
             class="rounded-lg"
           ></v-img>
         </v-col>
@@ -98,8 +77,9 @@
           dark
           width="100%"
           height="60px"
+          @click="onSubmit"
         >
-          다음
+          완료
         </v-btn>
       </div>
     </v-container>
@@ -108,7 +88,25 @@
 
 <script>
 export default {
-
+  data: () => ({
+    textRules: [v => v.length <= 1000 || '1000자 이상 입력할 수 없습니다'],
+    texts: '',
+    fileRules: [v => v.length <= 5 || '최대 5개의 파일을 올릴 수 있습니다'],
+    files: '',
+    items: [
+      {
+        src: "https://image.freepik.com/free-photo/a-man-and-a-boy-assemble-from-a-constructor-of-a-robot-male-and-children-s-hands-collect-lego_96336-244.jpg"
+      }
+    ]
+  }),
+  methods: {
+    upload () {
+      console.log(this.files);
+    },
+    onSubmit () {
+      console.log(this.texts)
+    }
+  }
 }
 </script>
 
