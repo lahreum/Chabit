@@ -68,6 +68,27 @@ public class ChallengeController {
         return response;
     }
 
+    // 챌린지 인증
+    @PostMapping("/{challengeId}/proof/{userEmail}")
+    public BaseResponse proofChallenge(@PathVariable Long challengeId, @PathVariable String userEmail, @RequestBody String proofUrl){
+        BaseResponse response = null;
+        try {
+            User user = userService.findUser(userEmail);
+            Challenge challenge = challengeService.findByChallengeId(challengeId);
+
+            if(challenge == null)
+                response = new BaseResponse("fail", "잘못된 챌린지 아이디입니다");
+            else {
+                // TODO: 인증 이미지 저장
+                userService.proofChallenge(user, challenge, proofUrl);
+                response = new BaseResponse("success", "인증 성공");
+            }
+        } catch (IllegalStateException e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
     // 카테고리 추가
     @PostMapping("/category")
     public BaseResponse makeCategory(@RequestBody String categoryName){
