@@ -21,6 +21,14 @@ public class JPAUserRepository implements UserRepository{
     }
 
     @Override
+    public Optional<User> findByUserNickname(String nickname) {
+        List<User> findUser = entityManager.createQuery("select u from User u where u.userNickname = :nickname", User.class)
+                .setParameter("nickname", nickname)
+                .getResultList();
+        return findUser.stream().findAny();
+    }
+
+    @Override
     public Optional<User> findByUserId(Long userId) {
         User user = entityManager.find(User.class, userId);
         return Optional.ofNullable(user);
