@@ -49,6 +49,7 @@ public class User {
         User user = new User();
         user.setUserEmail(request.getUserEmail());
         user.setUserPassword(request.getUserPassword());
+        user.setUserName(request.getUserName());
         user.setUserNickname(request.getUserNickname());
         user.setUserPhone(request.getUserPhone());
         user.setUserRole(UserRole.USER);

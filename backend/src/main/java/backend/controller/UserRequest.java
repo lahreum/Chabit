@@ -12,6 +12,8 @@ public class UserRequest {
     private String userEmail;
     @ApiModelProperty(value="사용자 패스워드")
     private String userPassword;
+    @ApiModelProperty(value="사용자 이름")
+    private String userName;
     @ApiModelProperty(value="사용자 닉네임")
     private String userNickname;
     @ApiModelProperty(value="사용자 휴대폰 번호")

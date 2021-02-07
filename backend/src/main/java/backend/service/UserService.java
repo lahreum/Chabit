@@ -59,6 +59,17 @@ public class UserService {
     }
 
     /**
+     * 닉네임으로 유저 조회
+     */
+    public User findUserByNickname(String nickname){
+        Optional<User> user = userRepository.findByUserNickname(nickname);
+        if(user.isPresent())
+            return user.get();
+        else
+            throw new IllegalStateException("없는 유저입니다");
+    }
+
+    /**
      * 회원 탈퇴
      */
     @Transactional
@@ -83,6 +94,7 @@ public class UserService {
             User updateUser = findUser.get();
             updateUser.setUserPassword(request.getUserPassword());
             updateUser.setUserNickname(request.getUserNickname());
+            updateUser.setUserName(request.getUserName());
             updateUser.setUserPhone(request.getUserPhone());
         } else {
             throw new IllegalStateException("잘못된 유저 이메일입니다");

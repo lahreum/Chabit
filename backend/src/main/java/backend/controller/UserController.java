@@ -22,6 +22,7 @@ public class UserController {
     private final UserService userService;
     private final LevelService levelService;
 
+    @ApiOperation(value="모든 사용자 조회", notes="모든 사용자 조회")
     @GetMapping
     public BaseResponse users() {
         List<User> findUsers = userService.findUsers();
@@ -32,6 +33,19 @@ public class UserController {
                 .collect(Collectors.toList());
 
         return new BaseResponse("success", collect);
+    }
+
+    @ApiOperation(value="닉네임으로 유저 찾기", notes="닉네임으로 유저 찾기")
+    @GetMapping("/nickname/{nickname}")
+    public BaseResponse chekcNickname(@PathVariable String nickname){
+        BaseResponse response = null;
+        try {
+            User user = userService.findUserByNickname(nickname);
+            response = new BaseResponse("success", new UserDto(user));
+        } catch (IllegalStateException e) {
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
     }
 
     @ApiOperation(value="사용자 한명 조회", notes="사용자 한명 조회")
