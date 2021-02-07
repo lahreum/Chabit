@@ -32,6 +32,7 @@ public class UserService {
     public Long signIn(User user) throws IllegalStateException {
         //같은 이메일은 중복X
         validateDuplicateUserEmail(user);
+        validateDuplicateUserNickname(user);
         userRepository.save(user);
         return user.getUserId();
     }
@@ -41,6 +42,13 @@ public class UserService {
             .ifPresent(u -> {
                 throw new IllegalStateException("이미 존재하는 이메일 입니다.");
             });
+    }
+
+    private void validateDuplicateUserNickname(User user) {
+        userRepository.findByUserNickname(user.getUserNickname())
+                .ifPresent(u -> {
+                    throw new IllegalStateException("이미 존재하는 닉네임 입니다.");
+                });
     }
 
     /**
