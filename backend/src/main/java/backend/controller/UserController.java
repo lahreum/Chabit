@@ -1,7 +1,7 @@
 package backend.controller;
 //http://localhost:9999/swagger-ui.html
 import backend.domain.*;
-import backend.repository.HashtagRepository;
+import backend.service.ChallengeService;
 import backend.service.LevelService;
 import backend.service.UserService;
 import io.swagger.annotations.*;
@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 public class UserController {
     private final UserService userService;
     private final LevelService levelService;
+
     @GetMapping
     public BaseResponse users() {
         List<User> findUsers = userService.findUsers();
@@ -149,6 +150,24 @@ public class UserController {
             response = new BaseResponse("fail", e.getMessage());
         }
 
+        return response;
+    }
+
+    // 랭킹
+    @GetMapping("/ranking")
+    public BaseResponse getRanking(@RequestParam(required = false) String userEmail,
+                                   @RequestParam(required = false) Long categoryId,
+                                   @RequestParam(required = false, defaultValue = "false") Boolean monthlyRanking) {
+        BaseResponse response = null;
+        try {
+            List<User> ranking = userService.findUserByRankingCondition(userEmail, categoryId, monthlyRanking);
+            List<UserDto> collect = ranking.stream()
+                    .map(UserDto::new)
+                    .collect(Collectors.toList());
+            response = new BaseResponse("success", collect);
+        } catch (IllegalStateException e) {
+            response = new BaseResponse("fail", e.getMessage());
+        }
         return response;
     }
 

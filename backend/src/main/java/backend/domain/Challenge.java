@@ -44,7 +44,7 @@ public class Challenge { // Challenge 코드리뷰 필수.
     @Column(columnDefinition = "TEXT")
     private String challengeThumbnail;
     @Column(columnDefinition = "INT DEFAULT 100")
-    private int challengePoint;
+    private int challengePoint = 100;
     @Column(columnDefinition = "INT DEFAULT 0")
     private int challengeUsercount;
 
