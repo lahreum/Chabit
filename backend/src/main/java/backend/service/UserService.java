@@ -37,6 +37,15 @@ public class UserService {
         return user.getUserId();
     }
 
+    public Long login(UserRequest request) throws IllegalStateException {
+        // 이메일 확인
+        User user = findUser(request.getUserEmail());
+        // 비밀번호 확인
+        if (user.getUserPassword().equals(request.getUserPassword()))
+            return user.getUserId();
+        throw new IllegalStateException("잘못된 비밀번호입니다");
+    }
+
     private void validateDuplicateUserEmail(User user) {
         userRepository.findByUserEmail(user.getUserEmail())
             .ifPresent(u -> {
