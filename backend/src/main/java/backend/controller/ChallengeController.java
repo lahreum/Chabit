@@ -9,6 +9,7 @@ import backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -70,8 +71,10 @@ public class ChallengeController {
 
     // 챌린지 인증
     @PostMapping("/{challengeId}/proof/{userEmail}")
-    public BaseResponse proofChallenge(@PathVariable Long challengeId, @PathVariable String userEmail, @RequestBody String proofUrl){
+    public BaseResponse proofChallenge(@PathVariable Long challengeId, @PathVariable String userEmail, @RequestBody(required = false) String proofUrl){
         BaseResponse response = null;
+        if(proofUrl == null)
+            return new BaseResponse("fail", "잘못된 인증사진입니다");
         try {
             User user = userService.findUser(userEmail);
             Challenge challenge = challengeService.findByChallengeId(challengeId);
@@ -169,20 +172,10 @@ public class ChallengeController {
     // 오늘까지인 챌린지 종료
     @PostMapping("/done")
     public BaseResponse endChallenge(){
-        // 챌린지 가져온다
-        // 상태 END로 변경
-        // 각 챌린지 참여 유저들 인증 내역 보고 ChallengeResult FAIL, SUCCESS로 변경
-        // SUCCESS면 포인트 지급 필요
         BaseResponse response;
         try {
-            List<Challenge> challenges = challengeService.findChallenges();
-            for (Challenge challenge : challenges) {
-                // 챌린지 종료 날짜가 오늘이라면
-                // 상태 END로 변경 후
-                // 챌린지 참여 유저들 인증 내역 체크
-                List<UserChallenge> challengers = challenge.getChallengers();
-
-            }
+            challengeService.endChallenges();
+            response = new BaseResponse("success", "성공");
         } catch (IllegalStateException e){
             response = new BaseResponse("fail", e.getMessage());
         }
