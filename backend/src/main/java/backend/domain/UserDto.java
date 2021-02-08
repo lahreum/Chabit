@@ -31,6 +31,8 @@ public class UserDto {
     private String userLevel;
     @ApiModelProperty(value="사용자 권한")
     private String userRole;
+    @ApiModelProperty(value="사용자 프로필사진")
+    private String userImage;
 
     public UserDto(String userEmail, String userNickname, String userName, String userPhone) {
         this.userEmail = userEmail;
@@ -45,6 +47,7 @@ public class UserDto {
         this.userPhone = user.getUserPhone();
         this.userPoints = user.getUserPoints();
         this.userJoindate = user.getUserJoindate();
+        this.userImage = user.getUserImage();
     }
 
     public UserDto(String userEmail, String userNickname, String userName, String userPhone, int userPoints, LocalDateTime userJoindate) {
