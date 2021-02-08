@@ -10,6 +10,7 @@ public interface UserRepository {
     Optional<User> findByUserId(Long userId);
     Optional<User> findByUserEmail(String userEmail);
     Optional<User> findByUserEmailAndUserUserPassword(String userEmail, String userPassword);
+    Optional<User> findByUserNickname(String nickname);
     List<User> findAll();
     void deleteUser(User user);
     void clearStore();

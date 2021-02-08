@@ -2,7 +2,6 @@ package backend.domain;
 
 import lombok.Getter;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

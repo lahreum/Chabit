@@ -29,20 +29,20 @@ export default [
         component: FindPw
       },
       {
-        path: 'find-pw/change-pw',
-        name: 'ChangePw',
-        component: ChangePw
-      },
-      {
         path: 'find-email',
         name: 'FindEmail',
         component: FindEmail
       },
-      {
-        path: 'find-email/find-email-finish',
-        name: 'FindEmailFinish',
-        component: FindEmailFinish
-      },
     ]
-    }
+    },
+    {
+      path: '/change-pw',
+      name: 'ChangePw',
+      component: ChangePw
+    },
+    {
+      path: '/find-email-finish',
+      name: 'FindEmailFinish',
+      component: FindEmailFinish
+    },
 ]

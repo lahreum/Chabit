@@ -3,8 +3,11 @@ package backend.repository;
 import backend.domain.Category;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CategoryRepository{
-        Category save(Category category);
-        List<Category> findAll();
+    Category save(Category category);
+    List<Category> findAll();
+    Optional<Category> findByCategoryName(String categoryName);
+    Optional<Category> findByCategoryId(Long categoryId);
 }

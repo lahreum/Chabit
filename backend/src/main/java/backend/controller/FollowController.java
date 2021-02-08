@@ -11,10 +11,11 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/follow")
+@RequestMapping("/v1/follow")
 @CrossOrigin(origins = {"*"})
 @RequiredArgsConstructor
 public class FollowController {
@@ -28,6 +29,7 @@ public class FollowController {
         try {
             follow.setUserId(userService.findUser(request.getUserEmail()));
             follow.setFollowingId(userService.findUser(request.getFollowingEmail()));
+            follow.setFollowDate(LocalDateTime.now());
 
             followService.follow(follow);
             response = new BaseResponse("success", follow.getUserId().getUserId());

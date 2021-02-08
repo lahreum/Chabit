@@ -1,37 +1,60 @@
 package backend.controller;
-
+//http://localhost:9999/swagger-ui.html
 import backend.domain.*;
-import backend.repository.HashtagRepository;
+import backend.service.ChallengeService;
 import backend.service.LevelService;
 import backend.service.UserService;
+import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Api
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/v1/users")
 @CrossOrigin(origins = {"*"})
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
     private final LevelService levelService;
+
+    @ApiOperation(value="모든 사용자 조회", notes="모든 사용자 조회")
     @GetMapping
     public BaseResponse users() {
         List<User> findUsers = userService.findUsers();
 
         // 엔티티 -> DTO 변환
         List<UserDto> collect = findUsers.stream()
-                .map(m -> new UserDto(m.getUserEmail(), m.getUserNickname(), m.getUserName(), m.getUserPhone(), m.getUserPoints(), m.getUserJoindate()))
+                .map(m -> new UserDto(m.getUserEmail(), m.getUserPassword(), m.getUserNickname(), m.getUserName(), m.getUserPhone(), m.getUserPoints(), m.getUserJoindate(), m.getUserRole()))
                 .collect(Collectors.toList());
+
+        // 레벨 추가
+        for(UserDto dto : collect) {
+            dto.addUserLevel(levelService.findUserLevel(dto.getUserPoints()));
+        }
 
         return new BaseResponse("success", collect);
     }
 
+    @ApiOperation(value="닉네임으로 유저 찾기", notes="닉네임으로 유저 찾기")
+    @GetMapping("/nickname/{nickname}")
+    public BaseResponse chekcNickname(@PathVariable String nickname){
+        BaseResponse response = null;
+        try {
+            User user = userService.findUserByNickname(nickname);
+            response = new BaseResponse("success", new UserDto(user));
+        } catch (IllegalStateException e) {
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    @ApiOperation(value="사용자 한명 조회", notes="사용자 한명 조회")
+    @ApiImplicitParam(name = "userEmail", value = "사용자 이메일", required = true)
     @GetMapping("/{userEmail}")
     public BaseResponse user(@PathVariable String userEmail) {
         BaseResponse response = null;
@@ -61,15 +84,12 @@ public class UserController {
     }
 
     @PostMapping
+    @ApiOperation(value="회원가입", notes="회원가입")
+    @ApiImplicitParam(name = "UserRequest", value = "사용자 정보", required = true)
     public BaseResponse signIn(@RequestBody UserRequest request) {
-        User user = new User();
-        user.setUserEmail(request.getUserEmail());
-        user.setUserPassword(request.getUserPassword());
-        user.setUserNickname(request.getUserNickname());
-        user.setUserPhone(request.getUserPhone());
-
         BaseResponse response = null;
         try {
+            User user = User.createUser(request);
             userService.signIn(user);
             response = new BaseResponse("success", new JoinUserResponse("success", "회원가입 성공"));
         } catch (IllegalStateException e) {
@@ -144,6 +164,24 @@ public class UserController {
             response = new BaseResponse("fail", e.getMessage());
         }
 
+        return response;
+    }
+
+    // 랭킹
+    @GetMapping("/ranking")
+    public BaseResponse getRanking(@RequestParam(required = false) String userEmail,
+                                   @RequestParam(required = false) Long categoryId,
+                                   @RequestParam(required = false, defaultValue = "false") Boolean monthlyRanking) {
+        BaseResponse response = null;
+        try {
+            List<User> ranking = userService.findUserByRankingCondition(userEmail, categoryId, monthlyRanking);
+            List<UserDto> collect = ranking.stream()
+                    .map(UserDto::new)
+                    .collect(Collectors.toList());
+            response = new BaseResponse("success", collect);
+        } catch (IllegalStateException e) {
+            response = new BaseResponse("fail", e.getMessage());
+        }
         return response;
     }
 
