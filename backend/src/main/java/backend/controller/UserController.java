@@ -29,8 +29,13 @@ public class UserController {
 
         // 엔티티 -> DTO 변환
         List<UserDto> collect = findUsers.stream()
-                .map(m -> new UserDto(m.getUserEmail(), m.getUserNickname(), m.getUserName(), m.getUserPhone(), m.getUserPoints(), m.getUserJoindate()))
+                .map(m -> new UserDto(m.getUserEmail(), m.getUserPassword(), m.getUserNickname(), m.getUserName(), m.getUserPhone(), m.getUserPoints(), m.getUserJoindate(), m.getUserRole()))
                 .collect(Collectors.toList());
+
+        // 레벨 추가
+        for(UserDto dto : collect) {
+            dto.addUserLevel(levelService.findUserLevel(dto.getUserPoints()));
+        }
 
         return new BaseResponse("success", collect);
     }
