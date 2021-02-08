@@ -43,7 +43,7 @@ export default {
           like: 231
         },
         {
-          src: "https://lh3.googleusercontent.com/proxy/jv-1KBAeFnMDj1VHJf06P5FjvND66v-M4KpkwcPnVwvdiUEukV_xVPv7KnUc8TNNnfrI3CSnPgSO3BWumVnX5HK4MajaWgY-5RzspIkRnXInOIDnCeG85QVuVxlFn1F-0yh5uAx9Fw",
+          src: "https://img1.daumcdn.net/thumb/R720x0.q80/?scode=mtistory2&fname=http%3A%2F%2Fcfile27.uf.tistory.com%2Fimage%2F2641383357E10083031AAB",
           nickname: "어텀리",
           like: 187
         },
