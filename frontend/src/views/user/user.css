@@ -1,12 +1,12 @@
+/* 공통 */
 .outside {
   background-color: #942706;
   padding: 100px 15px 100px 15px;
   display: flex;
   justify-content: center;
 }
-
 .logo {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   width: 115px;
   height: 115px;
   border-radius: 30px;
@@ -14,212 +14,112 @@
   position: absolute;
   top: 60px;
 }
-
 .chabit-logo {
   width: 95px;
   height: 70px;
   position: absolute;
   top: 90px;
 }
-
 .inside {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-radius: 30px;
   padding: 100px 1% 0px;
+  min-width: 320px;
+  max-width: 320px;
+}
+.text-input {
+  margin: 10px 10% 20px;
+  max-width: 80%;
+}
+.bottom {
+  text-align: center;
+  margin-bottom: 100px;
 }
 
-
-/* 로그인 */
-.login, .signup {
-  margin: 10px 30px 30px 30px;
+/* Button 10 */
+#button-10 .knobs:before,
+#button-10 .knobs:after,
+#button-10 .knobs span {
+  position: absolute;
+  top: 10px;
+  width: 99.5px;
+  height: 35px;
+  font-size: 10px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1;
+  padding: 9px 4px;
+  border-radius: 20px;
+  transition: 0.3s ease all;
+}
+#button-10 .knobs:before {
+  content: "";
+  left: 4px;
+  background-color: #942706;
+}
+#button-10 .knobs:after {
+  content: "비밀번호";
+  font-size: small;
+  right: 4px;
+  color: #942706;
+}
+#button-10 .knobs span {
+  display: inline-block;
+  left: 4px;
+  color: #fff;
+  z-index: 1;
+  font-size: small;
+}
+#button-10 .checkbox:checked + .knobs span {
+  color: #942706;
+}
+#button-10 .checkbox:checked + .knobs:before {
+  left: 90px;
+  background-color: #942706;
+}
+#button-10 .checkbox:checked + .knobs:after {
+  color: #fff;
+}
+#button-10 .checkbox:checked ~ .layer {
+  background-color: #fcebeb;
 }
 
+/* 비밀번호 변경 */
+.change-password > p,
+.modify-user > p,
+.signup > p,
 .login > p {
   font-size: large;
   font-weight: 600;
   color: #942706;
+  margin: 0 30px;
 }
-
-.input-with-label {
-  font-size: small;
-  margin: 25px 0;
-}
-
-.input-with-label > input {
-  box-shadow: gray;
-}
-
-.btn-login {
-  background-color: #942706;
-  color: white;
-  border-radius: 30px;
-  width: 215px;
-  height: 40px;
-  margin: 15px 0;
-}
-
-.btn-forget-signup {
-  text-align: center;
-  font-size: small;
-  margin: 5px 0;
-}
-
-.btn-forget-signup > a {
-  color: gray;
-  text-decoration: none;
-}
-
-.btn-forget-signup > span {
-  color: #942706;
-  font-weight: 600;
-}
-
-.btn-social-login {
-  display: flex;
-  justify-content: space-evenly;
-  margin: 40px 0;
-}
-
-
-/* Email, Password 선택 checkbox */
-.email-password-button
-{
-    position: relative;
-    top: 30px;
-    width: 195px;
-    height: 35px;
-    margin: -20px auto 0 auto;
-    overflow: visible;
-}
-
-.email-password-button.r, .email-password-button.r .layer
-{
-    border-radius: 100px;
-}
-
-.email-password-button.b2
-{
-    border-radius: 40px;
-}
-
-.checkbox
-{
-    position: relative;
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-    opacity: 0;
-    cursor: pointer;
-    z-index: 3;
-}
-
-.knobs
-{
-    z-index: 2;
-}
-
-.layer
-{
-    width: 100%;
-    background-color: #ebf7fc;
-    transition: 0.3s ease all;
-    z-index: 1;
-}
-
-/* Button 10 */
-#button-10 .knobs:before, #button-10 .knobs:after, #button-10 .knobs span
-{
-    position: absolute;
-    top: 10px;
-    width: 99.5px;
-    height: 35px;
-    font-size: 10px;
-    font-weight: bold;
-    text-align: center;
-    line-height: 1;
-    padding: 9px 4px;
-    border-radius: 20px;
-    transition: 0.3s ease all;
-}
-
-#button-10 .knobs:before
-{
-    content: '';
-    left: 4px;
-    background-color: #942706;
-}
-
-#button-10 .knobs:after
-{
-    content: 'Password';
-    font-size: small;
-    right: 4px;
-    color: #942706;
-}
-
-#button-10 .knobs span
-{
-    display: inline-block;
-    left: 4px;
-    color: #fff;
-    z-index: 1;
-    font-size: small;
-}
-
-#button-10 .checkbox:checked + .knobs span
-{
-    color: #942706;
-}
-
-#button-10 .checkbox:checked + .knobs:before
-{
-    left: 90px;
-    background-color: #942706;
-}
-
-#button-10 .checkbox:checked + .knobs:after
-{
-    color: #fff;
-}
-
-#button-10 .checkbox:checked ~ .layer
-{
-    background-color: #fcebeb;
-}
-
 
 /* 이메일 찾기 */
-.find-email {
-  margin: 70px 30px 30px 30px;
+.find-email,
+.find-pw {
+  margin: 70px 0 30px 0;
 }
-
-.btn-next, .btn-ok, .btn-signup {
+.btn-next,
+.btn-ok,
+.btn-signup {
   background-color: #942706;
   color: white;
   border-radius: 30px;
   width: 215px;
   height: 40px;
-  margin: 50px 0; 
 }
-
 
 /* 이메일 찾기 완료 */
 .find-email-finish {
-  margin: 40px 30px 30px 30px;
+  margin: 40px 30px 70px 30px;
   text-align: center;
 }
-
 .find-email-finish > p {
   font-size: small;
 }
 
-
 /* 비밀번호 찾기 */
-.find-pw {
-  margin: 70px 30px 30px 30px;
-}
-
 .btn-get-check {
   background-color: #fcc203;
   color: white;
@@ -228,21 +128,93 @@
   height: 25px;
   font-size: x-small;
 }
-
-/* 비밀번호 변경 */
-.change-password {
-  margin: 10px 30px 30px 30px;
+.find-pw .input-with-btn {
+  display: flex;
 }
 
-.change-password > p {
-  font-size: large;
-  font-weight: 600;
-  color: #942706;
+/* 회원정보 수정 */
+.modify-user .btn-left {
+  background-color: white;
+  color: black;
+  border: grey solid 1px;
+}
+.modify-user .input-with-btn {
+  display: flex;
+}
+.modify-user .btn-get-check {
+  margin: auto;
+}
+.modify-user img {
+  margin: 0;
 }
 
 /* 회원가입 */
-.signup > p {
-  font-size: large;
-  font-weight: 600;
+.signup .input-with-btn {
+  display: flex;
+}
+.signup .btn-get-check {
+  margin: auto;
+}
+
+/* 로그인 */
+.btn-login {
+  background-color: #942706;
+  color: white;
+  border-radius: 30px;
+  width: 215px;
+  height: 40px;
+}
+.btn-forget-signup {
+  font-size: small;
+  margin: 10px 0;
+}
+.btn-forget-signup > a {
+  color: gray;
+  text-decoration: none;
+}
+.btn-forget-signup > span {
   color: #942706;
+  font-weight: 600;
+}
+.btn-social-login {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 30px 0;
+}
+
+/* Email, Password 선택 checkbox */
+.email-password-button {
+  position: relative;
+  top: 60px;
+  width: 195px;
+  height: 35px;
+  margin: -20px auto 0 auto;
+  overflow: visible;
+}
+.email-password-button.r,
+.email-password-button.r .layer {
+  border-radius: 100px;
+}
+
+.email-password-button.b2 {
+  border-radius: 40px;
+}
+.checkbox {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 3;
+}
+.knobs {
+  z-index: 2;
+}
+.layer {
+  width: 100%;
+  background-color: #ebf7fc;
+  transition: 0.3s ease all;
+  z-index: 1;
 }

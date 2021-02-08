@@ -1,11 +1,11 @@
 <template>
-  <div class="modifyuser">
-    <div class="outside">
-      <div class="logo"></div>
-      <img class="chabit-logo" src="../../assets/img/chabit.jpg" alt="chabit" />
-      <div class="inside" id="inside">
-        <p>Modify</p>
-        <v-card-text dense>
+  <div class="outside">
+    <div class="logo"></div>
+    <img class="chabit-logo" src="../../assets/img/chabit.jpg" alt="chabit" />
+    <div class="inside">
+      <div class="modify-user">
+        <p>회원정보 변경</p>
+        <v-card-text class="text-input">
           <v-flex class="mb-4 text-center">
             <v-badge
               color="red darken-4"
@@ -20,42 +20,31 @@
               </v-avatar>
             </v-badge>
           </v-flex>
-          <v-text-field dense filled readonly v-model="form.name" label="Name"></v-text-field>
-          <v-text-field
-            filled
-            dense
-            readonly
-            v-model="form.email"
-            label="Email"
-            type="email"
-          ></v-text-field>
-          <v-text-field
-            dense
-            v-model="form.password"
-            label="Password"
-            type="password"
-          ></v-text-field>
-          <v-text-field v-model="form.confirm" label="Confirm" type="password"></v-text-field>
+          <v-text-field disabled v-model="form.name" label="이름"></v-text-field>
+          <v-text-field disabled v-model="form.email" label="이메일" type="email"></v-text-field>
+          <v-text-field v-model="form.password" label="비밀번호" type="password"></v-text-field>
+          <v-text-field v-model="form.confirm" label="비밀번호 확인" type="password"></v-text-field>
           <div class="input-with-btn">
-            <v-text-field v-model="form.nickName" label="Nickname"></v-text-field
-            ><button class="btn-get-check">Check</button>
-          </div>
-          <div class="input-with-btn">
-            <v-text-field v-model="form.phoneNumber" label="Phone number"></v-text-field>
-            <button class="btn-get-check">Send</button>
+            <v-text-field v-model="form.nickName" label="닉네임"></v-text-field
+            ><button class="btn-get-check">중복확인</button>
           </div>
           <div class="input-with-btn">
             <v-text-field
-              v-model="form.certificationNumber"
-              label="Certification Number"
-            ></v-text-field
-            ><button class="btn-get-check">Confirm</button>
+              v-model="form.phoneNumber"
+              label="연락처"
+              type="tel"
+              @input="enforcePhoneFormat()"
+            ></v-text-field>
+            <button class="btn-get-check">인증요청</button>
+          </div>
+          <div class="input-with-btn">
+            <v-text-field v-model="form.certificationNumber" label="인증번호 입력"></v-text-field
+            ><button class="btn-get-check">확인</button>
           </div>
         </v-card-text>
-        <v-card-actions class="inside-btn"
-          ><v-spacer></v-spacer><btn-small text="Cancel" class="btn-left"></btn-small
-          ><v-spacer></v-spacer><btn-small text="Change"></btn-small><v-spacer></v-spacer>
-          <v-spacer></v-spacer>
+        <v-card-actions class="bottom"
+          ><v-spacer></v-spacer><btn-small text="취소" class="btn-left"></btn-small
+          ><v-spacer></v-spacer><btn-small text="저장"></btn-small><v-spacer></v-spacer>
         </v-card-actions>
         <!-- <avatar-picker
           v-model="showAvatarPicker"
@@ -75,7 +64,6 @@ export default {
   pageTitle: "My Profile",
   data() {
     return {
-      loading: false,
       form: {
         name: "",
         email: "",
@@ -88,6 +76,13 @@ export default {
       // showAvatarPicker: false,
     };
   },
+  methods: {
+    enforcePhoneFormat() {
+      let x = this.form.phoneNumber.replace(/\D/g, "").match(/(\d{0,3})(\d{0,4})(\d{0,4})/);
+
+      this.form.phoneNumber = !x[2] ? x[1] : "(" + x[1] + ") " + x[2] + (x[3] ? "-" + x[3] : "");
+    },
+  },
   // methods: {
   //   openAvatarPicker() {
   //     this.showAvatarPicker = true;
@@ -98,29 +93,3 @@ export default {
   // },
 };
 </script>
-
-<style scoped>
-.inside > p {
-  font-size: large;
-  font-weight: 600;
-  color: #942706;
-  margin: 0 30px;
-}
-.btn-left {
-  background-color: white;
-  color: black;
-  border: grey solid 1px;
-}
-.input-with-btn {
-  display: flex;
-}
-.btn-get-check {
-  margin: auto;
-}
-.inside-btn {
-  margin-bottom: 2rem;
-}
-img {
-  margin: 0;
-}
-</style>
