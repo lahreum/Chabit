@@ -8,7 +8,6 @@ import lombok.Data;
 import java.util.List;
 
 // 챌린지 생성
-// TODO: 인증샷 예시, 챌린지 썸네일 기능 추가시 변경 필요
 @Data
 @ApiModel
 public class ChallengeRequest {
@@ -16,12 +15,16 @@ public class ChallengeRequest {
     String challengeName;
     @ApiModelProperty(value = "챌린지 설명")
     String challengeDesc;
+    @ApiModelProperty(value = "챌린지 썸네일")
+    String challengeThumbnail;
     @ApiModelProperty(value = "챌린지 개설자")
     String userEmail;
     @ApiModelProperty(value = "카테고리 이름")
     String categoryName;
     @ApiModelProperty(value = "인증 방법")
     String authWay;
+    @ApiModelProperty(value = "챌린지 인증 예시")
+    String authExample;
     @ApiModelProperty(value = "인증 빈도 (주 x회)")
     int authFrequency;
     @ApiModelProperty(value = "공휴일 인증 여부 true / false")
@@ -36,4 +39,6 @@ public class ChallengeRequest {
     String challengeEnddate;
     @ApiModelProperty(value = "챌린지 해시태그 리스트")
     List<Hashtag> hashtags;
+
+
 }

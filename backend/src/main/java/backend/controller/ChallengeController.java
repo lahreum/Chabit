@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,7 +30,7 @@ public class ChallengeController {
     private final ProofService proofService;
     private final Uploader uploader;
 
-    // TODO: 인증샷 예시, 챌린지 썸네일 기능 추가시 변경 필요
+
     @PostMapping
     @ApiOperation(value="챌린지 생성", notes="챌린지 생성")
     public BaseResponse makeChallenge(@RequestBody ChallengeRequest request) {
@@ -51,6 +52,36 @@ public class ChallengeController {
 
             response = new BaseResponse("success", "챌린지 생성 성공");
         } catch (IllegalStateException e) {
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    @PostMapping("/thumbnail")
+    @ApiOperation(value = "챌린지 썸네일 등록", notes = "챌린지 썸네일 등록")
+    public BaseResponse putChallengeThumbnail(@RequestPart(value = "thumbnail", required = false) MultipartFile thumbnail) {
+        BaseResponse response = null;
+        try {
+            String unique = "thumbnail_" + LocalDateTime.now() + "_" + (int)(Math.random() * 100000) + "_";
+            String thumbnailUrl = uploader.upload(thumbnail, "challenges", unique);
+
+            response = new BaseResponse("success", thumbnailUrl);
+        } catch (IllegalStateException | IOException | IllegalArgumentException e) {
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    @PostMapping("/authExample")
+    @ApiOperation(value = "챌린지 인증 예시 등록", notes = "챌린지 인증 예시 사진 등록")
+    public BaseResponse putChallengeAuthExample(@RequestPart(value = "authExample", required = false) MultipartFile authExample) {
+        BaseResponse response = null;
+        try {
+            String unique = "authExample_" + LocalDateTime.now() + "_" + (int)(Math.random() * 100000) + "_";
+            String authExampleUrl = uploader.upload(authExample, "challenges", unique);
+
+            response = new BaseResponse("success", authExampleUrl);
+        } catch (IllegalStateException | IOException | IllegalArgumentException e) {
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;

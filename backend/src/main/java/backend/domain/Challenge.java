@@ -96,6 +96,8 @@ public class Challenge { // Challenge 코드리뷰 필수.
         challenge.setChallengeDesc(request.getChallengeDesc());
         challenge.setChallengeOwner(owner);
         challenge.setChallengeCategory(category);
+        challenge.setChallengeThumbnail(request.getChallengeThumbnail());
+        challenge.setAuthExample(request.getAuthExample());
 
         LocalDate startdate= LocalDate.parse(request.getChallengeStartdate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         challenge.setChallengeStartdate(LocalDateTime.of(startdate, LocalDateTime.MIN.toLocalTime()));
