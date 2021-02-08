@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class LoginController {
     private final UserService userService;
 
-    @ApiOperation(value="닉네임으로 유저 찾기", notes="닉네임으로 유저 찾기")
+    @ApiOperation(value="로그인", notes="유저 이메일, 비밀번호 받아 로그인")
     @PostMapping
     public BaseResponse login(@RequestBody UserRequest request) {
         BaseResponse response = null;
