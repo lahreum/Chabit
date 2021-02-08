@@ -37,12 +37,12 @@ public class UserService {
         return user.getUserId();
     }
 
-    public Long login(UserRequest request) throws IllegalStateException {
+    public User login(UserRequest request) throws IllegalStateException {
         // 이메일 확인
         User user = findUser(request.getUserEmail());
         // 비밀번호 확인
         if (user.getUserPassword().equals(request.getUserPassword()))
-            return user.getUserId();
+            return user;
         throw new IllegalStateException("잘못된 비밀번호입니다");
     }
 
@@ -252,4 +252,10 @@ public class UserService {
         return result;
     }
 
+    // 챌린지 인증
+    @Transactional
+    public void proofChallenge(User user, Challenge challenge, String proofUrl) {
+        Proof proof = Proof.createProof(user, challenge, proofUrl);
+        user.proofChallenge(proof);
+    }
 }

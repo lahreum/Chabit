@@ -40,7 +40,8 @@ public class UserController {
         return new BaseResponse("success", collect);
     }
 
-    @ApiOperation(value="닉네임으로 유저 찾기", notes="닉네임으로 유저 찾기")
+    @ApiOperation(value="닉네임으로 유저 찾기", notes="닉네임 중복 체크 용")
+    @ApiImplicitParam(name = "nickname", value = "사용자 닉네임", required = true)
     @GetMapping("/nickname/{nickname}")
     public BaseResponse chekcNickname(@PathVariable String nickname){
         BaseResponse response = null;
@@ -100,6 +101,7 @@ public class UserController {
     }
 
     @PutMapping("/{userEmail}")
+    @ApiOperation(value="사용자 정보 수정", notes="사용자 정보 수정")
     public BaseResponse updateUser(@PathVariable String userEmail, @RequestBody UserRequest request) {
         BaseResponse response = null;
         try {
@@ -114,6 +116,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{userEmail}")
+    @ApiOperation(value="사용자 삭제", notes="회원탈퇴용")
     public BaseResponse deleteUser(@PathVariable String userEmail) {
         BaseResponse response = null;
         try {
@@ -127,6 +130,7 @@ public class UserController {
     }
 
     @PostMapping("/hashtag/{userEmail}")
+    @ApiOperation(value="해쉬태그 등록", notes="해쉬태그 등록")
     public BaseResponse saveHashtag(@PathVariable String userEmail, @RequestBody String hashtagName) {
         BaseResponse response = null;
         try {
@@ -139,6 +143,7 @@ public class UserController {
     }
 
     @GetMapping("/hashtag/{userEmail}")
+    @ApiOperation(value="유저 해쉬태그 조회", notes="유저 해쉬태그 가져오기")
     public BaseResponse getUserHashtag(@PathVariable String userEmail) {
         BaseResponse response = null;
         try {
@@ -155,6 +160,7 @@ public class UserController {
     }
 
     @DeleteMapping("/hashtag/{userEmail}/{hashtagName}")
+    @ApiOperation(value="유저 해쉬태그 삭제", notes="유저 해쉬태그 삭제")
     public BaseResponse deleteHashtag(@PathVariable String userEmail, @PathVariable String hashtagName) {
         BaseResponse response = null;
         try {
@@ -169,6 +175,7 @@ public class UserController {
 
     // 랭킹
     @GetMapping("/ranking")
+    @ApiOperation(value="랭킹 조회", notes="랭킹 조회. 조건별 조회 가능")
     public BaseResponse getRanking(@RequestParam(required = false) String userEmail,
                                    @RequestParam(required = false) Long categoryId,
                                    @RequestParam(required = false, defaultValue = "false") Boolean monthlyRanking) {
@@ -188,9 +195,12 @@ public class UserController {
     // ======= Response & Request 클래스 =======
     // 회원 가입
     @Data
+    @ApiModel
     static class JoinUserResponse {
-        private String joinResult; // 회원가입 결과
-        private String message; // 성공 & 실패 메세지
+        @ApiModelProperty(value = "회원가입 결과")
+        private String joinResult;
+        @ApiModelProperty(value = "회원가입 결과 메세지")
+        private String message; 
 
         public JoinUserResponse() {
         }
@@ -204,8 +214,11 @@ public class UserController {
     // 회원 탈퇴
     @Data
     @AllArgsConstructor
+    @ApiModel
     static class DeleteUserResponse {
-        private String deleteResult; // 삭제 결과
+        @ApiModelProperty(value = "탈퇴 결과")
+        private String deleteResult;
+        @ApiModelProperty(value = "탈퇴 결과 메세지")
         private String message;
     }
 

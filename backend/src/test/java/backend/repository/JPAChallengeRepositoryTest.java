@@ -53,12 +53,12 @@ class JPAChallengeRepositoryTest {
         challenge.setChallengeCategory(category);
         challenge.setChallengeStartdate(LocalDateTime.now());
         challenge.setChallengeEnddate(LocalDateTime.now().plusDays(1));
-        challenge.setAuthFrequency("주 2회인증");
+        challenge.setAuthFrequency(2);
         challenge.setAuthHoliday(1);
         //when
         challengeService.makeChallenge(challenge);
         //then
-        org.assertj.core.api.Assertions.assertThat(challenge.getAuthFrequency()).isEqualTo("주 2회인증");
+        org.assertj.core.api.Assertions.assertThat(challenge.getAuthFrequency()).isEqualTo(2);
     }
     @Test
     void findAll(){
@@ -74,7 +74,7 @@ class JPAChallengeRepositoryTest {
         challenge.setChallengeCategory(category);
         challenge.setChallengeStartdate(LocalDateTime.now());
         challenge.setChallengeEnddate(LocalDateTime.now().plusDays(1));
-        challenge.setAuthFrequency("주 3회인증");
+        challenge.setAuthFrequency(3);
         challenge.setAuthHoliday(1);
         Challenge challenge2 =  new Challenge();
         User user2 = new User();
@@ -88,7 +88,7 @@ class JPAChallengeRepositoryTest {
         challenge2.setChallengeCategory(category2);
         challenge2.setChallengeStartdate(LocalDateTime.now());
         challenge2.setChallengeEnddate(LocalDateTime.now().plusDays(1));
-        challenge2.setAuthFrequency("주 3회인증");
+        challenge2.setAuthFrequency(3);
         challenge2.setAuthHoliday(3);
         userService.signIn(user);
         userService.signIn(user2);
@@ -118,7 +118,7 @@ class JPAChallengeRepositoryTest {
         challenge.setChallengeCategory(category);
         challenge.setChallengeStartdate(LocalDateTime.now());
         challenge.setChallengeEnddate(LocalDateTime.now().plusDays(1));
-        challenge.setAuthFrequency("주 3회인증");
+        challenge.setAuthFrequency(3);
         challenge.setAuthHoliday(1);
         Challenge challenge2 =  new Challenge();
         User user2 = new User();
@@ -132,7 +132,7 @@ class JPAChallengeRepositoryTest {
         challenge2.setChallengeCategory(category2);
         challenge2.setChallengeStartdate(LocalDateTime.now());
         challenge2.setChallengeEnddate(LocalDateTime.now().plusDays(1));
-        challenge2.setAuthFrequency("주 3회인증");
+        challenge2.setAuthFrequency(3);
         challenge2.setAuthHoliday(3);
         Challenge challenge3 =  new Challenge();
         User user3 = new User();
@@ -146,7 +146,7 @@ class JPAChallengeRepositoryTest {
         challenge3.setChallengeCategory(category3);
         challenge3.setChallengeStartdate(LocalDateTime.now());
         challenge3.setChallengeEnddate(LocalDateTime.now().plusDays(1));
-        challenge3.setAuthFrequency("주 3회인증");
+        challenge3.setAuthFrequency(3);
         challenge3.setAuthHoliday(3);
 
         userService.signIn(user);
@@ -181,7 +181,7 @@ class JPAChallengeRepositoryTest {
         challenge.setChallengeUsercount(1000);
         challenge.setChallengeStartdate(LocalDateTime.now());
         challenge.setChallengeEnddate(LocalDateTime.now().plusDays(1));
-        challenge.setAuthFrequency("주 3회인증");
+        challenge.setAuthFrequency(3);
         challenge.setAuthHoliday(1);
         Challenge challenge2 =  new Challenge();
         User user2 = new User();
@@ -196,7 +196,7 @@ class JPAChallengeRepositoryTest {
         challenge2.setChallengeUsercount(2000);
         challenge2.setChallengeStartdate(LocalDateTime.now());
         challenge2.setChallengeEnddate(LocalDateTime.now().plusDays(1));
-        challenge2.setAuthFrequency("주 3회인증");
+        challenge2.setAuthFrequency(3);
         challenge2.setAuthHoliday(3);
         Challenge challenge3 =  new Challenge();
         User user3 = new User();
@@ -211,7 +211,7 @@ class JPAChallengeRepositoryTest {
         challenge3.setChallengeUsercount(1500);
         challenge3.setChallengeStartdate(LocalDateTime.now());
         challenge3.setChallengeEnddate(LocalDateTime.now().plusDays(1));
-        challenge3.setAuthFrequency("주 3회인증");
+        challenge3.setAuthFrequency(3);
         challenge3.setAuthHoliday(3);
 
         userService.signIn(user);

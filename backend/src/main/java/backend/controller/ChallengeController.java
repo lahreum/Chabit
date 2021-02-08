@@ -2,10 +2,9 @@ package backend.controller;
 
 import backend.domain.*;
 import backend.exception.NotEnoughPointException;
-import backend.service.CategoryService;
-import backend.service.ChallengeService;
-import backend.service.HashtagService;
-import backend.service.UserService;
+import backend.service.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +12,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Api
 @RestController
 @RequestMapping("/v1/challenges")
 @CrossOrigin(origins = {"*"})
@@ -22,9 +22,11 @@ public class ChallengeController {
     private final UserService userService;
     private final CategoryService categoryService;
     private final HashtagService hashtagService;
+    private final ProofService proofService;
 
     // TODO: 인증샷 예시, 챌린지 썸네일 기능 추가시 변경 필요
     @PostMapping
+    @ApiOperation(value="챌린지 생성", notes="챌린지 생성")
     public BaseResponse makeChallenge(@RequestBody ChallengeRequest request) {
         BaseResponse response = null;
         // 가져온 정보 토대로 챌린지 생성
@@ -51,6 +53,7 @@ public class ChallengeController {
 
     // 챌린지 참여
     @GetMapping("/{challengeId}/{userEmail}")
+    @ApiOperation(value="챌린지 참여", notes="챌린지 참여")
     public BaseResponse joinChallenge(@PathVariable Long challengeId, @PathVariable String userEmail){
         BaseResponse response = null;
         try {
@@ -68,8 +71,74 @@ public class ChallengeController {
         return response;
     }
 
+    // 챌린지 인증
+    @PostMapping("/{challengeId}/proof/{userEmail}")
+    @ApiOperation(value="챌린지 인증", notes="챌린지 인증 등록")
+    public BaseResponse proofChallenge(@PathVariable Long challengeId, @PathVariable String userEmail, @RequestBody(required = false) String proofUrl){
+        BaseResponse response = null;
+        if(proofUrl == null)
+            return new BaseResponse("fail", "잘못된 인증사진입니다");
+        try {
+            User user = userService.findUser(userEmail);
+            Challenge challenge = challengeService.findByChallengeId(challengeId);
+
+            if(challenge == null)
+                response = new BaseResponse("fail", "잘못된 챌린지 아이디입니다");
+            else {
+                // TODO: 인증 이미지 저장
+                userService.proofChallenge(user, challenge, proofUrl);
+                response = new BaseResponse("success", "인증 성공");
+            }
+        } catch (IllegalStateException e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    // 챌린지 인증 목록 가져오기
+    @GetMapping("/{challengeId}/proof")
+    @ApiOperation(value="챌린지 인증 목록", notes="한 챌린지에 등록된 모든 인증 목록 조회")
+    public BaseResponse getProofs(@PathVariable Long challengeId){
+        BaseResponse response = null;
+        try {
+            List<Proof> proofList = proofService.findAllByChallengeId(challengeId);
+            List<ProofDto> collect = proofList.stream()
+                    .map(ProofDto::new)
+                    .collect(Collectors.toList());
+            response = new BaseResponse("success", collect);
+        } catch (IllegalStateException e) {
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    // 챌린지 인증 취소
+    @DeleteMapping("/{challengeId}/proof/{proofId}")
+    @ApiOperation(value="챌린지 인증 반려", notes="챌린지에 등록한 인증 반려")
+    public BaseResponse proofCancel(@PathVariable Long challengeId, @PathVariable Long proofId, @RequestParam(required = false) String ownerEmail){
+        BaseResponse response = null;
+        if(ownerEmail == null)
+            return new BaseResponse("fail", "개설자 이메일이 없습니다");
+        try {
+            User owner = userService.findUser(ownerEmail);
+            Challenge challenge = challengeService.findByChallengeId(challengeId);
+
+            if (!challenge.getChallengeOwner().getUserEmail().equals(ownerEmail))
+                response = new BaseResponse("fail", "챌린지 개설자가 아닙니다");
+            else {
+                // 해당 인증 삭제
+                proofService.deleteProof(proofId);
+                response = new BaseResponse("success", "인증 취소 완료");
+            }
+        } catch (IllegalStateException e) {
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
     // 카테고리 추가
     @PostMapping("/category")
+    @ApiOperation(value="카테고리 생성", notes="챌린지 카테고리 생성")
     public BaseResponse makeCategory(@RequestBody String categoryName){
         BaseResponse response = null;
         try {
@@ -83,6 +152,7 @@ public class ChallengeController {
 
     // 카테고리 목록 가져오기
     @GetMapping("/category")
+    @ApiOperation(value="카테고리 목록 조회", notes="카테고리 목록 조회")
     public BaseResponse getCategories(){
         BaseResponse response = null;
         try {
@@ -96,6 +166,7 @@ public class ChallengeController {
 
     // 진행 예정, 진행중인 모든 챌린지 가져오기
     @GetMapping
+    @ApiOperation(value="챌린지 목록 조회", notes="진행중 & 진행 예정 중인 모든 챌린지 조회")
     public BaseResponse getChallenges(@RequestParam(required = false) String challengeName){
         BaseResponse response = null;
         try {
@@ -116,6 +187,7 @@ public class ChallengeController {
 
     // 특정 챌린지 1개 가져오기
     @GetMapping("/{challengeId}")
+    @ApiOperation(value="챌린지 조회", notes="특정 챌린지 1개 조회")
     public BaseResponse getChallenge(@PathVariable Long challengeId) {
         BaseResponse response = null;
         try {
@@ -132,6 +204,7 @@ public class ChallengeController {
 
     // 핫챌린지 4개 가져오기
     @GetMapping("/hot")
+    @ApiOperation(value="핫 챌린지 조회", notes="인기 상위 챌린지 4개 조회")
     public BaseResponse getHotChallenges(){
         BaseResponse response = null;
         try {
@@ -145,6 +218,30 @@ public class ChallengeController {
         return response;
     }
 
-    // ======= Response & Request 클래스 =======
-
+    // 오늘까지인 챌린지 종료
+    @PostMapping("/done")
+    @ApiOperation(value="챌린지 종료", notes="오늘까지인 모든 챌린지 종료 후 포인트 산정")
+    public BaseResponse endChallenge(){
+        BaseResponse response;
+        try {
+            challengeService.endChallenges();
+            response = new BaseResponse("success", "성공");
+        } catch (IllegalStateException e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+    // 오늘부터 시작인 챌린지 시작
+    @PostMapping("/start")
+    @ApiOperation(value="챌린지 시작", notes="오늘부터 시작인 챌린지들 시작")
+    public BaseResponse startChallenge() {
+        BaseResponse response = null;
+        try {
+            challengeService.startChallenges();
+            response = new BaseResponse("success", "챌린지 시작");
+        } catch (IllegalStateException e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
 }

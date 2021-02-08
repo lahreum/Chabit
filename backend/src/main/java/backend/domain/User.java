@@ -44,6 +44,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PointHistory> pointHistories = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Proof> proofs = new ArrayList<>();
+
     // 생성 메서드
     public static User createUser(UserRequest request) {
         User user = new User();
@@ -68,6 +71,11 @@ public class User {
     public void addHistory(PointHistory history){
         history.setUser(this);
         this.pointHistories.add(history);
+    }
+
+    public void proofChallenge(Proof proof){
+        this.proofs.add(proof);
+        proof.setUser(this);
     }
 
     // 비즈니스 로직

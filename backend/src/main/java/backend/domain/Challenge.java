@@ -51,7 +51,7 @@ public class Challenge { // Challenge 코드리뷰 필수.
     @Column
     private String authWay;
     @Column(nullable = false)
-    private String authFrequency;
+    private int authFrequency;
     @Column
     private LocalTime authStarttime;
     @Column
@@ -100,7 +100,7 @@ public class Challenge { // Challenge 코드리뷰 필수.
         LocalDate startdate= LocalDate.parse(request.getChallengeStartdate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         challenge.setChallengeStartdate(LocalDateTime.of(startdate, LocalDateTime.MIN.toLocalTime()));
 
-        LocalDate enddate= LocalDate.parse(request.getChallengeStartdate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        LocalDate enddate= LocalDate.parse(request.getChallengeEnddate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         challenge.setChallengeEnddate(LocalDateTime.of(enddate, LocalDateTime.MIN.toLocalTime()));
 
         challenge.setAuthWay(request.getAuthWay());

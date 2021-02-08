@@ -22,4 +22,13 @@ public class UserChallenge {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="challenge_id")
     private Challenge challenge;
+
+    @Enumerated(EnumType.STRING)
+    private ChallengeResult userChallengeResult;
+
+    public UserChallenge(User user, Challenge challenge) {
+        this.user = user;
+        this.challenge = challenge;
+        this.userChallengeResult = ChallengeResult.READY;
+    }
 }
