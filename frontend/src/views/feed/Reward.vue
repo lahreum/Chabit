@@ -19,7 +19,7 @@
       </v-card>
       <!-- 뱃지 리스트 -->
       <div>
-        <div style="width:90%; margin:20px; padding:10px;text-align:center;">
+        <div style="width:100%; margin-top:30px; text-align:center;">
           <v-row no-gutters>
             <v-col
               v-for="badge in badges"

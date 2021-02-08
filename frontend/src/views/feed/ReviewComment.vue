@@ -1,21 +1,23 @@
 <template>
   <div>
     <div style="margin-left:15px;display:flex;">
-      <div style="float:left;"><Profile src="https://www.shareicon.net/data/128x128/2016/09/01/822711_user_512x512.png" style="margin:10px;"/></div>
+      <div style="float:left;"><Profile src="https://ifh.cc/g/MHQ1jy.jpg" style="margin:10px;"/></div>
       <div >saljjingae<br><p>집밥 해먹기 챌린지를 통해 몸도 마음도 건강해질 수 있었던 기회였다. :)
-      앞으로도 다른 챌린지에 꾸준히 참여해봐야겠다.<br><br></p>
+      앞으로도 다른 챌린지에 꾸준히 참여해봐야겠다.<br></p>
+      <div style="color:gray; font-size:10px; font-weight:500;margin-bottom:10px;">2021.02.08</div>
       </div>
     </div>
     <div>
       <TalkComponent v-for="talk in talks" :talk="talk" v-bind:key="talk.id"/>
     </div>
+    <br><br><br><br>
 
     <v-bottom-navigation
     color="primary"
     horizontal fixed height="80"
     >
-        <Profile src="https://www.shareicon.net/data/128x128/2016/09/01/822711_user_512x512.png" style="margin:10px;"/><br>
-        <v-text-field label="댓글 달기..." v-model="oneComment"></v-text-field>
+        <Profile src="https://ifh.cc/g/MHQ1jy.jpg" style="margin:20px;"/><br>
+        <v-text-field label="댓글 달기..." v-model="oneComment" v-on:keyup.enter="addComment" style="margin-top:20px;"></v-text-field>
         <v-btn @click="addComment" >게시</v-btn>
   
     </v-bottom-navigation>
@@ -37,46 +39,22 @@ export default {
     talks: [
       {
         id: 1,
-        name: 'James',
-        handle: '@james',
-        img: 'https://www.shareicon.net/data/128x128/2016/09/01/822711_user_512x512.png',
-        talk: 'Puppy kitty ipsum dolor sit good dog tigger good boy furry teeth purr lazy cat run fast fish critters string.',
+        name: 'gogogooo',
+        img: 'https://ifh.cc/g/z3nk1K.jpg',
+        talk: '헉... 집밥 챌린지 재밌어 보이네요.. 저같은 똥손도 참여해도될까요,,ㅎㅎㅎ',
       },
       {
         id: 2,
-        name: 'Jessica',
-        handle: '@jessica',
-        img: 'https://www.shareicon.net/data/128x128/2016/09/01/822739_user_512x512.png',
-        talk: 'Wag Tail tuxedo run bedding head chew food purr drool kisses carrier chirp toy ID tag slobbery smooshy.',
+        name: 'sujinnn',
+        img: 'https://ifh.cc/g/hkmcm5.jpg',
+        talk: '우왕!!! 저랑 같은 챌린지 참여하셨었네요 ㅎㅎㅎ 잘 보고갑니다~ 제 피드도 들려주세요 >.<',
       },
       {
         id: 3,
-        name: 'Heather',
-        handle: '@heather',
-        img: 'https://www.shareicon.net/data/128x128/2016/09/01/822761_user_512x512.png',
-        talk: 'Rover maine coon cat speak harness whiskers mouse.',
+        name: '6seongjae',
+        img: 'https://ifh.cc/g/LAsIsp.jpg',
+        talk: '금손이세요..... ',
       },
-      {
-        id: 4,
-        name: 'Arthur',
-        handle: '@arthur',
-        img: 'https://www.shareicon.net/data/128x128/2016/09/01/822745_user_512x512.png',
-        talk: 'Toys stay finch polydactyl stay barky bark pet supplies food Buddy chirp Spike nap stick dog house throw.Tail collar leash Rover meow catch Scooby snacks.',
-      },
-      {
-        id: 5,
-        name: 'Francesca',
-        handle: '@francesca',
-        img: 'https://www.shareicon.net/data/128x128/2016/09/01/822715_user_512x512.png',
-        talk: 'Kitty bark string shake litter box toys polydactyl yawn polydactyl scratcher water dog stay cage nest slobber chirp water.',
-      },
-      {
-        id: 6,
-        name: 'Tina',
-        handle: '@tina',
-        img: 'https://www.shareicon.net/data/128x128/2016/09/01/822726_user_512x512.png',
-        talk: 'Birds fur collar fluffy collar parakeet barky dog house run sit Buddy purr. Bird wag tail small animals groom vitamins Tigger.',
-      }
     ],
   }),
     methods: {
