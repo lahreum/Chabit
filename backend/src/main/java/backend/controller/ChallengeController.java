@@ -3,11 +3,14 @@ package backend.controller;
 import backend.domain.*;
 import backend.exception.NotEnoughPointException;
 import backend.service.*;
+import backend.utils.Uploader;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,6 +26,7 @@ public class ChallengeController {
     private final CategoryService categoryService;
     private final HashtagService hashtagService;
     private final ProofService proofService;
+    private final Uploader uploader;
 
     // TODO: 인증샷 예시, 챌린지 썸네일 기능 추가시 변경 필요
     @PostMapping
@@ -74,10 +78,8 @@ public class ChallengeController {
     // 챌린지 인증
     @PostMapping("/{challengeId}/proof/{userEmail}")
     @ApiOperation(value="챌린지 인증", notes="챌린지 인증 등록")
-    public BaseResponse proofChallenge(@PathVariable Long challengeId, @PathVariable String userEmail, @RequestBody(required = false) String proofUrl){
+    public BaseResponse proofChallenge(@PathVariable Long challengeId, @PathVariable String userEmail, @RequestPart("proofImage") MultipartFile file){
         BaseResponse response = null;
-        if(proofUrl == null)
-            return new BaseResponse("fail", "잘못된 인증사진입니다");
         try {
             User user = userService.findUser(userEmail);
             Challenge challenge = challengeService.findByChallengeId(challengeId);
@@ -85,11 +87,12 @@ public class ChallengeController {
             if(challenge == null)
                 response = new BaseResponse("fail", "잘못된 챌린지 아이디입니다");
             else {
-                // TODO: 인증 이미지 저장
+                String uniqueName = user.getUserId() + "_" + challengeId + "_";
+                String proofUrl = uploader.upload(file, "proofs", uniqueName);
                 userService.proofChallenge(user, challenge, proofUrl);
                 response = new BaseResponse("success", "인증 성공");
             }
-        } catch (IllegalStateException e){
+        } catch (IllegalStateException | IOException e){
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;
