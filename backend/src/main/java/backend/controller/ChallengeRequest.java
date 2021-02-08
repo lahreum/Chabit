@@ -14,7 +14,7 @@ public class ChallengeRequest {
     String userEmail;   // 챌린지 개설자
     String categoryName; // 선택한 카테고리 이름
     String authWay; // 인증 방법
-    String authFrequency; // 인증 횟수
+    int authFrequency; // 인증 횟수
     boolean authHoliday; // 공휴일 인증 여부
     String authStarttime; // 인증 가능 시작 시간
     String authEndtime; // 인증 가능 종료 시간

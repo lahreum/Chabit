@@ -252,4 +252,10 @@ public class UserService {
         return result;
     }
 
+    // 챌린지 인증
+    @Transactional
+    public void proofChallenge(User user, Challenge challenge, String proofUrl) {
+        Proof proof = Proof.createProof(user, challenge, proofUrl);
+        user.proofChallenge(proof);
+    }
 }

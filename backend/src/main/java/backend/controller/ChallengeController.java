@@ -9,6 +9,7 @@ import backend.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -63,6 +64,29 @@ public class ChallengeController {
             
             response = new BaseResponse("success", "챌린지 참가 완료");
         } catch (IllegalStateException | NotEnoughPointException e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    // 챌린지 인증
+    @PostMapping("/{challengeId}/proof/{userEmail}")
+    public BaseResponse proofChallenge(@PathVariable Long challengeId, @PathVariable String userEmail, @RequestBody(required = false) String proofUrl){
+        BaseResponse response = null;
+        if(proofUrl == null)
+            return new BaseResponse("fail", "잘못된 인증사진입니다");
+        try {
+            User user = userService.findUser(userEmail);
+            Challenge challenge = challengeService.findByChallengeId(challengeId);
+
+            if(challenge == null)
+                response = new BaseResponse("fail", "잘못된 챌린지 아이디입니다");
+            else {
+                // TODO: 인증 이미지 저장
+                userService.proofChallenge(user, challenge, proofUrl);
+                response = new BaseResponse("success", "인증 성공");
+            }
+        } catch (IllegalStateException e){
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;
@@ -145,6 +169,28 @@ public class ChallengeController {
         return response;
     }
 
-    // ======= Response & Request 클래스 =======
-
+    // 오늘까지인 챌린지 종료
+    @PostMapping("/done")
+    public BaseResponse endChallenge(){
+        BaseResponse response;
+        try {
+            challengeService.endChallenges();
+            response = new BaseResponse("success", "성공");
+        } catch (IllegalStateException e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+    // 오늘부터 시작인 챌린지 시작
+    @PostMapping("/start")
+    public BaseResponse startChallenge() {
+        BaseResponse response = null;
+        try {
+            challengeService.startChallenges();
+            response = new BaseResponse("success", "챌린지 시작");
+        } catch (IllegalStateException e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
 }

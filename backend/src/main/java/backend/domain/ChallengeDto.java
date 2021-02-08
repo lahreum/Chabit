@@ -22,7 +22,7 @@ public class ChallengeDto {
     private int challengePoint;
     private int challengeUserCount;
     private String authWay;
-    private String authFrequency;
+    private int authFrequency;
     private LocalTime authStarttime;
     private LocalTime authEndtime;
     private boolean authHoliday;
@@ -52,7 +52,7 @@ public class ChallengeDto {
     }
 
     // 메인화면 HOT 챌린지.
-    public ChallengeDto (String challengeName, String categoryName, UserDto challengeOwner, String challengeThumbnail, String authFrequency){
+    public ChallengeDto (String challengeName, String categoryName, UserDto challengeOwner, String challengeThumbnail, int authFrequency){
         this.challengeName = challengeName;
         this.categoryName = categoryName;
         this.challengeOwner = challengeOwner;
