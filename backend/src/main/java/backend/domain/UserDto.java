@@ -13,6 +13,8 @@ import java.time.LocalDateTime;
 public class UserDto {
     @ApiModelProperty(value="사용자 이메일")
     private String userEmail;
+    @ApiModelProperty(value="사용자 패스워드")
+    private String userPassword;
     @ApiModelProperty(value="사용자 닉네임")
     private String userNickname;
     @ApiModelProperty(value="사용자 이름")
@@ -27,6 +29,9 @@ public class UserDto {
     private HashtagDto hashtags;
     @ApiModelProperty(value="사용자 레벨")
     private String userLevel;
+    @ApiModelProperty(value="사용자 권한")
+    private String userRole;
+
     public UserDto(String userEmail, String userNickname, String userName, String userPhone) {
         this.userEmail = userEmail;
         this.userNickname = userNickname;
@@ -49,6 +54,17 @@ public class UserDto {
         this.userPhone = userPhone;
         this.userPoints = userPoints;
         this.userJoindate = userJoindate;
+    }
+
+    public UserDto(String userEmail, String userPassword, String userNickname, String userName, String userPhone, int userPoints, LocalDateTime userJoindate, UserRole userRole) {
+        this.userEmail = userEmail;
+        this.userPassword = userPassword;
+        this.userNickname = userNickname;
+        this.userName = userName;
+        this.userPhone = userPhone;
+        this.userPoints = userPoints;
+        this.userJoindate = userJoindate;
+        this.userRole = userRole.equals(UserRole.USER) ? "USER" : "ADMIN";
     }
 
     public void addHashtags(HashtagDto hashtags) {
