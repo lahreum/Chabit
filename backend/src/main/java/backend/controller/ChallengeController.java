@@ -2,14 +2,10 @@ package backend.controller;
 
 import backend.domain.*;
 import backend.exception.NotEnoughPointException;
-import backend.service.CategoryService;
-import backend.service.ChallengeService;
-import backend.service.HashtagService;
-import backend.service.UserService;
+import backend.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,6 +19,7 @@ public class ChallengeController {
     private final UserService userService;
     private final CategoryService categoryService;
     private final HashtagService hashtagService;
+    private final ProofService proofService;
 
     // TODO: 인증샷 예시, 챌린지 썸네일 기능 추가시 변경 필요
     @PostMapping
@@ -87,6 +84,45 @@ public class ChallengeController {
                 response = new BaseResponse("success", "인증 성공");
             }
         } catch (IllegalStateException e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    // 챌린지 인증 목록 가져오기
+    @GetMapping("/{challengeId}/proof")
+    public BaseResponse getProofs(@PathVariable Long challengeId){
+        BaseResponse response = null;
+        try {
+            List<Proof> proofList = proofService.findAllByChallengeId(challengeId);
+            List<ProofDto> collect = proofList.stream()
+                    .map(ProofDto::new)
+                    .collect(Collectors.toList());
+            response = new BaseResponse("success", collect);
+        } catch (IllegalStateException e) {
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    // 챌린지 인증 취소
+    @DeleteMapping("/{challengeId}/proof/{proofId}")
+    public BaseResponse proofCancel(@PathVariable Long challengeId, @PathVariable Long proofId, @RequestParam(required = false) String ownerEmail){
+        BaseResponse response = null;
+        if(ownerEmail == null)
+            return new BaseResponse("fail", "개설자 이메일이 없습니다");
+        try {
+            User owner = userService.findUser(ownerEmail);
+            Challenge challenge = challengeService.findByChallengeId(challengeId);
+
+            if (!challenge.getChallengeOwner().getUserEmail().equals(ownerEmail))
+                response = new BaseResponse("fail", "챌린지 개설자가 아닙니다");
+            else {
+                // 해당 인증 삭제
+                proofService.deleteProof(proofId);
+                response = new BaseResponse("success", "인증 취소 완료");
+            }
+        } catch (IllegalStateException e) {
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;
