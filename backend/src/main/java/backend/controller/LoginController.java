@@ -1,5 +1,8 @@
 package backend.controller;
 
+import backend.domain.User;
+import backend.domain.UserDto;
+import backend.domain.UserRole;
 import backend.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,8 +22,11 @@ public class LoginController {
     public BaseResponse login(@RequestBody UserRequest request) {
         BaseResponse response = null;
         try {
-            Long userId = userService.login(request);
-            response = new BaseResponse("success", userId);
+            User loginUser = userService.login(request);
+            UserDto userDto = new UserDto(loginUser);
+            userDto.setUserRole(loginUser.getUserRole().equals(UserRole.ADMIN) ? "ADMIN" : "USER");
+
+            response = new BaseResponse("success", userDto);
         } catch (IllegalStateException e) {
             response = new BaseResponse("fail", e.getMessage());
         }
