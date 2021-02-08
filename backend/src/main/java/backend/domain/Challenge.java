@@ -51,7 +51,7 @@ public class Challenge { // Challenge 코드리뷰 필수.
     @Column
     private String authWay;
     @Column(nullable = false)
-    private String authFrequency;
+    private int authFrequency;
     @Column
     private LocalTime authStarttime;
     @Column

@@ -166,6 +166,5 @@ public class ChallengeController {
         return response;
     }
 
-    // ======= Response & Request 클래스 =======
 
 }
