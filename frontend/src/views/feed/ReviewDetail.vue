@@ -1,5 +1,5 @@
 <template>
-<v-card style="width:100%; height:100%;">
+<div style="width:100%; height:100%;">
   <div>
     <Profile src="https://cdn.vuetifyjs.com/images/lists/1.jpg" 
     style="width:45px;height:45px; margin:10px; float:left;"/><br>
@@ -38,7 +38,7 @@
         2021.02.08
       </p>
       </div>
-  </v-card>
+  </div>
 </template>
 
 <script>

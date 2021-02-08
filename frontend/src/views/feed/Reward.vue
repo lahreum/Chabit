@@ -11,25 +11,25 @@
         </v-list-item>
         <v-list-item>
             <div style="width:90%; margin:0 auto; text-align:center;">
-                <div style="float:left;width:30%;"><img :src="require(`../../assets/img/silver.jpg`)" style="height:40px;"></div>
-                <div style="float:left;margin-left:5%;width:30%;"><img :src="require(`../../assets/img/gold.jpg`)" style="height:40px;"></div>
-                <div style="float:right;width:30%;"><img :src="require(`../../assets/img/bronze.jpg`)" style="height:40px;"></div>
+                <div style="float:left;width:30%;"><img src="https://ifh.cc/g/rUZBvq.jpg" style="width:50px;"></div>
+                <div style="float:left;margin-left:5%;width:30%;"><img src="https://ifh.cc/g/wd7WQg.jpg" style="width:50px;"></div>
+                <div style="float:right;width:30%;"><img src="https://ifh.cc/g/pNp80t.jpg" style="width:50px;"></div>
             </div>
         </v-list-item>
       </v-card>
       <!-- 뱃지 리스트 -->
-      <v-card>
+      <div>
         <div style="width:90%; margin:20px; padding:10px;text-align:center;">
           <v-row no-gutters>
             <v-col
               v-for="badge in badges"
-              :key="badge.name"
+              :key="badge.category"
               cols="4"
             >
               <div class="text-center">
                 <v-dialog v-model="dialog" width="500" persistent :retain-focus="false">
                   <template v-slot:activator="{ on, attrs }">
-                    <div v-bind="attrs" v-on="on"><img :src="require(`@/assets/img/${badge.name}.jpg`)" @click="clickModal(badge)"></div>
+                    <div v-bind="attrs" v-on="on"><img :src="badge.src" @click="clickModal(badge)"></div>
                   </template>
                   
                   <!-- 뱃지 모음을 보여주는 모달 팝업 -->
@@ -39,7 +39,7 @@
                     </v-card-title>
                     <v-card-text>
                       <!-- 이미지 출력 오류 부분 -->
-                      <!-- <img :src="require(`@/assets/img/${badgeData.name}.jpg`)"/> -->
+                      <img :src="badgeData.src" :badgeData="badge"/>
                       <!-- <span>{{ badgeData.text }}</span> -->
                     </v-card-text>
                     <v-divider></v-divider>
@@ -63,57 +63,63 @@
 
           </v-row>
         </div>
-      </v-card>
+      </div>
   </div>
 </template>
 
 <script>
 export default {
   data: () => ({
-    // done: {
-    //   name: '',
-    //   text: ''
-    // },
     badges: [
       {
-        name: 'weight',
-        text: '운동 중독'
+        category: '운동',
+        text: '운동 중독',
+        src: 'https://ifh.cc/g/GcwzlU.png',
       },
       {
-        name: 'pencil',
-        text: '공부하는 맛'
+        category: '공부',
+        text: '공부하는 맛',
+        src: 'https://ifh.cc/g/mtZNrP.png',
       },
       {
-        name: 'plant',
-        text: '프로 돌봄이'
+        category: '돌봄',
+        text: '프로 돌봄이',
+        src: 'https://ifh.cc/g/UZrUKt.png',
       },
       {
-        name: 'diet',
-        text: '프로 다이어터'
+        category: '취미',
+        text: '덕밍아웃',
+        src: 'https://ifh.cc/g/4YE6Sv.png',
       },
       {
-        name: 'clock',
-        text: '바른 생활의 대명사'
+        category: '생활습관',
+        text: '바른 생활의 대명사',
+        src: 'https://ifh.cc/g/8imbsM.png',
       },
       {
-        name: 'palette',
-        text: '덕밍아웃'
+        category: '다이어트',
+        text: '프로 다이어터',
+        src: 'https://ifh.cc/g/sGCIPu.png',
       },
       {
-        name: 'book',
-        text: '독서 안하면 가시가 돋아요'
+        category: '독서',
+        text: '독서 안하면 가시가 돋아요',
+        src: 'https://ifh.cc/g/JsUO4S.png',
       },
       {
-        name: 'piggybank',
-        text: '스크루지의 환생'
+        category: '돈관리',
+        text: '스크루지의 환생',
+        src: 'https://ifh.cc/g/Nx2AKb.png',
       },
       {
-        name: 'dove',
-        text: '이너피스'
+        category: '감정관리',
+        text: '이너피스',
+        src: 'https://ifh.cc/g/IdabxF.png',
       },
       {
-        name: 'question',
-        text: '획득하러 가기'
+        category: '미정',
+        text: '획득하러 가기',
+        src: 'https://ifh.cc/g/vwL3m1.png',
       },
 
     ],
