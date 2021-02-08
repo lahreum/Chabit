@@ -3,6 +3,8 @@ package backend.controller;
 import backend.domain.*;
 import backend.exception.NotEnoughPointException;
 import backend.service.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +12,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Api
 @RestController
 @RequestMapping("/v1/challenges")
 @CrossOrigin(origins = {"*"})
@@ -23,6 +26,7 @@ public class ChallengeController {
 
     // TODO: 인증샷 예시, 챌린지 썸네일 기능 추가시 변경 필요
     @PostMapping
+    @ApiOperation(value="챌린지 생성", notes="챌린지 생성")
     public BaseResponse makeChallenge(@RequestBody ChallengeRequest request) {
         BaseResponse response = null;
         // 가져온 정보 토대로 챌린지 생성
@@ -49,6 +53,7 @@ public class ChallengeController {
 
     // 챌린지 참여
     @GetMapping("/{challengeId}/{userEmail}")
+    @ApiOperation(value="챌린지 참여", notes="챌린지 참여")
     public BaseResponse joinChallenge(@PathVariable Long challengeId, @PathVariable String userEmail){
         BaseResponse response = null;
         try {
@@ -68,6 +73,7 @@ public class ChallengeController {
 
     // 챌린지 인증
     @PostMapping("/{challengeId}/proof/{userEmail}")
+    @ApiOperation(value="챌린지 인증", notes="챌린지 인증 등록")
     public BaseResponse proofChallenge(@PathVariable Long challengeId, @PathVariable String userEmail, @RequestBody(required = false) String proofUrl){
         BaseResponse response = null;
         if(proofUrl == null)
@@ -91,6 +97,7 @@ public class ChallengeController {
 
     // 챌린지 인증 목록 가져오기
     @GetMapping("/{challengeId}/proof")
+    @ApiOperation(value="챌린지 인증 목록", notes="한 챌린지에 등록된 모든 인증 목록 조회")
     public BaseResponse getProofs(@PathVariable Long challengeId){
         BaseResponse response = null;
         try {
@@ -107,6 +114,7 @@ public class ChallengeController {
 
     // 챌린지 인증 취소
     @DeleteMapping("/{challengeId}/proof/{proofId}")
+    @ApiOperation(value="챌린지 인증 반려", notes="챌린지에 등록한 인증 반려")
     public BaseResponse proofCancel(@PathVariable Long challengeId, @PathVariable Long proofId, @RequestParam(required = false) String ownerEmail){
         BaseResponse response = null;
         if(ownerEmail == null)
@@ -130,6 +138,7 @@ public class ChallengeController {
 
     // 카테고리 추가
     @PostMapping("/category")
+    @ApiOperation(value="카테고리 생성", notes="챌린지 카테고리 생성")
     public BaseResponse makeCategory(@RequestBody String categoryName){
         BaseResponse response = null;
         try {
@@ -143,6 +152,7 @@ public class ChallengeController {
 
     // 카테고리 목록 가져오기
     @GetMapping("/category")
+    @ApiOperation(value="카테고리 목록 조회", notes="카테고리 목록 조회")
     public BaseResponse getCategories(){
         BaseResponse response = null;
         try {
@@ -156,6 +166,7 @@ public class ChallengeController {
 
     // 진행 예정, 진행중인 모든 챌린지 가져오기
     @GetMapping
+    @ApiOperation(value="챌린지 목록 조회", notes="진행중 & 진행 예정 중인 모든 챌린지 조회")
     public BaseResponse getChallenges(@RequestParam(required = false) String challengeName){
         BaseResponse response = null;
         try {
@@ -176,6 +187,7 @@ public class ChallengeController {
 
     // 특정 챌린지 1개 가져오기
     @GetMapping("/{challengeId}")
+    @ApiOperation(value="챌린지 조회", notes="특정 챌린지 1개 조회")
     public BaseResponse getChallenge(@PathVariable Long challengeId) {
         BaseResponse response = null;
         try {
@@ -192,6 +204,7 @@ public class ChallengeController {
 
     // 핫챌린지 4개 가져오기
     @GetMapping("/hot")
+    @ApiOperation(value="핫 챌린지 조회", notes="인기 상위 챌린지 4개 조회")
     public BaseResponse getHotChallenges(){
         BaseResponse response = null;
         try {
@@ -207,6 +220,7 @@ public class ChallengeController {
 
     // 오늘까지인 챌린지 종료
     @PostMapping("/done")
+    @ApiOperation(value="챌린지 종료", notes="오늘까지인 모든 챌린지 종료 후 포인트 산정")
     public BaseResponse endChallenge(){
         BaseResponse response;
         try {
@@ -219,6 +233,7 @@ public class ChallengeController {
     }
     // 오늘부터 시작인 챌린지 시작
     @PostMapping("/start")
+    @ApiOperation(value="챌린지 시작", notes="오늘부터 시작인 챌린지들 시작")
     public BaseResponse startChallenge() {
         BaseResponse response = null;
         try {
