@@ -166,5 +166,26 @@ public class ChallengeController {
         return response;
     }
 
+    // 오늘까지인 챌린지 종료
+    @PostMapping("/done")
+    public BaseResponse endChallenge(){
+        // 챌린지 가져온다
+        // 상태 END로 변경
+        // 각 챌린지 참여 유저들 인증 내역 보고 ChallengeResult FAIL, SUCCESS로 변경
+        // SUCCESS면 포인트 지급 필요
+        BaseResponse response;
+        try {
+            List<Challenge> challenges = challengeService.findChallenges();
+            for (Challenge challenge : challenges) {
+                // 챌린지 종료 날짜가 오늘이라면
+                // 상태 END로 변경 후
+                // 챌린지 참여 유저들 인증 내역 체크
+                List<UserChallenge> challengers = challenge.getChallengers();
 
+            }
+        } catch (IllegalStateException e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
 }
