@@ -1,5 +1,5 @@
 <template>
-<v-card style="width:100%; height:100%;">
+<div style="width:100%; height:100%;">
   <div>
     <Profile src="https://cdn.vuetifyjs.com/images/lists/1.jpg" 
     style="width:45px;height:45px; margin:10px; float:left;"/><br>
@@ -30,9 +30,15 @@
     <div style="margin: 15px;">
       집밥 해먹기 챌린지를 통해 몸도 마음도 건강해질 수 있었던 기회였다. :)
       앞으로도 다른 챌린지에 꾸준히 참여해봐야겠다.
-      <br><br>
+      <br>
     </div>
-  </v-card>
+    <div style="margin-left: 15px;">
+      <router-link to="/review-comment" style="text-decoration:none;color:inherit;"><p style="color:gray; font-size:12px;">댓글 {{ count + 4 }} 개 더보기..</p></router-link>
+      <p style="color:gray; font-size:10px;">
+        2021.02.08
+      </p>
+      </div>
+  </div>
 </template>
 
 <script>
