@@ -2,7 +2,7 @@
   <v-avatar>
       <img
         :src= src
-        :alt= alt
+        :alt= alt style="margin:0;"
       >
     </v-avatar>
 </template>

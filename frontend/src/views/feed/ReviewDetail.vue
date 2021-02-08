@@ -52,16 +52,19 @@ export default {
       choose: false,
       items: [
         {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
+          src: 'https://ifh.cc/g/YYwAT0.jpg',
         },
         {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
+          src: 'https://ifh.cc/g/xWSN8P.jpg',
         },
         {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
+          src: 'https://ifh.cc/g/93Zb5I.jpg'
         },
         {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
+          src: 'https://ifh.cc/g/U6HqMw.jpg'
+        },
+        {
+          src: 'https://ifh.cc/g/3ZgeU1.jpg',
         },
       ],
   }),
