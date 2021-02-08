@@ -27,6 +27,7 @@ public class ChallengeDto {
     private LocalTime authEndtime;
     private boolean authHoliday;
     private String authExample;
+    private ChallengeOngoing ongoing;
 
 
     ////////////추가적으로 생성하자.
@@ -47,6 +48,7 @@ public class ChallengeDto {
         this.authEndtime = challenge.getAuthEndtime();
         this.authHoliday = challenge.getAuthHoliday() == 1;
         this.authExample = challenge.getAuthExample();
+        this.ongoing = challenge.getChallengeOngoing();
     }
 
     // 메인화면 HOT 챌린지.

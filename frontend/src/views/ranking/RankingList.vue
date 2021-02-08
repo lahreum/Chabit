@@ -28,7 +28,7 @@
               clearable
               label="Search"
               return-object
-              width="50%"
+              :menu-props="{ top: false, bottom: true, offsetY: true, offsetX: true }"
             ></v-autocomplete>
           </div>
           <v-expand-transition>
@@ -160,7 +160,7 @@ export default {
   position: sticky;
 }
 .v-input {
-  max-width: 50%;
+  max-width: 70%;
 }
 .searchBox {
   display: flex;

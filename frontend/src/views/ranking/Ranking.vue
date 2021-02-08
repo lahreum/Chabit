@@ -2,11 +2,11 @@
   <div id="app">
     <v-app id="inspire">
       <div>
-        <v-row justify="center" class="r-header ma-" dense>
+        <v-row justify="center" class="r-header ma-" dense align="center">
           <div class="r-menu">
             <v-menu bottom offset-y rounded="lg">
               <template v-slot:activator="{ on, attrs }">
-                <v-btn v-bind="attrs" v-on="on" text>
+                <v-btn v-bind="attrs" v-on="on" text plain>
                   All
                   <v-icon>mdi-menu-down</v-icon>
                 </v-btn>
@@ -19,7 +19,7 @@
             </v-menu>
             <v-menu bottom offset-y rounded="lg">
               <template v-slot:activator="{ on, attrs }">
-                <v-btn v-bind="attrs" v-on="on" text>
+                <v-btn v-bind="attrs" v-on="on" text plain>
                   Category
                   <v-icon>mdi-menu-down</v-icon>
                 </v-btn>
@@ -31,13 +31,9 @@
               </v-list>
             </v-menu>
           </div>
-          <div>
-            <v-row align="center">
-              <v-btn text :ripple="false">ALL</v-btn>
-              <v-switch inset color="red darken-4primary" :ripple="false"></v-switch>
-              <v-btn text :ripple="false">MONTHLY</v-btn>
-            </v-row>
-          </div>
+          <v-btn text :ripple="false" plain>ALL</v-btn>
+          <v-switch inset color="red darken-4primary" :ripple="false"></v-switch>
+          <v-btn text :ripple="false" plain>MONTHLY</v-btn>
         </v-row>
         <v-divider></v-divider>
         <ranking-list></ranking-list>
@@ -95,12 +91,22 @@ export default {
 };
 </script>
 <style scoped>
-.r-header {
-  display: flex;
-  max-width: 100%;
-}
 .r-header .v-btn {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 100%;
+  padding: 12px;
   margin-right: 0;
-  padding-left: 0;
+  margin-left: 0;
+  min-width: 100%;
+}
+.row--dense {
+  margin: 0;
+}
+.row {
+  margin: 0;
 }
 </style>

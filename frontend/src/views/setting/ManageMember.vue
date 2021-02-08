@@ -8,9 +8,11 @@
         label="Search"
         single-line
         hide-details
+        clearable
         item-value="name"
         item-text="name"
         :items="memberInfo"
+        :menu-props="{ top: false, bottom: true, offsetY: true, offsetX: true }"
       ></v-autocomplete>
       <v-spacer></v-spacer>
       <v-btn elevation="1" rounded plain depressed color="error"> Forced</v-btn>
@@ -112,3 +114,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.v-menu__content {
+  margin-top: 1000px;
+}
+</style>
