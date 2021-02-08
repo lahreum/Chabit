@@ -181,4 +181,16 @@ public class ChallengeController {
         }
         return response;
     }
+    // 오늘부터 시작인 챌린지 시작
+    @PostMapping("/start")
+    public BaseResponse startChallenge() {
+        BaseResponse response = null;
+        try {
+            challengeService.startChallenges();
+            response = new BaseResponse("success", "챌린지 시작");
+        } catch (IllegalStateException e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
 }
