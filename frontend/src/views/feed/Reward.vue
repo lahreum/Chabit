@@ -1,16 +1,16 @@
 <template>
   <div>
     <!-- 상단 금,은,동 계기판 -->
-      <v-card style="width:90%;">
+      <v-card>
         <v-list-item>
-            <div class="top-text" style="width:90%; margin:10px auto;">
+            <div class="top-text" style="width:90%; margin:0 auto;text-align:center;">
                 <div style="float:left;width:30%;">1</div>
                 <div style="float:left;margin-left:5%;width:30%;">2</div>
                 <div style="float:right;width:30%;">0</div>
             </div>
         </v-list-item>
         <v-list-item>
-            <div style="width:90%; margin:10px auto;">
+            <div style="width:90%; margin:0 auto; text-align:center;">
                 <div style="float:left;width:30%;"><img :src="require(`../../assets/img/silver.jpg`)" style="height:40px;"></div>
                 <div style="float:left;margin-left:5%;width:30%;"><img :src="require(`../../assets/img/gold.jpg`)" style="height:40px;"></div>
                 <div style="float:right;width:30%;"><img :src="require(`../../assets/img/bronze.jpg`)" style="height:40px;"></div>
@@ -21,143 +21,120 @@
       <v-card>
         <div style="width:90%; margin:20px; padding:10px;text-align:center;">
           <v-row no-gutters>
-            <v-col>
-                <img :src="require(`../../assets/img/piggybank.png`)" style="height:70px;">
-            </v-col>
-            <v-col order="12">
-                <img :src="require(`../../assets/img/pencil.png`)" style="height:70px;">
-            </v-col>
-            <v-col order="1">
-                <img :src="require(`../../assets/img/plant.png`)" style="height:70px;">
-            </v-col>
-          </v-row>
-          <v-row no-gutters>
-            <v-col>
-              <div>
-                <strong>프로 절약러</strong>
+            <v-col
+              v-for="badge in badges"
+              :key="badge.name"
+              cols="4"
+            >
+              <div class="text-center">
+                <v-dialog v-model="dialog" width="500" persistent :retain-focus="false">
+                  <template v-slot:activator="{ on, attrs }">
+                    <div v-bind="attrs" v-on="on"><img :src="require(`@/assets/img/${badge.name}.jpg`)" @click="clickModal(badge)"></div>
+                  </template>
+                  
+                  <!-- 뱃지 모음을 보여주는 모달 팝업 -->
+                  <v-card>
+                    <v-card-title>
+                      <span>{{ badgeData.text }}</span>
+                    </v-card-title>
+                    <v-card-text>
+                      <!-- 이미지 출력 오류 부분 -->
+                      <!-- <img :src="require(`@/assets/img/${badgeData.name}.jpg`)"/> -->
+                      <!-- <span>{{ badgeData.text }}</span> -->
+                    </v-card-text>
+                    <v-divider></v-divider>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <div>
+                      <v-btn
+                      color="primary"
+                        text
+                        @click="dialog = false"
+                      >
+                        확인
+                      </v-btn></div>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+
+                <div><p>{{badge.text}}</p></div>
               </div>
             </v-col>
-            <v-col>
-              <div>
-                <strong>공부하는 맛</strong>
-              </div>
-            </v-col>
-            <v-col>
-              <div>
-                <strong>프로 돌봄이</strong>
-              </div>
-            </v-col>
-          </v-row>
-          <v-row no-gutters>
-            <v-col>
-                <img :src="require(`../../assets/img/palette.png`)" style="height:70px;">
-            </v-col>
-            <v-col order="12">
-                <img :src="require(`../../assets/img/question.png`)" style="height:70px;">
-            </v-col>
-            <v-col order="1">
-                <img :src="require(`../../assets/img/question.png`)" style="height:70px;">
-            </v-col>
-          </v-row>
-          <v-row no-gutters>
-            <v-col>
-                <div>
-                  <strong>덕밍아웃</strong>
-                </div>
-            </v-col>
-            <v-col order="12">
-                <div style="color:#caccce;">
-                  획득하러 가기
-                </div>
-            </v-col>
-            <v-col order="1">
-                <div style="color:#caccce;">
-                  획득하러 가기
-                </div>
-            </v-col>
-          </v-row>
-          <v-row no-gutters>
-            <v-col>
-                <img :src="require(`../../assets/img/question.png`)" style="height:70px;">
-            </v-col>
-            <v-col order="12">
-                <img :src="require(`../../assets/img/question.png`)" style="height:70px;">
-            </v-col>
-            <v-col order="1">
-                <img :src="require(`../../assets/img/question.png`)" style="height:70px;">
-            </v-col>
-          </v-row>
-          <v-row no-gutters>
-            <v-col>
-                <div style="color:#caccce;">
-                  획득하러 가기
-                </div>
-            </v-col>
-            <v-col order="12">
-                <div style="color:#caccce;">
-                  획득하러 가기
-                </div>
-            </v-col>
-            <v-col order="1">
-                <div style="color:#caccce;">
-                  획득하러 가기
-                </div>
-            </v-col>
+
           </v-row>
         </div>
       </v-card>
-    </div>
+  </div>
 </template>
 
 <script>
 export default {
   data: () => ({
+    // done: {
+    //   name: '',
+    //   text: ''
+    // },
     badges: [
       {
-        src: 'require(`../../assets/img/weight.png`)',   // 운동
-        name: 'weight'
+        name: 'weight',
+        text: '운동 중독'
       },
       {
-        src: 'require(`../../assets/img/pencil.png`)',      // 공부
-        name: 'pencil'
+        name: 'pencil',
+        text: '공부하는 맛'
       },
       {
-        src: 'require(`../../assets/img/plant.png`)',       // 돌봄
-        name: 'plant'
+        name: 'plant',
+        text: '프로 돌봄이'
       },
       {
-        src: 'require(`../../assets/img/diet.png`)',        // 다이어트
-        name: 'diet'
+        name: 'diet',
+        text: '프로 다이어터'
       },
       {
-        src: 'require(`../../assets/img/clock.png`)',        // 생활습관
-        name: 'clock'
+        name: 'clock',
+        text: '바른 생활의 대명사'
       },
       {
-        src: 'require(`../../assets/img/palette.png`)',      // 취미
-        name: 'palette'
+        name: 'palette',
+        text: '덕밍아웃'
       },
       {
-        src: 'require(`../../assets/img/book.png`)',          // 독서
-        name: 'book'
+        name: 'book',
+        text: '독서 안하면 가시가 돋아요'
       },
       {
-        src: 'require(`../../assets/img/piggybank.png`)',     // 돈관리
-        name: 'piggybank'
+        name: 'piggybank',
+        text: '스크루지의 환생'
       },
       {
-        src: 'require(`../../assets/img/dove.png`)',          // 감정관리
-        name: 'dove'
+        name: 'dove',
+        text: '이너피스'
       },
       {
-        src: 'require(`../../assets/img/question.png`)',           // 미정
-        name: 'question'
+        name: 'question',
+        text: '획득하러 가기'
       },
-    ]
-  })
+
+    ],
+    badgeData: {
+
+    },
+    dialog: false,
+  }),
+  methods: {
+    clickModal(badge) {
+      this.badgeData = badge
+      console.log(this.badgeData);
+    }
+  }
 }
 </script>
 
 <style>
-
+.top-text {
+    font-size: 20px;
+    font-weight: 600;
+    padding-bottom: 0;
+}
 </style>

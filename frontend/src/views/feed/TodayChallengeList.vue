@@ -1,18 +1,19 @@
 <template>
-  <v-card class="mx-auto" tile style="width:90%; margin-top:20px; padding:10px;">
+
+  <v-card class="mx-auto today-challenge rounded-10" tile style="width:100%; margin-top:20px; padding:10px;">
             <v-app>
                 <v-list rounded>
                     <v-subheader style="font-weight:600">현재 진행중인 챌린지</v-subheader>
                     <v-list-item-group
                         v-model="selectedItem"
-                        color="#B71C1C"
+                        color="#B71C1C" 
                     >
                         <v-list-item
                         v-for="(item, i) in items"
                         :key="i"
                         >
                         <v-list-item-content>
-                            <v-list-item-title v-text="item.text" style="text-align:left; padding-left:15px; font-size:13px;"></v-list-item-title>
+                            <router-link to="/proof" style="text-decoration:none; color:inherit;"><v-list-item-title v-text="item.text" style="text-align:left; padding-left:15px; font-size:13px;"></v-list-item-title></router-link>
                         </v-list-item-content>
                         </v-list-item>
                     </v-list-item-group>
@@ -36,5 +37,8 @@ export default {
 </script>
 
 <style>
-
+.v-sheet.v-card{
+    border-radius: 20px;
+    margin: 0 auto;
+}
 </style>
