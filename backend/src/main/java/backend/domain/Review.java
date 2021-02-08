@@ -1,6 +1,7 @@
 package backend.domain;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor
 public class Review {
     @Id
     @GeneratedValue
@@ -33,4 +35,11 @@ public class Review {
      @JoinColumn(name ="challenge_id")
      private Challenge challengeId;
 
+     public static Review createReview(User userId, Challenge challengeId, String reviewContent){
+         Review review = new Review();
+         review.reviewContent = reviewContent;
+         review.challengeId = challengeId;
+         review.userId = userId;
+         return review;
+     }
 }
