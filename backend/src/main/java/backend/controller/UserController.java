@@ -4,12 +4,16 @@ import backend.domain.*;
 import backend.service.ChallengeService;
 import backend.service.LevelService;
 import backend.service.UserService;
+import backend.utils.Uploader;
 import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,6 +25,7 @@ import java.util.stream.Collectors;
 public class UserController {
     private final UserService userService;
     private final LevelService levelService;
+    private final Uploader uploader;
 
     @ApiOperation(value="모든 사용자 조회", notes="모든 사용자 조회")
     @GetMapping
@@ -187,6 +192,24 @@ public class UserController {
                     .collect(Collectors.toList());
             response = new BaseResponse("success", collect);
         } catch (IllegalStateException e) {
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    // 프로필 사진 등록
+    @PostMapping("/{userEmail}/image")
+    @ApiOperation(value="프로필 사진 등록 & 수정", notes="프로필 사진 등록 & 수정하기")
+    public BaseResponse setUserImage(@PathVariable String userEmail, @RequestPart(value = "userImage", required = false) MultipartFile userImage){
+        BaseResponse response = null;
+        try {
+            User user = userService.findUser(userEmail);
+            String uniqueName = user.getUserId() + "_userImage_" + LocalDate.now() + "_";
+            String imageUrl = uploader.upload(userImage, "users", uniqueName);
+
+            userService.putUserImage(user, imageUrl);
+            response = new BaseResponse("success", "이미지 등록 성공");
+        } catch (IllegalStateException | IOException | IllegalArgumentException e) {
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;

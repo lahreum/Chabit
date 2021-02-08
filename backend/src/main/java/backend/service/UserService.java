@@ -258,4 +258,10 @@ public class UserService {
         Proof proof = Proof.createProof(user, challenge, proofUrl);
         user.proofChallenge(proof);
     }
+
+    // 유저 프로필사진 저장
+    @Transactional
+    public void putUserImage(User user, String userImage) {
+        user.setUserImage(userImage);
+    }
 }

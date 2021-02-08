@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -87,7 +88,7 @@ public class ChallengeController {
             if(challenge == null)
                 response = new BaseResponse("fail", "잘못된 챌린지 아이디입니다");
             else {
-                String uniqueName = user.getUserId() + "_" + challengeId + "_";
+                String uniqueName = user.getUserId() + "_" + challengeId + "_" + LocalDate.now() + "_";
                 String proofUrl = uploader.upload(file, "proofs", uniqueName);
                 userService.proofChallenge(user, challenge, proofUrl);
                 response = new BaseResponse("success", "인증 성공");

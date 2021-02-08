@@ -51,13 +51,17 @@ public class S3Uploader implements Uploader{
     }
 
     private File convert(MultipartFile file) throws IOException {
-        File convertFile = new File(file.getOriginalFilename());
-        if(convertFile.createNewFile()) {
-            try (FileOutputStream fos = new FileOutputStream(convertFile)) {
-                fos.write(file.getBytes());
+        try {
+            File convertFile = new File(file.getOriginalFilename());
+            if(convertFile.createNewFile()) {
+                try (FileOutputStream fos = new FileOutputStream(convertFile)) {
+                    fos.write(file.getBytes());
+                }
+                return convertFile;
             }
-            return convertFile;
+            throw new IllegalArgumentException(String.format("파일 변환이 실패했습니다. 파일 이름 : %s", file.getName()));
+        } catch (NullPointerException e) {
+            throw new IllegalArgumentException("잘못된 파일입니다.");
         }
-        throw new IllegalArgumentException(String.format("파일 변환이 실패했습니다. 파일 이름 : %s", file.getName()));
     }
 }

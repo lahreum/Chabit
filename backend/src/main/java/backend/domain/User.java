@@ -38,6 +38,7 @@ public class User {
 
     private LocalDateTime userJoindate;
 
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserHashtag> hashtags = new ArrayList<>();
 
