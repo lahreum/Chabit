@@ -60,8 +60,13 @@ export default {
       .then(
         res=> {
           console.log(res);
-          localStorage.setItem('token', res.data.data);
-          this.$router.push("/");
+          if (res.data.status == "fail") {
+            console.log(res.data.status)
+            alert("로그인 정보가 없습니다.")
+          } else {
+            localStorage.setItem('token', res.data.data);
+            this.$router.push("/");
+          }
         })
       .catch(
         err => {
