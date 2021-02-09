@@ -1,7 +1,7 @@
 <template>
 <div style="width:100%; height:100%;">
   <div>
-    <Profile src="https://cdn.vuetifyjs.com/images/lists/1.jpg" 
+    <Profile src="https://ifh.cc/g/MHQ1jy.jpg" 
     style="width:45px;height:45px; margin:10px; float:left;"/><br>
     <div style="float:left;"><strong>saljjingae</strong></div>
   </div>
