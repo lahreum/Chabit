@@ -119,6 +119,13 @@ public class ReviewController {
         }
         return response;
     }
+
+    /**
+     * ReviewComment 저장
+     * @param reviewId 해당 리뷰의 id
+     * @param reviewComment 저장할 reviewComment정보
+     * @return 저장 성공 여부
+     */
     @PostMapping("/comment/{reviewId}")
     public BaseResponse saveReviewComment(@PathVariable Long reviewId, @RequestBody ReviewComment reviewComment){
         BaseResponse response = null;
@@ -129,6 +136,25 @@ public class ReviewController {
             newReviewComment.setReviewId(review);
             reviewService.saveReviewComment(newReviewComment);
             response = new BaseResponse("success", newReviewComment);
+        }catch(IllegalStateException e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    //댓글 작성자만 수정할 수 있음.
+    @PutMapping("/comment/{userEmail}")
+    public BaseResponse updateReviewComment
+    (@PathVariable String userEmail, @RequestBody ReviewComment reviewComment){
+        BaseResponse response = null;
+        try{
+            User commentUser = reviewComment.getUserId(); //코멘트 작성자
+            User loginUser = userService.findUser(userEmail); //현재 수정하려는 사용자
+            if(loginUser.getUserId().equals(commentUser.getUserId())){
+                response = new BaseResponse("success", reviewService.updateReviewComment(reviewComment));
+            }else{
+                response = new BaseResponse("fail", "동일한 작성자가 아닙니다.");
+            }
         }catch(IllegalStateException e){
             response = new BaseResponse("fail", e.getMessage());
         }
