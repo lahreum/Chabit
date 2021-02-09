@@ -52,6 +52,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserCategory> successCount = new ArrayList<>();
 
+    // 유저가 갖고있는 뱃지 저장
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserBadge> badges = new ArrayList<>();
 
@@ -89,6 +90,11 @@ public class User {
     public void addSuccessCount(UserCategory userCategory) {
         this.successCount.add(userCategory);
         userCategory.setUser(this);
+    }
+
+    public void addBadge(UserBadge userBadge) {
+        this.badges.add(userBadge);
+        userBadge.setUser(this);
     }
 
     // 비즈니스 로직

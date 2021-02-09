@@ -8,16 +8,16 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@IdClass(UserBadgeId.class)
 @Getter @Setter
 @NoArgsConstructor
 public class UserBadge {
-    @Id
+    @Id @GeneratedValue
+    private Long userBadgeId;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "badge_id")
     private Badge badge;

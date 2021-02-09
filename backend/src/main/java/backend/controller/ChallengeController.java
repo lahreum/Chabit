@@ -254,12 +254,15 @@ public class ChallengeController {
     }
 
     // 오늘까지인 챌린지 종료
+    // TODO: 챌린지 성공한 사람들 카테고리별 성공 횟수도 추가시켜야함
+    // TODO : 3, 6, 9회 달성시 뱃지 추가
     @PostMapping("/done")
     @ApiOperation(value="챌린지 종료", notes="오늘까지인 모든 챌린지 종료 후 포인트 산정")
     public BaseResponse endChallenge(){
         BaseResponse response;
         try {
-            challengeService.endChallenges();
+            List<User> winners = challengeService.endChallenges();
+            challengeService.giveBadges(winners);
             response = new BaseResponse("success", "성공");
         } catch (IllegalStateException e){
             response = new BaseResponse("fail", e.getMessage());
