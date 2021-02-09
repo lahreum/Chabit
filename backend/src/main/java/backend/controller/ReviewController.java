@@ -119,5 +119,19 @@ public class ReviewController {
         }
         return response;
     }
-
+    @PostMapping("/comment/{reviewId}")
+    public BaseResponse saveReviewComment(@PathVariable Long reviewId, @RequestBody ReviewComment reviewComment){
+        BaseResponse response = null;
+        try {
+            Review review = reviewService.findByReviewId(reviewId);
+            ReviewComment newReviewComment = new ReviewComment();
+            newReviewComment.setUserId(review.getUserId());
+            newReviewComment.setReviewId(review);
+            reviewService.saveReviewComment(newReviewComment);
+            response = new BaseResponse("success", newReviewComment);
+        }catch(IllegalStateException e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
 }
