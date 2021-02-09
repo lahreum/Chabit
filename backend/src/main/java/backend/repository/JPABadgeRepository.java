@@ -19,4 +19,11 @@ public class JPABadgeRepository implements BadgeRepository{
                 .getResultList();
         return resultList;
     }
+
+    @Override
+    public List<Badge> findAll() {
+        List<Badge> resultList = entityManager.createQuery("select b from Badge b", Badge.class)
+                .getResultList();
+        return resultList;
+    }
 }

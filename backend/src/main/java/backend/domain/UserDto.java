@@ -33,6 +33,8 @@ public class UserDto {
     private String userRole;
     @ApiModelProperty(value="사용자 프로필사진")
     private String userImage;
+    @ApiModelProperty(value="사용자 획득 뱃지 목록")
+    private BadgeResponse badges;
 
     public UserDto(String userEmail, String userNickname, String userName, String userPhone) {
         this.userEmail = userEmail;
@@ -73,5 +75,10 @@ public class UserDto {
     public void addHashtags(HashtagDto hashtags) {
         this.hashtags = hashtags;
     }
-    public void addUserLevel(String userLevel) {this.userLevel = userLevel;}
+    public void addUserLevel(String userLevel) {
+        this.userLevel = userLevel;
+    }
+    public void addBadges(BadgeResponse badges) {
+        this.badges = badges;
+    }
 }

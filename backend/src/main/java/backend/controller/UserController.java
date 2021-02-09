@@ -1,7 +1,7 @@
 package backend.controller;
 //http://localhost:9999/swagger-ui.html
 import backend.domain.*;
-import backend.service.ChallengeService;
+import backend.service.BadgeService;
 import backend.service.LevelService;
 import backend.service.UserService;
 import backend.utils.Uploader;
@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 public class UserController {
     private final UserService userService;
     private final LevelService levelService;
+    private final BadgeService badgeService;
     private final Uploader uploader;
 
     @ApiOperation(value="모든 사용자 조회", notes="모든 사용자 조회")
@@ -81,6 +82,15 @@ public class UserController {
             // 해당 유저의 레벨 가져오기.
             String userLevel = levelService.findUserLevel(userDto.getUserPoints());
             userDto.addUserLevel(userLevel);
+            
+            // 뱃지 추가
+            BadgeResponse badgeDto = new BadgeResponse();
+            List<Badge> allBadge = badgeService.findAll();
+            allBadge.forEach(badgeDto::addBadge);
+            List<UserBadge> userBadges = findUser.getBadges();
+            userBadges.forEach(b -> badgeDto.addUserBadge(b.getBadge()));
+
+            userDto.addBadges(badgeDto);
 
             response = new BaseResponse("success", userDto);
         } catch (IllegalStateException e) {
