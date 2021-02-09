@@ -230,11 +230,11 @@ class ReviewRepositoryTest {
     }
 
     @Test
-    void findByReviewCommentId(){
+    void findReviewCommentByReviewCommentId(){
         ReviewComment reviewComment = new ReviewComment();
         reviewComment.setCommentContent("코멘트1번");
         reviewService.saveReviewComment(reviewComment);
 
-        Assertions.assertEquals(reviewService.findByReviewCommentId(reviewComment.getReviewCommentId()), reviewComment);
+        Assertions.assertEquals(reviewService.findReviewCommentByReviewCommentId(reviewComment.getReviewCommentId()), reviewComment);
     }
 }

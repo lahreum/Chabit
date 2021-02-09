@@ -81,10 +81,14 @@ public class ReviewService {
         return reviewCommentRepository.saveReviewComment(reviewComment);
     }
 
-    public ReviewComment findByReviewCommentId(Long reviewCommentId){
-        return reviewCommentRepository.findByReviewCommentId(reviewCommentId);
+    public ReviewComment findReviewCommentByReviewCommentId(Long reviewCommentId){
+        return reviewCommentRepository.findReviewCommentByReviewCommentId(reviewCommentId);
     }
 
+    public List<ReviewComment> findReviewCommentByReviewId(Review reviewId){
+        List<ReviewComment> result = reviewCommentRepository.findReviewCommentByReviewId(reviewId);
+        return result;
+    }
     /**
      * remove, findALl()
      */
