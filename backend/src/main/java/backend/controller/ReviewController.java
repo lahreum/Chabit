@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1/review")
@@ -56,7 +57,14 @@ public class ReviewController {
         try{
             User user = userService.findUser(userEmail);
             List<Review> reviewList = reviewService.findByUserIdOrderByReviewDate(user);
-            response = new BaseResponse("success", reviewList);
+            List<ReviewDto> reviewDtoList = null;
+            for (Review review : reviewList){
+                ReviewDto reviewDto = new ReviewDto(review);//리뷰 정보 주입.
+                ReviewImage reviewImage = reviewService.findReviewImageThumbnailByReviewId(review);//썸네일 얻어와서
+                reviewDto.addThumbnail(reviewImage);
+                reviewDtoList.add(reviewDto);
+            }
+            response = new BaseResponse("success", reviewDtoList);
         }catch (IllegalStateException e){
             response = new BaseResponse("fail", e.getMessage());
         }

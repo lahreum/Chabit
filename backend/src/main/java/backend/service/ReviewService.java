@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -60,6 +61,17 @@ public class ReviewService {
         List<ReviewImage> reviewImageList = reviewImageRepository.findReviewImageByReviewId(reviewId);
         return reviewImageList;
     }
+
+    public ReviewImage findReviewImageThumbnailByReviewId(Review reviewId){
+        Optional<ReviewImage> reviewImage = reviewImageRepository.findReviewImageThumbnailByReviewId(reviewId);
+        if(!reviewImage.isPresent()){
+            throw new IllegalStateException("이미지가 없습니다.");
+        }
+        else{
+            return reviewImage.get();//무슨?
+        }
+    }
+
 
 
     /**
