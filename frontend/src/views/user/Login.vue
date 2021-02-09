@@ -61,7 +61,7 @@ export default {
             console.log(res.data.status)
             alert("로그인 정보가 없습니다.")
           } else {
-            console.log('데이터는 잘 넘어옴~');
+            console.log('데이터는 잘 넘어옴~ ');
             this.$store.commit('LOGIN', res.data.data);
             this.$router.push("/");
           }

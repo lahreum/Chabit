@@ -38,7 +38,7 @@ export default {
       reviews: [
         {
           src: 'https://ifh.cc/g/xWSN8P.jpg',
-          review_id: '376812938239',
+          review_id: '1',
           review_content: '집밥 해먹기 챌린지를 통해 몸도 마음도 건강해질 수 있었다. :) 앞으로도 다른 챌린지에 꾸준히 참여해봐야겠다 !!! ',
           review_date: '2021.02.08',
           review_cool_count: '100',
@@ -48,7 +48,7 @@ export default {
         },
         {
           src: 'https://ifh.cc/g/Ck2aox.jpg',
-          review_id: '376812938239',
+          review_id: '2',
           review_content: '취미로 시작했던 일주일에 한곡 작곡하기... 힘들기도 했지만 지역내 작은 대회에서 수상할 수 있어서 뿌듯했다.',
           review_date: '2021.01.15',
           review_cool_count: '30',
@@ -58,7 +58,7 @@ export default {
         },
         {
           src: 'https://ifh.cc/g/mYsxhr.jpg',
-          review_id: '376812938239',
+          review_id: '3',
           review_content: '독서는 마음의 양식 :) 독서 챌린지는 꾸준히 진행할 예정이다. ',
           review_date: '2020.12.20',
           review_cool_count: '10',

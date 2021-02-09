@@ -1,24 +1,22 @@
  <template>
   <div
     class="overflow-hidden"
-    style="margin-left:5%;margin-right:5%;"
+    style="margin-left:8%;margin-right:8%; margin-bottom:-40px;"
   >
-    <v-toolbar
-      flat
-      color="white" style="width:100%; margin-bottom:10px;"
-    >
-      <v-toolbar-title class="font-weight-light" >
-            <div style="margin-top: 30px;">
-                <Profile src="https://ifh.cc/g/MHQ1jy.jpg" alt="profile" style="width:70px;height:70px;"/>
-                <span style="color:#424242;font-weight:600; margin-left:15px;">dlwlrma(200/3000p)</span>
-            </div>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn
+    <div>
+            <div style="margin-top: 20px; width:100%;">
+                <div style="float:left;">
+                  <Profile src="https://ifh.cc/g/MHQ1jy.jpg" alt="profile" style="width:70px;height:70px;"/>
+                </div>
+                <div>
+                  <span style="color:#424242;font-weight:600; margin-left:15px; font-size:20px;"> {{ getUserNickname }} <br></span>
+                  <span style="color:#424242;font-weight:600; margin-left:15px; font-size:20px;">({{ getUserPoints }}/30000)p<br></span>
+                  <span style="color:#424242;margin-left:15px; font-size:12px;">Bronze</span>
+                                    <v-btn
         color="gray darken-4"
         fab
-        small
-        @click="isEditing = !isEditing"
+        x-small
+        @click="isEditing = !isEditing" style="float:right; margin-right:10px;"
       >
         <v-icon v-if="isEditing">
           mdi-close
@@ -27,8 +25,10 @@
           mdi-pencil
         </v-icon>
       </v-btn>
-    </v-toolbar>
-    <v-card-text>
+                </div>
+            </div>
+
+    
         <!-- 해시태그 input -->
       <v-combobox
             v-model="chips"
@@ -36,27 +36,27 @@
             :disabled="!isEditing"
             chips
             clearable
-            label="해쉬태그"
+            placeholder="해쉬태그"
             multiple
-            solo style="height:70px;margin-top:15px;" 
+            style="height:70px;margin-top:15px;" 
         >
             <template v-slot:selection="{ attrs, item, selected }">
             <v-chip
                 v-bind="attrs"
-                :input-value="selected"
+                :input-value="selected" color="#212121" text-color="white"
                 @click="remove(item)" v-model="chips"
             >
                 <strong>{{ item }}</strong>&nbsp;
-            </v-chip>
+            </v-chip> 
             </template>
         </v-combobox>
         <!-- 상태메세지 input -->
       <v-text-field
         :disabled="!isEditing"
-        label="" v-model="status"
+        placeholder="상태메세지" v-model="status"
      
       ></v-text-field>
-    </v-card-text>
+    </div>
     <v-card-actions>
       <v-spacer></v-spacer>
       <v-btn
@@ -81,9 +81,14 @@
 
 <script>
 import Profile from '../../components/common/Profile.vue'
+import { mapGetters } from 'vuex'
+
   export default {
     components: {
         Profile
+    },
+    computed: {
+      ...mapGetters(['getUserNickname','getUserPoints','getUserHashtags','getUserLevel']),
     },
     data () {
       return {
@@ -91,10 +96,8 @@ import Profile from '../../components/common/Profile.vue'
         isEditing: null,
         model: null,
         hashtag:'',
-        status:'이 하루, 이 지금, 우리,눈부셔 아름다워',
-        chips: ['왼손으로그린별하나','내손을잡아'],
-        // chips: ['Programming', 'Playing video games', 'Watching movies', 'Sleeping'],
-        // items: ['Streaming', 'Eating'],
+        status:'Carpe diem',
+        chips: ['이지금','내손을잡아'],
       }
     },
 

@@ -2,7 +2,7 @@
 
   <v-card class="mx-auto today-challenge rounded-10" tile style="width:100%; margin-top:20px; padding:10px;">
             <v-app>
-                <v-list rounded>
+                <v-list>
                     <v-subheader style="font-weight:600">현재 진행중인 챌린지</v-subheader>
                     <v-list-item-group
                         v-model="selectedItem"
