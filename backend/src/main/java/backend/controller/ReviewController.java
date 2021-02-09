@@ -78,7 +78,7 @@ public class ReviewController {
      * @param reviewId
      * @return 해당 리뷰에 대한 정보와 ReviewImage 정보들
      */
-    @GetMapping("/{userEmail}/{reviewId}")
+    @GetMapping("/detail/{reviewId}")
     public BaseResponse getReviewDetail(@PathVariable Long reviewId){
         BaseResponse response = null;
         try {
@@ -97,6 +97,25 @@ public class ReviewController {
         }catch (IllegalStateException e)
         {
             response = new BaseResponse("fail",e.getMessage());
+        }
+        return response;
+    }
+
+    /**
+     * 리뷰 댓글 가져오기
+     * @param reviewId
+     * @return reviewCommentList
+     */
+    @GetMapping("/comment/{reviewId}")
+    public BaseResponse getReviewCommentList(@PathVariable Long reviewId){
+        BaseResponse response = null;
+        try{
+            Review review = reviewService.findByReviewId(reviewId);
+            List<ReviewComment> reviewCommentList = reviewService.findReviewCommentByReviewId(review);
+            response = new BaseResponse("success", reviewCommentList);
+        }catch(IllegalStateException e)
+        {
+            response = new BaseResponse("fail", e.getMessage());
         }
         return response;
     }
