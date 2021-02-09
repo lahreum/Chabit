@@ -68,21 +68,20 @@ public class ReviewService {
             throw new IllegalStateException("이미지가 없습니다.");
         }
         else{
-            return reviewImage.get();//무슨?
+            return reviewImage.get();
         }
     }
 
 
 
     /**
-     * remove, findALl(0
+     * remove, findALl()
      */
     public void deleteReview(Review review){ reviewRepository.deleteReview(review); }
 
     public void deleteReviewImage(ReviewImage reviewImage){
         reviewImageRepository.deleteReviewImage(reviewImage);
     }
-
 
     public List<Review> findAll() { return reviewRepository.findAll(); }
 }

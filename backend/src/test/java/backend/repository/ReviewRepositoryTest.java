@@ -155,14 +155,70 @@ class ReviewRepositoryTest {
     //Todo 테스트코드 진행 예정.
     @Test
     void saveReviewImage(){
-
+        Review review = new Review();
+        review.setReviewContent("test");
+        reviewService.saveReview(review);//리뷰 생성
+        ReviewImage reviewImage = new ReviewImage();
+        reviewImage.setReviewId(review);
+        reviewImage.setReviewImage("이미지1번");
+        ReviewImage test = reviewService.saveReviewImage(reviewImage);//리뷰이미지 생성
+        // 테스트값 확인
+        Assertions.assertEquals(test.getReviewImage(),"이미지1번");
     }
     @Test
     void findReviewImageByReviewId(){
-
+        Review review2 = new Review();
+        review2.setReviewContent("test");
+        reviewService.saveReview(review2);//리뷰 생성
+        ReviewImage reviewImage = new ReviewImage();
+        reviewImage.setReviewId(review2);
+        reviewImage.setReviewImage("이미지1번");
+        reviewService.saveReviewImage(reviewImage);//리뷰이미지 생성
+        ReviewImage reviewImage2 = new ReviewImage();
+        reviewImage2.setReviewId(review2);
+        reviewImage2.setReviewImage("이미지2번");
+        reviewService.saveReviewImage(reviewImage2);//리뷰이미지2번 생성
+        // 테스트값 확인
+//        Assertions.assertEquals(reviewService.findReviewImageByReviewId(review2).size(),2);
+        Assertions.assertEquals(reviewService.findReviewImageByReviewId(review2).get(0).getReviewImage(),"이미지1번");
     }
     @Test
     void deleteReviewImage(){
+        Review review3 = new Review();
+        review3.setReviewContent("test");
+        reviewService.saveReview(review3);//리뷰 생성
+        ReviewImage reviewImage3 = new ReviewImage();
+        reviewImage3.setReviewId(review3);
+        reviewImage3.setReviewImage("이미지1번");
+        reviewService.saveReviewImage(reviewImage3);//리뷰이미지 생성
+        ReviewImage reviewImage4 = new ReviewImage();
+        reviewImage4.setReviewId(review3);
+        reviewImage4.setReviewImage("이미지2번");//이미지 생성
+        reviewService.saveReviewImage(reviewImage4);//리뷰이미지 생성
+        //현재 리뷰이미지 2개
+        reviewService.deleteReviewImage(reviewImage3);//3번 삭제.
 
+        //테스트값 확인
+//        Assertions.assertEquals(reviewService.findReviewImageByReviewId(review3).size(),1);
+        Assertions.assertEquals(reviewService.findReviewImageByReviewId(review3).get(0).getReviewImage(), "이미지2번");
+    }
+    @Test
+    void findReviewImageThumbnailByReviewId(){
+        Review review4 = new Review();
+        review4.setReviewContent("test");
+        reviewService.saveReview(review4);//리뷰 생성
+        //없는 상태 test OK 아래 로그로 확인함.
+//        Assertions.assertEquals(reviewService.findReviewImageThumbnailByReviewId(review3),"이미지가 없습니다.");
+        //
+        ReviewImage reviewImage6 = new ReviewImage();
+        reviewImage6.setReviewId(review4);
+        reviewImage6.setReviewImage("이미지1번");
+        reviewService.saveReviewImage(reviewImage6);//리뷰이미지 생성
+        ReviewImage reviewImage7 = new ReviewImage();
+        reviewImage7.setReviewId(review4);
+        reviewImage7.setReviewImage("이미지2번");//이미지 생성
+        reviewService.saveReviewImage(reviewImage7);//리뷰이미지 생성
+        //현재 리뷰이미지 2개
+        Assertions.assertEquals(reviewService.findReviewImageThumbnailByReviewId(review4).getReviewImage(),"이미지1번");
     }
 }

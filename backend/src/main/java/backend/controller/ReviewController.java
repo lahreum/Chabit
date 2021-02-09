@@ -45,6 +45,8 @@ public class ReviewController {
         return response;
     }
 
+    ////////////////// 이미지 받는 기능 추후 수정할 것.
+
     /**
      * 해당 유저 마이리뷰 목록 불러오기
      * 해당 유저 email을 받아오면
