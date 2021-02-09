@@ -78,7 +78,7 @@ public class ReviewController {
      * @param reviewId
      * @return 해당 리뷰에 대한 정보와 ReviewImage 정보들
      */
-    @GetMapping("/detail/{reviewId}")
+    @GetMapping("/{userEmail}/{reviewId}")
     public BaseResponse getReviewDetail(@PathVariable Long reviewId){
         BaseResponse response = null;
         try {

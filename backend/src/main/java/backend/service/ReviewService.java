@@ -89,6 +89,18 @@ public class ReviewService {
         List<ReviewComment> result = reviewCommentRepository.findReviewCommentByReviewId(reviewId);
         return result;
     }
+
+    public ReviewComment updateReviewComment(ReviewComment newReviewComment){
+        ReviewComment reviewComment = reviewCommentRepository
+                .findReviewCommentByReviewCommentId(newReviewComment.getReviewCommentId());
+        reviewComment
+                .setCommentContent(newReviewComment.getCommentContent());
+        reviewCommentRepository.saveReviewComment(reviewComment);
+    }
+
+    public void deleteReviewComment(ReviewComment reviewComment){
+        reviewCommentRepository.deleteReviewComment(reviewComment);
+    }
     /**
      * remove, findALl()
      */

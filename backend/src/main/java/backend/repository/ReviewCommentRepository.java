@@ -2,6 +2,7 @@ package backend.repository;
 
 import backend.domain.Review;
 import backend.domain.ReviewComment;
+import backend.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -30,4 +31,6 @@ public class ReviewCommentRepository {
                         .getResultList();
         return result;
     }
+
+    public void deleteReviewComment(ReviewComment reviewComment){entityManager.remove(reviewComment);}
 }
