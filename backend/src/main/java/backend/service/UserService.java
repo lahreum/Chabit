@@ -187,13 +187,18 @@ public class UserService {
 
     /**
      * 조건에 따라 챌린지 조회
+     *
+     * userEmail : 현재 유저
+     * categoryId : 조회하려는 카테고리
+     * monthlyRanking : true면 이번달 랭킹만
+     * onlyFollowing : true면 팔로잉하는 유저 랭킹만
      */
-    public List<User> findUserByRankingCondition(String userEmail, Long categoryId, boolean monthlyRanking){
+    public List<User> findUserByRankingCondition(String userEmail, Long categoryId, boolean monthlyRanking, boolean onlyFollowing){
         List<User> result = new ArrayList<>();
 
         // 팔로잉 유저 선택하면 팔로잉하는 유저 목록만 가져옴
         // 아니면 전체 유저 목록 포인트로 정렬해서 가져옴
-        if(userEmail != null) {
+        if(onlyFollowing) {
             User user = findUser(userEmail);
             List<Follow> following = followRepository.findByUserId(user);
             // following 하는 유저들 뽑아서 넣음

@@ -179,18 +179,28 @@ public class UserController {
     }
 
     // 랭킹
-    @GetMapping("/ranking")
+    @GetMapping("/ranking/{userEmail}")
     @ApiOperation(value="랭킹 조회", notes="랭킹 조회. 조건별 조회 가능")
-    public BaseResponse getRanking(@RequestParam(required = false) String userEmail,
+    public BaseResponse getRanking(@PathVariable String userEmail,
                                    @RequestParam(required = false) Long categoryId,
-                                   @RequestParam(required = false, defaultValue = "false") Boolean monthlyRanking) {
+                                   @RequestParam(required = false, defaultValue = "false") Boolean monthlyRanking,
+                                   @RequestParam(required = false, defaultValue = "false") Boolean onlyFollowing) {
         BaseResponse response = null;
         try {
-            List<User> ranking = userService.findUserByRankingCondition(userEmail, categoryId, monthlyRanking);
+            List<User> ranking = userService.findUserByRankingCondition(userEmail, categoryId, monthlyRanking, onlyFollowing);
+            
+            // 내 랭킹 찾기
+            int myRank = 1;
+            for (User user : ranking) {
+                if(user.getUserEmail().equals(userEmail))
+                    break;
+                myRank++;
+            }
+
             List<UserDto> collect = ranking.stream()
                     .map(UserDto::new)
                     .collect(Collectors.toList());
-            response = new BaseResponse("success", collect);
+            response = new BaseResponse("success", new RankingResponse(myRank, collect));
         } catch (IllegalStateException e) {
             response = new BaseResponse("fail", e.getMessage());
         }
@@ -245,4 +255,14 @@ public class UserController {
         private String message;
     }
 
+    // 랭킹
+    @Data
+    @AllArgsConstructor
+    @ApiModel
+    static class RankingResponse {
+        @ApiModelProperty(value = "내 랭킹")
+        private int myRanking;
+        @ApiModelProperty(value = "랭킹")
+        List<UserDto> userRanking;
+    }
 }
