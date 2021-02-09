@@ -273,4 +273,20 @@ class ReviewRepositoryTest {
         Assertions.assertEquals(reviewService.updateReviewComment(reviewComment5).getCommentContent(),"코멘트2번");
     }
 
+    @Test
+    void deleteReviewComment(){
+        Review review = new Review();
+        review.setReviewContent("test");
+        reviewService.saveReview(review);//리뷰 생성
+        ReviewComment reviewComment4 = new ReviewComment();
+        reviewComment4.setCommentContent("코멘트1번");
+        reviewComment4.setReviewId(review);
+        ReviewComment reviewComment5 = new ReviewComment();
+        reviewComment5.setCommentContent("코멘트2번");
+        reviewComment5.setReviewId(review);
+        reviewService.saveReviewComment(reviewComment4); // reviewComment4 주입
+        reviewService.saveReviewComment(reviewComment5); // reviewComment4 주입
+        reviewService.deleteReviewComment(reviewComment4);
+        Assertions.assertEquals(reviewService.findReviewCommentByReviewId(review).size(),1);
+    }
 }
