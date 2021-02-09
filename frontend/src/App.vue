@@ -73,8 +73,8 @@
         <!-- padding을 넣어 줄 경우 내용이 밀림. 선택 -->
         <!-- <v-main style="padding:0"> -->
         <router-view />
-      </v-main> </v-app
-    >1
+      </v-main>
+    </v-app>
   </div>
 </template>
 
@@ -93,9 +93,9 @@ export default {
       window.pageYOffset > 0 ? (this.showNavbar = true) : (this.showNavbar = false);
     },
     logout() {
-      localStorage.removeItem('token')
-      this.$router.push('/login');
-    }
+      localStorage.removeItem("token");
+      this.$router.push("/login");
+    },
   },
   created() {
     window.addEventListener("scroll", this.scroll);
