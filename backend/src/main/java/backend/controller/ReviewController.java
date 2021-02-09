@@ -143,6 +143,12 @@ public class ReviewController {
     }
 
     //댓글 작성자만 수정할 수 있음.
+
+    /**
+     * @param userEmail 현재 로그인한 사용자의 eamil정보.
+     * @param reviewComment 수정될 Comment에 대한 정보를 가져온다.
+     * @return 반환 되는 값은 업데이트 된 정보 또는 에러메시지
+     */
     @PutMapping("/comment/{userEmail}")
     public BaseResponse updateReviewComment
     (@PathVariable String userEmail, @RequestBody ReviewComment reviewComment){
@@ -154,6 +160,33 @@ public class ReviewController {
                 response = new BaseResponse("success", reviewService.updateReviewComment(reviewComment));
             }else{
                 response = new BaseResponse("fail", "동일한 작성자가 아닙니다.");
+            }
+        }catch(IllegalStateException e){
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    /**
+     * @param reviewId 리뷰 작성자의 정보를 가져오기 위함.
+     * @param userEmail 현재 로그인한 사용자의 eamil정보.
+     * @param reviewComment 삭제될 Comment에 대한 정보를 가져온다.
+     * @return 삭제 되었는가에 대한 정보
+     */
+    @DeleteMapping("/comment/{reviewId}/{userEmail}")
+    public BaseResponse deleteReviewComment
+            (@PathVariable Long reviewId, @PathVariable String userEmail, @RequestBody ReviewComment reviewComment){
+        BaseResponse response = null;
+        try{
+            Review review = reviewService.findByReviewId(reviewId);
+            User reviewUser = review.getUserId(); //리뷰 작성자
+            User commentUser = reviewComment.getUserId(); //코멘트 작성자
+            User loginUser = userService.findUser(userEmail); //현재 수정하려는 사용자
+            if(loginUser.getUserId().equals(reviewUser.getUserId()) || loginUser.getUserId().equals(commentUser.getUserId())){
+                reviewService.deleteReviewComment(reviewComment);
+                response = new BaseResponse("success", "삭제되었습니다.");
+            }else{
+                response = new BaseResponse("fail", "동일한 작성자 또는 리뷰 작성자가 아닙니다.");
             }
         }catch(IllegalStateException e){
             response = new BaseResponse("fail", e.getMessage());
