@@ -5,9 +5,9 @@ import vuetify from './plugins/vuetify';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import axios from 'axios'
-import { store } from './vuex/store'
+import { store } from './vuex/store'    // vuex 전역 세팅
 
-Vue.prototype.$Axios = axios;
+Vue.prototype.$Axios = axios;       // this.$Axios 로 전역으로 사용 가능
 Vue.config.productionTip = false
 
 Vue.use(ElementUI);
