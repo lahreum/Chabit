@@ -1,8 +1,10 @@
 package backend.service;
 
 import backend.domain.Review;
+import backend.domain.ReviewComment;
 import backend.domain.ReviewImage;
 import backend.domain.User;
+import backend.repository.ReviewCommentRepository;
 import backend.repository.ReviewImageRepository;
 import backend.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ public class ReviewService {
 
     private final ReviewImageRepository reviewImageRepository;
 
+    private final ReviewCommentRepository reviewCommentRepository;
     /**
      * 리뷰 저장
      * @return 저장한 리뷰 정보
@@ -73,6 +76,9 @@ public class ReviewService {
     }
 
 
+    public ReviewComment saveReviewComment(ReviewComment reviewComment){
+        return reviewCommentRepository.saveReviewComment(reviewComment);
+    }
 
     /**
      * remove, findALl()
