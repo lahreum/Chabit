@@ -1,13 +1,13 @@
 package backend.domain;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
-@Data
+@Entity
 @Getter @Setter
 @NoArgsConstructor
 public class ReviewComment {
@@ -27,10 +27,22 @@ public class ReviewComment {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String commentContent;
 
-    @Column(columnDefinition = "BIGINT DEFAULT NULL")
-    private ReviewComment parentCommentId;
+    //Todo : 대댓글 작성 컬럼 추가 예정.
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "review_comment_id", referencedColumnName = "parent_comment_id")
+//    private ReviewComment parentCommentId;
+//
+//    @OneToMany(mappedBy = "parentCommentId")
+//    private List<ReviewComment> childrenComment;
 
     @Column(columnDefinition = "INT DEFAULT NULL")
     private int commentOrder;
 
 }
+
+/**
+ `parent_comment_id` BIGINT NULL DEFAULT NULL,
+ INDEX `REVIEW_COMMENT_REVIEW_COMMENT_FK_idx` (`parent_comment_id` ASC) VISIBLE,
+ CONSTRAINT `REVIEW_COMMENT_REVIEW_COMMENT_FK`
+ FOREIGN KEY (`parent_comment_id`)
+ */

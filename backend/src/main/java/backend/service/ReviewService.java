@@ -76,8 +76,13 @@ public class ReviewService {
     }
 
 
+    @Transactional
     public ReviewComment saveReviewComment(ReviewComment reviewComment){
         return reviewCommentRepository.saveReviewComment(reviewComment);
+    }
+
+    public ReviewComment findByReviewCommentId(Long reviewCommentId){
+        return reviewCommentRepository.findByReviewCommentId(reviewCommentId);
     }
 
     /**

@@ -15,4 +15,9 @@ public class ReviewCommentRepository {
         entityManager.persist(reviewComment);
         return reviewComment;
     }
+
+    public ReviewComment findByReviewCommentId(Long reviewCommentId){
+        ReviewComment reviewComment = entityManager.find(ReviewComment.class, reviewCommentId);
+        return reviewComment;
+    }
 }

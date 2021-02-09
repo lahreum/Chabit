@@ -221,4 +221,20 @@ class ReviewRepositoryTest {
         //현재 리뷰이미지 2개
         Assertions.assertEquals(reviewService.findReviewImageThumbnailByReviewId(review4).getReviewImage(),"이미지1번");
     }
+
+    @Test
+    void saveReviewComment(){
+        ReviewComment reviewComment = new ReviewComment();
+        reviewComment.setCommentContent("코멘트1번");
+        Assertions.assertEquals(reviewService.saveReviewComment(reviewComment).getCommentContent(),"코멘트1번" );
+    }
+
+    @Test
+    void findByReviewCommentId(){
+        ReviewComment reviewComment = new ReviewComment();
+        reviewComment.setCommentContent("코멘트1번");
+        reviewService.saveReviewComment(reviewComment);
+
+        Assertions.assertEquals(reviewService.findByReviewCommentId(reviewComment.getReviewCommentId()), reviewComment);
+    }
 }
