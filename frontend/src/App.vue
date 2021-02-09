@@ -73,8 +73,8 @@
         <!-- padding을 넣어 줄 경우 내용이 밀림. 선택 -->
         <!-- <v-main style="padding:0"> -->
         <router-view />
-      </v-main>
-    </v-app>
+      </v-main> </v-app
+    >1
   </div>
 </template>
 
@@ -106,9 +106,6 @@ export default {
 };
 </script>
 <style scoped>
-#app .v-sheet.v-app-bar.v-toolbar {
-  border-radius: 0 0 24px 24px;
-}
 #app .v-navigation-drawer {
   border-radius: 0 20px 20px 0;
 }
