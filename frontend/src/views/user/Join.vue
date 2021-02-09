@@ -14,7 +14,7 @@
           <v-text-field v-model="form.userPassword" label="비밀번호" type="password"></v-text-field>
           <!-- <v-text-field v-model="form.confirm" label="비밀번호 확인" type="password"></v-text-field> -->
           <div class="input-with-btn">
-            <v-text-field v-model="form.userNickName" label="닉네임"></v-text-field
+            <v-text-field v-model="form.userNickname" label="닉네임"></v-text-field
             ><button class="btn-get-check">중복확인</button>
           </div>
           <div class="input-with-btn">
@@ -53,7 +53,7 @@ export default {
         userEmail: "",
         userPassword: "",
         // confirm: "",
-        userNickName: "",
+        userNickname: "",
         userPhone: "",
         // certificationNumber: "",
       },
