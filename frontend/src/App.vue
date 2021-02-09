@@ -50,7 +50,7 @@
                 <v-list-item-title>설정</v-list-item-title>
               </v-list-item>
 
-              <v-list-item class="logout-list">
+              <v-list-item class="logout-list" @click="logout">
                 <v-icon class="logout-icon" color="white">mdi-logout</v-icon>
                 <v-list-item-title>로그아웃</v-list-item-title>
               </v-list-item>
@@ -92,6 +92,10 @@ export default {
     scroll() {
       window.pageYOffset > 0 ? (this.showNavbar = true) : (this.showNavbar = false);
     },
+    logout() {
+      localStorage.removeItem('token')
+      this.$router.push('/login');
+    }
   },
   created() {
     window.addEventListener("scroll", this.scroll);
