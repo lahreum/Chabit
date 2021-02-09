@@ -97,6 +97,8 @@ public class UserController {
         try {
             User user = User.createUser(request);
             userService.signIn(user);
+            userService.initSuccessCount(user); // 카테고리별 챌린지 성공 횟수 초기화
+
             response = new BaseResponse("success", new JoinUserResponse("success", "회원가입 성공"));
         } catch (IllegalStateException e) {
             response = new BaseResponse("success", new JoinUserResponse("fail", e.getMessage()));
