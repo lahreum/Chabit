@@ -4,12 +4,13 @@ import backend.domain.*;
 import backend.service.ChallengeService;
 import backend.service.ReviewService;
 import backend.service.UserService;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
+@Api
 @RestController
 @RequestMapping("/v1/review")
 @CrossOrigin(origins = {"*"})
