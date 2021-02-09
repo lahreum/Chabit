@@ -2,19 +2,24 @@ package backend.service;
 
 import backend.domain.*;
 import backend.exception.NotEnoughPointException;
+import backend.repository.BadgeRepository;
 import backend.repository.ChallengeRepoistory;
+import backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.Period;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ChallengeService {
     private final ChallengeRepoistory challengeRepoistory;
+    private final UserRepository userRepository;
+    private final BadgeRepository badgeRepository;
 
     /**
      * 챌린지 생성.
@@ -85,8 +90,9 @@ public class ChallengeService {
     }
 
     @Transactional
-    public void endChallenges() {
+    public List<User> endChallenges() {
         List<Challenge> challenges = findChallenges();
+        Map<Long, User> winners = new HashMap<>(); // 성공한 사람들
         for (Challenge challenge : challenges) {
             // 챌린지 중 종료 날짜가 오늘인 챌린지들만
             if (challenge.getChallengeEnddate().toLocalDate().isEqual(LocalDateTime.now().toLocalDate())) {
@@ -122,9 +128,16 @@ public class ChallengeService {
                         user.changePoint(point);
                         user.addHistory(new PointHistory(user, challenge, LocalDateTime.now(), point));
                     }
+                    
+                    // 성공시 카테고리별 성공 횟수 증가후 뱃지 조건 체크
+                    if (u.getUserChallengeResult().equals(ChallengeResult.SUCCESS)) {
+                        userRepository.updateUserSuccessCount(user.getUserId(), challenge.getChallengeCategory().getCategoryId());
+                        winners.putIfAbsent(user.getUserId(), user);
+                    }
                 }
             }
         }
+        return new ArrayList<>(winners.values());
     }
 
     // 참여인원에 따른 인센티브 계산
@@ -155,6 +168,45 @@ public class ChallengeService {
             incentive = 0.0f;
         }
         return incentive;
+    }
+
+    // 챌린지 성공한 사람들 뱃지 체크
+    @Transactional
+    public void giveBadges(List<User> winners) {
+        for (User user : winners) {
+            List<UserCategory> userCategories = user.getSuccessCount();
+
+            for (UserCategory uc : userCategories) {
+                Optional<Badge> badge = null;
+                System.out.println("success count : " + uc.getSuccessCount());
+                switch (uc.getSuccessCount()) {
+                    case 3:
+                        // 3번 성공한 경우 동뱃지
+                        System.out.println("called bronze");
+                        badge = badgeRepository.findByCategoryId(uc.getCategory().getCategoryId()).stream()
+                                .filter(h -> h.getBadgeType().equals(BadgeType.BRONZE))
+                                .findAny();
+                        badge.ifPresent(b -> user.addBadge(new UserBadge(user, b)));
+                        break;
+                    case 6:
+                        // 6번 성공한 경우 은뱃지
+                        System.out.println("called silver");
+                        badge = badgeRepository.findByCategoryId(uc.getCategory().getCategoryId()).stream()
+                                .filter(h -> h.getBadgeType().equals(BadgeType.SILVER))
+                                .findAny();
+                        badge.ifPresent(b -> user.addBadge(new UserBadge(user, b)));
+                        break;
+                    case 9:
+                        // 9번 성공한 경우 금뱃지
+                        System.out.println("called gold");
+                        badge = badgeRepository.findByCategoryId(uc.getCategory().getCategoryId()).stream()
+                                .filter(h -> h.getBadgeType().equals(BadgeType.GOLD))
+                                .findAny();
+                        badge.ifPresent(b -> user.addBadge(new UserBadge(user, b)));
+                        break;
+                }
+            }
+        }
     }
 
     @Transactional

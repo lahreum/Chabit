@@ -269,4 +269,14 @@ public class UserService {
     public void putUserImage(User user, String userImage) {
         user.setUserImage(userImage);
     }
+
+    // 카테고리별로 유저가 챌린지 성공한 횟수 초기화
+    @Transactional
+    public void initSuccessCount(User user) {
+        List<Category> categories = categoryRepository.findAll();
+
+        for (Category c : categories) {
+            user.addSuccessCount(new UserCategory(user, c, 0));
+        }
+    }
 }

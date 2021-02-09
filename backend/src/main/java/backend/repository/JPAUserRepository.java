@@ -1,6 +1,8 @@
 package backend.repository;
 
+import backend.domain.Category;
 import backend.domain.User;
+import backend.domain.UserCategory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -56,6 +58,23 @@ public class JPAUserRepository implements UserRepository{
         List<User> result = entityManager.createQuery("select u from User u", User.class)
                                         .getResultList();
         return result;
+    }
+
+    @Override
+    public void updateUserSuccessCount(Long userId, Long categoryId) {
+        entityManager.createQuery("update UserCategory uc set uc.successCount = uc.successCount + 1 where uc.category.categoryId = :categoryId and uc.user.userId =: userId" )
+                .setParameter("categoryId", categoryId)
+                .setParameter("userId", userId)
+                .executeUpdate();
+    }
+
+    @Override
+    public Optional<UserCategory> findSuccessCountByUserAndCategory(Long userId, Long categoryId) {
+        List<UserCategory> resultList = entityManager.createQuery("select uc from UserCategory uc where uc.user.userId = :userId and uc.category.categoryId = :categoryId", UserCategory.class)
+                .setParameter("userId", userId)
+                .setParameter("categoryId", categoryId)
+                .getResultList();
+        return resultList.stream().findAny();
     }
 
     @Override
