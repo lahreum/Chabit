@@ -20,7 +20,11 @@ import HotReviewList from './HotReviewList.vue'
 import UpcomingChallengeList from './UpcomingChallengeList.vue'
 export default {
   components: { HomeRanking, HotReviewList, UpcomingChallengeList, DeadlineChallengeList },
-  
+  created() {
+    if (!localStorage.getItem('token')) {
+      this.$router.push('/login')
+    }
+  }
 }
 </script>
 

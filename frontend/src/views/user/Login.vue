@@ -6,11 +6,11 @@
       <div class="login">
         <p>로그인</p>
         <v-card-text class="text-input">
-          <v-text-field v-model="form.email" label="이메일" type="email"></v-text-field>
-          <v-text-field v-model="form.password" label="비밀번호" type="password"></v-text-field>
+          <v-text-field v-model="form.email" label="이메일" type="email" @keyup.enter="onLogin"></v-text-field>
+          <v-text-field v-model="form.password" label="비밀번호" type="password" @keyup.enter="onLogin"></v-text-field>
         </v-card-text>
         <div class="bottom">
-          <button class="btn-login">
+          <button class="btn-login" @click="onLogin">
             로그인
           </button>
           <div class="btn-forget-signup">
@@ -48,5 +48,26 @@ export default {
       },
     };
   },
+  created() {
+    if (localStorage.getItem('token')) {
+      this.$router.push('/');
+    } 
+  },
+  methods: {
+    onLogin() {
+      // console.log("로그인");
+      this.$Axios.post(`${this.$store.state.host}/v1/login`, { userEmail: this.form.email, userPassword: this.form.password })
+      .then(
+        res=> {
+          console.log(res);
+          localStorage.setItem('token', res.data.data);
+          this.$router.push("/");
+        })
+      .catch(
+        err => {
+          console.log(err);
+        })
+    }
+  }
 };
 </script>
