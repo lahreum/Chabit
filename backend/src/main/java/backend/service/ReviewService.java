@@ -96,6 +96,7 @@ public class ReviewService {
         reviewComment
                 .setCommentContent(newReviewComment.getCommentContent());
         reviewCommentRepository.saveReviewComment(reviewComment);
+        return reviewComment;
     }
 
     public void deleteReviewComment(ReviewComment reviewComment){

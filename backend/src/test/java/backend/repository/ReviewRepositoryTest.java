@@ -231,10 +231,29 @@ class ReviewRepositoryTest {
 
     @Test
     void findReviewCommentByReviewCommentId(){
-        ReviewComment reviewComment = new ReviewComment();
-        reviewComment.setCommentContent("코멘트1번");
-        reviewService.saveReviewComment(reviewComment);
+        ReviewComment reviewComment2 = new ReviewComment();
+        reviewComment2.setCommentContent("코멘트1번");
+        reviewService.saveReviewComment(reviewComment2);
 
-        Assertions.assertEquals(reviewService.findReviewCommentByReviewCommentId(reviewComment.getReviewCommentId()), reviewComment);
+        Assertions.assertEquals(reviewService.findReviewCommentByReviewCommentId(reviewComment2.getReviewCommentId()), reviewComment2);
+    }
+    @Test
+    void findReviewCommentByReviewId() {
+        Review review = new Review();
+        review.setReviewContent("test");
+        reviewService.saveReview(review);//리뷰 생성
+
+        ReviewComment reviewComment3 = new ReviewComment();
+        reviewComment3.setCommentContent("코멘트1번");
+        reviewComment3.setReviewId(review);
+        reviewService.saveReviewComment(reviewComment3); // reviewComment3 주입
+
+        ReviewComment reviewComment4 = new ReviewComment();
+        reviewComment4.setCommentContent("코멘트2번");
+        reviewComment4.setReviewId(review);
+        reviewService.saveReviewComment(reviewComment4);// reviewComment4 주입
+
+        //findReviewCommentByReviewId
+        Assertions.assertEquals(reviewService.findReviewCommentByReviewId(review).get(0), reviewComment3);
     }
 }
