@@ -5,6 +5,7 @@ import backend.service.BadgeService;
 import backend.service.LevelService;
 import backend.service.UserService;
 import backend.utils.Uploader;
+import backend.utils.Validator;
 import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,6 +29,7 @@ public class UserController {
     private final LevelService levelService;
     private final BadgeService badgeService;
     private final Uploader uploader;
+    private final Validator validator;
 
     @ApiOperation(value="모든 사용자 조회", notes="모든 사용자 조회")
     @GetMapping
@@ -109,6 +111,7 @@ public class UserController {
     public BaseResponse signIn(@RequestBody UserRequest request) {
         BaseResponse response = null;
         try {
+            request.setUserPhone(validator.phoneValidator(request.getUserPhone())); // 전화번호 변환
             User user = User.createUser(request);
 
             userService.signIn(user);
@@ -128,6 +131,7 @@ public class UserController {
         BaseResponse response = null;
         try {
             request.setUserEmail(userEmail);
+            request.setUserPhone(validator.phoneValidator(request.getUserPhone())); // 전화번호 변환
             userService.updateUser(request);
             response = new BaseResponse("success", "수정 성공");
         } catch (IllegalStateException e) {
