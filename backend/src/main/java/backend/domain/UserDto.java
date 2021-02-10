@@ -21,6 +21,8 @@ public class UserDto {
     private String userName;
     @ApiModelProperty(value="사용자 휴대폰 번호")
     private String userPhone;
+    @ApiModelProperty(value="사용자 프로필 메세지")
+    private String userProfileMessage;
     @ApiModelProperty(value="사용자 포인트")
     private int userPoints;
     @ApiModelProperty(value="사용자 가입날짜")
@@ -28,9 +30,13 @@ public class UserDto {
     @ApiModelProperty(value="사용자 해시태그")
     private HashtagDto hashtags;
     @ApiModelProperty(value="사용자 레벨")
-    private String userLevel;
+    private LevelDto userLevel;
     @ApiModelProperty(value="사용자 권한")
     private String userRole;
+    @ApiModelProperty(value="사용자 프로필사진")
+    private String userImage;
+    @ApiModelProperty(value="사용자 획득 뱃지 목록")
+    private BadgeResponse badges;
 
     public UserDto(String userEmail, String userNickname, String userName, String userPhone) {
         this.userEmail = userEmail;
@@ -45,6 +51,8 @@ public class UserDto {
         this.userPhone = user.getUserPhone();
         this.userPoints = user.getUserPoints();
         this.userJoindate = user.getUserJoindate();
+        this.userImage = user.getUserImage();
+        this.userProfileMessage = user.getUserProfileMessage();
     }
 
     public UserDto(String userEmail, String userNickname, String userName, String userPhone, int userPoints, LocalDateTime userJoindate) {
@@ -70,5 +78,10 @@ public class UserDto {
     public void addHashtags(HashtagDto hashtags) {
         this.hashtags = hashtags;
     }
-    public void addUserLevel(String userLevel) {this.userLevel = userLevel;}
+    public void addUserLevel(LevelDto levelDto) {
+        this.userLevel = levelDto;
+    }
+    public void addBadges(BadgeResponse badges) {
+        this.badges = badges;
+    }
 }

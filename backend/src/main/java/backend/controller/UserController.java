@@ -1,16 +1,22 @@
 package backend.controller;
 //http://localhost:9999/swagger-ui.html
 import backend.domain.*;
-import backend.service.ChallengeService;
+import backend.service.BadgeService;
 import backend.service.LevelService;
 import backend.service.UserService;
+import backend.utils.Uploader;
+import backend.utils.Validator;
 import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Api
@@ -21,6 +27,9 @@ import java.util.stream.Collectors;
 public class UserController {
     private final UserService userService;
     private final LevelService levelService;
+    private final BadgeService badgeService;
+    private final Uploader uploader;
+    private final Validator validator;
 
     @ApiOperation(value="모든 사용자 조회", notes="모든 사용자 조회")
     @GetMapping
@@ -34,13 +43,16 @@ public class UserController {
 
         // 레벨 추가
         for(UserDto dto : collect) {
-            dto.addUserLevel(levelService.findUserLevel(dto.getUserPoints()));
+            String userLevel = levelService.findUserLevel(dto.getUserPoints());
+            Optional<Level> level = levelService.findOne(userLevel);
+            level.ifPresent(value -> dto.addUserLevel(new LevelDto(value)));
         }
 
         return new BaseResponse("success", collect);
     }
 
-    @ApiOperation(value="닉네임으로 유저 찾기", notes="닉네임으로 유저 찾기")
+    @ApiOperation(value="닉네임으로 유저 찾기", notes="닉네임 중복 체크 용")
+    @ApiImplicitParam(name = "nickname", value = "사용자 닉네임", required = true)
     @GetMapping("/nickname/{nickname}")
     public BaseResponse chekcNickname(@PathVariable String nickname){
         BaseResponse response = null;
@@ -74,7 +86,17 @@ public class UserController {
 
             // 해당 유저의 레벨 가져오기.
             String userLevel = levelService.findUserLevel(userDto.getUserPoints());
-            userDto.addUserLevel(userLevel);
+            Optional<Level> level = levelService.findOne(userLevel);
+            level.ifPresent(l -> userDto.addUserLevel(new LevelDto(l)));
+            
+            // 뱃지 추가
+            BadgeResponse badgeDto = new BadgeResponse();
+            List<Badge> allBadge = badgeService.findAll();
+            allBadge.forEach(badgeDto::addBadge);
+            List<UserBadge> userBadges = findUser.getBadges();
+            userBadges.forEach(b -> badgeDto.addUserBadge(b.getBadge()));
+
+            userDto.addBadges(badgeDto);
 
             response = new BaseResponse("success", userDto);
         } catch (IllegalStateException e) {
@@ -89,8 +111,12 @@ public class UserController {
     public BaseResponse signIn(@RequestBody UserRequest request) {
         BaseResponse response = null;
         try {
+            request.setUserPhone(validator.phoneValidator(request.getUserPhone())); // 전화번호 변환
             User user = User.createUser(request);
+
             userService.signIn(user);
+            userService.initSuccessCount(user); // 카테고리별 챌린지 성공 횟수 초기화
+
             response = new BaseResponse("success", new JoinUserResponse("success", "회원가입 성공"));
         } catch (IllegalStateException e) {
             response = new BaseResponse("success", new JoinUserResponse("fail", e.getMessage()));
@@ -100,10 +126,12 @@ public class UserController {
     }
 
     @PutMapping("/{userEmail}")
+    @ApiOperation(value="사용자 정보 수정", notes="사용자 정보 수정")
     public BaseResponse updateUser(@PathVariable String userEmail, @RequestBody UserRequest request) {
         BaseResponse response = null;
         try {
             request.setUserEmail(userEmail);
+            request.setUserPhone(validator.phoneValidator(request.getUserPhone())); // 전화번호 변환
             userService.updateUser(request);
             response = new BaseResponse("success", "수정 성공");
         } catch (IllegalStateException e) {
@@ -113,7 +141,23 @@ public class UserController {
         return response;
     }
 
+    @PatchMapping("/{userEmail}/profile")
+    @ApiOperation(value = "사용자 상태메세지 추가 & 수정", notes = "사용자 상태메세지 추가 & 수정")
+    public BaseResponse updateUserProfileMessage(@PathVariable String userEmail, @RequestBody UserRequest request) {
+        BaseResponse response = null;
+        try {
+            User user = userService.findUser(userEmail);
+            userService.putProfileMessage(user, request.getUserProfileMessage());
+
+            response = new BaseResponse("success", "성공");
+        } catch (IllegalStateException e) {
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
     @DeleteMapping("/{userEmail}")
+    @ApiOperation(value="사용자 삭제", notes="회원탈퇴용")
     public BaseResponse deleteUser(@PathVariable String userEmail) {
         BaseResponse response = null;
         try {
@@ -127,8 +171,11 @@ public class UserController {
     }
 
     @PostMapping("/hashtag/{userEmail}")
-    public BaseResponse saveHashtag(@PathVariable String userEmail, @RequestBody String hashtagName) {
+    @ApiOperation(value="해쉬태그 등록", notes="해쉬태그 등록")
+    public BaseResponse saveHashtag(@PathVariable String userEmail, @RequestParam(required = false, defaultValue = "") String hashtagName) {
         BaseResponse response = null;
+        if(hashtagName.equals(""))
+            return new BaseResponse("fail", "해쉬태그 이름을 입력해주세요");
         try {
             userService.addHashtag(userEmail, hashtagName);
             response = new BaseResponse("success", "추가 성공");
@@ -139,6 +186,7 @@ public class UserController {
     }
 
     @GetMapping("/hashtag/{userEmail}")
+    @ApiOperation(value="유저 해쉬태그 조회", notes="유저 해쉬태그 가져오기")
     public BaseResponse getUserHashtag(@PathVariable String userEmail) {
         BaseResponse response = null;
         try {
@@ -155,6 +203,7 @@ public class UserController {
     }
 
     @DeleteMapping("/hashtag/{userEmail}/{hashtagName}")
+    @ApiOperation(value="유저 해쉬태그 삭제", notes="유저 해쉬태그 삭제")
     public BaseResponse deleteHashtag(@PathVariable String userEmail, @PathVariable String hashtagName) {
         BaseResponse response = null;
         try {
@@ -168,18 +217,47 @@ public class UserController {
     }
 
     // 랭킹
-    @GetMapping("/ranking")
-    public BaseResponse getRanking(@RequestParam(required = false) String userEmail,
+    @GetMapping("/ranking/{userEmail}")
+    @ApiOperation(value="랭킹 조회", notes="랭킹 조회. 조건별 조회 가능")
+    public BaseResponse getRanking(@PathVariable String userEmail,
                                    @RequestParam(required = false) Long categoryId,
-                                   @RequestParam(required = false, defaultValue = "false") Boolean monthlyRanking) {
+                                   @RequestParam(required = false, defaultValue = "false") Boolean monthlyRanking,
+                                   @RequestParam(required = false, defaultValue = "false") Boolean onlyFollowing) {
         BaseResponse response = null;
         try {
-            List<User> ranking = userService.findUserByRankingCondition(userEmail, categoryId, monthlyRanking);
+            List<User> ranking = userService.findUserByRankingCondition(userEmail, categoryId, monthlyRanking, onlyFollowing);
+            
+            // 내 랭킹 찾기
+            int myRank = 1;
+            for (User user : ranking) {
+                if(user.getUserEmail().equals(userEmail))
+                    break;
+                myRank++;
+            }
+
             List<UserDto> collect = ranking.stream()
                     .map(UserDto::new)
                     .collect(Collectors.toList());
-            response = new BaseResponse("success", collect);
+            response = new BaseResponse("success", new RankingResponse(myRank, collect));
         } catch (IllegalStateException e) {
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    // 프로필 사진 등록
+    @PostMapping("/{userEmail}/image")
+    @ApiOperation(value="프로필 사진 등록 & 수정", notes="프로필 사진 등록 & 수정하기")
+    public BaseResponse setUserImage(@PathVariable String userEmail, @RequestPart(value = "userImage", required = false) MultipartFile userImage){
+        BaseResponse response = null;
+        try {
+            User user = userService.findUser(userEmail);
+            String uniqueName = user.getUserId() + "_userImage_" + LocalDate.now() + "_";
+            String imageUrl = uploader.upload(userImage, "users", uniqueName);
+
+            userService.putUserImage(user, imageUrl);
+            response = new BaseResponse("success", "이미지 등록 성공");
+        } catch (IllegalStateException | IOException | IllegalArgumentException e) {
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;
@@ -188,9 +266,12 @@ public class UserController {
     // ======= Response & Request 클래스 =======
     // 회원 가입
     @Data
+    @ApiModel
     static class JoinUserResponse {
-        private String joinResult; // 회원가입 결과
-        private String message; // 성공 & 실패 메세지
+        @ApiModelProperty(value = "회원가입 결과")
+        private String joinResult;
+        @ApiModelProperty(value = "회원가입 결과 메세지")
+        private String message; 
 
         public JoinUserResponse() {
         }
@@ -204,9 +285,22 @@ public class UserController {
     // 회원 탈퇴
     @Data
     @AllArgsConstructor
+    @ApiModel
     static class DeleteUserResponse {
-        private String deleteResult; // 삭제 결과
+        @ApiModelProperty(value = "탈퇴 결과")
+        private String deleteResult;
+        @ApiModelProperty(value = "탈퇴 결과 메세지")
         private String message;
     }
 
+    // 랭킹
+    @Data
+    @AllArgsConstructor
+    @ApiModel
+    static class RankingResponse {
+        @ApiModelProperty(value = "내 랭킹")
+        private int myRanking;
+        @ApiModelProperty(value = "랭킹")
+        List<UserDto> userRanking;
+    }
 }

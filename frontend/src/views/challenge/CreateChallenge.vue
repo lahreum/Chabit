@@ -33,6 +33,7 @@
                 height="80"
                 ripple
                 v-ripple="{class: 'error--text'}"
+                @click="selected.categoryName = '운동'"
               >
                 운동
               </v-btn>
@@ -46,6 +47,7 @@
                 height="80"
                 ripple
                 v-ripple="{class: 'error--text'}"
+                @click="selected.categoryName = '공부'"
               >
                 공부
               </v-btn>
@@ -59,6 +61,7 @@
                 height="80"
                 ripple
                 v-ripple="{class: 'error--text'}"
+                @click="selected.categoryName = '돌봄'"
               >
                 돌봄
               </v-btn>
@@ -72,6 +75,7 @@
                 height="80"
                 ripple
                 v-ripple="{class: 'error--text'}"
+                @click="selected.categoryName = '취미'"
               >
                 취미
               </v-btn>
@@ -85,6 +89,7 @@
                 height="80"
                 ripple
                 v-ripple="{class: 'error--text'}"
+                @click="selected.categoryName = '생활습관'"
               >
                 생활습관
               </v-btn>
@@ -98,6 +103,7 @@
                 height="80"
                 ripple
                 v-ripple="{class: 'error--text'}"
+                @click="selected.categoryName = '다이어트'"
               >
                 다이어트
               </v-btn>
@@ -111,6 +117,7 @@
                 height="80"
                 ripple
                 v-ripple="{class: 'error--text'}"
+                @click="selected.categoryName = '독서'"
               >
                 독서
               </v-btn>
@@ -124,6 +131,7 @@
                 height="80"
                 ripple
                 v-ripple="{class: 'error--text'}"
+                @click="selected.categoryName = '돈관리'"
               >
                 돈관리
               </v-btn>
@@ -137,12 +145,14 @@
                 height="80"
                 ripple
                 v-ripple="{class: 'error--text'}"
+                @click="selected.categoryName = '감정관리'"
               >
                 감정관리
               </v-btn>
             </v-col>
           </v-row>
         </v-card>
+        <p style="color: black; font-size: 1rem;">'{{selected.categoryName}}' 선택</p>
         <v-btn
           color="red darken-4"
           dark
@@ -240,6 +250,7 @@
                   outlined
                   dense
                   accept="image/png, image/jpeg, image/bmp"
+                  v-model="proofFiles"
                 ></v-file-input>
               </v-col>
               <v-col
@@ -250,6 +261,7 @@
                   color="red darken-4"
                   dark
                   height="40px"
+                  @click="proofUpload"
                 >
                   업로드
                 </v-btn>
@@ -329,11 +341,12 @@
         <v-card
           color="grey lighten-5"
           class="mb-12"
-          height="500px"
+          height="570px"
           flat
         >
           <v-card-text>
             <p style="font-size: 1rem; font-weight: 600;">챌린지 기간</p>
+            <p>챌린지 기간은 <b>1주일</b> 단위로만 가능합니다. 예) 시작일이 화요일이면 종료일은 월요일이어야 함.</p>
             <v-row>
               <v-col
                 cols="12"
@@ -401,6 +414,7 @@
                   outlined
                   dense
                   accept="image/png, image/jpeg, image/bmp"
+                  v-model="challengeFiles"
                 ></v-file-input>
               </v-col>
               <v-col
@@ -411,6 +425,7 @@
                   color="red darken-4"
                   dark
                   height="40px"
+                  @click="challengeUpload"
                 >
                   업로드
                 </v-btn>
@@ -421,6 +436,7 @@
         <v-btn
           color="red darken-4"
           dark
+          @click="createChallenge"
         >
           완료
         </v-btn>
@@ -444,6 +460,7 @@
         textRules: [v => v.length <= 1000 || '1000자 이상 입력할 수 없습니다'],
         texts: '',
         proofType: '',
+        proofFiles: [],
         rating: 0,
         switch1: true,
         switch2: false,
@@ -459,7 +476,24 @@
         ],
         startTime: '',
         endTime: '',
-        dates: ['2021-02-07', '2021-02-14'],
+        dates: ['', ''],
+        challengeFiles: [],
+        selected: {
+          "authEndtime": "",
+          "authExample": "",
+          "authFrequency": 0,
+          "authHoliday": false,
+          "authStarttime": "",
+          "authWay": "",
+          "categoryName": "",
+          "challengeDesc": "",
+          "challengeEnddate": "",
+          "challengeName": "",
+          "challengeStartdate": "",
+          "challengeThumbnail": "",
+          "hashtags": [],
+          "userEmail": ""
+        }
       }
     },
     computed: {
@@ -467,6 +501,125 @@
         return this.dates.join(' ~ ')
       },
     },
+    watch: {
+      dates: function() {
+        let year1 = parseInt(this.dates[0].slice(0,4));
+        let month1 = parseInt(this.dates[0].slice(5,7));
+        let day1 = parseInt(this.dates[0].slice(8,10));
+        let date1 = new Date(year1, month1-1, day1);
+
+        let year2 = parseInt(this.dates[1].slice(0,4));
+        let month2 = parseInt(this.dates[1].slice(5,7));
+        let day2 = parseInt(this.dates[1].slice(8,10));
+        let date2 = new Date(year2, month2-1, day2);
+
+        const elapsedMSec = date2.getTime() - date1.getTime();
+        const elapsedDay = elapsedMSec / (1000 * 60 * 60 * 24);
+
+        if (elapsedDay < 0) {
+          alert("시작일은 종료일보다 앞서 있어야 합니다.")
+          this.dates[0] = ""
+          this.dates[1] = ""
+        } else if ((elapsedDay + 1) % 7 !== 0) {
+          alert("챌린지는 1주일 단위로 선택하셔야 합니다.")
+          this.dates[0] = ""
+          this.dates[1] = ""
+        }  
+      }
+    },
+    updated() {
+      this.$nextTick(function() {
+        this.selected.challengeName = this.title
+        this.selected.challengeDesc = this.texts
+        this.selected.authWay = this.proofType
+        if (this.switch2 === false) {
+          this.selected.authHoliday = false
+        } else {
+          this.selected.authHoliday = true
+        }
+        this.selected.authFrequency = this.count + 1
+        this.selected.authStarttime = this.startTime
+        this.selected.authEndtime = this.endTime
+        this.selected.challengeStartdate = this.dates[0]
+        this.selected.challengeEnddate = this.dates[1]
+      })
+    },
+    created() {
+      this.selected.userEmail = this.$store.state.user.userEmail
+    },
+    methods: {
+      async proofUpload() {
+        let fd = new FormData();
+        fd.append('authExample', this.proofFiles)
+
+        await this.$Axios.post(`${this.$store.state.host}/v1/challenges/authExample`,
+              fd, {
+                headers: {
+                  'Content-Type': 'multipart/form-data'
+                }
+              }
+            ).then(res => {
+              // console.log('전송 성공');
+              console.log(res.data)
+              this.selected.authExample = res.data.data
+            }).catch(function () {
+              console.log('전송 실패')
+            })
+          
+      },
+      async challengeUpload() {
+        let fd = new FormData();
+        fd.append('thumbnail', this.challengeFiles)
+
+        await this.$Axios.post(`${this.$store.state.host}/v1/challenges/thumbnail`,
+              fd, {
+                headers: {
+                  'Content-Type': 'multipart/form-data'
+                }
+              }
+            ).then(res => {
+              // console.log('전송 성공');
+              console.log(res.data)
+              this.selected.challengeThumbnail = res.data.data
+            }).catch(function () {
+              console.log('전송 실패')
+            })
+          
+      },
+      async createChallenge() {
+        const categoryName = this.selected.categoryName
+        await this.$Axios.post(`${this.$store.state.host}/v1/hashtag?hashtagName=${categoryName}`
+        ).then(res => {
+          console.log(res.data)
+          this.selected.hashtags.append(res.data.data)
+          console.log(this.selected.hashtags)
+        }).catch(function () {
+          console.log('전송 실패')
+        })
+
+        const proofFrequency = "주 " + this.selected.authFrequency + "회 인증"
+        // console.log(proofFrequency) 
+        await this.$Axios.post(`${this.$store.state.host}/v1/hashtag?hashtagName=${proofFrequency}`
+        ).then(res => {
+          console.log(res.data)
+          this.selected.hashtags.append(res.data.data)
+          console.log(this.selected.hashtags)
+        }).catch(function () {
+          console.log('전송 실패')
+        })
+
+        // console.log(this.selected)
+        await this.$Axios.post(`${this.$store.state.host}/v1/challenges`, 
+          this.selected
+        ).then(res => {
+          console.log(res.data)
+          alert("챌린지 생성이 완료되었습니다.")
+          // this.$router.push("/feed");
+        }).catch(function () {
+          console.log('전송 실패')
+        })
+      }
+    }
   }
 </script>
 

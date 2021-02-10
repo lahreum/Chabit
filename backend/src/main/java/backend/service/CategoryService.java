@@ -46,4 +46,5 @@ public class CategoryService {
              throw new IllegalStateException("잘못된 카테고리 명입니다.");
          }
      }
+
 }

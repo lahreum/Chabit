@@ -10,15 +10,30 @@
                   <v-list-item-avatar style="height:63px; width:63px; background-color:white; ">
                     <!-- 프로필 사진 입력 -->
                     <v-img
+                      v-if="checkLogin()"
                       style="height:60px; min-width: 60px; width:60px;"
-                      src="./assets/img/maja.png"
+                      :src="userImage"
+                    ></v-img>
+                    <v-img
+                      v-else
+                      style="height:60px; min-width: 60px; width:60px;"
+                      src="./assets/img/avatardefault.png"
                     ></v-img>
                   </v-list-item-avatar>
                 </div>
                 <div class="nav-top-content">
-                  <v-list-item-title class="title"> Saljjingae </v-list-item-title>
-                  <v-list-item-subtitle color="white"> Bronze </v-list-item-subtitle>
-                  <v-list-item-subtitle> 200/3000p </v-list-item-subtitle>
+                  <v-list-item-title v-if="checkLogin()" class="title">
+                    {{ userNickname }}
+                  </v-list-item-title>
+                  <v-list-item-title v-else class="title" @click="$router.push('/login')">
+                    로그인하기
+                  </v-list-item-title>
+                  <v-list-item-subtitle v-if="checkLogin()" color="white">
+                    {{ userLevel.level }}
+                  </v-list-item-subtitle>
+                  <v-list-item-subtitle v-if="checkLogin()">
+                    {{ userPoints }}/{{ userLevel.levelMaxPoint }}p
+                  </v-list-item-subtitle>
                 </div>
               </v-list-item-content>
             </v-list-item>
@@ -27,10 +42,10 @@
           <div id="nav-mid" class="nav-mid">
             <v-list-item-group v-model="group" active-class="text--accent-4">
               <v-list-item>
-                <v-list-item-title @click="$router.push('/')">Home</v-list-item-title>
+                <v-list-item-title @click="$router.push({ name: 'Home' })">Home</v-list-item-title>
               </v-list-item>
 
-              <v-list-item @click="$router.push('/feed')">
+              <v-list-item @click="$router.push({ name: 'Feed' })">
                 <v-list-item-title>마이피드</v-list-item-title>
               </v-list-item>
 
@@ -38,19 +53,19 @@
                 <v-list-item-title>팔로우</v-list-item-title>
               </v-list-item>
 
-              <v-list-item @click="$router.push('/challenge')">
+              <v-list-item @click="$router.push({ name: 'Challenge' })">
                 <v-list-item-title>챌린지</v-list-item-title>
               </v-list-item>
 
-              <v-list-item @click="$router.push('/ranking')">
+              <v-list-item @click="$router.push({ name: 'Ranking' })">
                 <v-list-item-title>랭킹</v-list-item-title>
               </v-list-item>
 
-              <v-list-item @click="$router.push('/setting')">
+              <v-list-item v-if="this.userEmail" @click="$router.push({ name: 'Setting' })">
                 <v-list-item-title>설정</v-list-item-title>
               </v-list-item>
 
-              <v-list-item class="logout-list">
+              <v-list-item v-if="this.userEmail" class="logout-list" @click="logout">
                 <v-icon class="logout-icon" color="white">mdi-logout</v-icon>
                 <v-list-item-title>로그아웃</v-list-item-title>
               </v-list-item>
@@ -79,18 +94,37 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "App",
   data: () => ({ drawer: null, group: null, showNavbar: false }),
   props: ["pageTitle"],
+  computed: {
+    ...mapGetters({ userEmail: "getUserEmail" }),
+    ...mapGetters({ userLevel: "getUserLevel" }),
+    ...mapGetters({ userNickname: "getUserNickname" }),
+    ...mapGetters({ userImage: "getUserImage" }),
+    ...mapGetters({ userPoints: "getUserPoints" }),
+  },
   watch: {
     group() {
       this.drawer = false;
     },
   },
   methods: {
+    checkLogin() {
+      if (this.userEmail != null) return true;
+      else return false;
+    },
     scroll() {
       window.pageYOffset > 0 ? (this.showNavbar = true) : (this.showNavbar = false);
+    },
+    logout() {
+      localStorage.removeItem("vuex");
+      window.location.reload();
+      this.$router.push("/login");
+      alert("로그아웃 되었습니다.");
     },
   },
   created() {
@@ -102,9 +136,6 @@ export default {
 };
 </script>
 <style scoped>
-#app .v-sheet.v-app-bar.v-toolbar {
-  border-radius: 0 0 24px 24px;
-}
 #app .v-navigation-drawer {
   border-radius: 0 20px 20px 0;
 }
@@ -133,16 +164,17 @@ export default {
   padding-left: 10px;
 }
 #nav-mid .v-list-item {
-  width: 60%;
+  width: 70%;
 }
 #nav-mid .v-list-item:hover {
   background-color: white;
+  opacity: 0.5;
   box-shadow: 2px 2px 7px #3c0903;
 }
 #nav-mid .theme--light.v-list-item--active::before {
   background-color: white;
   box-shadow: 2px 2px 7px #3c0903;
-  opacity: 0.8;
+  opacity: 0.3;
   color: #a62f22;
 }
 #nav-mid .v-list-item .v-list-item__title {

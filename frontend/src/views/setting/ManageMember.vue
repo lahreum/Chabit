@@ -1,40 +1,99 @@
 <template>
-  <v-card>
+  <v-card class="manage-member" flat>
     <v-card-title color="white">
       <v-spacer></v-spacer>
       <v-autocomplete
         v-model="search"
+        append
         append-icon="mdi-magnify"
         label="Search"
         single-line
+        hide-no-data
         hide-details
         clearable
-        item-value="name"
-        item-text="name"
+        item-value="userName"
+        item-text="userName"
         :items="memberInfo"
         :menu-props="{ top: false, bottom: true, offsetY: true, offsetX: true }"
       ></v-autocomplete>
       <v-spacer></v-spacer>
-      <v-btn elevation="1" rounded plain depressed color="error"> Forced</v-btn>
+      <v-btn elevation="1" rounded plain depressed color="error" @click="dialog = !dialog">
+        Forced</v-btn
+      >
+      <!-- Start Popup dialog -->
+      <p v-if="dialog">
+        <v-row justify="center">
+          <v-dialog v-model="dialog" persistent max-width="290" content-class="rounded-xl">
+            <v-card class="rounded-xl justify-center text-sm-center">
+              <v-card-title class="headline justify-center rounded-xl">
+                <strong>회원삭제</strong>
+              </v-card-title>
+              <v-card-text>강제로 회원을 탈퇴시키겠습니까?</v-card-text>
+              <v-divider></v-divider>
+              <v-card-actions class="rounded-xl">
+                <v-spacer></v-spacer>
+                <v-btn text @click="dialog = false">
+                  취소
+                </v-btn>
+                <v-spacer></v-spacer>
+                <v-divider vertical></v-divider>
+                <v-spacer></v-spacer>
+                <v-btn color="red darken-4" plain :ripple="false" text @click="deleteUserForced()">
+                  탈퇴
+                </v-btn>
+                <v-spacer></v-spacer> </v-card-actions
+            ></v-card>
+          </v-dialog>
+        </v-row>
+      </p>
+      <!-- End Popup dialog -->
+      <!-- Start AfterPopup -->
+      <p v-if="afterDialog">
+        <v-row justify="center">
+          <v-dialog v-model="afterDialog" persistent max-width="290" content-class="rounded-xl">
+            <v-card class="rounded-xl justify-center text-sm-center">
+              <v-card-title class="headline justify-center rounded-xl">
+                <strong>회원삭제 결과</strong>
+              </v-card-title>
+              <v-card-text>{{ this.afterMessage }}</v-card-text>
+              <v-divider></v-divider>
+              <v-card-actions class="rounded-xl">
+                <v-spacer></v-spacer>
+                <v-btn
+                  color="red darken-4"
+                  plain
+                  :ripple="false"
+                  text
+                  @click="afterDialog = !afterDialog"
+                >
+                  확인
+                </v-btn>
+                <v-spacer></v-spacer> </v-card-actions
+            ></v-card>
+          </v-dialog>
+        </v-row>
+      </p>
+      <!-- End AfterPopup -->
     </v-card-title>
     <v-data-table
       v-model="selected"
       :headers="headers"
       :items="memberInfo"
-      item-key="name"
+      item-key="userName"
       show-select
+      single-select
       sort
       :search="search"
       class="elevation-1"
       hide-default-footer
-      @toggle-select-all="selectAllToggle"
     >
+      <!-- @toggle-select-all="selectAllToggle" -->
       <template v-slot:[`item.data-table-select`]="{ item, isSelected, select }">
         <v-simple-checkbox
           v-ripple
           :value="isSelected"
-          :readonly="item.permission"
-          :disabled="item.permission"
+          :readonly="checkRole(item.userRole)"
+          :disabled="checkRole(item.userRole)"
           @input="select($event)"
         ></v-simple-checkbox>
       </template>
@@ -43,6 +102,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -50,73 +110,90 @@ export default {
       selected: [],
       disabledCount: 0,
       headers: [
-        { text: "Name", value: "name" },
+        { text: "Name", value: "userName" },
         {
           text: "Email",
           align: "start",
           sortable: false,
-          value: "email",
+          value: "userEmail",
         },
-        { text: "Nickname", value: "nickName" },
-        { text: "Password", sortable: false, value: "password" },
-        { text: "Permission", value: "permission" },
+        { text: "Nickname", value: "userNickname" },
+        { text: "Password", sortable: false, value: "userPassword" },
+        { text: "Permission", value: "userRole" },
       ],
-      memberInfo: [
-        {
-          name: "내이름",
-          email: "hello@ssafy.com",
-          nickName: "김미역",
-          password: "asdf12345",
-          permission: true,
-        },
-        {
-          name: "쟤이름",
-          email: "saljjingae@help.com",
-          nickName: "백찐개",
-          password: "qwer5789",
-          permission: false,
-        },
-        {
-          name: "걔이름",
-          email: "ssafy@ssafy.com",
-          nickName: "어반동",
-          password: "KDJfdjg!",
-          permission: false,
-        },
-        {
-          name: "헐이름",
-          email: "daejeon@ssafy.com",
-          nickName: "어럼리",
-          password: "sdfahiul654",
-          permission: false,
-        },
-      ],
+      memberInfo: [],
+      dialog: false,
+      afterDialog: false,
+      afterMessage: "",
     };
   },
+  computed: {
+    ...mapGetters({ userRole: "getUserRole" }),
+  },
   methods: {
-    selectAllToggle(props) {
-      if (this.selected.length != this.memberInfo.length - this.disabledCount) {
-        this.selected = [];
-        const self = this;
-        props.items.forEach((item) => {
-          if (!item.permission) {
-            self.selected.push(item);
+    // 전체선택 자동 계산
+    // selectAllToggle(props) {
+    //   if (this.selected.length != this.memberInfo.length - this.disabledCount) {
+    //     this.selected = [];
+    //     props.items.forEach((item) => {
+    //       if (!this.checkRole(item.userRole)) {
+    //         this.selected.push(item);
+    //       }
+    //     });
+    //   } else this.selected = [];
+    // },
+    // 사용자 권한 확인
+    checkRole(input) {
+      if (input != "USER") return true;
+      else return false;
+    },
+
+    // 데이터 가져오기
+    getMemberList() {
+      this.$Axios
+        .get(`${this.$store.state.host}/v1/users`)
+        .then((res) => {
+          if (res.data.status == "success") {
+            this.memberInfo = res.data.data;
+            // 관리자 권한일 경우 선택 못하도록 카운트
+            // this.memberInfo.map((item) => {
+            //   if (this.checkRole(item.userRole)) this.disabledCount += 1;
+            // });
           }
+        })
+        .catch((err) => {
+          console.log(err);
         });
-      } else this.selected = [];
+    },
+
+    deleteUserForced() {
+      if (this.userRole == "ADMIN") {
+        let deleteEmail = this.selected[this.selected.length - 1].userEmail;
+        this.$Axios
+          .delete(`${this.$store.state.host}/v1/users/` + deleteEmail)
+          .then((res) => {
+            if (res.data.data.deleteResult == "success") {
+              this.dialog = false;
+              this.afterDialog = true;
+              this.afterMessage = res.data.data.message;
+              this.getMemberList();
+            } else {
+              this.afterMessage = res.data.data.message;
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        this.dialog = false;
+        this.afterDialog = true;
+        this.afterMessage = "관리자만 사용이 가능합니다.";
+      }
     },
   },
-  created() {
-    const self = this;
-    this.memberInfo.map((item) => {
-      if (item.permission) self.disabledCount += 1;
-    });
+  mounted() {
+    // 자동으로 함수 실행
+    this.getMemberList();
   },
 };
 </script>
-
-<style scoped>
-.v-menu__content {
-  margin-top: 1000px;
-}
-</style>

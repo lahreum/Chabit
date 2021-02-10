@@ -1,10 +1,14 @@
 package backend.controller;
 
+import backend.domain.*;
+import backend.service.LevelService;
 import backend.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Api
 @RestController
@@ -13,14 +17,23 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class LoginController {
     private final UserService userService;
+    private final LevelService levelService;
 
-    @ApiOperation(value="닉네임으로 유저 찾기", notes="닉네임으로 유저 찾기")
+    @ApiOperation(value="로그인", notes="유저 이메일, 비밀번호 받아 로그인")
     @PostMapping
     public BaseResponse login(@RequestBody UserRequest request) {
         BaseResponse response = null;
         try {
-            Long userId = userService.login(request);
-            response = new BaseResponse("success", userId);
+            User loginUser = userService.login(request);
+            UserDto userDto = new UserDto(loginUser);
+            userDto.setUserRole(loginUser.getUserRole().equals(UserRole.ADMIN) ? "ADMIN" : "USER");
+
+            // 유저 레벨 담아서 보내기
+            String userLevel = levelService.findUserLevel(loginUser.getUserPoints());
+            Optional<Level> findLevel = levelService.findOne(userLevel);
+            findLevel.ifPresent(level -> userDto.addUserLevel(new LevelDto(level)));
+
+            response = new BaseResponse("success", userDto);
         } catch (IllegalStateException e) {
             response = new BaseResponse("fail", e.getMessage());
         }

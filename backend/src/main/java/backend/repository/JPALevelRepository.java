@@ -23,7 +23,14 @@ public class JPALevelRepository implements LevelRepository{
 
     @Override
     public List<Level> findAll() {
-        List<Level> result = entityManager.createQuery("select l from Level l",Level.class).getResultList();
+        List<Level> result = entityManager.createQuery("select l from Level l", Level.class).getResultList();
         return result;
+    }
+
+    @Override
+    public Optional<Level> findOne(String level) {
+        return entityManager.createQuery("select l from Level l where l.level = :level", Level.class)
+                .setParameter("level", level)
+                .getResultList().stream().findAny();
     }
 }

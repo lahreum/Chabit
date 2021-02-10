@@ -1,6 +1,8 @@
 package backend.domain;
 
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,23 +12,43 @@ import java.time.LocalTime;
 @Data //@ToString @Getter , @Setter, @EqualsAndHashCode, @RequiredArgsConstructor
 @NoArgsConstructor //파라미터가 없는 기본 생성자 생성
 @AllArgsConstructor //모든 필드 값을 파라미터로 받는 생성자 생성
+@ApiModel
 public class ChallengeDto {
+    @ApiModelProperty(value = "챌린지 아이디")
     private Long challengeID;
+    @ApiModelProperty(value = "챌린지 이름")
     private String challengeName;
+    @ApiModelProperty(value = "챌린지 설명")
     private String challengeDesc;
+    @ApiModelProperty(value = "챌린지 개설자")
     private UserDto challengeOwner;
+    @ApiModelProperty(value = "챌린지 카테고리")
     private String categoryName;
+    @ApiModelProperty(value = "챌린지 해시태그")
+    private HashtagDto hashtags;
+    @ApiModelProperty(value = "챌린지 시작일")
     private LocalDateTime challengeStartDate;
+    @ApiModelProperty(value = "챌린지 종료일")
     private LocalDateTime challengeEndDate;
+    @ApiModelProperty(value = "챌린지 썸네일")
     private String challengeThumbnail;
+    @ApiModelProperty(value = "챌린지 완료시 획득 포인트")
     private int challengePoint;
+    @ApiModelProperty(value = "챌린지 참여 인원")
     private int challengeUserCount;
+    @ApiModelProperty(value = "인증 방법")
     private String authWay;
-    private String authFrequency;
+    @ApiModelProperty(value = "인증 빈도(주 n회)")
+    private int authFrequency;
+    @ApiModelProperty(value = "인증 시작 시간")
     private LocalTime authStarttime;
+    @ApiModelProperty(value = "인증 마감 시간")
     private LocalTime authEndtime;
+    @ApiModelProperty(value = "공휴일 인증 여부 (true / false)")
     private boolean authHoliday;
+    @ApiModelProperty(value = "인증샷 예시")
     private String authExample;
+    @ApiModelProperty(value = "챌린지 상태 (예정 / 진행/ 종료)")
     private ChallengeOngoing ongoing;
 
 
@@ -52,11 +74,15 @@ public class ChallengeDto {
     }
 
     // 메인화면 HOT 챌린지.
-    public ChallengeDto (String challengeName, String categoryName, UserDto challengeOwner, String challengeThumbnail, String authFrequency){
+    public ChallengeDto (String challengeName, String categoryName, UserDto challengeOwner, String challengeThumbnail, int authFrequency){
         this.challengeName = challengeName;
         this.categoryName = categoryName;
         this.challengeOwner = challengeOwner;
         this.challengeThumbnail = challengeThumbnail;
         this.authFrequency = authFrequency;
+    }
+
+    public void addHashtag(HashtagDto hashtags) {
+        this.hashtags = hashtags;
     }
 }

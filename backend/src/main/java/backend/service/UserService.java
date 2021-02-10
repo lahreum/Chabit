@@ -37,12 +37,12 @@ public class UserService {
         return user.getUserId();
     }
 
-    public Long login(UserRequest request) throws IllegalStateException {
+    public User login(UserRequest request) throws IllegalStateException {
         // 이메일 확인
         User user = findUser(request.getUserEmail());
         // 비밀번호 확인
         if (user.getUserPassword().equals(request.getUserPassword()))
-            return user.getUserId();
+            return user;
         throw new IllegalStateException("잘못된 비밀번호입니다");
     }
 
@@ -119,6 +119,14 @@ public class UserService {
     }
 
     /**
+     * 상태메세지 추가
+     */
+    @Transactional
+    public void putProfileMessage(User user, String userProfileMessage) {
+        user.putProfileMessage(userProfileMessage);
+    }
+
+    /**
      * 해쉬태그 추가
      */
     @Transactional
@@ -186,14 +194,19 @@ public class UserService {
     }
 
     /**
-     * 조건에 따라 챌린지 조회
+     * 조건에 따라 랭킹 조회
+     *
+     * userEmail : 현재 유저
+     * categoryId : 조회하려는 카테고리
+     * monthlyRanking : true면 이번달 랭킹만
+     * onlyFollowing : true면 팔로잉하는 유저 랭킹만
      */
-    public List<User> findUserByRankingCondition(String userEmail, Long categoryId, boolean monthlyRanking){
+    public List<User> findUserByRankingCondition(String userEmail, Long categoryId, boolean monthlyRanking, boolean onlyFollowing){
         List<User> result = new ArrayList<>();
 
         // 팔로잉 유저 선택하면 팔로잉하는 유저 목록만 가져옴
         // 아니면 전체 유저 목록 포인트로 정렬해서 가져옴
-        if(userEmail != null) {
+        if(onlyFollowing) {
             User user = findUser(userEmail);
             List<Follow> following = followRepository.findByUserId(user);
             // following 하는 유저들 뽑아서 넣음
@@ -252,4 +265,26 @@ public class UserService {
         return result;
     }
 
+    // 챌린지 인증
+    @Transactional
+    public void proofChallenge(User user, Challenge challenge, String proofUrl) {
+        Proof proof = Proof.createProof(user, challenge, proofUrl);
+        user.proofChallenge(proof);
+    }
+
+    // 유저 프로필사진 저장
+    @Transactional
+    public void putUserImage(User user, String userImage) {
+        user.setUserImage(userImage);
+    }
+
+    // 카테고리별로 유저가 챌린지 성공한 횟수 초기화
+    @Transactional
+    public void initSuccessCount(User user) {
+        List<Category> categories = categoryRepository.findAll();
+
+        for (Category c : categories) {
+            user.addSuccessCount(new UserCategory(user, c, 0));
+        }
+    }
 }

@@ -6,12 +6,12 @@
           <article class="media">
             <div class="media-left">
               <figure class="image">
-                <img :src="talk.img">
+                <Profile :src="talk.img" style="margin-right:20px;"/>
               </figure>
             </div>
             <div class="media-content" >
               <div class="content">
-                <p><strong>{{talk.name}}</strong> <small>{{talk.handle}}</small></p>
+                <p><strong>{{talk.name}}</strong></p>
                 <p>{{talk.talk}}</p>
               </div>
             </div>
@@ -21,10 +21,15 @@
 </template>
 
 <script>
+import Profile from '../../components/common/Profile.vue'
+
 export default {
-    props: {
-      talk: Object
-    }
+  components: {
+    Profile
+  },
+  props: {
+    talk: Object
+  }
 }
 </script>
 

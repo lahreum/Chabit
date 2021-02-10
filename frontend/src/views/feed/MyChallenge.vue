@@ -1,5 +1,6 @@
 <template>
   <div>
+      <!-- 상단 참가중,완료,개설 섹션 -->
         <v-card style="width:100%;">
             <v-list-item>
                 <div class="top-text" style="width:90%; margin:10px auto;">
@@ -16,12 +17,12 @@
                 </div>
             </v-list-item>
         </v-card>  
-        <v-card style="width:90%; margin-top:20px;height:350px;">          
+        <!-- 달력 -->
+        <v-card style="width:100%; margin-top:20px;height:350px;">          
             <Calendar style="padding-top:30px;"/>
         </v-card>
-        <v-card>
+        <!-- 현재 진행중인 챌린지 목록 -->
         <TodayChallengeList />
-        </v-card>
   </div>
 </template>
 

@@ -51,7 +51,7 @@ public class Challenge { // Challenge 코드리뷰 필수.
     @Column
     private String authWay;
     @Column(nullable = false)
-    private String authFrequency;
+    private int authFrequency;
     @Column
     private LocalTime authStarttime;
     @Column
@@ -96,19 +96,21 @@ public class Challenge { // Challenge 코드리뷰 필수.
         challenge.setChallengeDesc(request.getChallengeDesc());
         challenge.setChallengeOwner(owner);
         challenge.setChallengeCategory(category);
+        challenge.setChallengeThumbnail(request.getChallengeThumbnail());
+        challenge.setAuthExample(request.getAuthExample());
 
         LocalDate startdate= LocalDate.parse(request.getChallengeStartdate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         challenge.setChallengeStartdate(LocalDateTime.of(startdate, LocalDateTime.MIN.toLocalTime()));
 
-        LocalDate enddate= LocalDate.parse(request.getChallengeStartdate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        LocalDate enddate= LocalDate.parse(request.getChallengeEnddate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         challenge.setChallengeEnddate(LocalDateTime.of(enddate, LocalDateTime.MIN.toLocalTime()));
 
         challenge.setAuthWay(request.getAuthWay());
         challenge.setAuthFrequency(request.getAuthFrequency());
         challenge.setAuthStarttime(LocalTime.parse(request.getAuthStarttime(),
-                DateTimeFormatter.ofPattern("HH:mm:ss")));
+                DateTimeFormatter.ofPattern("HH:mm")));
         challenge.setAuthEndtime(LocalTime.parse(request.getAuthEndtime(),
-                DateTimeFormatter.ofPattern("HH:mm:ss")));
+                DateTimeFormatter.ofPattern("HH:mm")));
         challenge.setAuthHoliday(request.isAuthHoliday() ? 1 : 0);
 
         if(challenge.challengeStartdate.toLocalDate().isEqual(LocalDateTime.now().toLocalDate())){

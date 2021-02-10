@@ -1,4 +1,10 @@
 /* 공통 */
+
+.input-with-btn {
+  width: 80%;
+  padding-right: 5px;
+  display: inline-flex;
+}
 .outside {
   background-color: #942706;
   padding: 100px 15px 100px 15px;
@@ -19,6 +25,7 @@
   height: 70px;
   position: absolute;
   top: 90px;
+  margin: 0;
 }
 .inside {
   background-color: #ffffff;
@@ -28,8 +35,8 @@
   max-width: 320px;
 }
 .text-input {
-  margin: 10px 10% 20px;
-  max-width: 80%;
+  margin: 10px 5% 20px;
+  max-width: 90%;
 }
 .bottom {
   text-align: center;
@@ -128,9 +135,6 @@
   height: 25px;
   font-size: x-small;
 }
-.find-pw .input-with-btn {
-  display: flex;
-}
 
 /* 회원정보 수정 */
 .modify-user .btn-left {
@@ -138,22 +142,24 @@
   color: black;
   border: grey solid 1px;
 }
-.modify-user .input-with-btn {
-  display: flex;
-}
 .modify-user .btn-get-check {
-  margin: auto;
+  margin: 0;
+  width: 20%;
 }
 .modify-user img {
   margin: 0;
 }
 
 /* 회원가입 */
-.signup .input-with-btn {
-  display: flex;
+.signup .input {
+  color: white;
+}
+.signup .v-input {
+  margin-top: 15px;
 }
 .signup .btn-get-check {
-  margin: auto;
+  margin: 0;
+  width: 20%;
 }
 
 /* 로그인 */
