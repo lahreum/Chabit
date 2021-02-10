@@ -1,9 +1,15 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import createPersistedState from 'vuex-persistedstate';
+// import modules from './modules';
 
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
+  // modules,
+  plugins: [
+    createPersistedState(),
+  ],
   state: {        // data
     host: 'http://i4b207.p.ssafy.io/api',
     /*로그인한 회원의 정보*/
