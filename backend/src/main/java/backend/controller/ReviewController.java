@@ -8,6 +8,7 @@ import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Api
@@ -41,7 +42,7 @@ public class ReviewController {
                 reviewImage.setReviewImage(inputImage);//이미지 URL 값 넣어주기.
                 reviewService.saveReviewImage(reviewImage); // 리뷰 이미지 하나씩 저장하자.
             }
-            response = new BaseResponse("success",saveReview);
+            response = new BaseResponse("success","저장성공");
         }catch(IllegalStateException e){
             response = new BaseResponse("fail", e.getMessage());
         }
@@ -115,7 +116,12 @@ public class ReviewController {
         try{
             Review review = reviewService.findByReviewId(reviewId);
             List<ReviewComment> reviewCommentList = reviewService.findReviewCommentByReviewId(review);
-            response = new BaseResponse("success", reviewCommentList);
+            List<ReviewCommentDto> reviewCommentDtoList = new ArrayList<>();
+            for(ReviewComment reviewComment : reviewCommentList){
+                ReviewCommentDto newReviewCommentDto = new ReviewCommentDto(reviewComment);
+                reviewCommentDtoList.add(newReviewCommentDto);
+            }
+            response = new BaseResponse("success", reviewCommentDtoList);
         }catch(IllegalStateException e)
         {
             response = new BaseResponse("fail", e.getMessage());
@@ -139,7 +145,7 @@ public class ReviewController {
             newReviewComment.setReviewId(review);
             newReviewComment.setCommentContent(commentContent);
             reviewService.saveReviewComment(newReviewComment);
-            response = new BaseResponse("success", newReviewComment);
+            response = new BaseResponse("success", "저장성공");
         }catch(IllegalStateException e){
             response = new BaseResponse("fail", e.getMessage());
         }
@@ -166,7 +172,7 @@ public class ReviewController {
                 ReviewComment reviewComment = new ReviewComment();
                 reviewComment.setReviewCommentId(reviewCommentId);
                 reviewComment.setCommentContent(request.getReviewContent());
-                response = new BaseResponse("success", reviewService.updateReviewComment(reviewComment));
+                response = new BaseResponse("success", "수정성공");
             }else{
                 response = new BaseResponse("fail", "동일한 작성자가 아닙니다.");
             }

@@ -16,8 +16,8 @@ public class ReviewDto {
     private LocalDateTime reviewDate;
     private int coolCount;
     private int commentCount;
-    private User userId;
-    private Challenge challengeId;
+    private Long userId;
+    private Long challengeId;
     private ReviewImage thumbnail;
     private ReviewImageDto reviewImageDto;
     public ReviewDto(Review review){
@@ -26,8 +26,8 @@ public class ReviewDto {
         this.reviewDate = review.getReviewDate();
         this.coolCount = review.getCoolCount();
         this.commentCount = review.getCommentCount();
-        this.userId = review.getUserId();
-        this.challengeId = review.getChallengeId();
+        this.userId = review.getUserId().getUserId();
+        this.challengeId = review.getChallengeId().getChallengeId();
     }
     public void addThumbnail(ReviewImage reviewImage){
         this.thumbnail = reviewImage;

@@ -7,10 +7,8 @@ import java.util.List;
 
 @Getter
 public class ReviewImageDto {
-    private List<ReviewImage> reviewImageList = new ArrayList<>();
-
+    private List<String> reviewImageList = new ArrayList<>();
     public void addReviewImage(ReviewImage reviewImage){
-        this.reviewImageList.add(reviewImage);
+        this.reviewImageList.add(reviewImage.getReviewImage());
     }
-
 }
