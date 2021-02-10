@@ -12,12 +12,3 @@
 #calender .v-picker__title {
   display: none;
 }
-#calender .v-btn__content:hover {
-  color: #f05454;
-}
-#calender .v-btn:hover {
-  opacity: 0.5;
-}
-#calender .v-btn--active {
-  opacity: 0.4;
-}

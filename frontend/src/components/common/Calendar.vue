@@ -5,8 +5,8 @@
         <v-date-picker
           v-model="picker"
           :events="arrayEvents"
-          event-color="#a62f22"
-          color="#a62f22"
+          event-color="red darken-4"
+          color="red darken-4"
         ></v-date-picker>
       </div>
     </v-app>
@@ -35,4 +35,3 @@ export default {
   },
 };
 </script>
-
