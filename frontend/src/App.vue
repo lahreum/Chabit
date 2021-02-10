@@ -45,7 +45,7 @@
                 <v-list-item-title @click="$router.push({ name: 'Home' })">Home</v-list-item-title>
               </v-list-item>
 
-              <v-list-item @click="$router.push('/follow')">
+              <v-list-item @click="$router.push({ name: 'Feed' })">
                 <v-list-item-title>마이피드</v-list-item-title>
               </v-list-item>
 
