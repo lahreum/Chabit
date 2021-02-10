@@ -1,13 +1,20 @@
 package backend.controller;
 
-import backend.domain.*;
+import backend.domain.challenge.Challenge;
+import backend.domain.review.*;
+import backend.domain.user.User;
 import backend.service.ChallengeService;
 import backend.service.ReviewService;
 import backend.service.UserService;
+import backend.utils.Uploader;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +28,7 @@ public class ReviewController {
     private final UserService userService;
     private final ChallengeService challengeService;
     private final ReviewService reviewService;
+    private final Uploader uploader;
 
     /**
      * 리뷰 생성
@@ -28,24 +36,28 @@ public class ReviewController {
      * @return
      */
     @PostMapping
-    public BaseResponse makeReview(@RequestBody ReviewRequest request){
+    @ApiOperation(value="리뷰 작성", notes="리뷰 작성")
+    public BaseResponse makeReview(ReviewRequest request){
         BaseResponse response = null;
         try {
             User user = userService.findUser(request.getUserEmail()); //해당 리뷰 유저 정보
             Challenge challenge = challengeService.findByChallengeId(request.getChallengeId()); // 어떤 챌린지 참가했는가.
 
-            Review newReview = Review.createReview(user,challenge, request.getReviewContent()); //리뷰를 만든다.
-            newReview.setReviewDate(LocalDateTime.now());
+            Review newReview = Review.createReview(user, challenge, request.getReviewContent()); //리뷰를 만든다.
             Review saveReview = reviewService.saveReview(newReview);//저장
 
-            for(String inputImage : request.getReviewImageList()){
-                ReviewImage reviewImage = new ReviewImage();
-                reviewImage.setReviewId(newReview);//리뷰의id값도 넣어주자.
-                reviewImage.setReviewImage(inputImage);//이미지 URL 값 넣어주기
-                reviewService.saveReviewImage(reviewImage); // 리뷰 이미지 하나씩 저장하자.
+            List<String> urls = new ArrayList<>();
+            
+            for (MultipartFile file : request.getReviewImages()) {
+                String unique = "reviewImage_" + user.getUserId() + "_" + challenge.getChallengeId() + "_" + LocalDateTime.now() + "_";
+                String reviews = uploader.upload(file, "reviews", unique);
+
+                urls.add(reviews);
             }
+            reviewService.addReviewImages(saveReview, urls);
+
             response = new BaseResponse("success","저장성공");
-        }catch(IllegalStateException e){
+        }catch(IllegalStateException | IOException e){
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;
@@ -69,8 +81,8 @@ public class ReviewController {
                 List<ReviewDto> reviewDtoList = new ArrayList<>();
                 for (Review review : reviewList){
                     ReviewDto reviewDto = new ReviewDto(review);//리뷰 정보 주입.
-                    ReviewImage reviewImage = reviewService.findReviewImageThumbnailByReviewId(review);//썸네일 얻어와서
-                    reviewDto.addThumbnail(reviewImage);
+                    review.getReviewImageList().forEach(reviewDto::addReviewImage);
+
                     reviewDtoList.add(reviewDto);
                 }
                 response = new BaseResponse("success", reviewDtoList);
@@ -94,15 +106,9 @@ public class ReviewController {
         BaseResponse response = null;
         try {
             Review review = reviewService.findByReviewId(reviewId);
-            List<ReviewImage> reviewImageList = reviewService.findReviewImageByReviewId(review);
-
             ReviewDto reviewDtoResult = new ReviewDto(review); //Review 정보 주입
 
-            ReviewImageDto reviewImageDto = new ReviewImageDto();
-            for(ReviewImage reviewImage : reviewImageList){
-                reviewImageDto.addReviewImage(reviewImage);
-            }
-            reviewDtoResult.addReviewImage(reviewImageDto);//ReviewIamge 정보 주입
+            review.getReviewImageList().forEach(reviewDtoResult::addReviewImage);
 
             response = new BaseResponse("success", reviewDtoResult);
         }catch (IllegalStateException e)

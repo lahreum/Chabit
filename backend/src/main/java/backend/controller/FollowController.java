@@ -1,8 +1,8 @@
 package backend.controller;
 
-import backend.domain.Follow;
-import backend.domain.FollowDto;
-import backend.domain.User;
+import backend.domain.follow.Follow;
+import backend.domain.follow.FollowDto;
+import backend.domain.user.User;
 import backend.exception.DuplicatedFollowingException;
 import backend.service.FollowService;
 import backend.service.UserService;

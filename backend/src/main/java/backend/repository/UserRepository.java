@@ -1,8 +1,7 @@
 package backend.repository;
 
-import backend.domain.Category;
-import backend.domain.User;
-import backend.domain.UserCategory;
+import backend.domain.user.User;
+import backend.domain.user.UserCategory;
 
 import java.util.List;
 import java.util.Optional;

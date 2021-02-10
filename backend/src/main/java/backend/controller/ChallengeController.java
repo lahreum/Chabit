@@ -1,6 +1,12 @@
 package backend.controller;
 
-import backend.domain.*;
+import backend.domain.challenge.*;
+import backend.domain.hashtag.Hashtag;
+import backend.domain.hashtag.HashtagDto;
+import backend.domain.user.Proof;
+import backend.domain.user.ProofDto;
+import backend.domain.user.User;
+import backend.domain.user.UserChallenge;
 import backend.exception.NotEnoughPointException;
 import backend.service.*;
 import backend.utils.Uploader;

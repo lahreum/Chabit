@@ -1,8 +1,8 @@
 package backend.repository;
 
-import backend.domain.Follow;
-import backend.domain.FollowId;
-import backend.domain.User;
+import backend.domain.follow.Follow;
+import backend.domain.follow.FollowId;
+import backend.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

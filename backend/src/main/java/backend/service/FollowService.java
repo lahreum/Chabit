@@ -1,11 +1,10 @@
 package backend.service;
 
-import backend.domain.Follow;
-import backend.domain.FollowDto;
-import backend.domain.User;
+import backend.domain.follow.Follow;
+import backend.domain.follow.FollowDto;
+import backend.domain.user.User;
 import backend.exception.DuplicatedFollowingException;
 import backend.repository.FollowRepository;
-import backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

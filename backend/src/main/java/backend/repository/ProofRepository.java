@@ -1,6 +1,6 @@
 package backend.repository;
 
-import backend.domain.Proof;
+import backend.domain.user.Proof;
 
 import java.util.List;
 import java.util.Optional;

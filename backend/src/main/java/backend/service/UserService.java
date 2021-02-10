@@ -1,7 +1,15 @@
 package backend.service;
 
 import backend.controller.UserRequest;
-import backend.domain.*;
+import backend.domain.challenge.Category;
+import backend.domain.challenge.Challenge;
+import backend.domain.challenge.PointHistory;
+import backend.domain.follow.Follow;
+import backend.domain.hashtag.Hashtag;
+import backend.domain.user.Proof;
+import backend.domain.user.User;
+import backend.domain.user.UserCategory;
+import backend.domain.user.UserHashtag;
 import backend.repository.CategoryRepository;
 import backend.repository.FollowRepository;
 import backend.repository.HashtagRepository;

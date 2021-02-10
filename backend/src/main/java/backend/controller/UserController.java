@@ -1,6 +1,9 @@
 package backend.controller;
 //http://localhost:9999/swagger-ui.html
-import backend.domain.*;
+import backend.domain.badge.Badge;
+import backend.domain.badge.BadgeResponse;
+import backend.domain.hashtag.HashtagDto;
+import backend.domain.user.*;
 import backend.service.BadgeService;
 import backend.service.LevelService;
 import backend.service.UserService;

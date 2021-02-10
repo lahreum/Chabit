@@ -1,9 +1,9 @@
 package backend.service;
 
-import backend.domain.Review;
-import backend.domain.ReviewComment;
-import backend.domain.ReviewImage;
-import backend.domain.User;
+import backend.domain.review.Review;
+import backend.domain.review.ReviewComment;
+import backend.domain.review.ReviewImage;
+import backend.domain.user.User;
 import backend.repository.ReviewCommentRepository;
 import backend.repository.ReviewImageRepository;
 import backend.repository.ReviewRepository;
@@ -31,6 +31,14 @@ public class ReviewService {
     public Review saveReview(Review review){
         return reviewRepository.saveReview(review);
     }
+
+    @Transactional
+    public void addReviewImages(Review review, List<String> urls) {
+        for (String url : urls) {
+            review.addReviewImage(new ReviewImage(review, url));
+        }
+    }
+
     /**
      * 아이디값에 따른 reviewList가져오기
      * @return 아이디에 맞는 reviewList

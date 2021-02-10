@@ -1,6 +1,6 @@
 package backend.repository;
 
-import backend.domain.Badge;
+import backend.domain.badge.Badge;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

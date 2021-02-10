@@ -1,8 +1,8 @@
 //package backend.repository;
 //
-//import backend.domain.Category;
-//import backend.domain.Challenge;
-//import backend.domain.User;
+//import backend.domain.challenge.Category;
+//import backend.domain.challenge.Challenge;
+//import backend.domain.user.User;
 //import backend.service.CategoryService;
 //import backend.service.ChallengeService;
 //import backend.service.UserService;

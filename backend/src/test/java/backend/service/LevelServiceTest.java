@@ -1,7 +1,7 @@
 //package backend.service;
 //
-//import backend.domain.Level;
-//import backend.domain.User;
+//import backend.domain.user.Level;
+//import backend.domain.user.User;
 //import backend.repository.LevelRepository;
 //import org.assertj.core.api.Assertions;
 //import org.junit.jupiter.api.Test;

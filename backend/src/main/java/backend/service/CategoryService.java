@@ -1,6 +1,6 @@
 package backend.service;
 
-import backend.domain.Category;
+import backend.domain.challenge.Category;
 import backend.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

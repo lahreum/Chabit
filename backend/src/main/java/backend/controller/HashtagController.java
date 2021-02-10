@@ -1,6 +1,6 @@
 package backend.controller;
 
-import backend.domain.Hashtag;
+import backend.domain.hashtag.Hashtag;
 import backend.service.HashtagService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
