@@ -10,15 +10,30 @@
                   <v-list-item-avatar style="height:63px; width:63px; background-color:white; ">
                     <!-- 프로필 사진 입력 -->
                     <v-img
+                      v-if="checkLogin()"
                       style="height:60px; min-width: 60px; width:60px;"
-                      src="./assets/img/maja.png"
+                      :src="userImage"
+                    ></v-img>
+                    <v-img
+                      v-else
+                      style="height:60px; min-width: 60px; width:60px;"
+                      src="./assets/img/avatardefault.png"
                     ></v-img>
                   </v-list-item-avatar>
                 </div>
                 <div class="nav-top-content">
-                  <v-list-item-title class="title"> Saljjingae </v-list-item-title>
-                  <v-list-item-subtitle color="white"> Bronze </v-list-item-subtitle>
-                  <v-list-item-subtitle> 200/3000p </v-list-item-subtitle>
+                  <v-list-item-title v-if="checkLogin()" class="title">
+                    {{ userNickname }}
+                  </v-list-item-title>
+                  <v-list-item-title v-else class="title" @click="$router.push('/login')">
+                    로그인하기
+                  </v-list-item-title>
+                  <v-list-item-subtitle v-if="checkLogin()" color="white">
+                    {{ userLevel.level }}
+                  </v-list-item-subtitle>
+                  <v-list-item-subtitle v-if="checkLogin()">
+                    {{ userPoints }}/{{ userLevel.levelMaxPoint }}p
+                  </v-list-item-subtitle>
                 </div>
               </v-list-item-content>
             </v-list-item>
@@ -30,7 +45,7 @@
                 <v-list-item-title @click="$router.push({ name: 'Home' })">Home</v-list-item-title>
               </v-list-item>
 
-              <v-list-item @click="$router.push({ name: 'Feed' })">
+              <v-list-item @click="$router.push('/follow')">
                 <v-list-item-title>마이피드</v-list-item-title>
               </v-list-item>
 
@@ -87,6 +102,10 @@ export default {
   props: ["pageTitle"],
   computed: {
     ...mapGetters({ userEmail: "getUserEmail" }),
+    ...mapGetters({ userLevel: "getUserLevel" }),
+    ...mapGetters({ userNickname: "getUserNickname" }),
+    ...mapGetters({ userImage: "getUserImage" }),
+    ...mapGetters({ userPoints: "getUserPoints" }),
   },
   watch: {
     group() {
@@ -95,21 +114,21 @@ export default {
   },
   methods: {
     checkLogin() {
-      if (this.userEmail == null) {
-        this.$router.push("/login");
-      }
+      if (this.userEmail != null) return true;
+      else return false;
     },
     scroll() {
       window.pageYOffset > 0 ? (this.showNavbar = true) : (this.showNavbar = false);
     },
     logout() {
       localStorage.removeItem("vuex");
+      window.location.reload();
       this.$router.push("/login");
+      alert("로그아웃 되었습니다.");
     },
   },
   created() {
     window.addEventListener("scroll", this.scroll);
-    this.checkLogin();
   },
   destroyed() {
     window.removeEventListener("scroll", this.scroll);
@@ -145,16 +164,17 @@ export default {
   padding-left: 10px;
 }
 #nav-mid .v-list-item {
-  width: 60%;
+  width: 70%;
 }
 #nav-mid .v-list-item:hover {
   background-color: white;
+  opacity: 0.5;
   box-shadow: 2px 2px 7px #3c0903;
 }
 #nav-mid .theme--light.v-list-item--active::before {
   background-color: white;
   box-shadow: 2px 2px 7px #3c0903;
-  opacity: 0.8;
+  opacity: 0.3;
   color: #a62f22;
 }
 #nav-mid .v-list-item .v-list-item__title {
