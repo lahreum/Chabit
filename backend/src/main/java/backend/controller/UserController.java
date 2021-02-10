@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Api
@@ -40,7 +41,9 @@ public class UserController {
 
         // 레벨 추가
         for(UserDto dto : collect) {
-            dto.addUserLevel(levelService.findUserLevel(dto.getUserPoints()));
+            String userLevel = levelService.findUserLevel(dto.getUserPoints());
+            Optional<Level> level = levelService.findOne(userLevel);
+            level.ifPresent(value -> dto.addUserLevel(new LevelDto(value)));
         }
 
         return new BaseResponse("success", collect);
@@ -81,7 +84,8 @@ public class UserController {
 
             // 해당 유저의 레벨 가져오기.
             String userLevel = levelService.findUserLevel(userDto.getUserPoints());
-            userDto.addUserLevel(userLevel);
+            Optional<Level> level = levelService.findOne(userLevel);
+            level.ifPresent(l -> userDto.addUserLevel(new LevelDto(l)));
             
             // 뱃지 추가
             BadgeResponse badgeDto = new BadgeResponse();

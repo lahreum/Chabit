@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Data
@@ -21,4 +20,7 @@ public class Level {
 
     @Column(nullable = false)
     private int levelMaxPoint;
+
+    @Column(columnDefinition = "TEXT")
+    private String levelImage;
 }

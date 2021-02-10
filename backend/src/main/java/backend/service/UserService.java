@@ -186,7 +186,7 @@ public class UserService {
     }
 
     /**
-     * 조건에 따라 챌린지 조회
+     * 조건에 따라 랭킹 조회
      *
      * userEmail : 현재 유저
      * categoryId : 조회하려는 카테고리
