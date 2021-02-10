@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -205,12 +206,24 @@ public class ChallengeController {
     public BaseResponse getChallenges(@RequestParam(required = false) String challengeName){
         BaseResponse response = null;
         try {
-            List<ChallengeDto> collect = challengeService.findChallenges().stream()
+            List<Challenge> challenges = challengeService.findChallenges().stream()
                     .filter(m -> (challengeName == null || m.getChallengeName().contains(challengeName)) &&
                             (m.getChallengeOngoing().equals(ChallengeOngoing.READY) || m.getChallengeOngoing().equals(ChallengeOngoing.ONGOING)))
                     .sorted(Comparator.comparing(Challenge::getChallengeStartdate))
-                    .map(ChallengeDto::new)
                     .collect(Collectors.toList());
+
+            List<ChallengeDto> collect = new ArrayList<>();
+            for (Challenge challenge : challenges) {
+                List<ChallengeHashtag> hashtags = challenge.getHashtags();
+                HashtagDto hashtagDto = new HashtagDto();
+
+                hashtags.forEach(h -> hashtagDto.addHashtag(h.getHashtag()));
+
+                ChallengeDto dto = new ChallengeDto(challenge);
+                dto.addHashtag(hashtagDto);
+
+                collect.add(dto);
+            }
             response = new BaseResponse("success", collect);
         } catch (IllegalStateException e){
             response = new BaseResponse("fail", e.getMessage());
@@ -229,8 +242,16 @@ public class ChallengeController {
             Challenge findChallenge = challengeService.findByChallengeId(challengeId);
             if(findChallenge == null)
                 response = new BaseResponse("fail", "잘못된 챌린지 아이디 입니다");
-            else
-                response = new BaseResponse("success", new ChallengeDto(findChallenge));
+            else {
+                // 해시태그 추가
+                List<ChallengeHashtag> hashtags = findChallenge.getHashtags();
+                HashtagDto hashtagDto = new HashtagDto();
+                hashtags.forEach(h -> hashtagDto.addHashtag(h.getHashtag()));
+
+                ChallengeDto dto = new ChallengeDto(findChallenge);
+                dto.addHashtag(hashtagDto);
+                response = new BaseResponse("success", dto);
+            }
         } catch (IllegalStateException e) {
             response = new BaseResponse("fail", e.getMessage());
         }
@@ -243,9 +264,20 @@ public class ChallengeController {
     public BaseResponse getHotChallenges(){
         BaseResponse response = null;
         try {
-            List<ChallengeDto> collect = challengeService.findAllOrderByChallengeUserCount().stream()
-                    .map(ChallengeDto::new)
-                    .collect(Collectors.toList());
+            List<Challenge> challenges = challengeService.findAllOrderByChallengeUserCount();
+            List<ChallengeDto> collect = new ArrayList<>();
+
+            for (Challenge challenge : challenges) {
+                List<ChallengeHashtag> hashtags = challenge.getHashtags();
+                HashtagDto hashtagDto = new HashtagDto();
+                hashtags.forEach(h -> hashtagDto.addHashtag(h.getHashtag()));
+
+                ChallengeDto dto = new ChallengeDto(challenge);
+                dto.addHashtag(hashtagDto);
+
+                collect.add(dto);
+            }
+
             response = new BaseResponse("success", collect);
         } catch (IllegalStateException e){
             response = new BaseResponse("fail", e.getMessage());
