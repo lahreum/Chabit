@@ -67,6 +67,7 @@ public class User {
         user.setUserRole(UserRole.USER);
         user.setUserPoints(1000);
         user.setUserJoindate(LocalDateTime.now());
+        user.setUserImage("https://ssafychabit.s3.ap-northeast-2.amazonaws.com/users/avatardefault_92824.png"); // 기본 프사
 
         return user;
     }

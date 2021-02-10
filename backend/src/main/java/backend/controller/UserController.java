@@ -110,6 +110,7 @@ public class UserController {
         BaseResponse response = null;
         try {
             User user = User.createUser(request);
+
             userService.signIn(user);
             userService.initSuccessCount(user); // 카테고리별 챌린지 성공 횟수 초기화
 
