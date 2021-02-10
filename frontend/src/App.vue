@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="app">
     <v-app id="inspire">
-      <v-navigation-drawer v-if="hideNav()" v-model="drawer" app temporary color="#a62f22">
+      <v-navigation-drawer v-model="drawer" app temporary color="#a62f22">
         <v-list nav dense shaped>
           <div id="nav-top" class="nav-top">
             <v-list-item>
@@ -97,11 +97,6 @@ export default {
     checkLogin() {
       if (this.userEmail == null) {
         this.$router.push("/login");
-      }
-    },
-    hideNav() {
-      if (this.userEmail == null) {
-        this.drawer = false;
       }
     },
     scroll() {
