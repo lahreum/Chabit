@@ -270,7 +270,7 @@ class ReviewRepositoryTest {
         reviewComment5.setCommentContent("코멘트2번");
         reviewComment5.setReviewId(review);
         
-        Assertions.assertEquals(reviewService.updateReviewComment(reviewComment5).getCommentContent(),"코멘트2번");
+        Assertions.assertEquals(reviewService.updateReviewComment(reviewComment4).getCommentContent(),"코멘트2번");
     }
 
     @Test

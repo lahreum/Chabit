@@ -29,17 +29,19 @@ public class ReviewController {
     public BaseResponse makeReview(@RequestBody ReviewRequest request){
         BaseResponse response = null;
         try {
-            User user = userService.findUser(request.getUserEamil());
-            Challenge challenge = challengeService.findByChallengeId(request.getChallengeId());
+            User user = userService.findUser(request.getUserEmail()); //해당 리뷰 유저 정보
+            Challenge challenge = challengeService.findByChallengeId(request.getChallengeId()); // 어떤 챌린지 참가했는가.
 
-            Review newReview = Review.createReview(user,challenge, request.getReviewContent());
+            Review newReview = Review.createReview(user,challenge, request.getReviewContent()); //리뷰를 만든다.
             Review saveReview = reviewService.saveReview(newReview);//저장
 
-            for(ReviewImage reviewImage : request.getReviewImageList()){
+            for(String inputImage : request.getReviewImageList()){
+                ReviewImage reviewImage = new ReviewImage();
                 reviewImage.setReviewId(newReview);//리뷰의id값도 넣어주자.
+                reviewImage.setReviewImage(inputImage);//이미지 URL 값 넣어주기.
                 reviewService.saveReviewImage(reviewImage); // 리뷰 이미지 하나씩 저장하자.
             }
-            response = new BaseResponse("success","리뷰 저장 성공");
+            response = new BaseResponse("success",saveReview);
         }catch(IllegalStateException e){
             response = new BaseResponse("fail", e.getMessage());
         }
@@ -124,17 +126,18 @@ public class ReviewController {
     /**
      * ReviewComment 저장
      * @param reviewId 해당 리뷰의 id
-     * @param reviewComment 저장할 reviewComment정보
+     * @param commentContent 저장할 reviewComment정보
      * @return 저장 성공 여부
      */
     @PostMapping("/comment/{reviewId}")
-    public BaseResponse saveReviewComment(@PathVariable Long reviewId, @RequestBody ReviewComment reviewComment){
+    public BaseResponse saveReviewComment(@PathVariable Long reviewId, @RequestBody String commentContent){
         BaseResponse response = null;
         try {
-            Review review = reviewService.findByReviewId(reviewId);
-            ReviewComment newReviewComment = new ReviewComment();
+            Review review = reviewService.findByReviewId(reviewId); //아이디값으로 어떤 review인가 구한다.
+            ReviewComment newReviewComment = new ReviewComment();//새 리뷰답장을 만든다.
             newReviewComment.setUserId(review.getUserId());
             newReviewComment.setReviewId(review);
+            newReviewComment.setCommentContent(commentContent);
             reviewService.saveReviewComment(newReviewComment);
             response = new BaseResponse("success", newReviewComment);
         }catch(IllegalStateException e){
@@ -146,18 +149,23 @@ public class ReviewController {
     //댓글 작성자만 수정할 수 있음.
 
     /**
-     * @param userEmail 현재 로그인한 사용자의 eamil정보.
-     * @param reviewComment 수정될 Comment에 대한 정보를 가져온다.
+     * @param reviewCommentId 수정할 리뷰코멘트의 id값
+     * @param request userEmail 현재 로그인한 사용자의 eamil정보.
+     *  + reviewCommentContent 수정될 Comment에 대한 내용를 가져온다.
      * @return 반환 되는 값은 업데이트 된 정보 또는 에러메시지
      */
-    @PutMapping("/comment/{userEmail}")
+    @PutMapping("/comment/{reviewCommentId}")
     public BaseResponse updateReviewComment
-    (@PathVariable String userEmail, @RequestBody ReviewComment reviewComment){
+    (@PathVariable Long reviewCommentId, @RequestBody ReviewRequest request){
         BaseResponse response = null;
         try{
-            User commentUser = reviewComment.getUserId(); //코멘트 작성자
-            User loginUser = userService.findUser(userEmail); //현재 수정하려는 사용자
+            User commentUser = reviewService.findReviewCommentByReviewCommentId(reviewCommentId).getUserId();
+            //reviewCommentId로 리뷰코멘트 데이터 -> 코멘트 작성자Id찾기
+            User loginUser = userService.findUser(request.getUserEmail()); //현재 수정하려는 사용자
             if(loginUser.getUserId().equals(commentUser.getUserId())){
+                ReviewComment reviewComment = new ReviewComment();
+                reviewComment.setReviewCommentId(reviewCommentId);
+                reviewComment.setCommentContent(request.getReviewContent());
                 response = new BaseResponse("success", reviewService.updateReviewComment(reviewComment));
             }else{
                 response = new BaseResponse("fail", "동일한 작성자가 아닙니다.");
@@ -169,21 +177,21 @@ public class ReviewController {
     }
 
     /**
-     * @param reviewId 리뷰 작성자의 정보를 가져오기 위함.
      * @param userEmail 현재 로그인한 사용자의 eamil정보.
-     * @param reviewComment 삭제될 Comment에 대한 정보를 가져온다.
+     * @param reviewCommentId 삭제될 Comment에 대한 Id 정보
      * @return 삭제 되었는가에 대한 정보
      */
-    @DeleteMapping("/comment/{reviewId}/{userEmail}")
+    @DeleteMapping("/comment/{userEmail}/{reviewCommentId}")
     public BaseResponse deleteReviewComment
-            (@PathVariable Long reviewId, @PathVariable String userEmail, @RequestBody ReviewComment reviewComment){
+            (@PathVariable String userEmail, @PathVariable Long reviewCommentId){
         BaseResponse response = null;
         try{
-            Review review = reviewService.findByReviewId(reviewId);
-            User reviewUser = review.getUserId(); //리뷰 작성자
-            User commentUser = reviewComment.getUserId(); //코멘트 작성자
+            User reviewUser = reviewService.findReviewCommentByReviewCommentId(reviewCommentId).getReviewId().getUserId(); //리뷰 작성자
+            User commentUser = reviewService.findReviewCommentByReviewCommentId(reviewCommentId).getUserId();
+            //reviewCommentId로 리뷰코멘트 데이터 -> 코멘트 작성자Id찾기
             User loginUser = userService.findUser(userEmail); //현재 수정하려는 사용자
             if(loginUser.getUserId().equals(reviewUser.getUserId()) || loginUser.getUserId().equals(commentUser.getUserId())){
+                ReviewComment reviewComment = reviewService.findReviewCommentByReviewCommentId(reviewCommentId);
                 reviewService.deleteReviewComment(reviewComment);
                 response = new BaseResponse("success", "삭제되었습니다.");
             }else{
