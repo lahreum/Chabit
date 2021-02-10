@@ -119,6 +119,14 @@ public class UserService {
     }
 
     /**
+     * 상태메세지 추가
+     */
+    @Transactional
+    public void putProfileMessage(User user, String userProfileMessage) {
+        user.putProfileMessage(userProfileMessage);
+    }
+
+    /**
      * 해쉬태그 추가
      */
     @Transactional

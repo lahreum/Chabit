@@ -141,6 +141,21 @@ public class UserController {
         return response;
     }
 
+    @PatchMapping("/{userEmail}/profile")
+    @ApiOperation(value = "사용자 상태메세지 추가 & 수정", notes = "사용자 상태메세지 추가 & 수정")
+    public BaseResponse updateUserProfileMessage(@PathVariable String userEmail, @RequestBody UserRequest request) {
+        BaseResponse response = null;
+        try {
+            User user = userService.findUser(userEmail);
+            userService.putProfileMessage(user, request.getUserProfileMessage());
+
+            response = new BaseResponse("success", "성공");
+        } catch (IllegalStateException e) {
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
     @DeleteMapping("/{userEmail}")
     @ApiOperation(value="사용자 삭제", notes="회원탈퇴용")
     public BaseResponse deleteUser(@PathVariable String userEmail) {

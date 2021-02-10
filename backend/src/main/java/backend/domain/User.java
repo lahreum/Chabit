@@ -29,6 +29,7 @@ public class User {
     private String userPhone;
     @Column(columnDefinition = "TEXT")
     private String userImage;
+    private String userProfileMessage;
 
     @Column(columnDefinition = "INT DEFAULT 1000")
     private int userPoints;
@@ -106,4 +107,7 @@ public class User {
         this.userPoints = restPoint;
     }
 
+    public void putProfileMessage(String userProfileMessage) {
+        this.userProfileMessage = userProfileMessage;
+    }
 }

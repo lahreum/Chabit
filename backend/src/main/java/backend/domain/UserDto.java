@@ -21,6 +21,8 @@ public class UserDto {
     private String userName;
     @ApiModelProperty(value="사용자 휴대폰 번호")
     private String userPhone;
+    @ApiModelProperty(value="사용자 프로필 메세지")
+    private String userProfileMessage;
     @ApiModelProperty(value="사용자 포인트")
     private int userPoints;
     @ApiModelProperty(value="사용자 가입날짜")
@@ -50,6 +52,7 @@ public class UserDto {
         this.userPoints = user.getUserPoints();
         this.userJoindate = user.getUserJoindate();
         this.userImage = user.getUserImage();
+        this.userProfileMessage = user.getUserProfileMessage();
     }
 
     public UserDto(String userEmail, String userNickname, String userName, String userPhone, int userPoints, LocalDateTime userJoindate) {
