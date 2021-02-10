@@ -544,6 +544,9 @@
         this.selected.challengeEnddate = this.dates[1]
       })
     },
+    created() {
+      this.selected.userEmail = this.$store.state.user.userEmail
+    },
     methods: {
       async proofUpload() {
         let fd = new FormData();
@@ -558,7 +561,7 @@
             ).then(res => {
               // console.log('전송 성공');
               console.log(res.data)
-              this.selected.authExample = res.data
+              this.selected.authExample = res.data.data
             }).catch(function () {
               console.log('전송 실패')
             })
@@ -577,36 +580,41 @@
             ).then(res => {
               // console.log('전송 성공');
               console.log(res.data)
-              this.selected.challengeThumbnail = res.data
+              this.selected.challengeThumbnail = res.data.data
             }).catch(function () {
               console.log('전송 실패')
             })
           
       },
       async createChallenge() {
-        await this.$Axios.post(`${this.$store.state.host}/v1/hashtag`, 
-          this.selected.categoryName
+        const categoryName = this.selected.categoryName
+        await this.$Axios.post(`${this.$store.state.host}/v1/hashtag?hashtagName=${categoryName}`
         ).then(res => {
           console.log(res.data)
-          this.selected.hashtags.append(res.data)
+          this.selected.hashtags.append(res.data.data)
+          console.log(this.selected.hashtags)
         }).catch(function () {
           console.log('전송 실패')
         })
 
-        const proofFrequency = "주 " + this.selected.authFrequency + "회 인증" 
-        await this.$Axios.post(`${this.$store.state.host}/v1/hashtag`, 
-          proofFrequency
+        const proofFrequency = "주 " + this.selected.authFrequency + "회 인증"
+        // console.log(proofFrequency) 
+        await this.$Axios.post(`${this.$store.state.host}/v1/hashtag?hashtagName=${proofFrequency}`
         ).then(res => {
           console.log(res.data)
-          this.selected.hashtags.append(res.data)
+          this.selected.hashtags.append(res.data.data)
+          console.log(this.selected.hashtags)
         }).catch(function () {
           console.log('전송 실패')
         })
 
+        // console.log(this.selected)
         await this.$Axios.post(`${this.$store.state.host}/v1/challenges`, 
           this.selected
         ).then(res => {
           console.log(res.data)
+          alert("챌린지 생성이 완료되었습니다.")
+          // this.$router.push("/feed");
         }).catch(function () {
           console.log('전송 실패')
         })
