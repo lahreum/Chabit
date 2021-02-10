@@ -100,6 +100,7 @@ public class ReviewService {
         return reviewComment;
     }
 
+    @Transactional
     public void deleteReviewComment(ReviewComment reviewComment){
         reviewCommentRepository.deleteReviewComment(reviewComment);
     }

@@ -191,19 +191,19 @@ public class ReviewController {
     }
 
     /**
-     * @param userEmail 현재 로그인한 사용자의 eamil정보.
+     * @param loginUserEmail 현재 로그인한 사용자의 eamil정보.
      * @param reviewCommentId 삭제될 Comment에 대한 Id 정보
      * @return 삭제 되었는가에 대한 정보
      */
     @DeleteMapping("/comment/{userEmail}/{reviewCommentId}")
     public BaseResponse deleteReviewComment
-            (@PathVariable String userEmail, @PathVariable Long reviewCommentId){
+            (@PathVariable String loginUserEmail, @PathVariable Long reviewCommentId){
         BaseResponse response = null;
         try{
             User reviewUser = reviewService.findReviewCommentByReviewCommentId(reviewCommentId).getReviewId().getUserId(); //리뷰 작성자
             User commentUser = reviewService.findReviewCommentByReviewCommentId(reviewCommentId).getUserId();
             //reviewCommentId로 리뷰코멘트 데이터 -> 코멘트 작성자Id찾기
-            User loginUser = userService.findUser(userEmail); //현재 수정하려는 사용자
+            User loginUser = userService.findUser(loginUserEmail); //현재 수정하려는 사용자
             if(loginUser.getUserId().equals(reviewUser.getUserId()) || loginUser.getUserId().equals(commentUser.getUserId())){
                 ReviewComment reviewComment = reviewService.findReviewCommentByReviewCommentId(reviewCommentId);
                 reviewService.deleteReviewComment(reviewComment);
