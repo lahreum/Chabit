@@ -24,6 +24,8 @@ public class ChallengeDto {
     private UserDto challengeOwner;
     @ApiModelProperty(value = "챌린지 카테고리")
     private String categoryName;
+    @ApiModelProperty(value = "챌린지 해시태그")
+    private HashtagDto hashtags;
     @ApiModelProperty(value = "챌린지 시작일")
     private LocalDateTime challengeStartDate;
     @ApiModelProperty(value = "챌린지 종료일")
@@ -78,5 +80,9 @@ public class ChallengeDto {
         this.challengeOwner = challengeOwner;
         this.challengeThumbnail = challengeThumbnail;
         this.authFrequency = authFrequency;
+    }
+
+    public void addHashtag(HashtagDto hashtags) {
+        this.hashtags = hashtags;
     }
 }
