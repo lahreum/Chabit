@@ -28,7 +28,7 @@ public class UserDto {
     @ApiModelProperty(value="사용자 해시태그")
     private HashtagDto hashtags;
     @ApiModelProperty(value="사용자 레벨")
-    private String userLevel;
+    private LevelDto userLevel;
     @ApiModelProperty(value="사용자 권한")
     private String userRole;
     @ApiModelProperty(value="사용자 프로필사진")
@@ -75,8 +75,8 @@ public class UserDto {
     public void addHashtags(HashtagDto hashtags) {
         this.hashtags = hashtags;
     }
-    public void addUserLevel(String userLevel) {
-        this.userLevel = userLevel;
+    public void addUserLevel(LevelDto levelDto) {
+        this.userLevel = levelDto;
     }
     public void addBadges(BadgeResponse badges) {
         this.badges = badges;

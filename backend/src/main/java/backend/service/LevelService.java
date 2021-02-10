@@ -24,6 +24,10 @@ public class LevelService {
         return levelRepository.findAll();
     }
 
+    public Optional<Level> findOne(String level) {
+        return levelRepository.findOne(level);
+    }
+
     public String findUserLevel(int userPoints) {
         List<Level> levelList = levelRepository.findAll();
         if(0 < levelList.size()){
