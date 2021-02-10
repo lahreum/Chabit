@@ -18,7 +18,7 @@ public class ReviewDto {
     private int commentCount;
     private Long userId;
     private Long challengeId;
-    private ReviewImage thumbnail;
+    private String thumbnail;
     private ReviewImageDto reviewImageDto;
     public ReviewDto(Review review){
         this.reviewId = review.getReviewId();
@@ -30,7 +30,7 @@ public class ReviewDto {
         this.challengeId = review.getChallengeId().getChallengeId();
     }
     public void addThumbnail(ReviewImage reviewImage){
-        this.thumbnail = reviewImage;
+        this.thumbnail = reviewImage.getReviewImage();
     }
 
     public void addReviewImage(ReviewImageDto reviewImageDto){

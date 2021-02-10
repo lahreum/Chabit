@@ -42,7 +42,7 @@ class ReviewRepositoryTest {
         challenge.setChallengeCategory(category);
         challenge.setChallengeStartdate(LocalDateTime.now());
         challenge.setChallengeEnddate(LocalDateTime.now().plusDays(1));
-        challenge.setAuthFrequency("주 3회인증");
+        challenge.setAuthFrequency(1);
         challenge.setAuthHoliday(1);
         userService.signIn(user);
         categoryService.makeCategory(category);
@@ -70,7 +70,7 @@ class ReviewRepositoryTest {
         challenge3.setChallengeCategory(category3);
         challenge3.setChallengeStartdate(LocalDateTime.now());
         challenge3.setChallengeEnddate(LocalDateTime.now().plusDays(1));
-        challenge3.setAuthFrequency("주 3회인증");
+        challenge3.setAuthFrequency(1);
         challenge3.setAuthHoliday(1);
         userService.signIn(user3);
         User userIdTest= userService.findUser("asd3@naver.com");
@@ -107,7 +107,7 @@ class ReviewRepositoryTest {
         challenge2.setChallengeCategory(category2);
         challenge2.setChallengeStartdate(LocalDateTime.now());
         challenge2.setChallengeEnddate(LocalDateTime.now().plusDays(1));
-        challenge2.setAuthFrequency("주 3회인증");
+        challenge2.setAuthFrequency(1);
         challenge2.setAuthHoliday(1);
         userService.signIn(user2);
         categoryService.makeCategory(category2);
@@ -137,7 +137,7 @@ class ReviewRepositoryTest {
         challenge6.setChallengeCategory(category6);
         challenge6.setChallengeStartdate(LocalDateTime.now());
         challenge6.setChallengeEnddate(LocalDateTime.now().plusDays(1));
-        challenge6.setAuthFrequency("주 3회인증");
+        challenge6.setAuthFrequency(1);
         challenge6.setAuthHoliday(1);
         userService.signIn(user6);
         categoryService.makeCategory(category6);

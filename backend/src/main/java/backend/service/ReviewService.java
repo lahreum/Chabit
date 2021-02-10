@@ -90,6 +90,7 @@ public class ReviewService {
         return result;
     }
 
+    @Transactional
     public ReviewComment updateReviewComment(ReviewComment newReviewComment){
         ReviewComment reviewComment = reviewCommentRepository
                 .findReviewCommentByReviewCommentId(newReviewComment.getReviewCommentId());

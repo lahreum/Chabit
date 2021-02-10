@@ -8,6 +8,7 @@ import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,12 +35,13 @@ public class ReviewController {
             Challenge challenge = challengeService.findByChallengeId(request.getChallengeId()); // 어떤 챌린지 참가했는가.
 
             Review newReview = Review.createReview(user,challenge, request.getReviewContent()); //리뷰를 만든다.
+            newReview.setReviewDate(LocalDateTime.now());
             Review saveReview = reviewService.saveReview(newReview);//저장
 
             for(String inputImage : request.getReviewImageList()){
                 ReviewImage reviewImage = new ReviewImage();
                 reviewImage.setReviewId(newReview);//리뷰의id값도 넣어주자.
-                reviewImage.setReviewImage(inputImage);//이미지 URL 값 넣어주기.
+                reviewImage.setReviewImage(inputImage);//이미지 URL 값 넣어주기
                 reviewService.saveReviewImage(reviewImage); // 리뷰 이미지 하나씩 저장하자.
             }
             response = new BaseResponse("success","저장성공");
@@ -63,14 +65,19 @@ public class ReviewController {
         try{
             User user = userService.findUser(userEmail);
             List<Review> reviewList = reviewService.findByUserIdOrderByReviewDate(user);
-            List<ReviewDto> reviewDtoList = null;
-            for (Review review : reviewList){
-                ReviewDto reviewDto = new ReviewDto(review);//리뷰 정보 주입.
-                ReviewImage reviewImage = reviewService.findReviewImageThumbnailByReviewId(review);//썸네일 얻어와서
-                reviewDto.addThumbnail(reviewImage);
-                reviewDtoList.add(reviewDto);
+            if(reviewList.size()!=0){
+                List<ReviewDto> reviewDtoList = new ArrayList<>();
+                for (Review review : reviewList){
+                    ReviewDto reviewDto = new ReviewDto(review);//리뷰 정보 주입.
+                    ReviewImage reviewImage = reviewService.findReviewImageThumbnailByReviewId(review);//썸네일 얻어와서
+                    reviewDto.addThumbnail(reviewImage);
+                    reviewDtoList.add(reviewDto);
+                }
+                response = new BaseResponse("success", reviewDtoList);
             }
-            response = new BaseResponse("success", reviewDtoList);
+            else{
+                response = new BaseResponse("success","데이터가 없습니다.");
+            }
         }catch (IllegalStateException e){
             response = new BaseResponse("fail", e.getMessage());
         }
@@ -172,6 +179,7 @@ public class ReviewController {
                 ReviewComment reviewComment = new ReviewComment();
                 reviewComment.setReviewCommentId(reviewCommentId);
                 reviewComment.setCommentContent(request.getReviewContent());
+                reviewService.updateReviewComment(reviewComment);
                 response = new BaseResponse("success", "수정성공");
             }else{
                 response = new BaseResponse("fail", "동일한 작성자가 아닙니다.");
