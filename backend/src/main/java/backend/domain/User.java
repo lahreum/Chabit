@@ -29,6 +29,7 @@ public class User {
     private String userPhone;
     @Column(columnDefinition = "TEXT")
     private String userImage;
+    private String userProfileMessage;
 
     @Column(columnDefinition = "INT DEFAULT 1000")
     private int userPoints;
@@ -67,6 +68,7 @@ public class User {
         user.setUserRole(UserRole.USER);
         user.setUserPoints(1000);
         user.setUserJoindate(LocalDateTime.now());
+        user.setUserImage("https://ssafychabit.s3.ap-northeast-2.amazonaws.com/users/avatardefault_92824.png"); // 기본 프사
 
         return user;
     }
@@ -105,4 +107,7 @@ public class User {
         this.userPoints = restPoint;
     }
 
+    public void putProfileMessage(String userProfileMessage) {
+        this.userProfileMessage = userProfileMessage;
+    }
 }

@@ -18,4 +18,6 @@ public class UserRequest {
     private String userNickname;
     @ApiModelProperty(value="사용자 휴대폰 번호")
     private String userPhone;
+    @ApiModelProperty(value="사용자 상태 메세지")
+    private String userProfileMessage;
 }

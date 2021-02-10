@@ -1,6 +1,7 @@
 package backend.controller;
 
 import backend.service.AuthService;
+import backend.utils.Validator;
 import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +18,7 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
+    private final Validator validator;
 
     @GetMapping("/sms")
     public BaseResponse getCertificateNumber(@RequestParam(required = false) String phone) {
@@ -28,7 +30,7 @@ public class AuthController {
             for (int i = 0; i < 6; ++i) {
                 secret += Integer.toString(random.nextInt(10));
             }
-            authService.sendSms(phone, secret);
+            authService.sendSms(validator.phoneValidator(phone), secret);
             response = new BaseResponse("success", new SMSResponse(secret));
         } catch (Exception e) {
             response = new BaseResponse("fail", e.getMessage());
