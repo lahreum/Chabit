@@ -17,8 +17,10 @@ public class HashtagController {
 
     @PostMapping
     @ApiOperation(value="해쉬태그 등록", notes="해쉬태그 등록")
-    public BaseResponse addHashtag(@RequestBody String hashtagName){
+    public BaseResponse addHashtag(@RequestParam(required = false, defaultValue = "") String hashtagName){
         BaseResponse response = null;
+        if(hashtagName.equals(""))
+            return new BaseResponse("fail", "해쉬태그 명을 입력해주세요");
         try {
             Hashtag hashtag = hashtagService.makeHashtag(hashtagName);
             response = new BaseResponse("success", hashtag);

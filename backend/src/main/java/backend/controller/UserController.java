@@ -153,8 +153,10 @@ public class UserController {
 
     @PostMapping("/hashtag/{userEmail}")
     @ApiOperation(value="해쉬태그 등록", notes="해쉬태그 등록")
-    public BaseResponse saveHashtag(@PathVariable String userEmail, @RequestBody String hashtagName) {
+    public BaseResponse saveHashtag(@PathVariable String userEmail, @RequestParam(required = false, defaultValue = "") String hashtagName) {
         BaseResponse response = null;
+        if(hashtagName.equals(""))
+            return new BaseResponse("fail", "해쉬태그 이름을 입력해주세요");
         try {
             userService.addHashtag(userEmail, hashtagName);
             response = new BaseResponse("success", "추가 성공");

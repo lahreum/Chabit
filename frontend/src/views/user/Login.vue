@@ -6,8 +6,18 @@
       <div class="login">
         <p>로그인</p>
         <v-card-text class="text-input">
-          <v-text-field v-model="form.userEmail" label="이메일" type="email" @keyup.enter="onLogin"></v-text-field>
-          <v-text-field v-model="form.userPassword" label="비밀번호" type="password" @keyup.enter="onLogin"></v-text-field>
+          <v-text-field
+            v-model="form.userEmail"
+            label="이메일"
+            type="email"
+            @keyup.enter="onLogin"
+          ></v-text-field>
+          <v-text-field
+            v-model="form.userPassword"
+            label="비밀번호"
+            type="password"
+            @keyup.enter="onLogin"
+          ></v-text-field>
         </v-card-text>
         <div class="bottom">
           <button class="btn-login" @click="onLogin">
@@ -53,25 +63,23 @@ export default {
   // },
   methods: {
     onLogin() {
-      this.$Axios.post(`${this.$store.state.host}/v1/login`, this.form)
-      .then(
-        res=> {
+      this.$Axios
+        .post(`${this.$store.state.host}/v1/login`, this.form)
+        .then((res) => {
           console.log(res);
           if (res.data.status == "fail") {
-            console.log(res.data.status)
-            alert("로그인 정보가 없습니다.")
+            console.log(res.data.status);
+            alert("로그인 정보가 없습니다.");
           } else {
-            console.log('데이터는 잘 넘어옴~ ');
-            this.$store.commit('LOGIN', res.data.data);
+            console.log("데이터는 잘 넘어옴~ ");
+            this.$store.commit("LOGIN", res.data.data);
             this.$router.push("/");
           }
-        }
-      )
-      .catch(
-        err => {
-          console.log(err);
         })
-    }
-  }
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
 };
 </script>

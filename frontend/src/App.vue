@@ -27,10 +27,10 @@
           <div id="nav-mid" class="nav-mid">
             <v-list-item-group v-model="group" active-class="text--accent-4">
               <v-list-item>
-                <v-list-item-title @click="$router.push('/')">Home</v-list-item-title>
+                <v-list-item-title @click="$router.push({ name: 'Home' })">Home</v-list-item-title>
               </v-list-item>
 
-              <v-list-item @click="$router.push('/feed')">
+              <v-list-item @click="$router.push({ name: 'Feed' })">
                 <v-list-item-title>마이피드</v-list-item-title>
               </v-list-item>
 
@@ -38,19 +38,19 @@
                 <v-list-item-title>팔로우</v-list-item-title>
               </v-list-item>
 
-              <v-list-item @click="$router.push('/challenge')">
+              <v-list-item @click="$router.push({ name: 'Challenge' })">
                 <v-list-item-title>챌린지</v-list-item-title>
               </v-list-item>
 
-              <v-list-item @click="$router.push('/ranking')">
+              <v-list-item @click="$router.push({ name: 'Ranking' })">
                 <v-list-item-title>랭킹</v-list-item-title>
               </v-list-item>
 
-              <v-list-item @click="$router.push('/setting')">
+              <v-list-item v-if="this.userEmail" @click="$router.push({ name: 'Setting' })">
                 <v-list-item-title>설정</v-list-item-title>
               </v-list-item>
 
-              <v-list-item class="logout-list" @click="logout">
+              <v-list-item v-if="this.userEmail" class="logout-list" @click="logout">
                 <v-icon class="logout-icon" color="white">mdi-logout</v-icon>
                 <v-list-item-title>로그아웃</v-list-item-title>
               </v-list-item>
@@ -79,26 +79,37 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "App",
   data: () => ({ drawer: null, group: null, showNavbar: false }),
   props: ["pageTitle"],
+  computed: {
+    ...mapGetters({ userEmail: "getUserEmail" }),
+  },
   watch: {
     group() {
       this.drawer = false;
     },
   },
   methods: {
+    checkLogin() {
+      if (this.userEmail == null) {
+        this.$router.push("/login");
+      }
+    },
     scroll() {
       window.pageYOffset > 0 ? (this.showNavbar = true) : (this.showNavbar = false);
     },
     logout() {
-      localStorage.removeItem("token");
+      localStorage.removeItem("vuex");
       this.$router.push("/login");
     },
   },
   created() {
     window.addEventListener("scroll", this.scroll);
+    this.checkLogin();
   },
   destroyed() {
     window.removeEventListener("scroll", this.scroll);

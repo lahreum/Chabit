@@ -1,29 +1,6 @@
 <template>
-  <v-app id="setting" class="setting">
+  <v-app class="setting">
     <v-list>
-      <!-- 알림설정 -->
-      <v-list-group color="#B71C1C" no-action>
-        <template v-slot:activator>
-          <v-list-item-title class="font-weight-black">알림설정</v-list-item-title>
-        </template>
-        <v-list-item>
-          <v-list-item-content>
-            <v-list-item-title class="font-weight-medium">관계</v-list-item-title>
-            <v-list-item-subtitle
-              >팔로우 신청, 팔로워 신청, 좋아요, 댓글 알림 등</v-list-item-subtitle
-            >
-          </v-list-item-content>
-          <!-- <v-switch v-model="switch1"></v-switch> -->
-          <div><v-switch inset color="red darken-4primary"></v-switch></div>
-        </v-list-item>
-        <v-list-item>
-          <v-list-item-content>
-            <v-list-item-title class="font-weight-medium">챌린지</v-list-item-title>
-            <v-list-item-subtitle>챌린지 시작 안내</v-list-item-subtitle>
-          </v-list-item-content>
-          <v-switch inset color="red darken-4primary"></v-switch>
-        </v-list-item>
-      </v-list-group>
       <!-- 계정설정 -->
       <v-list-group color="#B71C1C" no-action>
         <template v-slot:activator>
@@ -36,21 +13,80 @@
         </v-list-item>
         <v-list-item>
           <v-list-item-content>
-            <v-list-item-title class="font-weight-medium" @click="openDialog = !openDialog"
+            <v-list-item-title class="font-weight-medium" @click="dialog = !dialog"
               >회원탈퇴</v-list-item-title
             >
-            <p v-if="openDialog">
-              <PopUp
-                title="회원 탈퇴"
-                text="탈퇴시 3개월 동안 재가입할 수 없습니다."
-                btnLeft="취소"
-                btnRight="탈퇴"
-              /></p
-          ></v-list-item-content>
+            <!-- Start Popup dialog -->
+            <p v-if="dialog">
+              <v-row justify="center">
+                <v-dialog v-model="dialog" persistent max-width="290" content-class="rounded-xl">
+                  <v-card class="rounded-xl justify-center text-sm-center">
+                    <v-card-title class="headline justify-center rounded-xl">
+                      <strong>회원탈퇴</strong>
+                    </v-card-title>
+                    <v-card-text
+                      >탈퇴시 3개월 동안<br />
+                      재가입할 수 없습니다.</v-card-text
+                    >
+                    <v-divider></v-divider>
+                    <v-card-actions class="rounded-xl">
+                      <v-spacer></v-spacer>
+                      <v-btn text @click="dialog = false">
+                        취소
+                      </v-btn>
+                      <v-spacer></v-spacer>
+                      <v-divider vertical></v-divider>
+                      <v-spacer></v-spacer>
+                      <v-btn color="red darken-4" plain :ripple="false" text @click="deleteUser()">
+                        탈퇴
+                      </v-btn>
+                      <v-spacer></v-spacer> </v-card-actions
+                  ></v-card>
+                </v-dialog>
+              </v-row>
+            </p>
+            <!-- End Popup dialog -->
+            <!-- Start AfterPopup -->
+            <p v-if="afterDialog">
+              <v-row justify="center">
+                <v-dialog
+                  v-model="afterDialog"
+                  persistent
+                  max-width="290"
+                  content-class="rounded-xl"
+                >
+                  <v-card class="rounded-xl justify-center text-sm-center">
+                    <v-card-title class="headline justify-center rounded-xl">
+                      <strong>회원탈퇴 결과</strong>
+                    </v-card-title>
+                    <v-card-text>{{ this.afterMessage }}</v-card-text>
+                    <v-divider></v-divider>
+                    <v-card-actions class="rounded-xl">
+                      <v-spacer></v-spacer>
+                      <v-btn
+                        color="red darken-4"
+                        plain
+                        :ripple="false"
+                        text
+                        @click="$router.push('/login')"
+                      >
+                        확인
+                      </v-btn>
+                      <v-spacer></v-spacer> </v-card-actions
+                  ></v-card>
+                </v-dialog>
+              </v-row>
+            </p>
+            <!-- End AfterPopup -->
+          </v-list-item-content>
         </v-list-item>
       </v-list-group>
       <!-- 회원관리 -->
-      <v-list-group color="#B71C1C" @click="$router.push('/manage-member')">
+      <v-list-group
+        v-if="checkRole(userRole)"
+        color="#B71C1C"
+        @click="$router.push({ name: 'ManageMember' })"
+      >
         <template v-slot:activator>
           <v-list-item-title class="font-weight-black">회원관리</v-list-item-title>
         </template>
@@ -63,13 +99,48 @@
 <script>
 import "./setting.css";
 import Footer from "../../components/include/Footer.vue";
-import PopUp from "../../components/common/PopUp.vue";
+import { mapGetters } from "vuex";
 
 export default {
-  components: { Footer, PopUp },
+  components: { Footer },
   data: () => ({
-    // switch1: true,
-    openDialog: false,
+    dialog: false,
+    afterDialog: false,
+    afterMessage: "",
   }),
+  computed: {
+    ...mapGetters({ userEmail: "getUserEmail" }),
+    ...mapGetters({ userRole: "getUserRole" }),
+  },
+  methods: {
+    checkRole(input) {
+      if (input == "ADMIN") return true;
+      else return false;
+    },
+
+    deleteUser() {
+      if (this.userEmail) {
+        this.$Axios
+          .delete(`${this.$store.state.host}/v1/users/` + this.userEmail)
+          .then((res) => {
+            if (res.data.data.deleteResult == "success") {
+              this.dialog = false;
+              this.afterDialog = true;
+              this.afterMessage = res.data.data.message;
+            } else {
+              this.afterDialog = true;
+              this.afterMessage = res.data.data.message;
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        this.dialog = false;
+        this.afterDialog = true;
+        this.afterMessage = "로그인 상태가 아닙니다.";
+      }
+    },
+  },
 };
 </script>
