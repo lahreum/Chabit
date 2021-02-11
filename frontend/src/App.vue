@@ -122,9 +122,9 @@ export default {
     },
     logout() {
       localStorage.removeItem("vuex");
-      window.location.reload();
       this.$router.push("/login");
       alert("로그아웃 되었습니다.");
+      window.location.reload();
     },
   },
   created() {

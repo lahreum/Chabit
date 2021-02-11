@@ -1,44 +1,55 @@
 <template>
-  <div id="app">
+  <div id="Ranking">
     <v-app id="inspire">
-      <div>
-        <v-row justify="center" class="r-header ma-" dense align="center">
+      <v-container fluid>
+        <v-row justify="center" dense align="center">
           <div class="r-menu">
-            <v-menu bottom offset-y rounded="lg">
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn v-bind="attrs" v-on="on" text plain>
-                  All
-                  <v-icon>mdi-menu-down</v-icon>
-                </v-btn>
-              </template>
-              <v-list>
-                <v-list-item v-for="(item, i) in folItems" :key="i" @click="() => {}">
-                  <v-list-item-title>{{ item.title }} </v-list-item-title>
-                </v-list-item>
-              </v-list>
-            </v-menu>
-            <v-menu bottom offset-y rounded="lg">
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn v-bind="attrs" v-on="on" text plain>
-                  Category
-                  <v-icon>mdi-menu-down</v-icon>
-                </v-btn>
-              </template>
-              <v-list>
-                <v-list-item v-for="(item, i) in cateItems" :key="i" @click="() => {}">
-                  <v-list-item-title>{{ item.title }} </v-list-item-title>
-                </v-list-item>
-              </v-list>
-            </v-menu>
+            <v-col class="d-flex" cols="3.5" sm="1">
+              <v-select
+                v-model="selectedFol"
+                :items="onlyFollowing"
+                item-text="title"
+                item-value="value"
+                label="구분"
+                return-value
+              >
+              </v-select>
+            </v-col>
+            <v-col class="d-flex" cols="3.5" sm="2">
+              <v-select
+                v-model="selectedCate"
+                :items="categoryId"
+                item-text="title"
+                item-value="value"
+                label="카테고리"
+                return-value
+              >
+                <!-- v-on:select="$emit('select', $event.target.value)" -->
+              </v-select>
+            </v-col>
+            <div class="r-toggle">
+              <v-switch
+                v-model="selectedMon"
+                inset
+                color="red darken-4 primary"
+                :ripple="false"
+                label="Monthly"
+              >
+                <template class="r-left-label" #prepend>
+                  <v-label>All</v-label>
+                </template>
+              </v-switch>
+            </div>
           </div>
-          <v-btn text :ripple="false" plain>ALL</v-btn>
-          <v-switch inset color="red darken-4primary" :ripple="false"></v-switch>
-          <v-btn text :ripple="false" plain>MONTHLY</v-btn>
         </v-row>
         <v-divider></v-divider>
-        <ranking-list></ranking-list>
+        <ranking-list
+          :categoryId="selectedCate"
+          :monthlyRanking="selectedMon"
+          :onlyFollowing="selectedFol"
+        ></ranking-list>
         <router-view></router-view>
-      </div>
+      </v-container>
     </v-app>
   </div>
 </template>
@@ -49,41 +60,62 @@ export default {
   components: { RankingList },
   data() {
     return {
-      folItems: [
+      selectedCate: 0,
+      selectedMon: false,
+      selectedFol: false,
+      // selectOf: { title: "전체", value: false },
+      // selectCi: { title: "전체", value: false },
+      monthlyRanking: false,
+      onlyFollowing: [
         {
-          title: "All",
+          title: "전체",
+          value: false,
         },
         {
-          title: "Following",
+          title: "팔로잉",
+          value: true,
         },
       ],
-      cateItems: [
+      categoryId: [
+        {
+          title: "전체",
+          value: "0",
+        },
         {
           title: "운동",
+          value: "21",
         },
         {
           title: "취미",
+          value: "24",
         },
         {
           title: "독서",
+          value: "27",
         },
         {
           title: "생활습관",
+          value: "25",
         },
         {
           title: "돈관리",
+          value: "28",
         },
         {
           title: "돌봄",
+          value: "23",
         },
         {
           title: "다이어트",
+          value: "26",
         },
         {
           title: "감정관리",
+          value: "29",
         },
         {
           title: "공부",
+          value: "22",
         },
       ],
     };
@@ -91,22 +123,17 @@ export default {
 };
 </script>
 <style scoped>
-.r-header .v-btn {
-  margin: 0;
-  padding: 0;
+.r-toggle {
+  display: inline-flex;
+  padding-right: 12px;
 }
-
-.container {
-  max-width: 100%;
-  padding: 12px;
-  margin-right: 0;
-  margin-left: 0;
-  min-width: 100%;
+.v-label {
+  margin: 0px 4px;
 }
-.row--dense {
-  margin: 0;
+.r-menu {
+  display: inline-flex;
 }
-.row {
-  margin: 0;
+.v-label theme--light {
+  margin-right: 2rem;
 }
 </style>
