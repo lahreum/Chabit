@@ -41,6 +41,9 @@ public class Review {
      @OneToMany(mappedBy = "reviewId", cascade = CascadeType.ALL)
      private List<ReviewImage> reviewImageList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "reviewId", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Cool> coolList = new ArrayList<>();
+
      public static Review createReview(User userId, Challenge challengeId, String reviewContent){
          Review review = new Review();
          review.reviewContent = reviewContent;
@@ -54,5 +57,16 @@ public class Review {
     public void addReviewImage(ReviewImage reviewImage) {
          this.reviewImageList.add(reviewImage);
          reviewImage.setReviewId(this);
+    }
+
+    // 멋저요 누르기
+    public void pressCool(Cool cool) {
+        this.coolList.add(cool);
+        cool.setReviewId(this);
+    }
+
+    // 멋져요 취소
+    public void unpressCool(Cool cool) {
+        this.coolList.remove(cool);
     }
 }
