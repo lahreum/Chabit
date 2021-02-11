@@ -6,12 +6,12 @@
     <div>
             <div style="margin-top: 20px; width:100%;">
                 <div style="float:left;">
-                  <Profile src="https://ifh.cc/g/MHQ1jy.jpg" alt="profile" style="width:70px;height:70px;"/>
+                  <Profile :src="userImage" alt="profile" style="width:70px;height:70px;"/>
                 </div>
                 <div>
-                  <span style="color:#424242;font-weight:600; margin-left:15px; font-size:20px;"> {{ getUserNickname }} <br></span>
-                  <span style="color:#424242;font-weight:600; margin-left:15px; font-size:20px;">({{ getUserPoints }}/30000)p<br></span>
-                  <span style="color:#424242;margin-left:15px; font-size:12px;">Bronze</span>
+                  <span style="color:#424242;font-weight:600; margin-left:10px; font-size:20px;"> {{ userNickname }} <br></span>
+                  <span style="color:#424242;font-weight:600; margin-left:10px; font-size:20px;">({{ userPoints }}/{{ userMaxPoint }})p<br></span>
+                  <span style="color:#424242;margin-left:10px; font-size:12px;">{{ userLevel }} </span>
                                     <v-btn
         color="gray darken-4"
         fab
@@ -32,7 +32,6 @@
         <!-- 해시태그 input -->
       <v-combobox
             v-model="chips"
-            
             :disabled="!isEditing"
             chips
             clearable
@@ -40,11 +39,11 @@
             multiple
             style="height:70px;margin-top:15px;" 
         >
-            <template v-slot:selection="{ attrs, item, selected }">
+            <template v-slot:selection="{ attrs, item }">
             <v-chip
                 v-bind="attrs"
-                :input-value="selected" color="#212121" text-color="white"
-                @click="remove(item)" v-model="chips"
+                color="#212121" text-color="white"
+                @click="remove(item)" 
             >
                 <strong>{{ item }}</strong>&nbsp;
             </v-chip> 
@@ -87,17 +86,26 @@ import { mapGetters } from 'vuex'
     components: {
         Profile
     },
+    // computed: {
+    //   ...mapGetters(['getUserNickname','getUserPoints','getUserHashtags','getUserLevel','getUserMaxPoint','getUserLevelImage']),
+    // },
     computed: {
-      ...mapGetters(['getUserNickname','getUserPoints','getUserHashtags','getUserLevel']),
-    },
+      ...mapGetters({ userEmail: "getUserEmail" }),
+      ...mapGetters({ userImage: "getUserImage" }),
+      ...mapGetters({ userNickname: "getUserNickname" }),
+      ...mapGetters({ userPoints: "getUserPoints" }),
+      ...mapGetters({ userHashtags: "getUserHashtags" }),
+      ...mapGetters({ userLevel: "getUserLevel" }),
+      ...mapGetters({ userMaxPoint: "getUserMaxPoint" }),
+  },
     data () {
       return {
         hasSaved: false,
         isEditing: null,
         model: null,
         hashtag:'',
-        status:'Carpe diem',
-        chips: ['이지금','내손을잡아'],
+        status:'',
+        chips: [],
       }
     },
 
@@ -105,12 +113,32 @@ import { mapGetters } from 'vuex'
       save () {
         this.isEditing = !this.isEditing
         this.hasSaved = true
+
+        this.$Axios
+        // .post(`${this.$store.state.host}/v1/users/hashtag/${this.$store.state.user.userEmail}`, this.chips)
+        .post(`${this.$store.state.host}/v1/users/hashtag/`+ this.userEmail  + '?hashtagName=' + `${this.chips}`)
+        .then(({data}) => {
+          if(data.status === "success") {
+            console.log('해쉬태그 저장잘됨');
+          } else {
+            console.log('해쉬태그 안보내짐....');
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       },
       remove (item) {
         this.chips.splice(this.chips.indexOf(item), 1)
         this.chips = [...this.chips]
       },
     },
+    // addhashtag(item) {
+
+    // }
+    created() {
+      this.chips = '';
+    }
   }
 </script>
 
@@ -119,4 +147,5 @@ import { mapGetters } from 'vuex'
     padding: 0;
     margin-top: 0;
 }
+
 </style>

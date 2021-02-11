@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
-// import modules from './modules';
 
 Vue.use(Vuex);
 
@@ -35,7 +34,13 @@ export const store = new Vuex.Store({
       return state.user.hashtags;
     },
     getUserLevel(state) {
-      return state.user.userLevel;
+      return state.user.userLevel.level;
+    },
+    getUserMaxPoint(state) {
+      return state.user.userLevel.levelMaxPoint;
+    },
+    getUserLevelImage(state) {
+      return state.user.userLevel.levelImage;
     },
     getUserRole(state) {
       return state.user.userRole;
