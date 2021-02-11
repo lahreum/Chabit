@@ -94,10 +94,21 @@ public class UserController {
             
             // 뱃지 추가
             BadgeResponse badgeDto = new BadgeResponse();
-            List<Badge> allBadge = badgeService.findAll();
-            allBadge.forEach(badgeDto::addBadge);
-            List<UserBadge> userBadges = findUser.getBadges();
-            userBadges.forEach(b -> badgeDto.addUserBadge(b.getBadge()));
+            List<Badge> allBadge = badgeService.findAll(); // 모든 뱃지
+            List<UserBadge> userBadges = findUser.getBadges(); // 유저가 딴 뱃지
+
+            for (Badge badge : allBadge) {
+                boolean userGet = false;
+                for (UserBadge userBadge : userBadges) {
+                    if (badge.getBadgeId().equals(userBadge.getBadge().getBadgeId())) {
+                        userGet = true;
+                        badgeDto.addBadge(badge, userGet);
+                        break;
+                    }
+                }
+                if (!userGet)
+                    badgeDto.addBadge(badge, userGet);
+            }
 
             userDto.addBadges(badgeDto);
 
