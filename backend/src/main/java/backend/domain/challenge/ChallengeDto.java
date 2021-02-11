@@ -53,6 +53,10 @@ public class ChallengeDto {
     @ApiModelProperty(value = "챌린지 상태 (예정 / 진행/ 종료)")
     private ChallengeOngoing ongoing;
 
+    @ApiModelProperty(value = "유저 - 챌린지 상태 (참가 안함 / 참가 중/ 성공 / 실패")
+    private String challengeJoinStatus;
+    @ApiModelProperty(value = "리뷰 작성 여부 (작성 함 / 아직 안함 / 할 수 없음)")
+    private String reviewStatus;
 
     ////////////추가적으로 생성하자.
     public ChallengeDto (Challenge challenge){
@@ -86,5 +90,10 @@ public class ChallengeDto {
 
     public void addHashtag(HashtagDto hashtags) {
         this.hashtags = hashtags;
+    }
+
+    public void addUserStatus(String challengeJoinStatus, String reviewStatus) {
+        this.challengeJoinStatus = challengeJoinStatus;
+        this.reviewStatus = reviewStatus;
     }
 }

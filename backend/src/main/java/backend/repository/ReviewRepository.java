@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -16,6 +17,14 @@ public class ReviewRepository {
     public Review saveReview(Review review){
         entityManager.persist(review);
         return review;
+    }
+
+    public Optional<Review> findByUserIdAndChallengeId(Long userId, Long challengeId) {
+        List<Review> resultList = entityManager.createQuery("select r from Review r where r.userId.userId = :userId and r.challengeId.challengeId = :challengeId", Review.class)
+                .setParameter("userId", userId)
+                .setParameter("challengeId", challengeId)
+                .getResultList();
+        return resultList.stream().findAny();
     }
 
     public List<Review> findByUserIdOrderByReviewDate(User user){
