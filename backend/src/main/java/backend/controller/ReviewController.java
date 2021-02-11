@@ -102,11 +102,20 @@ public class ReviewController {
      * @return 해당 리뷰에 대한 정보와 ReviewImage 정보들
      */
     @GetMapping("/detail/{reviewId}")
-    public BaseResponse getReviewDetail(@PathVariable Long reviewId) {
+    public BaseResponse getReviewDetail(@PathVariable Long reviewId, @RequestParam(required = false, defaultValue = "") String userEmail) {
         BaseResponse response = null;
         try {
+            User user = userService.findUser(userEmail);
             Review review = reviewService.findByReviewId(reviewId);
+
             ReviewDto reviewDtoResult = new ReviewDto(review); //Review 정보 주입
+            // 좋아요 눌렀나 체크
+            List<Cool> coolList = review.getCoolList();
+            for (Cool c : coolList) {
+                if (c.getUserId().getUserEmail().equals(userEmail)) {
+                    reviewDtoResult.setPressCool(true);
+                }
+            }
 
             review.getReviewImageList().forEach(reviewDtoResult::addReviewImage);
 
