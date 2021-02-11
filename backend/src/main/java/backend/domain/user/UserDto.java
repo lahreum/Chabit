@@ -57,6 +57,18 @@ public class UserDto {
         this.userProfileMessage = user.getUserProfileMessage();
     }
 
+    public UserDto(User user, int userPoint) {
+        this.userEmail = user.getUserEmail();
+        this.userNickname = user.getUserNickname();
+        this.userName = user.getUserName();
+        this.userPhone = user.getUserPhone();
+        this.userPoints = user.getUserPoints();
+        this.userJoindate = user.getUserJoindate();
+        this.userImage = user.getUserImage();
+        this.userProfileMessage = user.getUserProfileMessage();
+        this.userPoints = userPoint;
+    }
+
     public UserDto(String userEmail, String userNickname, String userName, String userPhone, int userPoints, LocalDateTime userJoindate) {
         this.userEmail = userEmail;
         this.userNickname = userNickname;

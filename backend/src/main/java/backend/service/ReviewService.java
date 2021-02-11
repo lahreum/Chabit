@@ -40,6 +40,13 @@ public class ReviewService {
     }
 
     /**
+     * 유저아이디, 챌린지 아이디로 리뷰 찾기
+     */
+    public Optional<Review> findByUserIdAndChallengeId(Long userId, Long challengeId) {
+        return reviewRepository.findByUserIdAndChallengeId(userId, challengeId);
+    }
+
+    /**
      * 아이디값에 따른 reviewList가져오기
      * @return 아이디에 맞는 reviewList
      */

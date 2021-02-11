@@ -3,6 +3,7 @@ package backend.controller;
 import backend.domain.challenge.*;
 import backend.domain.hashtag.Hashtag;
 import backend.domain.hashtag.HashtagDto;
+import backend.domain.review.Review;
 import backend.domain.user.Proof;
 import backend.domain.user.ProofDto;
 import backend.domain.user.User;
@@ -22,6 +23,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Api
@@ -35,6 +37,7 @@ public class ChallengeController {
     private final CategoryService categoryService;
     private final HashtagService hashtagService;
     private final ProofService proofService;
+    private final ReviewService reviewService;
     private final Uploader uploader;
 
 
@@ -240,9 +243,11 @@ public class ChallengeController {
 
 
     // 특정 챌린지 1개 가져오기
+    // TODO: 챌린지 참여 안함 / 참여 중 / 성공 / 실패
+    // TODO : 리뷰작성 완료 / 예정
     @GetMapping("/{challengeId}")
-    @ApiOperation(value="챌린지 조회", notes="특정 챌린지 1개 조회")
-    public BaseResponse getChallenge(@PathVariable Long challengeId) {
+    @ApiOperation(value="챌린지 상세 정보 조회", notes="특정 챌린지 1개 조회")
+    public BaseResponse getChallenge(@PathVariable Long challengeId, @RequestParam(required = false, defaultValue = "") String userEmail) {
         BaseResponse response = null;
         try {
             Challenge findChallenge = challengeService.findByChallengeId(challengeId);
@@ -256,6 +261,42 @@ public class ChallengeController {
 
                 ChallengeDto dto = new ChallengeDto(findChallenge);
                 dto.addHashtag(hashtagDto);
+
+                // 유저 참여 정보 찾기
+                if (!userEmail.equals("")) {
+                    User user = userService.findUser(userEmail);
+                    List<UserChallenge> challengers = findChallenge.getChallengers();
+
+                    String challengeJoinStatus = null;
+                    String reviewStatus = null;
+                    for (UserChallenge uc : challengers) {
+                        if (uc.getUser().getUserEmail().equals(userEmail)) {
+                            // 챌린지 참여자 중에 해당유저 있음
+                            ChallengeResult userStatus = uc.getUserChallengeResult();
+                            if (userStatus.equals(ChallengeResult.READY)) {
+                                challengeJoinStatus = "JOIN";
+                            } else if (userStatus.equals(ChallengeResult.FAIL)) {
+                                challengeJoinStatus = "FAIL";
+                            } else {
+                                challengeJoinStatus = "SUCCESS";
+                                // 리뷰 작성 여부 판단
+
+                                Optional<Review> review = reviewService.findByUserIdAndChallengeId(user.getUserId(), findChallenge.getChallengeId());
+                                if (review.isPresent())
+                                    reviewStatus = "DONE";
+                                else
+                                    reviewStatus = "YET";
+                            }
+                            break;
+                        }
+                    }
+                    if (challengeJoinStatus == null)
+                        challengeJoinStatus = "NO";
+                    if (reviewStatus == null)
+                        reviewStatus = "CANT";
+
+                    dto.addUserStatus(challengeJoinStatus, reviewStatus);
+                }
                 response = new BaseResponse("success", dto);
             }
         } catch (IllegalStateException e) {

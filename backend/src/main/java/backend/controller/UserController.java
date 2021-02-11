@@ -94,10 +94,21 @@ public class UserController {
             
             // 뱃지 추가
             BadgeResponse badgeDto = new BadgeResponse();
-            List<Badge> allBadge = badgeService.findAll();
-            allBadge.forEach(badgeDto::addBadge);
-            List<UserBadge> userBadges = findUser.getBadges();
-            userBadges.forEach(b -> badgeDto.addUserBadge(b.getBadge()));
+            List<Badge> allBadge = badgeService.findAll(); // 모든 뱃지
+            List<UserBadge> userBadges = findUser.getBadges(); // 유저가 딴 뱃지
+
+            for (Badge badge : allBadge) {
+                boolean userGet = false;
+                for (UserBadge userBadge : userBadges) {
+                    if (badge.getBadgeId().equals(userBadge.getBadge().getBadgeId())) {
+                        userGet = true;
+                        badgeDto.addBadge(badge, userGet);
+                        break;
+                    }
+                }
+                if (!userGet)
+                    badgeDto.addBadge(badge, userGet);
+            }
 
             userDto.addBadges(badgeDto);
 
@@ -223,25 +234,22 @@ public class UserController {
     @GetMapping("/ranking/{userEmail}")
     @ApiOperation(value="랭킹 조회", notes="랭킹 조회. 조건별 조회 가능")
     public BaseResponse getRanking(@PathVariable String userEmail,
-                                   @RequestParam(required = false) Long categoryId,
+                                   @RequestParam Long categoryId,
                                    @RequestParam(required = false, defaultValue = "false") Boolean monthlyRanking,
                                    @RequestParam(required = false, defaultValue = "false") Boolean onlyFollowing) {
         BaseResponse response = null;
         try {
-            List<User> ranking = userService.findUserByRankingCondition(userEmail, categoryId, monthlyRanking, onlyFollowing);
+            List<UserDto> ranking = userService.findUserByRankingCondition(userEmail, categoryId, monthlyRanking, onlyFollowing);
             
             // 내 랭킹 찾기
             int myRank = 1;
-            for (User user : ranking) {
+            for (UserDto user : ranking) {
                 if(user.getUserEmail().equals(userEmail))
                     break;
                 myRank++;
             }
 
-            List<UserDto> collect = ranking.stream()
-                    .map(UserDto::new)
-                    .collect(Collectors.toList());
-            response = new BaseResponse("success", new RankingResponse(myRank, collect));
+            response = new BaseResponse("success", new RankingResponse(myRank, ranking));
         } catch (IllegalStateException e) {
             response = new BaseResponse("fail", e.getMessage());
         }
