@@ -63,13 +63,7 @@
                     <v-divider></v-divider>
                     <v-card-actions class="rounded-xl">
                       <v-spacer></v-spacer>
-                      <v-btn
-                        color="red darken-4"
-                        plain
-                        :ripple="false"
-                        text
-                        @click="$router.push('/login')"
-                      >
+                      <v-btn color="red darken-4" plain :ripple="false" text @click="movePage()">
                         확인
                       </v-btn>
                       <v-spacer></v-spacer> </v-card-actions
@@ -119,7 +113,7 @@ export default {
     },
 
     deleteUser() {
-      if (this.userEmail) {
+      if (this.userEmail != null) {
         this.$Axios
           .delete(`${this.$store.state.host}/v1/users/` + this.userEmail)
           .then((res) => {
@@ -140,6 +134,11 @@ export default {
         this.afterDialog = true;
         this.afterMessage = "로그인 상태가 아닙니다.";
       }
+    },
+    movePage() {
+      localStorage.removeItem("vuex");
+      this.$router.push("/login");
+      window.location.reload();
     },
   },
 };
