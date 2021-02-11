@@ -6,10 +6,7 @@ import backend.domain.challenge.Challenge;
 import backend.domain.challenge.PointHistory;
 import backend.domain.follow.Follow;
 import backend.domain.hashtag.Hashtag;
-import backend.domain.user.Proof;
-import backend.domain.user.User;
-import backend.domain.user.UserCategory;
-import backend.domain.user.UserHashtag;
+import backend.domain.user.*;
 import backend.repository.CategoryRepository;
 import backend.repository.FollowRepository;
 import backend.repository.HashtagRepository;
@@ -209,9 +206,9 @@ public class UserService {
      * monthlyRanking : true면 이번달 랭킹만
      * onlyFollowing : true면 팔로잉하는 유저 랭킹만
      */
-    public List<User> findUserByRankingCondition(String userEmail, Long categoryId, boolean monthlyRanking, boolean onlyFollowing){
-        List<User> result = new ArrayList<>();
-
+    public List<UserDto> findUserByRankingCondition(String userEmail, Long categoryId, boolean monthlyRanking, boolean onlyFollowing){
+        List<User> userList = new ArrayList<>();
+        List<UserDto> result = new ArrayList<>();
         // 팔로잉 유저 선택하면 팔로잉하는 유저 목록만 가져옴
         // 아니면 전체 유저 목록 포인트로 정렬해서 가져옴
         if(onlyFollowing) {
@@ -219,57 +216,73 @@ public class UserService {
             List<Follow> following = followRepository.findByUserId(user);
             // following 하는 유저들 뽑아서 넣음
             for(Follow follow : following) {
-                result.add(follow.getFollowingId());
+                userList.add(follow.getFollowingId());
             }
         } else {
-            result = userRepository.findAll();
+            userList = userRepository.findAll();
         }
 
+        Optional<Category> findCategory = categoryRepository.findByCategoryId(categoryId);
         // 카테고리별 정렬 선택한 경우
-        if(categoryId != null) {
-            Optional<Category> findCategory = categoryRepository.findByCategoryId(categoryId);
-            if(!findCategory.isPresent())
-                throw new IllegalStateException("잘못된 카테고리입니다");
+        if(findCategory.isPresent()) {
             // 도전한 챌린지를 카테고리로 필터링 후 해당 챌린지들에서 잃고 얻은 포인트 합계를 통해 정렬
             Category category = findCategory.get();
             final Comparator<User> comp = (u1, u2) ->
-                Integer.compare(u1.getPointHistories().stream()
-                    .filter(h -> !monthlyRanking || h.getPointDate().getMonth().equals(LocalDate.now().getMonth()))
-                    .filter(h -> h.getChallenge().getChallengeCategory().equals(category))
-                    .mapToInt(PointHistory::getPointChange)
-                    .sum(),
-                    u2.getPointHistories().stream()
-                    .filter(h -> !monthlyRanking || h.getPointDate().getMonth().equals(LocalDate.now().getMonth()))
-                    .filter(h -> h.getChallenge().getChallengeCategory().equals(category))
-                    .mapToInt(PointHistory::getPointChange)
-                    .sum());
+                    Integer.compare(u1.getPointHistories().stream()
+                                    .filter(h -> !monthlyRanking || h.getPointDate().getMonth().equals(LocalDate.now().getMonth()))
+                                    .filter(h -> h.getChallenge().getChallengeCategory().equals(category))
+                                    .mapToInt(PointHistory::getPointChange)
+                                    .sum() + u1.getUserPoints(),
+                            u2.getPointHistories().stream()
+                                    .filter(h -> !monthlyRanking || h.getPointDate().getMonth().equals(LocalDate.now().getMonth()))
+                                    .filter(h -> h.getChallenge().getChallengeCategory().equals(category))
+                                    .mapToInt(PointHistory::getPointChange)
+                                    .sum() + u2.getUserPoints());
 
-            result = result.stream()
+            result = userList.stream()
                     .filter(u ->
                             u.getPointHistories().stream()
                                     .anyMatch(h -> h.getChallenge().getChallengeCategory().equals(category)))
                     .sorted(comp.reversed())
+                    .map(u -> new UserDto(u,
+                            u.getPointHistories().stream()
+                            .filter(h -> !monthlyRanking || h.getPointDate().getMonth().equals(LocalDate.now().getMonth()))
+                            .filter(h -> h.getChallenge().getChallengeCategory().equals(category))
+                            .mapToInt(PointHistory::getPointChange)
+                            .sum()))
                     .collect(Collectors.toList());
-        } else {
+        } else if(monthlyRanking) {
             // 카테고리별 정렬 선택 안한 경우
             final Comparator<User> comp = (u1, u2) ->
                     Integer.compare(
                             u1.getPointHistories().stream()
-                                .filter(h -> !monthlyRanking || h.getPointDate().getMonth().equals(LocalDate.now().getMonth()))
-                                .mapToInt(PointHistory::getPointChange)
-                                .sum(),
+                                    .filter(h -> !monthlyRanking || h.getPointDate().getMonth().equals(LocalDate.now().getMonth()))
+                                    .mapToInt(PointHistory::getPointChange)
+                                    .sum() + u1.getUserPoints(),
                             u1.getPointHistories().stream()
-                                .filter(h -> !monthlyRanking || h.getPointDate().getMonth().equals(LocalDate.now().getMonth()))
-                                .mapToInt(PointHistory::getPointChange)
-                                .sum()
+                                    .filter(h -> !monthlyRanking || h.getPointDate().getMonth().equals(LocalDate.now().getMonth()))
+                                    .mapToInt(PointHistory::getPointChange)
+                                    .sum() + u2.getUserPoints()
                     );
-            result = result.stream()
+            result = userList.stream()
                     .filter(u ->
                             !monthlyRanking || u.getPointHistories().stream()
                                     .anyMatch(h -> h.getPointDate().getMonth().equals(LocalDate.now().getMonth())))
                     .sorted(comp.reversed())
+                    .map(u -> new UserDto(u,
+                            u.getPointHistories().stream()
+                            .filter(h -> !monthlyRanking || h.getPointDate().getMonth().equals(LocalDate.now().getMonth()))
+                            .mapToInt(PointHistory::getPointChange)
+                            .sum()))
+                    .collect(Collectors.toList());
+        } else {
+            // 카테고리별 정렬도 아니고 월간 정렬도 아닌 경우 유저가 가진 포인트 그대로 담아서 보냄
+            result = userList.stream()
+                    .sorted((u1, u2) -> Integer.compare(u2.getUserPoints(), u1.getUserPoints()))
+                    .map(u -> new UserDto(u, u.getUserPoints()))
                     .collect(Collectors.toList());
         }
+
         return result;
     }
 

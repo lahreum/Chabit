@@ -239,20 +239,17 @@ public class UserController {
                                    @RequestParam(required = false, defaultValue = "false") Boolean onlyFollowing) {
         BaseResponse response = null;
         try {
-            List<User> ranking = userService.findUserByRankingCondition(userEmail, categoryId, monthlyRanking, onlyFollowing);
+            List<UserDto> ranking = userService.findUserByRankingCondition(userEmail, categoryId, monthlyRanking, onlyFollowing);
             
             // 내 랭킹 찾기
             int myRank = 1;
-            for (User user : ranking) {
+            for (UserDto user : ranking) {
                 if(user.getUserEmail().equals(userEmail))
                     break;
                 myRank++;
             }
 
-            List<UserDto> collect = ranking.stream()
-                    .map(UserDto::new)
-                    .collect(Collectors.toList());
-            response = new BaseResponse("success", new RankingResponse(myRank, collect));
+            response = new BaseResponse("success", new RankingResponse(myRank, ranking));
         } catch (IllegalStateException e) {
             response = new BaseResponse("fail", e.getMessage());
         }
