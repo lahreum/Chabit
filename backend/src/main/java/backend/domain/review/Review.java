@@ -63,10 +63,12 @@ public class Review {
     public void pressCool(Cool cool) {
         this.coolList.add(cool);
         cool.setReviewId(this);
+        this.coolCount += 1; // 멋져요 수 증가
     }
 
     // 멋져요 취소
     public void unpressCool(Cool cool) {
         this.coolList.remove(cool);
+        this.coolCount -= 1; // 멋져요 수 감소
     }
 }
