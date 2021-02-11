@@ -1,6 +1,6 @@
 package backend.repository;
 
-import backend.domain.Level;
+import backend.domain.user.Level;
 
 import java.util.List;
 import java.util.Optional;

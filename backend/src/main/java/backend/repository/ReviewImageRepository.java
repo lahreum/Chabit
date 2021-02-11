@@ -1,7 +1,7 @@
 package backend.repository;
 
-import backend.domain.Review;
-import backend.domain.ReviewImage;
+import backend.domain.review.Review;
+import backend.domain.review.ReviewImage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

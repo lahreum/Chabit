@@ -1,7 +1,8 @@
 package backend.controller;
 
-import backend.domain.ReviewImage;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -11,5 +12,5 @@ public class ReviewRequest {
     Long challengeId;
     String userEmail;
     String reviewContent;
-    List<String> reviewImageList;
+    List<MultipartFile> reviewImages;
 }

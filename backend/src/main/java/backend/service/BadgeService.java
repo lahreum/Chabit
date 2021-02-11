@@ -1,6 +1,6 @@
 package backend.service;
 
-import backend.domain.Badge;
+import backend.domain.badge.Badge;
 import backend.repository.BadgeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

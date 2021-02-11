@@ -1,7 +1,7 @@
 //package backend.repository;
 //
-//import backend.domain.Follow;
-//import backend.domain.User;
+//import backend.domain.follow.Follow;
+//import backend.domain.user.User;
 //import backend.service.FollowService;
 //import backend.service.UserService;
 //import org.assertj.core.api.Assertions;

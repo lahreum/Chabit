@@ -1,6 +1,6 @@
 package backend.controller;
 
-import backend.domain.Hashtag;
+import backend.domain.hashtag.Hashtag;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

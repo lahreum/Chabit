@@ -1,6 +1,6 @@
 //package backend.service;
 //
-//import backend.domain.User;
+//import backend.domain.user.User;
 //import backend.repository.UserRepository;
 //import org.assertj.core.api.Assertions;
 //import org.junit.jupiter.api.Test;

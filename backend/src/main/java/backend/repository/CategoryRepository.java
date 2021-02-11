@@ -1,6 +1,6 @@
 package backend.repository;
 
-import backend.domain.Category;
+import backend.domain.challenge.Category;
 
 import java.util.List;
 import java.util.Optional;

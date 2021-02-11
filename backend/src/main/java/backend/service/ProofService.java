@@ -1,6 +1,6 @@
 package backend.service;
 
-import backend.domain.Proof;
+import backend.domain.user.Proof;
 import backend.repository.ProofRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

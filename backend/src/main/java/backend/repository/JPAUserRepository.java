@@ -1,8 +1,7 @@
 package backend.repository;
 
-import backend.domain.Category;
-import backend.domain.User;
-import backend.domain.UserCategory;
+import backend.domain.user.User;
+import backend.domain.user.UserCategory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,13 @@
 package backend.service;
 
-import backend.domain.*;
+import backend.domain.badge.Badge;
+import backend.domain.badge.BadgeType;
+import backend.domain.challenge.*;
+import backend.domain.hashtag.Hashtag;
+import backend.domain.user.User;
+import backend.domain.user.UserBadge;
+import backend.domain.user.UserCategory;
+import backend.domain.user.UserChallenge;
 import backend.exception.NotEnoughPointException;
 import backend.repository.BadgeRepository;
 import backend.repository.ChallengeRepoistory;
@@ -12,7 +19,6 @@ import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

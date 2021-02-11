@@ -1,6 +1,6 @@
 package backend.controller;
 
-import backend.domain.*;
+import backend.domain.user.*;
 import backend.service.LevelService;
 import backend.service.UserService;
 import io.swagger.annotations.Api;

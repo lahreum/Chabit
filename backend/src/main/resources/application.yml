@@ -21,17 +21,17 @@ spring:
       max-request-size: 10MB
 
 --- # 개발
-#spring:
-#  profiles: local
-#  datasource:
-#    url: jdbc:h2:tcp://localhost/~/chabit;MODE=MySQL
-#    username: sa
-#    password:
-#    driver-class-name: org.h2.Driver
-#
-#  jpa:
-#    hibernate:
-#      ddl-auto: create
+spring:
+  profiles: local
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/chabit;MODE=MySQL
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
 
 --- # 배포 환경
 spring:

@@ -1,6 +1,6 @@
 package backend.service;
 
-import backend.domain.Hashtag;
+import backend.domain.hashtag.Hashtag;
 import backend.repository.HashtagRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

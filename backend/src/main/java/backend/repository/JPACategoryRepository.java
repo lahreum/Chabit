@@ -1,6 +1,6 @@
 package backend.repository;
 
-import backend.domain.Category;
+import backend.domain.challenge.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

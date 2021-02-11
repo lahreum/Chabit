@@ -1,7 +1,7 @@
 package backend.service;
 
 
-import backend.domain.Level;
+import backend.domain.user.Level;
 import backend.repository.LevelRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
