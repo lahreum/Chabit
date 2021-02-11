@@ -85,33 +85,34 @@
               </v-list-item>
             </v-list>
           </v-expand-transition>
-          <!-- <div v-if="checkListLength() == false"> -->
-          <v-list>
-            <v-list-item v-for="(user, index) in users" :key="index">
-              <v-list-item-avatar class="avatar" size="60">
-                <v-img :src="user.userImage"></v-img>
-              </v-list-item-avatar>
-              <v-list-item-content>
-                <v-list-item-title class="black--text">{{ user.userNickname }}</v-list-item-title>
-                <v-list-item-subtitle class="point gray--text"
-                  >{{ user.userPoints }}
-                </v-list-item-subtitle>
-              </v-list-item-content>
-              <v-icon v-if="index == 0" color="yellow darken-2">mdi-crown</v-icon>
-              <v-icon v-if="index == 1" color="grey lighten-2">mdi-crown</v-icon>
-              <v-icon v-if="index == 2" color="brown lighten-2">mdi-crown</v-icon>
-              <v-footer color="transparent">
-                <v-list-item
-                  class="black--text"
-                  v-text="users.findIndex((i) => i.userNickname == user.userNickname) + 1 + `위`"
-                ></v-list-item>
-              </v-footer>
-            </v-list-item>
-          </v-list>
+          <div>
+            <!-- <div v-if="checkListLength() == false"> -->
+            <v-list>
+              <v-list-item v-for="(user, index) in users" :key="index">
+                <v-list-item-avatar class="avatar" size="60">
+                  <v-img :src="user.userImage"></v-img>
+                </v-list-item-avatar>
+                <v-list-item-content>
+                  <v-list-item-title class="black--text">{{ user.userNickname }}</v-list-item-title>
+                  <v-list-item-subtitle class="point gray--text"
+                    >{{ user.userPoints }}
+                  </v-list-item-subtitle>
+                </v-list-item-content>
+                <v-icon v-if="index == 0" color="yellow darken-2">mdi-crown</v-icon>
+                <v-icon v-if="index == 1" color="grey lighten-2">mdi-crown</v-icon>
+                <v-icon v-if="index == 2" color="brown lighten-2">mdi-crown</v-icon>
+                <v-footer color="transparent">
+                  <v-list-item
+                    class="black--text"
+                    v-text="users.findIndex((i) => i.userNickname == user.userNickname) + 1 + `위`"
+                  ></v-list-item>
+                </v-footer>
+              </v-list-item>
+            </v-list>
+          </div>
           <!-- </div> -->
           <!-- <div v-else>
-            야 왜 안떠 이유가 뭔데
-          </div> -->
+            야 왜 안떠 이유가 뭔데 -->
         </v-card>
       </v-flex>
     </v-layout>
