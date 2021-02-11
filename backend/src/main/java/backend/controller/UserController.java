@@ -234,25 +234,22 @@ public class UserController {
     @GetMapping("/ranking/{userEmail}")
     @ApiOperation(value="랭킹 조회", notes="랭킹 조회. 조건별 조회 가능")
     public BaseResponse getRanking(@PathVariable String userEmail,
-                                   @RequestParam(required = false) Long categoryId,
+                                   @RequestParam Long categoryId,
                                    @RequestParam(required = false, defaultValue = "false") Boolean monthlyRanking,
                                    @RequestParam(required = false, defaultValue = "false") Boolean onlyFollowing) {
         BaseResponse response = null;
         try {
-            List<User> ranking = userService.findUserByRankingCondition(userEmail, categoryId, monthlyRanking, onlyFollowing);
+            List<UserDto> ranking = userService.findUserByRankingCondition(userEmail, categoryId, monthlyRanking, onlyFollowing);
             
             // 내 랭킹 찾기
             int myRank = 1;
-            for (User user : ranking) {
+            for (UserDto user : ranking) {
                 if(user.getUserEmail().equals(userEmail))
                     break;
                 myRank++;
             }
 
-            List<UserDto> collect = ranking.stream()
-                    .map(UserDto::new)
-                    .collect(Collectors.toList());
-            response = new BaseResponse("success", new RankingResponse(myRank, collect));
+            response = new BaseResponse("success", new RankingResponse(myRank, ranking));
         } catch (IllegalStateException e) {
             response = new BaseResponse("fail", e.getMessage());
         }
