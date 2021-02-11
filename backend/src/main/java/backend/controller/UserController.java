@@ -234,7 +234,7 @@ public class UserController {
     @GetMapping("/ranking/{userEmail}")
     @ApiOperation(value="랭킹 조회", notes="랭킹 조회. 조건별 조회 가능")
     public BaseResponse getRanking(@PathVariable String userEmail,
-                                   @RequestParam(required = false) Long categoryId,
+                                   @RequestParam Long categoryId,
                                    @RequestParam(required = false, defaultValue = "false") Boolean monthlyRanking,
                                    @RequestParam(required = false, defaultValue = "false") Boolean onlyFollowing) {
         BaseResponse response = null;
