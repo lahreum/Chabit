@@ -141,8 +141,17 @@ public class ReviewController {
             List<ReviewComment> reviewCommentList = reviewService.findReviewCommentByReviewId(review);
             List<ReviewCommentDto> reviewCommentDtoList = new ArrayList<>();
             for (ReviewComment reviewComment : reviewCommentList) {
-                ReviewCommentDto newReviewCommentDto = new ReviewCommentDto(reviewComment);
-                reviewCommentDtoList.add(newReviewCommentDto);
+                if (reviewComment.getParentCommentId() == null) {
+                    ReviewCommentDto newReviewCommentDto = new ReviewCommentDto(reviewComment);
+
+                    // 대댓글 있으면 넣음
+                    List<ReviewComment> childrenComment = reviewComment.getChildrenComment();
+                    for (ReviewComment reply : childrenComment) {
+                        newReviewCommentDto.addReply(new ReviewCommentDto(reply));
+                    }
+
+                    reviewCommentDtoList.add(newReviewCommentDto);
+                }
             }
             response = new BaseResponse("success", reviewCommentDtoList);
         } catch (IllegalStateException e) {
