@@ -41,7 +41,7 @@ export default [
       { 
         path: '/challenge-detail',
         name: 'ChallengeDetail',
-        component: ChallengeDetail
+        component: ChallengeDetail,
       },
       { 
         path: '/write-challenge-review',

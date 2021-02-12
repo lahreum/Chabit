@@ -12,19 +12,19 @@
     >
       <v-list>
         <v-list-item
-          v-for="item in ranking"
-          :key="item.rank"
+          v-for="(item,idx) in ranking"
+          :key="idx"
         >
           <v-list-item-subtitle class="text-left" style="font-size: 1.2rem; font-weight: 600;">
-            {{ item.rank }}
+            {{ idx + 1 }}위
           </v-list-item-subtitle>
 
           <v-list-item-subtitle class="text-left" style="font-size: 1.1rem; font-weight: 600;">
-            {{ item.nickname }}
+            {{ item.userNickname }}
           </v-list-item-subtitle>
 
           <v-list-item-subtitle class="text-right" style="font-size: 1.2rem; font-weight: 600; color: #B71C1C;">
-            {{ item.point }}
+            {{ item.userPoints }}
           </v-list-item-subtitle>
         </v-list-item>
       </v-list>
@@ -37,13 +37,25 @@
 export default {
   data () {
     return {
-      ranking: [
-        {rank: '1위', nickname: '백찐개', point: '129345'},
-        {rank: '2위', nickname: '어텀리', point: '29246'},
-        {rank: '3위', nickname: '김미역', point: '9441'},
-      ],
+      ranking: [],
     }
   },
+  created() {
+    this.$Axios.get("http://i4b207.p.ssafy.io/api/v1/users/ranking/jihae@ssafy.com?categoryId=0&monthlyRanking=false&onlyFollowing=false")
+      .then(res => {
+        console.log(res.data.data)
+        const allRankings = res.data.data.userRanking
+        allRankings.sort(function(a, b) {
+          return b.userPoints - a.userPoints
+        })
+        // console.log(allRankings)
+        this.ranking = allRankings.slice(0,3)
+        console.log(this.ranking)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
 }
 </script>
 
