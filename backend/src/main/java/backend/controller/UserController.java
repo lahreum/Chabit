@@ -2,6 +2,9 @@ package backend.controller;
 //http://localhost:9999/swagger-ui.html
 import backend.domain.badge.Badge;
 import backend.domain.badge.BadgeResponse;
+import backend.domain.challenge.Challenge;
+import backend.domain.challenge.ChallengeDto;
+import backend.domain.challenge.ChallengeHashtag;
 import backend.domain.hashtag.HashtagDto;
 import backend.domain.user.*;
 import backend.service.BadgeService;
@@ -18,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -269,6 +273,35 @@ public class UserController {
             userService.putUserImage(user, imageUrl);
             response = new BaseResponse("success", "이미지 등록 성공");
         } catch (IllegalStateException | IOException | IllegalArgumentException e) {
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    @GetMapping("/{userEmail}/challenges")
+    @ApiOperation(value="유저가 참여한 챌린지 조회", notes="참여했던 모든 챌린지 조회(종료된 챌린지 포함)")
+    public BaseResponse getUserChallenges(@PathVariable String userEmail) {
+        BaseResponse response = null;
+        try {
+            User user = userService.findUser(userEmail);
+            List<UserChallenge> challenges = user.getChallenges();
+            List<ChallengeDto> result = new ArrayList<>();
+
+            for (UserChallenge uc : challenges) {
+                Challenge challenge = uc.getChallenge();
+                List<ChallengeHashtag> hashtags = challenge.getHashtags();
+
+                HashtagDto hashtagDto = new HashtagDto();
+                hashtags.forEach(h -> hashtagDto.addHashtag(h.getHashtag()));
+
+                ChallengeDto dto = new ChallengeDto(challenge);
+                dto.addHashtag(hashtagDto);
+
+                result.add(dto);
+            }
+
+            response = new BaseResponse("success", result);
+        } catch (IllegalStateException e) {
             response = new BaseResponse("fail", e.getMessage());
         }
         return response;
