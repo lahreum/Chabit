@@ -1,5 +1,6 @@
 package backend.service;
 
+import backend.controller.CommentRequest;
 import backend.domain.review.Cool;
 import backend.domain.review.Review;
 import backend.domain.review.ReviewComment;
@@ -144,4 +145,8 @@ public class ReviewService {
         review.pressCool(new Cool(user, review));
     }
 
+    @Transactional
+    public void saveCommentReply(Review review, User user, ReviewComment parent, CommentRequest request) {
+        parent.addReply(ReviewComment.createCommentReply(review, user, parent, request.getCommentContent()));
+    }
 }

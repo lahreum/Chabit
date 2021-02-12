@@ -9,6 +9,7 @@ import backend.service.UserService;
 import backend.utils.Uploader;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -132,7 +133,7 @@ public class ReviewController {
      * @param reviewId
      * @return reviewCommentList
      */
-    @GetMapping("/comment/{reviewId}")
+    @GetMapping("/{reviewId}/comment")
     public BaseResponse getReviewCommentList(@PathVariable Long reviewId) {
         BaseResponse response = null;
         try {
@@ -157,7 +158,7 @@ public class ReviewController {
      * @param commentContent 저장할 reviewComment정보
      * @return 저장 성공 여부
      */
-    @PostMapping("/comment/{reviewId}")
+    @PostMapping("/{reviewId}/comment")
     public BaseResponse saveReviewComment(@PathVariable Long reviewId, @RequestBody String commentContent) {
         BaseResponse response = null;
         try {
@@ -244,6 +245,25 @@ public class ReviewController {
 
             reviewService.pressCool(review, user);
 
+            response = new BaseResponse("success", "성공");
+        } catch (IllegalStateException e) {
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    /**
+     * 대댓글 작성
+     */
+    @PostMapping("/{reviewId}/comment/{commentId}")
+    public BaseResponse addReply(@PathVariable Long reviewId, @PathVariable Long commentId, @RequestBody CommentRequest request) {
+        BaseResponse response = null;
+        try {
+            Review review = reviewService.findByReviewId(reviewId);
+            User user = userService.findUser(request.getUserEmail());
+            ReviewComment parent = reviewService.findReviewCommentByReviewCommentId(commentId);
+
+            reviewService.saveCommentReply(review, user, parent, request);
             response = new BaseResponse("success", "성공");
         } catch (IllegalStateException e) {
             response = new BaseResponse("fail", e.getMessage());
