@@ -14,9 +14,10 @@
         >
           <v-card
             max-width="12rem"
+            @click="moveToChallengeDetail(item)"
           >
             <v-img
-              :src="item.src"
+              :src="item.challengeThumbnail"
               height="8rem"
             >
 
@@ -26,7 +27,7 @@
           <v-row
             align="center"
             class="mx-0"
-            v-if="item.official"
+            v-if="item.challengeOwner.userRole === 'ADMIN'"
           >
             <div style="color: #B71C1C; font-size: 0.8rem; font-weight: 600;" >
               <i class="fas fa-gem"></i>
@@ -36,7 +37,7 @@
             </div>
           </v-row>
           <div class="new-challenge-info">
-            <span>{{item.title}}</span>
+            <span>{{item.challengeName}}</span>
           </div>
         </v-col>
       </v-row>
@@ -57,42 +58,30 @@
 export default {
   data() {
     return {
-      items: [
-        {
-          src: 'https://www.gereports.kr/wp-content/uploads/2020/09/IMG_1219_0-738x820.jpg',
-          title: '레고로 작품 만들기 챌린지',
-          official: true,
-          category: '취미',
-          proof: 5,
-          word: ''
-        },
-        {
-          src: 'http://image.dongascience.com/Photo/2019/07/35bfc9ddc157d6faa3c211cee6c55715.jpg',
-          title: '체중 2kg 감량하기 챌린지',
-          official: false,
-          category: '다이어트',
-          proof: 7,
-          word: ''
-        },
-        {
-          src: 'https://mblogthumb-phinf.pstatic.net/MjAyMDAxMDNfMjY3/MDAxNTc4MDE4NDk2NjQ0.Y5bF47ZdptLfUeQQFJJ5MDQtP7A6ufURnW3-5Iovb10g.K8DO-8hkF2EOYh3lGpl6Lp55HDne0nUOFXLrGXrH34Yg.PNG.drawinart/%ED%8E%AD%EC%88%98_%EA%B7%B8%EB%A6%AC%EA%B8%B0.png?type=w800',
-          title: '펭수 그리기 챌린지',
-          official: true,
-          category: '취미',
-          proof: 1,
-          word: ''
-        },
-        {
-          src: 'https://img.huffingtonpost.com/asset/5d7011fa2400004f007476d5.jpeg?ops=scalefit_630_noupscale',
-          title: '하루 영단어 10개 공부하기 챌린지',
-          official: true,
-          category: '공부',
-          proof: 7,
-          word: ''
-        },
-      ],
+      items: [],
     }
   },
+  created() {
+    this.$Axios.get(`${this.$store.state.host}/v1/challenges`)
+      .then(res => {
+        // console.log(res.data.data)
+        const challenges = res.data.data
+        challenges.sort(function(a, b) {
+          return b.challengeID - a.challengeID
+        })
+        // console.log(challenges)
+        this.items = challenges
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  },
+  methods: {
+    moveToChallengeDetail(item) {
+      this.$store.commit("SELECTEDCHALLENGE", item.challengeID);
+      this.$router.push("/challenge-detail");
+    }
+  }
 }
 </script>
 

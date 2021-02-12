@@ -14,6 +14,7 @@ export const store = new Vuex.Store({
     host: 'http://i4b207.p.ssafy.io/api',
     /*로그인한 회원의 정보*/
     user: {},
+    currentChallengeDetailId: 0,
   },
   getters: {    // computed
     getUserEmail(state) {
@@ -54,6 +55,9 @@ export const store = new Vuex.Store({
         alert('로그아웃되었습니다.');
       }
     },
+    SELECTEDCHALLENGE(state, id) {
+      state.currentChallengeDetailId = id;
+    }
   },
   
 });
