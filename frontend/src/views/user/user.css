@@ -151,6 +151,11 @@
 }
 
 /* 회원가입 */
+.signup .display-timer {
+  width: 35%;
+  float: right;
+  margin-top: -1rem;
+}
 .signup .input {
   color: white;
 }
