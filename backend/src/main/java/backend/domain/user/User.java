@@ -58,6 +58,10 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserBadge> badges = new ArrayList<>();
 
+    // 유저가 참여한 챌린지
+    @OneToMany(mappedBy = "user")
+    private List<UserChallenge> challenges = new ArrayList<>();
+
     // 생성 메서드
     public static User createUser(UserRequest request) {
         User user = new User();
