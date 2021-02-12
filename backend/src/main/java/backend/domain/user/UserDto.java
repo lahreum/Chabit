@@ -54,6 +54,7 @@ public class UserDto {
         this.userPoints = user.getUserPoints();
         this.userJoindate = user.getUserJoindate();
         this.userImage = user.getUserImage();
+        this.userRole = user.getUserRole().equals(UserRole.USER) ? "USER" : "ADMIN";
         this.userProfileMessage = user.getUserProfileMessage();
     }
 
@@ -65,6 +66,7 @@ public class UserDto {
         this.userPoints = user.getUserPoints();
         this.userJoindate = user.getUserJoindate();
         this.userImage = user.getUserImage();
+        this.userRole = user.getUserRole().equals(UserRole.USER) ? "USER" : "ADMIN";
         this.userProfileMessage = user.getUserProfileMessage();
         this.userPoints = userPoint;
     }
