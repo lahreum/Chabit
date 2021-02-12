@@ -1,6 +1,7 @@
 package backend.service;
 
 import backend.domain.user.Proof;
+import backend.domain.user.ProofExample;
 import backend.repository.ProofRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,10 @@ public class ProofService {
         if (proof.isPresent())
             return proof.get();
         throw new IllegalStateException("잘못된 인증 아이디입니다");
+    }
+
+    public List<ProofExample> getTodayProofList() {
+        return proofRepository.findAllProofExample();
     }
 
     @Transactional
