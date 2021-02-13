@@ -11,6 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.json.simple.JSONObject;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -57,7 +58,10 @@ public class ReviewController {
             }
             reviewService.addReviewImages(saveReview, urls);
 
-            response = new BaseResponse("success", "저장성공");
+            JSONObject obj = new JSONObject();
+            obj.put("reviewId", saveReview.getReviewId());
+
+            response = new BaseResponse("success", obj);
         } catch (IllegalStateException | IOException e) {
             response = new BaseResponse("fail", e.getMessage());
         }

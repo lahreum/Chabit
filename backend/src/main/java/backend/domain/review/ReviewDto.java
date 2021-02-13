@@ -38,4 +38,8 @@ public class ReviewDto {
     public void setPressCool(boolean pressCool) {
         this.pressCool = pressCool;
     }
+
+    public void setReviewId(Long reviewId) {
+        this.reviewId = reviewId;
+    }
 }
