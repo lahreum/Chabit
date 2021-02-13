@@ -7,7 +7,7 @@
       color="grey lighten-5"
     >
       <v-card-text>
-        <div style="font-size: 1.3rem; font-weight: 600;">레고 만들기 챌린지</div>
+        <div style="font-size: 1.3rem; font-weight: 600;">{{item.challengeName}}</div>
       </v-card-text>
     </v-card>
     <p></p>
@@ -18,24 +18,15 @@
     >
       <v-card-text>
         <p style="font-size: 1.1rem; font-weight: 600;">인증 방법</p>
-        <p style="font-size: 1rem;">자신이 만든 레고 사진을 오늘의 제스처 손동작이 나오도록 올려주세요.</p>
+        <p style="font-size: 1rem;">{{item.authWay}}</p>
         <hr>
         <p style="font-size: 1.1rem; font-weight: 600; margin-top: 1rem;">예시</p>
         <v-row>
           <v-col
-            cols="6"
+            cols="12"
           >
             <v-img
-              src="http://files.ciokorea.com/archive/images/201801/GettyImages-459315505.jpg"
-              class="rounded-lg"
-            ></v-img>
-          </v-col>
-
-          <v-col
-            cols="6"
-          >
-            <v-img 
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYJ8oGOpLT8gltD-FyOJtaYL6ZPaMhay_U4Q&usqp=CAU"
+              :src="item.authExample"
               class="rounded-lg"
             ></v-img>
           </v-col>
@@ -48,7 +39,7 @@
             cols="6"
           >
             <v-img
-              src="https://cdn.crowdpic.net/list-thumb/thumb_l_A9B6BC32AFCE767900378297235318FC.png"
+              :src="gesture"
               class="rounded-lg"
             ></v-img>
           </v-col>
@@ -66,6 +57,7 @@
             outlined
             dense
             accept="image/png, image/jpeg, image/bmp"
+            v-model="proofFiles"
           ></v-file-input>
         </v-col>
         <v-col
@@ -76,6 +68,7 @@
             color="red darken-4"
             dark
             height="40px"
+            @click="proofUpload"
           >
             업로드
           </v-btn>
@@ -86,7 +79,7 @@
           cols="12"
         >
           <v-img
-            src="https://image.freepik.com/free-photo/a-man-and-a-boy-assemble-from-a-constructor-of-a-robot-male-and-children-s-hands-collect-lego_96336-244.jpg"
+            src=""
             class="rounded-lg"
             max-width="50%"
           ></v-img>
@@ -100,8 +93,9 @@
           dark
           width="100%"
           height="60px"
+          @click="proof"
         >
-          다음
+          인증하기
         </v-btn>
       </div>
     </v-container>
@@ -110,7 +104,66 @@
 
 <script>
 export default {
+  data() {
+    return {
+      item: [],
+      proofFiles: [],
+      proofImage: '',
+      gesture: ''
+    }
+  },
+  created() {
+    const challengeId = this.$store.state.proofChallengeId
+    // console.log(challengeId)
+    // console.log(this.$store.state.user)
+    this.$Axios.get(`${this.$store.state.host}/v1/challenges/${challengeId}?userEmail=${this.$store.state.user.userEmail}`)
+      .then(res => {
+        console.log(res.data)
+        this.item = res.data.data
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    
+    this.$Axios.get(`${this.$store.state.host}/v1/challenges/todayProof`)
+      .then(res => {
+        // console.log(res.data.data)
+        this.gesture = res.data.data.proofExampleImg
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  },
+  methods: {
+      proofUpload() {
+        let fd = new FormData();
+        fd.append('proofImage', this.proofFiles)
+        console.log(fd)
+        alert("이미지가 업로드 되었습니다.")
+        this.proofImage = fd
+      },
+      proof() {
+        const challengeId = this.$store.state.proofChallengeId
+        const proofImage = this.proofImage
+        const userEmail = this.$store.state.user.userEmail
 
+        this.$Axios.post(`${this.$store.state.host}/v1/challenges/${challengeId}/proof/${userEmail}`,
+          proofImage, {
+                headers: {
+                  'Content-Type': 'multipart/form-data'
+                }
+              }
+            ).then(res=> {
+              console.log(res.data.data)
+              alert("성공적으로 인증을 완료하였습니다.")
+              this.$store.commit("MOVETOPROOFLIST", challengeId);
+              this.$router.push('/finish-proof')
+            }).catch(err => {
+              alert("인증 사진을 올려주세요")
+              console.log(err)
+            })
+      }
+  }
 }
 </script>
 
