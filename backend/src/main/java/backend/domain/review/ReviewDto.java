@@ -19,6 +19,8 @@ public class ReviewDto {
     private int commentCount;
     private Long userId;
     private String userNickname;
+    private String userImage;
+    private String userLevelImage;
     private Long challengeId;
     private List<String> reviewImages = new ArrayList<>();
 
@@ -30,6 +32,7 @@ public class ReviewDto {
         this.commentCount = review.getCommentCount();
         this.userId = review.getUserId().getUserId();
         this.userNickname = review.getUserId().getUserNickname();
+        this.userImage = review.getUserId().getUserImage();
         this.challengeId = review.getChallengeId().getChallengeId();
     }
 

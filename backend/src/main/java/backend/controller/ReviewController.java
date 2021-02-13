@@ -2,8 +2,10 @@ package backend.controller;
 
 import backend.domain.challenge.Challenge;
 import backend.domain.review.*;
+import backend.domain.user.Level;
 import backend.domain.user.User;
 import backend.service.ChallengeService;
+import backend.service.LevelService;
 import backend.service.ReviewService;
 import backend.service.UserService;
 import backend.utils.Uploader;
@@ -18,6 +20,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Api
 @RestController
@@ -26,6 +29,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReviewController {
     private final UserService userService;
+    private final LevelService levelService;
     private final ChallengeService challengeService;
     private final ReviewService reviewService;
     private final Uploader uploader;
@@ -124,6 +128,11 @@ public class ReviewController {
             }
 
             review.getReviewImageList().forEach(reviewDtoResult::addReviewImage);
+
+            // 해당 유저의 레벨이미지 추가
+            String userLevel = levelService.findUserLevel(user.getUserPoints());
+            Optional<Level> level = levelService.findOne(userLevel);
+            level.ifPresent(l -> reviewDtoResult.setUserLevelImage(l.getLevelImage()));
 
             response = new BaseResponse("success", reviewDtoResult);
         } catch (IllegalStateException e) {
