@@ -26,6 +26,7 @@ public class LoginController {
         try {
             User loginUser = userService.login(request);
             UserDto userDto = new UserDto(loginUser);
+            userDto.setUserPassword(loginUser.getUserPassword());
             userDto.setUserRole(loginUser.getUserRole().equals(UserRole.ADMIN) ? "ADMIN" : "USER");
 
             // 유저 레벨 담아서 보내기
