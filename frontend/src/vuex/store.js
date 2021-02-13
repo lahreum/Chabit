@@ -38,6 +38,9 @@ export const store = new Vuex.Store({
     getUserHashtags(state) {
       return state.user.hashtags;
     },
+    getUserProfileMessage(state) {
+      return state.user.userProfileMessage;
+    },
     getUserLevel(state) {
       return state.user.userLevel.level;
     },
