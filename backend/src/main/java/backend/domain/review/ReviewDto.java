@@ -18,6 +18,7 @@ public class ReviewDto {
     private boolean pressCool;
     private int commentCount;
     private Long userId;
+    private String userNickname;
     private Long challengeId;
     private List<String> reviewImages = new ArrayList<>();
 
@@ -28,6 +29,7 @@ public class ReviewDto {
         this.coolCount = review.getCoolCount();
         this.commentCount = review.getCommentCount();
         this.userId = review.getUserId().getUserId();
+        this.userNickname = review.getUserId().getUserNickname();
         this.challengeId = review.getChallengeId().getChallengeId();
     }
 
@@ -42,4 +44,5 @@ public class ReviewDto {
     public void setReviewId(Long reviewId) {
         this.reviewId = reviewId;
     }
+
 }
