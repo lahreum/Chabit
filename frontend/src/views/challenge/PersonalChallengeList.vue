@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-card-actions
+    <!-- <v-card-actions
       class="challenge-card"
       v-for="(item,i) in items"
       :key="i"
@@ -9,7 +9,7 @@
         class="mx-auto my-12 rounded-xl"
         max-width="380"
         :loading="loading"
-        @click="reverse"
+        @click="reverse, moveToChallengeDetail(item)"
         style="background-color: white;"
       >
         <template slot="progress">
@@ -22,16 +22,16 @@
 
         <v-img
           height="250"
-          :src="item.src"
+          :src="item.challengeThumbnail"
         ></v-img>
 
-        <v-card-title style="color: black; font-weight: 600;">{{item.title}}</v-card-title>
+        <v-card-title style="color: black; font-weight: 600;">{{item.challengeName}}</v-card-title>
 
         <v-card-text>
           <v-row
             align="center"
             class="mx-0"
-            v-if="item.official"
+            v-if="item.challengeOwner.userRole === 'ADMIN'"
           >
             <div style="color: #B71C1C; font-size: 1.1rem; font-weight: 600;" >
               <i class="fas fa-gem"></i>
@@ -42,55 +42,62 @@
           </v-row>
           <p></p>
           <div class="hash-tag-bundle">
-            <hash-tag :content="item.category"/>
-            <hash-tag :content="item.word"/>
+            <hash-tag :content="item.hashtags.hashtags[0].hashtagName"/>
+            <hash-tag :content="item.hashtags.hashtags[1].hashtagName"/>
           </div>
         </v-card-text>
       </v-card>
-    </v-card-actions>
+    </v-card-actions> -->
+    <v-container>
+      <v-row
+      >
+        <v-col
+          cols="6"
+          sm
+          v-for="(item, idx) in items"
+          :key="idx"
+        >
+          <v-card
+            max-width="12rem"
+            @click="moveToChallengeDetail(item)"
+          >
+            <v-img
+              :src="item.challengeThumbnail"
+              height="8rem"
+            >
+
+            </v-img>
+          </v-card>
+          <p></p>
+          <v-row
+            align="center"
+            class="mx-0"
+            v-if="item.challengeOwner.userRole === 'ADMIN'"
+          >
+            <div style="color: #B71C1C; font-size: 0.8rem; font-weight: 600;" >
+              <i class="fas fa-gem"></i>
+            </div>
+            <div class="grey--text ml-1" style="font-size: 0.8rem; font-weight: 600;">
+              공식 챌린지
+            </div>
+          </v-row>
+          <div class="new-challenge-info">
+            <span>{{item.challengeName}}</span>
+          </div>
+        </v-col>
+      </v-row>
+    </v-container>
   </v-container>
 </template>
 
 <script>
-import HashTag from '../../components/common/HashTag.vue'
+// import HashTag from '../../components/common/HashTag.vue'
 export default {
-  components: { HashTag },
+  // components: { HashTag },
+  props: ['type'],
   data () {
     return {
-      items: [
-        {
-          src: 'https://img.huffingtonpost.com/asset/5acacc721f00002d0016ca31.jpeg?cache=0lOXly1x2s&ops=1778_1000',
-          title: '하루 5분 플랭크 챌린지',
-          official: true,
-          category: '운동',
-          proof: 5,
-          word: ''
-        },
-        {
-          src: 'https://www.wallpapertip.com/wmimgs/41-412909_github-octocat.jpg',
-          title: '1일 1커밋 챌린지',
-          official: true,
-          category: '공부',
-          proof: 7,
-          word: ''
-        },
-        {
-          src: 'http://img.insight.co.kr/static/2016/01/25/700/fguurh33in34jq0x698a.jpg',
-          title: '아침 6시 기상하기 챌린지',
-          official: true,
-          category: '생활습관',
-          proof: 5,
-          word: ''
-        },
-        {
-          src: 'https://t1.daumcdn.net/cfile/tistory/990290335A0A2B2B0B',
-          title: '매일 화분에 물주기 챌린지',
-          official: false,
-          category: '돌봄',
-          proof: 7,
-          word: ''
-        },
-      ],
+      items: [],
       loading: false,
     }
   },
@@ -99,12 +106,28 @@ export default {
       this.loading = true
 
       setTimeout(() => (this.loading = false), 2000)
+    },
+    moveToChallengeDetail(item) {
+      this.$store.commit("SELECTEDCHALLENGE", item.challengeID);
+      this.$router.push("/challenge-detail");
     }
   },
-  mounted() {
-    for (let i=0; i < this.items.length; i++) {
-      this.items[i].word = "주 " + this.items[i].proof + "회 인증"
-    }
+  created() {
+    const currentType = this.type
+    this.$Axios.get(`${this.$store.state.host}/v1/users/${this.$store.state.user.userEmail}/challenges`)
+      .then(res => {
+        console.log(res.data.data)
+        if (currentType === "참가중인") {
+          this.items = res.data.data.ongoingChallenge
+        } else if (currentType === "완료한") {
+          this.items = res.data.data.terminatedChallenge
+        } else {
+          this.items = res.data.data.ownChallenge
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 }
 </script>
@@ -118,5 +141,14 @@ export default {
 .hash-tag-bundle {
   display: flex;
   align-items: flex-start;
+}
+
+.new-challenge-info {
+  margin: 0.5rem 0 -1rem 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 1rem;
+  font-weight: 600;
+  max-width: 12rem;
 }
 </style>

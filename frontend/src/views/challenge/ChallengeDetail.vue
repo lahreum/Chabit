@@ -164,7 +164,6 @@
             height="60px"
             fixed
             bottom
-            disabled
           >
             종료
           </v-btn>
