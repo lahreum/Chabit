@@ -14,6 +14,10 @@ export const store = new Vuex.Store({
     /*로그인한 회원의 정보*/
     user: {},
     currentChallengeDetailId: 0,
+    proofChallengeId: 0,
+    writeReviewChallengeId: 0,
+    prooflistChallengeId: 0,
+    reviewDetailId: 0,
   },
   getters: {    // computed
     getUserEmail(state) {
@@ -62,6 +66,18 @@ export const store = new Vuex.Store({
     },
     SELECTEDCHALLENGE(state, id) {
       state.currentChallengeDetailId = id;
+    },
+    MOVETOPROOF(state, id) {
+      state.proofChallengeId = id;
+    },
+    MOVETOWRITEREVIEW(state, id) {
+      state.writeReviewChallengeId = id;
+    },
+    MOVETOPROOFLIST(state, id) {
+      state.prooflistChallengeId = id;
+    },
+    MOVETOREVIEWDETAIL(state, id) {
+      state.reviewDetailId = id;
     }
   },
   

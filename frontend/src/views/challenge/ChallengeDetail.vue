@@ -136,7 +136,7 @@
             height="60px"
             fixed
             bottom
-            @click="proof"
+            @click="proof(item)"
           >
             인증하기
           </v-btn>
@@ -150,6 +150,7 @@
             height="60px"
             fixed
             bottom
+            @click="writeReview(item)"
           >
             리뷰 작성
           </v-btn>
@@ -208,21 +209,44 @@ export default {
           })
       }
     },
-    proof() {
+    proof(item) {
       const today = new Date();
-      console.log(today)
-      let dates = this.item.challengeStartDate
-      let year = dates.slice(0,4)
-      let month = dates.slice(5,7)
-      let day = dates.slice(8,10)
-      let date = new Date(year, month-1, day)
-      console.log(date)
 
-      const currentHour = today.getHours()
-      console.log(currentHour)
-      const currentMinute = today.getMinutes()
-      console.log(currentMinute)
-    }
+      const startDates = item.challengeStartDate
+      const year1 = startDates.slice(0,4)
+      const month1 = startDates.slice(5,7)
+      const day1 = startDates.slice(8,10)
+
+      const endDates = item.challengeEndDate
+      const year2 = endDates.slice(0,4)
+      const month2 = endDates.slice(5,7)
+      const day2 = endDates.slice(8,10)
+
+      const startHour = parseInt(item.authStarttime.slice(0,2))
+      const endHour = parseInt(item.authEndtime.slice(0,2))
+      const startMinute = parseInt(item.authStarttime.slice(3,5))
+      const endMinute = parseInt(item.authEndtime.slice(3,5))
+      
+      let startDate = new Date(year1, month1-1, day1, startHour, startMinute)
+      let endDate = new Date(year2, month2-1, day2, endHour, endMinute)
+      
+      console.log(today.getTime())
+      console.log(startDate.getTime())
+      console.log(endDate.getTime())
+
+
+      if((today.getTime() >= startDate.getTime()) && (endDate.getTime() >= today.getTime())) {
+        alert("인증페이지로 이동합니다.")
+        this.$store.commit("MOVETOPROOF", item.challengeID);
+        this.$router.push("/proof")
+      } else {
+        alert("아직 인증 시간이 아닙니다.")
+      }
+    },
+    writeReview(item) {
+      this.$store.commit("MOVETOWRITEREVIEW", item.challengeID);
+      this.$router.push("/write-challenge-review");
+    },
   }
 }
 </script>
