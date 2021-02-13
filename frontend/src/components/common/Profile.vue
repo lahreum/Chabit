@@ -3,8 +3,8 @@
     avatar
     bottom
     color="none"
-    offset-x="30"
-    offset-y="30"> 
+    offset-x="25"
+    offset-y="25"> 
     <template v-slot:badge>
       <v-avatar>
         <v-img :src="userLevelImage" />
