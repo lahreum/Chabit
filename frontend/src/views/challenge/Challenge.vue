@@ -20,7 +20,7 @@
     </div>
     <div v-else>
       <span class="search-result">'{{searchItem}}' 검색 결과</span>
-      <search-challenge-list v-if="isSearch"/>
+      <search-challenge-list v-if="isSearch" :searchWord="searchItem"/>
     </div>
   </div>
 </template>

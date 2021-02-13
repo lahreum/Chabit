@@ -4,69 +4,37 @@
     style="margin-left:8%;margin-right:8%; margin-bottom:-40px;"
   >
     <div>
-            <div style="margin-top: 20px; width:100%;">
-                <div style="float:left;">
-                  <Profile src="https://ifh.cc/g/MHQ1jy.jpg" alt="profile" style="width:70px;height:70px;"/>
-                </div>
-                <div>
-                  <span style="color:#424242;font-weight:600; margin-left:15px; font-size:20px;"> {{ getUserNickname }} <br></span>
-                  <span style="color:#424242;font-weight:600; margin-left:15px; font-size:20px;">({{ getUserPoints }}/30000)p<br></span>
-                  <span style="color:#424242;margin-left:15px; font-size:12px;">Bronze</span>
-                                    <v-btn
-        color="gray darken-4"
-        fab
-        x-small
-        @click="isEditing = !isEditing" style="float:right; margin-right:10px;"
-      >
-        <v-icon v-if="isEditing">
-          mdi-close
-        </v-icon>
-        <v-icon v-else>
-          mdi-pencil
-        </v-icon>
-      </v-btn>
-                </div>
-            </div>
+      <div style="margin-top: 20px; width:100%;">
+          <div style="float:left;">
+            <Profile :src="this.user.userImage" alt="profile" style="width:70px;height:70px;"/>
+          </div>
+          <div>
+            <span style="color:#424242;font-weight:600; margin-left:10px; font-size:20px;"> {{ this.user.userNickname }} <br></span>
+            <span style="color:#424242;font-weight:600; margin-left:10px; font-size:20px;">({{ this.user.userPoints }}/{{ this.user.userMaxPoint }})p<br></span>
+            <span style="color:#424242;margin-left:10px; font-size:12px;">{{ this.user.userLevel.level }} </span>
+              <v-btn
+                color="gray darken-4"
+                fab
+                x-small
+                @click="isEditing = !isEditing" style="float:right; margin-right:10px;"
+              >
+                <v-icon v-if="isEditing" @click="save">
+                  mdi-close
+                </v-icon>
+                <v-icon v-else>
+                  mdi-pencil
+                </v-icon>
+               </v-btn>
+          </div>
+        </div>
 
-    
-        <!-- 해시태그 input -->
-      <v-combobox
-            v-model="chips"
-            
-            :disabled="!isEditing"
-            chips
-            clearable
-            placeholder="해쉬태그"
-            multiple
-            style="height:70px;margin-top:15px;" 
-        >
-            <template v-slot:selection="{ attrs, item, selected }">
-            <v-chip
-                v-bind="attrs"
-                :input-value="selected" color="#212121" text-color="white"
-                @click="remove(item)" v-model="chips"
-            >
-                <strong>{{ item }}</strong>&nbsp;
-            </v-chip> 
-            </template>
-        </v-combobox>
-        <!-- 상태메세지 input -->
       <v-text-field
         :disabled="!isEditing"
-        placeholder="상태메세지" v-model="status"
-     
+        placeholder="상태메세지" v-model="this.user.userProfileMessage" style="margin-top:15px;"
       ></v-text-field>
     </div>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn
-        v-if="isEditing"
-        :disabled="!isEditing"
-        color="primary"
-        @click="save"
-      >
-        Save
-      </v-btn>
     </v-card-actions>
     <v-snackbar
       v-model="hasSaved"
@@ -85,32 +53,95 @@ import { mapGetters } from 'vuex'
 
   export default {
     components: {
-        Profile
-    },
-    computed: {
-      ...mapGetters(['getUserNickname','getUserPoints','getUserHashtags','getUserLevel']),
+      Profile
     },
     data () {
       return {
         hasSaved: false,
         isEditing: null,
-        model: null,
-        hashtag:'',
-        status:'Carpe diem',
-        chips: ['이지금','내손을잡아'],
+        status: '',
+        chips: [],
+        user: {                 // 유저 정보를 한번에 가져와서 저장해 놓을 객체
+          "userEmail" : "",
+          "userName" : "",
+          "userNickname": "",
+          "userPhone": "",
+          "userPassword": "",
+          "userProfileMessage": "",
+          "userPoints": "",
+          "userLevel": {
+            "level": "",
+            "levelMaxPoint": "",
+            "levelImage": "",
+          },
+          "userImage": "",
+          // "badges": {
+            // },            
+        }
       }
     },
-
+    computed: {
+      ...mapGetters({ email: 'getUserEmail' }),
+    },
     methods: {
+      getUserInfo()  {
+        this.$Axios
+        .get(`${this.$store.state.host}/v1/users/` + this.email)
+        .then((res) => {
+          if(res.data.status == "success") {
+            console.log('상단 유저정보 잘 넘어옴');
+            this.user.userNickname = res.data.data.userNickname;
+            this.user.userName = res.data.data.userName;
+            this.user.userPhone = res.data.data.userPhone;
+            this.user.userPassword = res.data.data.userPassword;
+            this.user.userProfileMessage = res.data.data.userProfileMessage;
+            this.user.userPoints = res.data.data.userPoints;
+            this.user.userLevel.level = res.data.data.userLevel.level;
+            this.user.userLevel.levelMaxPoint = res.data.data.userLevel.levelMaxPoint;
+            this.user.userLevel.levelImage = res.data.data.userLevel.levelImage;
+            this.user.userImage = res.data.data.userImage;
+            // this.badges = data.data.userNickname;
+          } else {
+            console.log('데이터 안넘어옴..');
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+      },
       save () {
-        this.isEditing = !this.isEditing
-        this.hasSaved = true
+        this.hasSaved = true;
+        this.$Axios
+        // .post(`${this.$store.state.host}/v1/users/hashtag/${this.$store.state.user.userEmail}`, this.chips)
+        .patch(`${this.$store.state.host}/v1/users/`+ this.user.userEmail  + '/profile', {
+          userEmail: this.user.userEmail,
+          userName: this.user.userName,
+          userNickname: this.user.userNickname,
+          userPassword: this.user.userPassword,
+          userPhone: this.user.userPhone,
+          userProfileMessage: this.user.userProfileMessage
+        })
+        .then((res) => {
+          if(res.data.status == "success") {
+            console.log('상태메세지 잘 저장됨');
+          } else {
+            console.log('상메 안보내짐....');
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       },
       remove (item) {
         this.chips.splice(this.chips.indexOf(item), 1)
         this.chips = [...this.chips]
       },
     },
+    created() {
+      this.user.userEmail = this.email;   // 유저 이메일 정보를 로그인한 사람의 정보로
+      console.log(this.user.userEmail);
+      this.getUserInfo();    // 페이지 열자마자 유저 정보 가져옴.
+    }
   }
 </script>
 
@@ -119,4 +150,5 @@ import { mapGetters } from 'vuex'
     padding: 0;
     margin-top: 0;
 }
+
 </style>

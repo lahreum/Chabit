@@ -15,6 +15,7 @@ public class ReviewDto {
     private String reviewContent;
     private LocalDateTime reviewDate;
     private int coolCount;
+    private boolean pressCool;
     private int commentCount;
     private Long userId;
     private Long challengeId;
@@ -32,5 +33,13 @@ public class ReviewDto {
 
     public void addReviewImage(ReviewImage reviewImage){
         this.reviewImages.add(reviewImage.getReviewImage());
+    }
+
+    public void setPressCool(boolean pressCool) {
+        this.pressCool = pressCool;
+    }
+
+    public void setReviewId(Long reviewId) {
+        this.reviewId = reviewId;
     }
 }

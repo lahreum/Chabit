@@ -21,6 +21,7 @@
 import "./user.css";
 import FindEmail from "../../views/user/FindEmail.vue";
 import FindPw from "../../views/user/FindPw.vue";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -32,6 +33,9 @@ export default {
       isTrue: false,
     };
   },
+  computed: {
+    ...mapGetters({ userRole: "getUserRole" }),
+  },
   methods: {
     // 이메일-비밀번호 스위치
     checkForm(event) {
@@ -41,6 +45,13 @@ export default {
         this.isTrue = true;
       }
     },
+    // 로그인여부 확인
+    checkLogin() {
+      if (this.userRole != null) this.$router.push("/");
+    },
+  },
+  created() {
+    this.checkLogin();
   },
 };
 </script>

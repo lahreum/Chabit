@@ -1,5 +1,7 @@
 package backend.service;
 
+import backend.controller.CommentRequest;
+import backend.domain.review.Cool;
 import backend.domain.review.Review;
 import backend.domain.review.ReviewComment;
 import backend.domain.review.ReviewImage;
@@ -53,6 +55,14 @@ public class ReviewService {
     public List<Review> findByUserIdOrderByReviewDate(User user){
         return reviewRepository.findByUserIdOrderByReviewDate(user);
     }
+
+    /**
+     * 인기 리뷰 4개 조회
+     */
+    public List<Review> findAllOrderByCoolCount() {
+        return reviewRepository.findAllOrderByCoolCount();
+    }
+
     /**
      * 해당 리뷰에 대한 상세정보
      * @return 리뷰 상세 정보
@@ -129,4 +139,22 @@ public class ReviewService {
     }
 
     public List<Review> findAll() { return reviewRepository.findAll(); }
+
+    @Transactional
+    public void pressCool(Review review, User user) {
+        List<Cool> coolList = review.getCoolList();
+        for (Cool c : coolList) {
+            if (c.getUserId().getUserEmail().equals(user.getUserEmail())) {
+                // 이미 멋져요 누름 -> 멋져요 취소
+                review.unpressCool(c);
+                return;
+            }
+        }
+        review.pressCool(new Cool(user, review));
+    }
+
+    @Transactional
+    public void saveCommentReply(Review review, User user, ReviewComment parent, CommentRequest request) {
+        parent.addReply(ReviewComment.createCommentReply(review, user, parent, request.getCommentContent()));
+    }
 }

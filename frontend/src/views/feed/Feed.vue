@@ -29,14 +29,20 @@ import MyReview from './MyReview.vue';
 import Reward from './Reward.vue';
 
 export default {
-  data: () => ({ activetab: 1 }),
+  data() {
+    return {
+      activetab: 1,
+    }
+  },
+  // computed: {
+  //     ...mapGetters({ email: "getUserEmail" }),
+  // },
   components: {
     MyInfo,
     MyChallenge,
     MyReview,
     Reward
   },
-
 }
 </script>
 

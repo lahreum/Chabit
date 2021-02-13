@@ -42,6 +42,14 @@
   text-align: center;
   margin-bottom: 100px;
 }
+.btn-get-check {
+  background-color: #fcc203;
+  color: white;
+  border-radius: 10px;
+  width: 65px;
+  height: 25px;
+  font-size: x-small;
+}
 
 /* Button 10 */
 #button-10 .knobs:before,
@@ -101,7 +109,9 @@
   color: #942706;
   margin: 0 30px;
 }
-
+.change-password .v-input {
+  margin-top: 15px;
+}
 /* 이메일 찾기 */
 .find-email,
 .find-pw {
@@ -116,7 +126,9 @@
   width: 215px;
   height: 40px;
 }
-
+.find-email .v-input {
+  margin-top: 15px;
+}
 /* 이메일 찾기 완료 */
 .find-email-finish {
   margin: 40px 30px 70px 30px;
@@ -127,15 +139,13 @@
 }
 
 /* 비밀번호 찾기 */
-.btn-get-check {
-  background-color: #fcc203;
-  color: white;
-  border-radius: 10px;
-  width: 65px;
-  height: 25px;
-  font-size: x-small;
+.find-pw .btn-get-check {
+  margin: 0;
+  width: 20%;
 }
-
+.find-pw .v-input {
+  margin-top: 15px;
+}
 /* 회원정보 수정 */
 .modify-user .btn-left {
   background-color: white;
@@ -151,6 +161,11 @@
 }
 
 /* 회원가입 */
+.signup .display-timer {
+  width: 35%;
+  float: right;
+  margin-top: -1rem;
+}
 .signup .input {
   color: white;
 }
@@ -187,8 +202,24 @@
   justify-content: space-evenly;
   margin: 30px 0;
 }
-
+.login .v-input {
+  margin-top: 15px;
+}
 /* Email, Password 선택 checkbox */
+.btn-login-signup {
+  text-align: center;
+  font-size: small;
+  margin-top: 10px;
+}
+.btn-login-signup > a {
+  color: gray;
+  text-decoration: none;
+}
+.btn-login-signup > span {
+  color: #942706;
+  font-weight: 600;
+}
+
 .email-password-button {
   position: relative;
   top: 60px;
