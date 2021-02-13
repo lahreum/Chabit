@@ -91,6 +91,7 @@ public class UserController {
             findHashtagList.forEach(h -> hashtagDto.addHashtag(h.getHashtag()));
 
             UserDto userDto = new UserDto(findUser);
+            userDto.setUserPassword(findUser.getUserPassword());
             userDto.addHashtags(hashtagDto);
 
             // 해당 유저의 레벨 가져오기.
