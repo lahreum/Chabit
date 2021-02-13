@@ -166,9 +166,6 @@ export default {
     },
   },
   methods: {
-    checkLog() {
-      console.log("hello");
-    },
     onSubmit() {
       this.$v.$touch();
       this.$Axios

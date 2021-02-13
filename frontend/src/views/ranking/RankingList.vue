@@ -144,6 +144,12 @@ export default {
     //   if (this.users.length == 0) return true;
     //   else return false;
     // },
+    checkLog() {
+      if (this.myEmail == null) {
+        alert("로그인 후 확인 가능합니다.");
+        this.$router.push("/login");
+      }
+    },
     getRankList() {
       if (this.myEmail != null) {
         this.$Axios
@@ -173,6 +179,7 @@ export default {
   },
   created() {
     this.getRankList();
+    this.checkLog();
   },
   watch: {
     monthlyRanking: function() {
