@@ -89,7 +89,7 @@ import { mapGetters } from 'vuex'
         .get(`${this.$store.state.host}/v1/users/` + this.email)
         .then((res) => {
           if(res.data.status == "success") {
-            console.log('데이터 잘 넘어옴');
+            console.log('상단 유저정보 잘 넘어옴');
             this.user.userNickname = res.data.data.userNickname;
             this.user.userName = res.data.data.userName;
             this.user.userPhone = res.data.data.userPhone;
