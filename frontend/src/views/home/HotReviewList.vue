@@ -14,17 +14,18 @@
         >
           <v-card
             max-width="12rem"
+            @click="moveToReviewDetail(item)"
           >
             <v-img
-              :src="item.src"
+              :src="item.reviewImages[0]"
               height="8rem"
             >
 
             </v-img>
           </v-card>
           <div class="hot-review-info">
-            <span>{{item.nickname}}</span>
-            <span class="like">{{item.like}}<i class="far fa-thumbs-up"></i></span>
+            <span>{{item.userNickname}}</span>
+            <span class="like">{{item.coolCount}}<i class="far fa-thumbs-up"></i></span>
           </div>
         </v-col>
       </v-row>
@@ -36,28 +37,23 @@
 export default {
   data() {
     return {
-      items: [
-        {
-          src: "http://www.itworld.co.kr/files/itworld/2020/02/GettyImages-1029186020.jpg",
-          nickname: "살찐개",
-          like: 231
-        },
-        {
-          src: "https://img1.daumcdn.net/thumb/R720x0.q80/?scode=mtistory2&fname=http%3A%2F%2Fcfile27.uf.tistory.com%2Fimage%2F2641383357E10083031AAB",
-          nickname: "어텀리",
-          like: 187
-        },
-        {
-          src: "https://sites.google.com/site/playlegotime/_/rsrc/1468758956698/home/5932-2.jpg",
-          nickname: "김미역",
-          like: 156
-        },
-        {
-          src: "https://myanimals.com/ko/wp-content/uploads/2019/04/Boy-playing-with-cat.jpg",
-          nickname: "우반동",
-          like: 133
-        },
-      ]
+      items: []
+    }
+  },
+  created() {
+    this.$Axios.get(`${this.$store.state.host}/v1/review/hot`)
+      .then(res => {
+        console.log(res.data.data)
+        this.items = res.data.data
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  },
+  methods: {
+    moveToReviewDetail(item) {
+      this.$store.commit("MOVETOREVIEWDETAIL", item.reviewId)
+      this.$router.push('/review-detail')
     }
   }
 }
