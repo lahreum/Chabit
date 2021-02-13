@@ -5,6 +5,7 @@ import backend.domain.badge.BadgeResponse;
 import backend.domain.challenge.Challenge;
 import backend.domain.challenge.ChallengeDto;
 import backend.domain.challenge.ChallengeHashtag;
+import backend.domain.challenge.ChallengeResult;
 import backend.domain.hashtag.HashtagDto;
 import backend.domain.user.*;
 import backend.service.BadgeService;
@@ -16,6 +17,7 @@ import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.json.simple.JSONObject;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -279,28 +281,50 @@ public class UserController {
     }
 
     @GetMapping("/{userEmail}/challenges")
-    @ApiOperation(value="유저가 참여한 챌린지 조회", notes="참여했던 모든 챌린지 조회(종료된 챌린지 포함)")
+    @ApiOperation(value="유저가 참여한 챌린지 조회", notes="진행중인 챌린지(ongoing)/ 종료된 챌린지(terminated)/ 개설한 챌린지(own) 목록 제공")
     public BaseResponse getUserChallenges(@PathVariable String userEmail) {
         BaseResponse response = null;
         try {
             User user = userService.findUser(userEmail);
             List<UserChallenge> challenges = user.getChallenges();
-            List<ChallengeDto> result = new ArrayList<>();
+            List<ChallengeDto> ongoingChallenges = new ArrayList<>(); // 진행중인 챌린지
+            List<ChallengeDto> terminatedChallenges = new ArrayList<>(); // 종료된 챌린지
+            List<ChallengeDto> ownChallenges = new ArrayList<>(); // 개설한 챌린지
 
             for (UserChallenge uc : challenges) {
                 Challenge challenge = uc.getChallenge();
-                List<ChallengeHashtag> hashtags = challenge.getHashtags();
+                ChallengeDto dto = new ChallengeDto(challenge);
 
+                // 해쉬태그
+                List<ChallengeHashtag> hashtags = challenge.getHashtags();
                 HashtagDto hashtagDto = new HashtagDto();
                 hashtags.forEach(h -> hashtagDto.addHashtag(h.getHashtag()));
-
-                ChallengeDto dto = new ChallengeDto(challenge);
                 dto.addHashtag(hashtagDto);
 
-                result.add(dto);
+                // 챌린지 상태
+                ChallengeResult challengeResult = uc.getUserChallengeResult();
+                if (challengeResult.equals(ChallengeResult.READY)) {
+                    dto.addChallengeStatus("JOIN");
+                    ongoingChallenges.add(dto);
+                } else if (challengeResult.equals(ChallengeResult.SUCCESS)) {
+                    dto.addChallengeStatus("SUCCESS");
+                    terminatedChallenges.add(dto);
+                } else {
+                    dto.addChallengeStatus("FAIL");
+                    terminatedChallenges.add(dto);
+                }
+
+                // 내가 개설한 챌린지
+                if (challenge.getChallengeOwner().getUserEmail().equals(userEmail))
+                    ownChallenges.add(dto);
             }
 
-            response = new BaseResponse("success", result);
+            JSONObject obj = new JSONObject();
+            obj.put("ongoingChallenge", ongoingChallenges);
+            obj.put("terminatedChallenge", terminatedChallenges);
+            obj.put("ownChallenge", ownChallenges);
+
+            response = new BaseResponse("success", obj);
         } catch (IllegalStateException e) {
             response = new BaseResponse("fail", e.getMessage());
         }
