@@ -28,7 +28,6 @@ public class ReviewComment {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String commentContent;
 
-    //Todo : 대댓글 작성 컬럼 추가 예정.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_comment_id")
     private ReviewComment parentCommentId;
@@ -36,8 +35,8 @@ public class ReviewComment {
     @OneToMany(mappedBy = "parentCommentId", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ReviewComment> childrenComment;
 
-    @Column(columnDefinition = "INT DEFAULT NULL")
-    private int commentOrder;
+    @Column(columnDefinition = "INT DEFAULT 0")
+    private int commentOrder = 0;
 
     // 연관관계
     public void addReply(ReviewComment reply) {
