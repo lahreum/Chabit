@@ -9,7 +9,6 @@ import backend.service.UserService;
 import backend.utils.Uploader;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.springframework.web.bind.annotation.*;
@@ -77,6 +76,7 @@ public class ReviewController {
      * @return 해당유저 review의 List(최신 순으로 정렬)
      */
     @GetMapping("/{userEmail}")
+    @ApiOperation(value="유저가 작성한 리뷰 목록 조회", notes="유저가 작성한 리뷰 목록 조회")
     public BaseResponse getReviews(@PathVariable String userEmail) {
         BaseResponse response = null;
         try {
@@ -107,6 +107,7 @@ public class ReviewController {
      * @return 해당 리뷰에 대한 정보와 ReviewImage 정보들
      */
     @GetMapping("/detail/{reviewId}")
+    @ApiOperation(value="리뷰 상세보기", notes="리뷰 상세 보기")
     public BaseResponse getReviewDetail(@PathVariable Long reviewId, @RequestParam(required = false, defaultValue = "") String userEmail) {
         BaseResponse response = null;
         try {
@@ -138,6 +139,7 @@ public class ReviewController {
      * @return reviewCommentList
      */
     @GetMapping("/{reviewId}/comment")
+    @ApiOperation(value="리뷰 댓글 목록 조회", notes="리뷰 댓글 목록 조회")
     public BaseResponse getReviewCommentList(@PathVariable Long reviewId) {
         BaseResponse response = null;
         try {
@@ -172,6 +174,7 @@ public class ReviewController {
      * @return 저장 성공 여부
      */
     @PostMapping("/{reviewId}/comment")
+    @ApiOperation(value="리뷰 댓글 작성", notes="리뷰 댓글 작성")
     public BaseResponse saveReviewComment(@PathVariable Long reviewId, @RequestBody String commentContent) {
         BaseResponse response = null;
         try {
@@ -197,6 +200,7 @@ public class ReviewController {
      * @return 반환 되는 값은 업데이트 된 정보 또는 에러메시지
      */
     @PutMapping("/comment/{reviewCommentId}")
+    @ApiOperation(value="리뷰 댓글 수정", notes="댓글 작성자만 수정 가능")
     public BaseResponse updateReviewComment
     (@PathVariable Long reviewCommentId, @RequestBody ReviewRequest request) {
         BaseResponse response = null;
@@ -225,6 +229,7 @@ public class ReviewController {
      * @return 삭제 되었는가에 대한 정보
      */
     @DeleteMapping("/comment/{userEmail}/{reviewCommentId}")
+    @ApiOperation(value="리뷰 댓글 삭제", notes="리뷰 댓글 삭제")
     public BaseResponse deleteReviewComment
     (@PathVariable String loginUserEmail, @PathVariable Long reviewCommentId) {
         BaseResponse response = null;
@@ -250,6 +255,7 @@ public class ReviewController {
      * 리뷰 멋져오 누르기 (누른 사람이 또 누르면 취소)
      */
     @PostMapping("/{reviewId}/cool")
+    @ApiOperation(value="리뷰 멋져요", notes="멋져요 한 사람이 다시 요청하면 멋져요 취소")
     public BaseResponse pressCool(@PathVariable Long reviewId, @RequestParam(required = false, defaultValue = "") String userEmail) {
         BaseResponse response = null;
         try {
@@ -269,6 +275,7 @@ public class ReviewController {
      * 대댓글 작성
      */
     @PostMapping("/{reviewId}/comment/{commentId}")
+    @ApiOperation(value="리뷰 대댓글 작성", notes="리뷰 대댓글 작성")
     public BaseResponse addReply(@PathVariable Long reviewId, @PathVariable Long commentId, @RequestBody CommentRequest request) {
         BaseResponse response = null;
         try {
@@ -284,4 +291,26 @@ public class ReviewController {
         return response;
     }
 
+    /**
+     * 인기 리뷰 4개 전송
+     */
+    @GetMapping("/hot")
+    public BaseResponse getHotReview() {
+        BaseResponse response = null;
+        try {
+            List<Review> hotReviews = reviewService.findAllOrderByCoolCount();
+            List<ReviewDto> hotReviewDto = new ArrayList<>();
+
+            for (Review review : hotReviews) {
+                ReviewDto reviewDto = new ReviewDto(review);
+                review.getReviewImageList().forEach(reviewDto::addReviewImage);
+
+                hotReviewDto.add(reviewDto);
+            }
+            response = new BaseResponse("success", hotReviewDto);
+        } catch (IllegalStateException e) {
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
 }
