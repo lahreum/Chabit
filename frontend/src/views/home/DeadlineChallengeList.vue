@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <div class="deadline-challenge">
-      <span class="hot">마감임박</span><span>챌린지</span>
+      <span class="hot">시작 임박</span><span>챌린지</span>
     </div>
     <v-carousel 
       hide-delimiters 

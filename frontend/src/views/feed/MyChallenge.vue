@@ -1,41 +1,166 @@
 <template>
   <div>
       <!-- 상단 참가중,완료,개설 섹션 -->
-        <v-card style="width:100%;">
-            <v-list-item>
-                <div class="top-text" style="width:90%; margin:10px auto;">
-                    <div style="float:left;width:30%;">1</div>
-                    <div style="float:left;margin-left:5%;width:30%;">2</div>
-                    <div style="float:right;width:30%;">0</div>
-                </div>
-            </v-list-item>
-            <v-list-item>
-                <div class="bottom-text" style="width:90%; margin:10px auto;">
-                    <div style="float:left;width:30%;">참가중</div>
-                    <div style="float:left;margin-left:5%;width:30%;">완료</div>
-                    <div style="float:right;width:30%;">개설</div>
-                </div>
-            </v-list-item>
-        </v-card>  
-        <!-- 달력 -->
-        <v-card style="width:100%; margin-top:20px;height:350px;">          
-            <Calendar style="padding-top:30px;"/>
+      <p></p>
+        <v-card flat style="width:100%;">
+          <v-row>
+            <v-col
+              cols="4"
+            > 
+              <v-btn elevation="0" color="white" width="100%" @click="participate">
+                <p style="font-size: 1.5rem;">{{item.ongoingChallenge.length}}</p>
+              </v-btn>
+              <v-btn elevation="0" color="white" width="100%" @click="participate">
+                <p style="font-size: 1rem;">참가중</p>
+              </v-btn>
+            </v-col>
+            <v-col
+            > 
+              <v-btn elevation="0" color="white" width="100%" @click="finish">
+                <p style="font-size: 1.5rem;">{{item.terminatedChallenge.length}}</p>
+              </v-btn>
+              <v-btn elevation="0" color="white" width="100%" @click="finish">
+                <p style="font-size: 1rem;">완료</p>
+              </v-btn>
+            </v-col>
+            <v-col
+            > 
+              <v-btn elevation="0" color="white" width="100%" @click="manage">
+                <p style="font-size: 1.5rem;">{{item.ownChallenge.length}}</p>
+              </v-btn>
+              <v-btn elevation="0" color="white" width="100%" @click="manage">
+                <p style="font-size: 1rem;">개설한</p>
+              </v-btn>
+            </v-col>
+          </v-row>
         </v-card>
+        <p></p>  
+        <!-- 달력 -->
+        <v-card flat outlined>
+          <v-date-picker
+            full-width
+            v-model="date"
+            no-title
+            color="red darken-4"
+          ></v-date-picker>
+        </v-card>
+        <p></p>
         <!-- 현재 진행중인 챌린지 목록 -->
-        <TodayChallengeList />
+        <TodayChallengeList :date="date" :items="items"/>
   </div>
 </template>
 
 <script>
-import Calendar from '../../components/common/Calendar.vue';
 import TodayChallengeList from './TodayChallengeList.vue';
 
 export default {
     components: {
-        Calendar,
         TodayChallengeList
     },
-    
+    methods: {
+      participate() {
+        this.$store.commit('MOVETOPERSONALCHALLENGE', "참가중인")
+        this.$router.push('/personal-challenge')
+      },
+      finish() {
+        this.$store.commit('MOVETOPERSONALCHALLENGE', "완료한")
+        this.$router.push('/personal-challenge')
+      },
+      manage() {
+        this.$store.commit('MOVETOPERSONALCHALLENGE', "내가 개설한")
+        this.$router.push('/personal-challenge')
+      }
+    },
+    data() {
+      return {
+        item: {ongoingChallenge: [], terminatedChallenge: [], ownChallenge: []},
+        date: "",
+        items: []
+      }
+    },
+    created() {
+      const today = new Date();
+      function leadingZeros(n, digits) {
+        let zero = '';
+        n = n.toString();
+
+        if (n.length < digits) {
+            for (let i = 0; i < digits - n.length; i++)
+                zero += '0';
+        }
+        return zero + n;
+      }
+      let s = leadingZeros(today.getFullYear(), 4) + '-' + leadingZeros(today.getMonth() + 1, 2) + '-' + leadingZeros(today.getDate(), 2);
+      this.date = s
+      // console.log(this.date)
+
+      this.$Axios.get(`${this.$store.state.host}/v1/users/${this.$store.state.user.userEmail}/challenges`)
+        .then(res => {
+          console.log(res.data.data)
+          this.item = res.data.data
+
+          const ongoingChallenge = res.data.data.ongoingChallenge
+          const date = this.date
+          const currentYear = date.slice(0,4)
+          const currentMonth = date.slice(5,7)
+          const currentDay = date.slice(8,10)
+
+          const currentTime = new Date(currentYear, currentMonth-1, currentDay).getTime()
+
+          for (let i=0; i < ongoingChallenge.length; i++) {
+            let startYear = ongoingChallenge[i].challengeStartDate.slice(0,4)
+            let startMonth = ongoingChallenge[i].challengeStartDate.slice(5,7)
+            let startDay = ongoingChallenge[i].challengeStartDate.slice(8,10)
+
+            let startTime = new Date(startYear, startMonth-1, startDay).getTime()
+            
+            let endYear = ongoingChallenge[i].challengeEndDate.slice(0,4)
+            let endMonth = ongoingChallenge[i].challengeEndDate.slice(5,7)
+            let endDay = ongoingChallenge[i].challengeEndDate.slice(8,10)
+
+            let endTime = new Date(endYear, endMonth-1, endDay).getTime()
+            // console.log(startTime)
+            // console.log(endTime)
+            if (startTime <= currentTime && currentTime <= endTime) {
+              this.items.push(ongoingChallenge[i])
+            }
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    watch: {
+      date: function (val) {
+        this.items = []
+        const ongoingChallenge = this.item.ongoingChallenge
+        const date = val
+        const currentYear = date.slice(0,4)
+        const currentMonth = date.slice(5,7)
+        const currentDay = date.slice(8,10)
+
+        const currentTime = new Date(currentYear, currentMonth-1, currentDay).getTime()
+
+        for (let i=0; i < ongoingChallenge.length; i++) {
+          let startYear = ongoingChallenge[i].challengeStartDate.slice(0,4)
+          let startMonth = ongoingChallenge[i].challengeStartDate.slice(5,7)
+          let startDay = ongoingChallenge[i].challengeStartDate.slice(8,10)
+
+          let startTime = new Date(startYear, startMonth-1, startDay).getTime()
+          
+          let endYear = ongoingChallenge[i].challengeEndDate.slice(0,4)
+          let endMonth = ongoingChallenge[i].challengeEndDate.slice(5,7)
+          let endDay = ongoingChallenge[i].challengeEndDate.slice(8,10)
+
+          let endTime = new Date(endYear, endMonth-1, endDay).getTime()
+          // console.log(startTime)
+          // console.log(endTime)
+          if (startTime <= currentTime && currentTime <= endTime) {
+            this.items.push(ongoingChallenge[i])
+          }
+        }
+      }
+    }
 }
 </script>
 

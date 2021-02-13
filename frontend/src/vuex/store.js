@@ -18,6 +18,7 @@ export const store = new Vuex.Store({
     writeReviewChallengeId: 0,
     prooflistChallengeId: 0,
     reviewDetailId: 0,
+    typeOfChallenge: "",
   },
   getters: {    // computed
     getUserEmail(state) {
@@ -81,6 +82,9 @@ export const store = new Vuex.Store({
     },
     MOVETOREVIEWDETAIL(state, id) {
       state.reviewDetailId = id;
+    },
+    MOVETOPERSONALCHALLENGE(state, type) {
+      state.typeOfChallenge = type
     }
   },
   
