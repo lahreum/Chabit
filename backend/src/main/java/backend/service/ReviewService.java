@@ -55,6 +55,14 @@ public class ReviewService {
     public List<Review> findByUserIdOrderByReviewDate(User user){
         return reviewRepository.findByUserIdOrderByReviewDate(user);
     }
+
+    /**
+     * 인기 리뷰 4개 조회
+     */
+    public List<Review> findAllOrderByCoolCount() {
+        return reviewRepository.findAllOrderByCoolCount();
+    }
+
     /**
      * 해당 리뷰에 대한 상세정보
      * @return 리뷰 상세 정보
