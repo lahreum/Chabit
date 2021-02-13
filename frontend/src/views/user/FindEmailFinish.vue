@@ -6,11 +6,16 @@
       <div class="find-email-finish">
         <h3>이메일 찾기 완료</h3>
         <br />
-        <p>김싸피님의 가입 이메일은</p>
-        <p>coronakill123@gmail.com 입니다.</p>
+        <p>
+          <strong>{{ $route.params.userName }}</strong
+          >님의 가입 이메일은
+        </p>
+        <p>
+          <strong>{{ $route.params.userEmail }}</strong> 입니다.
+        </p>
       </div>
       <div class="bottom">
-        <button class="btn-ok">
+        <button class="btn-ok" @click="$router.push('/login')">
           로그인하기
         </button>
       </div>
@@ -23,6 +28,9 @@
 import "./user.css";
 
 export default {
-  components: {},
+  props: {
+    userName: { type: String, default: "" },
+    userEmail: { type: String, default: "" },
+  },
 };
 </script>
