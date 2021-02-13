@@ -5,7 +5,7 @@ import FindPw from '../views/user/FindPw.vue'
 import FindEmail from '../views/user/FindEmail.vue'
 import FindEmailFinish from '../views/user/FindEmailFinish.vue'
 import ChangePw from '../views/user/ChangePw.vue'
-
+import Instruction from '../views/user/Instruction.vue'
 
 export default [
     {
@@ -17,6 +17,11 @@ export default [
     path: '/join',
     name: 'Join',
     component: Join
+  },
+  {
+    path: '/instruction',
+    name: 'Instruction',
+    component: Instruction
   },
   {
     path: '/find',
