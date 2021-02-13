@@ -27,7 +27,7 @@
             @blur="$v.userEmail.$touch()"
           >
           </v-text-field>
-          <button class="btn-get-check " name="checkBtn" type="button" @click="checkEmail()">
+          <button class="btn-get-check " name="checkBtn" type="button" @click="checkEmail">
             중복확인
           </button>
           <v-text-field
@@ -61,7 +61,7 @@
             @blur="$v.userNickname.$touch()"
           >
           </v-text-field>
-          <button class="btn-get-check" type="button" @click="checkNickname()">
+          <button class="btn-get-check" type="button" @click="checkNickname">
             중복확인
           </button>
           <v-text-field
@@ -75,7 +75,7 @@
             @input="$v.userPhone.$touch()"
             @blur="$v.userPhone.$touch()"
           ></v-text-field>
-          <button class="btn-get-check" type="button" @click="requestVali()">인증요청</button>
+          <button class="btn-get-check" type="button" @click="requestVali">인증요청</button>
           <v-text-field
             :error-messages="certificationNumberErrors"
             class="input-with-btn"
@@ -86,7 +86,7 @@
             @input="$v.certificationNumber.$touch()"
             @blur="$v.certificationNumber.$touch()"
           ></v-text-field
-          ><button class="btn-get-check" type="button" @click="checkNum()">확인</button>
+          ><button class="btn-get-check" type="button" @click="checkNum">확인</button>
           <!-- 타이머 -->
           <div class="display-timer">
             <p class="display__time-left"></p>
@@ -241,7 +241,6 @@ export default {
         this.timerOut = false;
         this.callReset = false;
       }
-      document.title = display;
       timerDisplay.textContent = display;
     },
 
@@ -304,6 +303,7 @@ export default {
               alert("인증번호가 전송되었습니다.");
               this.timer(180);
               this.rqNumber = true;
+              this.timerOut = false;
               this.rqNumberHasClicked = true;
               this.certNum = res.data.data.certificateNum;
               document.getElementById("btnCkPN").disabled = true;
@@ -357,15 +357,14 @@ export default {
         this.submitStatus = "ERROR";
       } else if (this.ckEmail == false) {
         this.submitStatus = "ERROR";
-        this.submitStatus = "ERROR";
         alert("이메일 중복 확인을 해주세요!");
       } else if (this.ckNickname == false) {
         this.submitStatus = "ERROR";
         alert("닉네임 중복 확인을 해주세요!");
-      } else if (this.ckrqNum == false) {
+      } else if (this.rqNumber == false) {
         this.submitStatus = "ERROR";
         alert("휴대전화번호 인증이 필요합니다!");
-      } else if (this.rqNumber == false) {
+      } else if (this.ckrqNum == false) {
         this.submitStatus = "ERROR";
         alert("인증번호 확인이 필요합니다!");
       } else {
@@ -379,9 +378,10 @@ export default {
           userProfileMessage: "",
         };
         this.$Axios
-          .post(`${this.$store.state.host}/v1/users`, this.form)
+          .post(`${this.$store.state.host}/v1/users/`, this.form)
           .then((res) => {
             if (res.data.data.joinResult == "success") {
+              clearInterval(countdown);
               alert("가입이 완료되었습니다.");
               this.$router.push("/login");
             } else {

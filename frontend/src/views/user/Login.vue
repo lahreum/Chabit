@@ -7,20 +7,35 @@
         <p>로그인</p>
         <v-card-text class="text-input">
           <v-text-field
-            v-model="form.userEmail"
+            :error-messages="emailErrors"
+            v-model="userEmail"
+            required
             label="이메일"
             type="email"
             @keyup.enter="onLogin"
-          ></v-text-field>
+            @input="$v.userEmail.$touch()"
+            @blur="$v.userEmail.$touch()"
+          >
+          </v-text-field>
           <v-text-field
-            v-model="form.userPassword"
+            :error-messages="passwordErrors"
+            v-model="userPassword"
             label="비밀번호"
             type="password"
+            required
             @keyup.enter="onLogin"
-          ></v-text-field>
+            @input="$v.userPassword.$touch()"
+            @blur="$v.userPassword.$touch()"
+          >
+          </v-text-field>
         </v-card-text>
         <div class="bottom">
-          <button class="btn-login" @click="onLogin">
+          <button
+            class="btn-login"
+            @click.prevent="onLogin"
+            type="submit"
+            :disabled="submitStatus === 'PENDING'"
+          >
             로그인
           </button>
           <div class="btn-forget-signup">
@@ -41,43 +56,92 @@
 
 <script>
 import "./user.css";
+import { required, minLength, email, helpers } from "vuelidate/lib/validators";
 import Kakao from "../../components/user/snsLogin/Kakao.vue";
 import Google from "../../components/user/snsLogin/Google.vue";
+import { mapGetters } from "vuex";
+
+const password = helpers.regex("password", /^.*(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).*$/);
 
 export default {
+  validations: {
+    userEmail: { required, email },
+    userPassword: { required, minLength: minLength(5), password },
+  },
+
+  computed: {
+    ...mapGetters({ userNickname: "getUserNickname" }),
+
+    emailErrors() {
+      const errors = [];
+      if (!this.$v.userEmail.$dirty) return errors;
+      !this.$v.userEmail.email && errors.push("이메일 형식이 올바르지 않습니다.");
+      !this.$v.userEmail.required && errors.push("필수 입력항목입니다.");
+      return errors;
+    },
+
+    passwordErrors() {
+      const errors = [];
+      if (!this.$v.userPassword.$dirty) return errors;
+      !this.$v.userPassword.minLength &&
+        errors.push("영문, 숫자, 특수문자(!@#$%^&*)로 5글자 이상 입력해주세요.");
+      !this.$v.userPassword.required && errors.push("필수 입력입력항목입니다.");
+      !this.$v.userPassword.password &&
+        errors.push("영문, 숫자, 특수문자(!@#$%^&*)로 5글자 이상 입력해주세요.");
+      return errors;
+    },
+  },
+
   components: {
     Kakao,
     Google,
   },
+
   data() {
     return {
       loading: false,
-      form: {
-        userEmail: "",
-        userPassword: "",
-      },
+      form: "",
+      userEmail: "",
+      userPassword: "",
+      submitStatus: null, // 로그인 기능 활성화 수준
     };
   },
-  // created() {
-  //   this.$store.commit('LOGOUT');
-  // },
+
   methods: {
     onLogin() {
-      this.$Axios
-        .post(`${this.$store.state.host}/v1/login`, this.form)
-        .then((res) => {
-          if (res.data.status == "fail") {
-            console.log(res.data.status);
-            alert("로그인 정보가 없습니다.");
-          } else {
-            this.$store.commit("LOGIN", res.data.data);
-            this.$router.push("/");
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      this.$v.$touch();
+      if (this.$v.$invalid) {
+        this.submitStatus = "ERROR";
+      } else {
+        this.submitStatus = "PENDING";
+        this.form = {
+          userEmail: this.userEmail,
+          userPassword: this.userPassword,
+        };
+        this.$Axios
+          .post(`${this.$store.state.host}/v1/login`, this.form)
+          .then((res) => {
+            if (res.data.status == "fail") {
+              console.log(res.data.status);
+              alert("로그인 정보가 없습니다.");
+            } else {
+              this.$store.commit("LOGIN", res.data.data);
+              this.$router.push("/");
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        setTimeout(() => {
+          this.submitStatus = "OK";
+        }, 500);
+      }
     },
+  },
+  created() {
+    if (this.userNickname != null) {
+      this.$router.push("/");
+    }
   },
 };
 </script>
