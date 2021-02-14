@@ -215,11 +215,13 @@ public class ChallengeService {
         }
     }
 
+    // TODO: 시작 날짜가 오늘 + 이전 날짜인 챌린지 전부 진행중으로 변경
+    // TODO: 단, 이미 종료되었거나 진행중인 챌린지는 해당사항 없음
     @Transactional
     public void startChallenges() {
         List<Challenge> challenges = findChallenges();
         for (Challenge challenge : challenges) {
-            if (challenge.getChallengeStartdate().toLocalDate().isEqual(LocalDateTime.now().toLocalDate())){
+            if (!challenge.getChallengeStartdate().toLocalDate().isAfter(LocalDateTime.now().toLocalDate()) && challenge.getChallengeOngoing().equals(ChallengeOngoing.READY)){
                 challenge.setChallengeOngoing(ChallengeOngoing.ONGOING);
             }
         }
