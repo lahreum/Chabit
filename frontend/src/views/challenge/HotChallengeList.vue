@@ -1,8 +1,5 @@
 <template>
-  <v-sheet
-    class="mx-auto"
-    max-width="1800"
-  >
+  <v-container>
     <v-carousel
       class="slide"
       hide-delimiters 
@@ -58,7 +55,7 @@
         </v-card>
       </v-carousel-item>
     </v-carousel>
-  </v-sheet>
+  </v-container>
 </template>
 
 <script>
