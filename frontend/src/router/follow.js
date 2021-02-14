@@ -2,7 +2,6 @@ import Follow from '../views/follow/Follow.vue'
 import FollowList from '../views/follow/FollowList.vue'
 import FollowSearchList from '../views/follow/FollowSearchList.vue'
 import FollowingList from '../views/follow/FollowingList.vue'
-import TogetherList from '../views/follow/TogetherList.vue'
 
 export default[
     {
@@ -11,7 +10,7 @@ export default[
         component: Follow,
         children: [
           {
-            path: 'follow-list',
+            path: '',
             name: 'FollowList',
             component: FollowList
           },
@@ -24,11 +23,6 @@ export default[
             path: 'following-list',
             name: 'FollowingList',
             component: FollowingList
-          },
-          {
-            path: '',
-            name: 'TogetherList',
-            component: TogetherList
           },
         ]
       }

@@ -28,7 +28,7 @@ export default {
   methods: {
     search: function() {
       if(this.searchItem !== ''){   // 무언가 입력되었을때
-        console.log(this.searchItem);
+        this.$store.commit('SEARCH',this.searchItem);
         this.clearInput();
       } else {    // 아무것도 입력 안되었을때
         this.showPopup = !this.showPopup;   // 팝업창출력

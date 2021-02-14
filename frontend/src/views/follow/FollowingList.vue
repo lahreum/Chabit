@@ -8,13 +8,12 @@
                             <span>팔로잉</span>
                         </div>
                     </v-subheader>
-                    <v-list-item v-for="user in users" :key="user.name">
+                    <v-list-item v-for="following in this.followings" :key="following.userEmail">
                         <v-list-item-avatar>
-                            <v-img :alt="`${user.name} avatar`" :src="user.avatar"></v-img>
+                            <v-img :alt="`${following.userImage} avatar`" :src="following.userImage"></v-img>
                         </v-list-item-avatar>
                         <v-list-item-content>
-                            <v-list-item-title  class="name black--text" v-text="user.name"></v-list-item-title>
-                            <v-list-item-title class="msg gray--text" v-text="user.msg"></v-list-item-title>
+                            <v-list-item-title  class="name black--text" v-text="following.userNickname"></v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
                 </v-list>
@@ -24,51 +23,35 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
     data: () => ({
-      users: [
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-          name: 'walkinglife',
-          msg: '맨날 걷는 사람'
-        },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
-          name: 'workaholic',
-          msg: '워커홀릭...'
-        },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-          name: 'ILoveChicken',
-          msg: '치킨 도살자'
-        },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
-          name: 'LoveEating',
-          msg: '예비 푸드파이터'
-        },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg',
-          name: 'goodFriend',
-          msg: '으리으리'
-        },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
-          name: 'goodFriend2',
-          msg: '의리빼면 시체'
-        },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-          name: 'saljjingae',
-          msg: '소통하면서 지내요 :)'
-        },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
-          name: 'ssafy4th',
-          msg: '싸피4기 친추해주세요 :)'
-        },
-      ],
+      followings: [],
     }),
+    created() {
+      this.getFollowingList();
+    },
+    methods: {
+      getFollowingList() {
+        this.$Axios
+          .get(`${this.$store.state.host}/v1/follow/` + this.email)
+          .then((res) => {
+              if(res.data.status === "success") {
+                  console.log("팔로잉 리스트 잘 넘어옴");
+                  this.followings = res.data.data.followings.followings;
+              } else {
+                console.log("팔로잉 리스트 받아오기 실패");
+              }
+          })
+          .catch((error)=> {
+              console.log(error);
+          })
+      }
+    },
+    computed: {
+    ...mapGetters({ email: 'getUserEmail'}),
+    },
 }
 </script>
 
