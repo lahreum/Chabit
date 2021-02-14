@@ -7,7 +7,7 @@
       color="grey lighten-5"
     >
       <v-card-text>
-        <div style="font-size: 1.3rem; font-weight: 600;">레고 만들기 챌린지</div>
+        <div style="font-size: 1.3rem; font-weight: 600;">{{item.challengeName}}</div>
       </v-card-text>
     </v-card>
     <p></p>
@@ -60,11 +60,11 @@
       <v-row>
         <v-col
           cols="4"
-          v-for="(item, idx) in items"
+          v-for="(reviewImage, idx) in reviewImages"
           :key="idx"
         >
           <v-img
-            :src="item.src"
+            src=""
             class="rounded-lg"
           ></v-img>
         </v-col>
@@ -89,23 +89,63 @@
 <script>
 export default {
   data: () => ({
+    item: {},
     textRules: [v => v.length <= 1000 || '1000자 이상 입력할 수 없습니다'],
     texts: '',
-    fileRules: [v => v.length <= 5 || '최대 5개의 파일을 올릴 수 있습니다'],
+    fileRules: [v => v.length <= 4 || '최대 4개의 파일을 올릴 수 있습니다'],
     files: '',
-    items: [
-      {
-        src: "https://image.freepik.com/free-photo/a-man-and-a-boy-assemble-from-a-constructor-of-a-robot-male-and-children-s-hands-collect-lego_96336-244.jpg"
-      }
-    ]
+    reviewImages: [],
   }),
   methods: {
     upload () {
-      console.log(this.files);
+      console.log(this.files)
+      alert("이미지가 업로드 되었습니다.")
+      this.reviewImages = this.files
+      // console.log(this.reviewImages)
     },
     onSubmit () {
-      console.log(this.texts)
+      if(this.texts === "") {
+        alert("리뷰 내용을 채워주세요.")
+      } else {
+        let fd = new FormData();
+        fd.append('challengeId', this.$store.state.writeReviewChallengeId)
+        fd.append('reviewContent', this.texts)
+        for (let i=0; i < this.reviewImages.length; i++) {
+          fd.append('reviewImages', this.reviewImages[i], "[PROXY]")
+        }
+        fd.append('userEmail', this.$store.state.user.userEmail)
+        console.log(fd)
+        this.$Axios.post(`${this.$store.state.host}/v1/review`, 
+          fd, {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+          }
+        )
+        .then(res => {
+          console.log(res.data)
+          alert("리뷰가 성공적으로 저장되었습니다.")
+          this.$store.commit("MOVETOREVIEWDETAIL", res.data.data.reviewId)
+          this.$router.push('/review-detail')
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      }
     }
+  },
+  created() {
+    const challengeId = this.$store.state.writeReviewChallengeId
+    // console.log(challengeId)
+    // console.log(this.$store.state.user)
+    this.$Axios.get(`${this.$store.state.host}/v1/challenges/${challengeId}?userEmail=${this.$store.state.user.userEmail}`)
+      .then(res => {
+        console.log(res.data)
+        this.item = res.data.data
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 }
 </script>

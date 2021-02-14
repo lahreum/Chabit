@@ -11,9 +11,10 @@
         >
           <v-card
             max-width="12rem"
+            @click="moveToChallengeDetail(item)"
           >
             <v-img
-              :src="item.src"
+              :src="item.challengeThumbnail"
               height="8rem"
             >
 
@@ -23,7 +24,7 @@
           <v-row
             align="center"
             class="mx-0"
-            v-if="item.official"
+            v-if="item.challengeOwner.userRole === 'ADMIN'"
           >
             <div style="color: #B71C1C; font-size: 0.8rem; font-weight: 600;" >
               <i class="fas fa-gem"></i>
@@ -33,7 +34,7 @@
             </div>
           </v-row>
           <div class="new-challenge-info">
-            <span>{{item.title}}</span>
+            <span>{{item.challengeName}}</span>
           </div>
         </v-col>
       </v-row>
@@ -52,36 +53,33 @@
 
 <script>
 export default {
+  props: ['searchWord'],
   data() {
     return {
-      items: [
-        {
-          src: 'https://i.ytimg.com/vi/i0kiRwCOdI0/maxresdefault.jpg',
-          title: '오전 5시 기상 챌린지',
-          official: false,
-          category: '취미',
-          proof: 5,
-          word: ''
-        },
-        {
-          src: 'https://wonderfulmind.co.kr/wp-content/uploads/2017/03/%EA%B5%BF%EB%AA%A8%EB%8B%9D.jpg',
-          title: '오전 6시 기상 챌린지',
-          official: true,
-          category: '다이어트',
-          proof: 5,
-          word: ''
-        },
-        {
-          src: 'https://t2.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/Jp6/image/IwYzW72Uo74eQO38aVTWktWY8Gc.jpg',
-          title: '오전 7시 기상 챌린지',
-          official: true,
-          category: '취미',
-          proof: 5,
-          word: ''
-        },
-      ],
+      items: [],
     }
   },
+  created() {
+    this.$Axios.get(`${this.$store.state.host}/v1/challenges`)
+      .then(res => {
+        // console.log(res.data.data)
+        // console.log(this.searchWord)
+        const challenges = res.data.data
+        for (let i = 0; i < challenges.length; i++) {
+          // console.log(challenges[i])
+          if(challenges[i].challengeName.includes(this.searchWord)) {
+            this.items.push(challenges[i])
+          }
+        // console.log(this.items)
+        }
+      })
+  },
+  methods: {
+    moveToChallengeDetail(item) {
+      this.$store.commit("SELECTEDCHALLENGE", item.challengeID);
+      this.$router.push("/challenge-detail");
+    }
+  }
 }
 </script>
 

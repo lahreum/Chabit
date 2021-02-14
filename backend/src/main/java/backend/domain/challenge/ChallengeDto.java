@@ -96,4 +96,8 @@ public class ChallengeDto {
         this.challengeJoinStatus = challengeJoinStatus;
         this.reviewStatus = reviewStatus;
     }
+
+    public void addChallengeStatus(String challengeJoinStatus) {
+        this.challengeJoinStatus = challengeJoinStatus;
+    }
 }

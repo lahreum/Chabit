@@ -73,6 +73,13 @@ public class UserService {
     }
 
     /**
+     * 유저아이디로 조회
+     */
+    public Optional<User> findUserByUserId(Long userId) {
+        return userRepository.findByUserId(userId);
+    }
+
+    /**
      * 회원 1명 조회
      */
     public User findUser(String userEmail) {

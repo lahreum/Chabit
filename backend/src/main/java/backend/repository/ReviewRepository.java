@@ -48,4 +48,11 @@ public class ReviewRepository {
     public void deleteReview(Review review) {
         entityManager.remove(review);
     }
+
+    public List<Review> findAllOrderByCoolCount() {
+        List<Review> resultList = entityManager.createQuery("select r from Review r order by r.coolCount desc", Review.class)
+                .setMaxResults(4)
+                .getResultList();
+        return resultList;
+    }
 }

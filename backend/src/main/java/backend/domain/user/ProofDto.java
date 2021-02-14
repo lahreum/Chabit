@@ -15,6 +15,8 @@ public class ProofDto {
     private Long proofId;
     @ApiModelProperty(value = "인증한 유저")
     private String userEmail;
+    @ApiModelProperty(value = "인증한 유저 닉네임")
+    private String userNickname;
     @ApiModelProperty(value = "인증한 챌린지")
     private Long challengeId;
     @ApiModelProperty(value = "인증 날짜")
@@ -25,6 +27,7 @@ public class ProofDto {
     public ProofDto(Proof proof) {
         this.proofId = proof.getProofId();
         this.userEmail = proof.getUser().getUserEmail();
+        this.userNickname = proof.getUser().getUserNickname();
         this.challengeId = proof.getChallenge().getChallengeId();
         this.proofDate = proof.getProofDate();
         this.proofImage = proof.getProofImage();

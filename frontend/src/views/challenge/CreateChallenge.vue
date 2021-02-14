@@ -235,6 +235,7 @@
           <v-card-text>
             <p style="font-size: 1rem; font-weight: 600;">인증 방식</p>
             <v-textarea
+              placeholder="예) 영단어 5개를 메모한 노트와 오늘의 손동작을 함께 찍은 사진을 올려주세요."
               flat
               solo
               height="100"
@@ -297,7 +298,7 @@
               :picker-options="{
                 start: '00:00',
                 step: '00:10',
-                end: '24:00'
+                end: '23:59'
               }">
             </el-time-select>
             ~
@@ -308,7 +309,7 @@
               :picker-options="{
                 start: '00:00',
                 step: '00:10',
-                end: '24:00',
+                end: '23:59',
                 minTime: startTime
               }">
             </el-time-select>
@@ -591,7 +592,7 @@
         await this.$Axios.post(`${this.$store.state.host}/v1/hashtag?hashtagName=${categoryName}`
         ).then(res => {
           console.log(res.data)
-          this.selected.hashtags.append(res.data.data)
+          this.selected.hashtags.push(res.data.data)
           console.log(this.selected.hashtags)
         }).catch(function () {
           console.log('전송 실패')
@@ -602,7 +603,7 @@
         await this.$Axios.post(`${this.$store.state.host}/v1/hashtag?hashtagName=${proofFrequency}`
         ).then(res => {
           console.log(res.data)
-          this.selected.hashtags.append(res.data.data)
+          this.selected.hashtags.push(res.data.data)
           console.log(this.selected.hashtags)
         }).catch(function () {
           console.log('전송 실패')
@@ -614,7 +615,7 @@
         ).then(res => {
           console.log(res.data)
           alert("챌린지 생성이 완료되었습니다.")
-          // this.$router.push("/feed");
+          this.$router.push("/challenge");
         }).catch(function () {
           console.log('전송 실패')
         })

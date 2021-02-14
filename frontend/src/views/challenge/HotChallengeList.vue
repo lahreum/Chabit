@@ -15,21 +15,21 @@
           class="ma-2 rounded-lg"
           height="390"
           width="370"
-          @click="toggle"
+          @click="toggle, moveToChallengeDetail(item)"
         >
           <v-img
             class="rounded-lg"
             height="250"
-            :src="item.src"
+            :src="item.challengeThumbnail"
           ></v-img>
 
-          <v-card-title style="color: black; font-weight: 600;">{{item.title}}</v-card-title>
+          <v-card-title style="color: black; font-weight: 600;">{{item.challengeName}}</v-card-title>
 
           <v-card-text>
             <v-row
               align="center"
               class="mx-0"
-              v-if="item.official"
+              v-if="item.challengeOwner.userRole === 'ADMIN'"
             >
               <div style="color: #B71C1C; font-size: 1.1rem; font-weight: 600;" >
                 <i class="fas fa-gem"></i>
@@ -40,8 +40,8 @@
             </v-row>
             <p></p>
             <div class="hash-tag-bundle">
-              <hash-tag :content="item.category"/>
-              <hash-tag :content="item.word"/>
+              <hash-tag :content="item.hashtags.hashtags[0].hashtagName"/>
+              <hash-tag :content="item.hashtags.hashtags[1].hashtagName"/>
             </div>
           </v-card-text>
         </v-card>
@@ -56,45 +56,22 @@ export default {
   components: { HashTag },
   data () {
     return {
-      items: [
-        {
-          src: 'https://img.huffingtonpost.com/asset/5acacc721f00002d0016ca31.jpeg?cache=0lOXly1x2s&ops=1778_1000',
-          title: '하루 5분 플랭크 챌린지',
-          official: true,
-          category: '운동',
-          proof: 5,
-          word: ''
-        },
-        {
-          src: 'https://www.wallpapertip.com/wmimgs/41-412909_github-octocat.jpg',
-          title: '1일 1커밋 챌린지',
-          official: true,
-          category: '공부',
-          proof: 7,
-          word: ''
-        },
-        {
-          src: 'http://img.insight.co.kr/static/2016/01/25/700/fguurh33in34jq0x698a.jpg',
-          title: '아침 6시 기상하기 챌린지',
-          official: true,
-          category: '생활습관',
-          proof: 5,
-          word: ''
-        },
-        {
-          src: 'https://t1.daumcdn.net/cfile/tistory/990290335A0A2B2B0B',
-          title: '매일 화분에 물주기 챌린지',
-          official: false,
-          category: '돌봄',
-          proof: 7,
-          word: ''
-        },
-      ],
+      items: [],
     }
   },
-  mounted() {
-    for (let i=0; i < this.items.length; i++) {
-      this.items[i].word = "주 " + this.items[i].proof + "회 인증"
+  created() {
+    this.$Axios.get(`${this.$store.state.host}/v1/challenges/hot`)
+      .then(res => {
+        console.log(res.data)
+        this.items = res.data.data
+      }).catch(err => {
+        console.log(err)
+      })
+  },
+  methods: {
+    moveToChallengeDetail(item) {
+      this.$store.commit("SELECTEDCHALLENGE", item.challengeID);
+      this.$router.push("/challenge-detail");
     }
   }
 }

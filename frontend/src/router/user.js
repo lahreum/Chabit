@@ -8,15 +8,15 @@ import ChangePw from '../views/user/ChangePw.vue'
 import Instruction from '../views/user/Instruction.vue'
 
 export default [
-    {
-    path: '/login',
-    name: 'Login',
-    component: Login
+  {
+    path: "/login",
+    name: "Login",
+    component: Login,
   },
   {
-    path: '/join',
-    name: 'Join',
-    component: Join
+    path: "/join",
+    name: "Join",
+    component: Join,
   },
   {
     path: '/instruction',
@@ -29,25 +29,27 @@ export default [
     component: Find,
     children: [
       {
-        path: 'find-pw',
-        name: 'FindPw',
-        component: FindPw
+        path: "find-pw",
+        name: "FindPw",
+        component: FindPw,
       },
       {
-        path: 'find-email',
-        name: 'FindEmail',
-        component: FindEmail
+        path: "find-email",
+        name: "FindEmail",
+        component: FindEmail,
       },
-    ]
-    },
-    {
-      path: '/change-pw',
-      name: 'ChangePw',
-      component: ChangePw
-    },
-    {
-      path: '/find-email-finish',
-      name: 'FindEmailFinish',
-      component: FindEmailFinish
-    },
-]
+    ],
+  },
+  {
+    path: "/change-pw",
+    name: "ChangePw",
+    component: ChangePw,
+    props: true,
+  },
+  {
+    path: "/find-email-finish",
+    name: "FindEmailFinish",
+    component: FindEmailFinish,
+    props: true,
+  },
+];
