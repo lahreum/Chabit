@@ -1,16 +1,15 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-import createPersistedState from 'vuex-persistedstate';
+import Vue from "vue";
+import Vuex from "vuex";
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   // modules,
-  plugins: [
-    createPersistedState(),
-  ],
-  state: {        // data
-    host: 'http://i4b207.p.ssafy.io/api',
+  plugins: [createPersistedState()],
+  state: {
+    // data
+    host: "https://i4b207.p.ssafy.io/api",
     /*로그인한 회원의 정보*/
     user: {},
     currentChallengeDetailId: 0,
@@ -20,7 +19,8 @@ export const store = new Vuex.Store({
     reviewDetailId: 0,
     typeOfChallenge: "",
   },
-  getters: {    // computed
+  getters: {
+    // computed
     getUserEmail(state) {
       return state.user.userEmail;
     },
@@ -57,15 +57,19 @@ export const store = new Vuex.Store({
     getUserImage(state) {
       return state.user.userImage;
     },
+    getUserPassword(state) {
+      return state.user.userPassword;
+    },
   },
-  mutations: {    // methods
+  mutations: {
+    // methods
     LOGIN(state, payload) {
       state.user = payload;
     },
     LOGOUT(state) {
       if (state.user) {
         state.user = {};
-        alert('로그아웃되었습니다.');
+        alert("로그아웃되었습니다.");
       }
     },
     SELECTEDCHALLENGE(state, id) {
@@ -84,8 +88,7 @@ export const store = new Vuex.Store({
       state.reviewDetailId = id;
     },
     MOVETOPERSONALCHALLENGE(state, type) {
-      state.typeOfChallenge = type
-    }
+      state.typeOfChallenge = type;
+    },
   },
-  
 });
