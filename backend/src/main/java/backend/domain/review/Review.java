@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +50,7 @@ public class Review {
          review.reviewContent = reviewContent;
          review.challengeId = challengeId;
          review.userId = userId;
-         review.reviewDate = LocalDateTime.now();
+         review.reviewDate = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
          return review;
      }
 

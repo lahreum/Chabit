@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -54,7 +55,7 @@ public class ReviewController {
             List<String> urls = new ArrayList<>();
 
             for (MultipartFile file : request.getReviewImages()) {
-                String unique = "reviewImage_" + user.getUserId() + "_" + challenge.getChallengeId() + "_" + LocalDateTime.now() + "_";
+                String unique = "reviewImage_" + user.getUserId() + "_" + challenge.getChallengeId() + "_" + LocalDateTime.now(ZoneId.of("Asia/Seoul")) + "_";
                 String reviews = uploader.upload(file, "reviews", unique);
 
                 urls.add(reviews);

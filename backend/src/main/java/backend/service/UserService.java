@@ -239,12 +239,12 @@ public class UserService {
                                     .filter(h -> !monthlyRanking || h.getPointDate().getMonth().equals(LocalDate.now().getMonth()))
                                     .filter(h -> h.getChallenge().getChallengeCategory().equals(category))
                                     .mapToInt(PointHistory::getPointChange)
-                                    .sum() + u1.getUserPoints(),
+                                    .sum(),
                             u2.getPointHistories().stream()
                                     .filter(h -> !monthlyRanking || h.getPointDate().getMonth().equals(LocalDate.now().getMonth()))
                                     .filter(h -> h.getChallenge().getChallengeCategory().equals(category))
                                     .mapToInt(PointHistory::getPointChange)
-                                    .sum() + u2.getUserPoints());
+                                    .sum());
 
             result = userList.stream()
                     .filter(u ->
