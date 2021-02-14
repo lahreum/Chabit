@@ -100,8 +100,8 @@ public class ChallengeService {
         List<Challenge> challenges = findChallenges();
         Map<Long, User> winners = new HashMap<>(); // 성공한 사람들
         for (Challenge challenge : challenges) {
-            // 챌린지 중 종료 날짜가 오늘인 챌린지들만
-            if (challenge.getChallengeEnddate().toLocalDate().isEqual(LocalDateTime.now().toLocalDate())) {
+            // 챌린지 중 종료 날짜가 어제인 챌린지들만
+            if (challenge.getChallengeEnddate().toLocalDate().isEqual(LocalDateTime.now().toLocalDate().minusDays(1))) {
                 challenge.setChallengeOngoing(ChallengeOngoing.END);
 
                 // 챌린지 참여 유저들 인증 내역 체크

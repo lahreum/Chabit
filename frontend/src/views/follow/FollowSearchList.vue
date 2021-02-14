@@ -2,7 +2,6 @@
     <v-container>
         <v-layout>
             <v-flex class="section">
-                <v-card class="mx-auto rounded-xl" max-width="100%" elevation="3"> 
                 <v-list subheader>
                     <v-subheader>
                         <div class="text-darken-1 mb-2 font-weight-black black--text" id="title">
@@ -19,7 +18,6 @@
                         </v-list-item-content>
                     </v-list-item>
                 </v-list>
-                </v-card>
             </v-flex>
         </v-layout>
     </v-container>

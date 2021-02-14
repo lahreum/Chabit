@@ -14,6 +14,7 @@
           width="30%"
           height="60px"
           class="proof-btn"
+          @click="toHome"
         >
           <span>홈으로</span> 
         </v-btn>
@@ -24,6 +25,7 @@
           width="30%"
           height="60px"
           class="proof-btn"
+          @click="toProofList"
         >
           <span>인증목록</span>
         </v-btn>
@@ -35,7 +37,14 @@
 
 <script>
 export default {
-
+  methods: {
+    toHome() {
+      this.$router.push('/')
+    },
+    toProofList() {
+      this.$router.push('/proof-list')
+    }
+  }
 }
 </script>
 

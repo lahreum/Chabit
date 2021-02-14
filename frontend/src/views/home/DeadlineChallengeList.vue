@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <div class="deadline-challenge">
-      <span class="hot">마감임박</span><span>챌린지</span>
+      <span class="hot">시작 임박</span><span>챌린지</span>
     </div>
     <v-carousel 
       hide-delimiters 
@@ -18,7 +18,7 @@
           class="mx-auto my-12 rounded-xl"
           max-width="380"
           :loading="loading"
-          @click="reverse"
+          @click="reverse, moveToChallengeDetail(item)"
           style="background-color: white;"
         >
           <template slot="progress">
@@ -31,16 +31,16 @@
 
           <v-img
             height="250"
-            :src="item.src"
+            :src="item.challengeThumbnail"
           ></v-img>
 
-          <v-card-title style="color: black; font-weight: 600;">{{item.title}}</v-card-title>
+          <v-card-title style="color: black; font-weight: 600;">{{item.challengeName}}</v-card-title>
 
           <v-card-text>
             <v-row
               align="center"
               class="mx-0"
-              v-if="item.official"
+              v-if="item.challengeOwner.userRole === 'ADMIN'"
             >
               <div style="color: #B71C1C; font-size: 1.1rem; font-weight: 600;" >
                 <i class="fas fa-gem"></i>
@@ -51,8 +51,8 @@
             </v-row>
             <p></p>
             <div class="hash-tag-bundle">
-              <hash-tag :content="item.category"/>
-              <hash-tag :content="item.word"/>
+              <hash-tag :content="item.hashtags.hashtags[0].hashtagName"/>
+              <hash-tag :content="item.hashtags.hashtags[1].hashtagName"/>
             </div>
           </v-card-text>
         </v-card>
@@ -67,40 +67,7 @@ export default {
   components: { HashTag },
   data () {
     return {
-      items: [
-        {
-          src: 'https://image.lawtimes.co.kr/images/82883.jpg',
-          title: '디즈니 영화감상 후기 작성하기 챌린지',
-          official: true,
-          category: '취미',
-          proof: 1,
-          word: ''
-        },
-        {
-          src: 'https://www.ekoreanews.co.kr/news/photo/202008/45510_55959_5344.jpg',
-          title: '1일 1백준 알고리즘 문제 풀기 챌린지',
-          official: true,
-          category: '공부',
-          proof: 5,
-          word: ''
-        },
-        {
-          src: 'https://blog.kakaocdn.net/dn/8VBma/btqFujrPEQO/qUMZoIrWbXHy4vF8sPSZK1/img.jpg',
-          title: '봉골레 파스타 만들기 챌린지',
-          official: true,
-          category: '취미',
-          proof: 1,
-          word: ''
-        },
-        {
-          src: 'https://wonderfulmind.co.kr/wp-content/uploads/2018/05/knitting.jpg',
-          title: '뜨개질해서 목도리 만들기 챌린지',
-          official: false,
-          category: '취미',
-          proof: 2,
-          word: ''
-        },
-      ],
+      items: [],
       loading: false,
     }
   },
@@ -109,13 +76,43 @@ export default {
       this.loading = true
 
       setTimeout(() => (this.loading = false), 2000)
+    },
+    moveToChallengeDetail(item) {
+      this.$store.commit("SELECTEDCHALLENGE", item.challengeID);
+      this.$router.push("/challenge-detail");
     }
   },
-  mounted() {
-    for (let i=0; i < this.items.length; i++) {
-      this.items[i].word = "주 " + this.items[i].proof + "회 인증"
-    }
-  }
+  created() {
+    this.$Axios.get(`${this.$store.state.host}/v1/challenges/hot`)
+      .then(res => {
+        console.log(res.data.data)
+        // this.items = res.data.data
+        const challenges = res.data.data
+        const currentDay = new Date()
+        console.log(currentDay)
+        let dates = ""
+        let year = ""
+        let month = ""
+        let day = ""
+        let date = ""
+        for (let i=0; i < challenges.length; i++) {
+          dates = String(challenges[i].challengeStartDate.substr(0,10));
+          year = parseInt(dates.slice(0,4));
+          month = parseInt(dates.slice(5,7));
+          day = parseInt(dates.slice(8,10));
+          date = new Date(year, month-1, day);
+          console.log(date)
+          const elapsedMSec = date.getTime() - currentDay.getTime();
+          const elapsedDay = elapsedMSec / (1000 * 60 * 60 * 24);
+          if (elapsedDay <= 3 && elapsedDay >= 1) {
+            this.items.push(challenges[i])
+          }
+        }
+        console.log(this.items)
+      }).catch(err => {
+        console.log(err)
+      })
+  },
 }
 </script>
 

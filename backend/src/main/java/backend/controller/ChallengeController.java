@@ -4,10 +4,7 @@ import backend.domain.challenge.*;
 import backend.domain.hashtag.Hashtag;
 import backend.domain.hashtag.HashtagDto;
 import backend.domain.review.Review;
-import backend.domain.user.Proof;
-import backend.domain.user.ProofDto;
-import backend.domain.user.User;
-import backend.domain.user.UserChallenge;
+import backend.domain.user.*;
 import backend.exception.NotEnoughPointException;
 import backend.service.*;
 import backend.utils.Uploader;
@@ -20,10 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Api
@@ -94,6 +88,26 @@ public class ChallengeController {
         } catch (IllegalStateException | IOException | IllegalArgumentException e) {
             response = new BaseResponse("fail", e.getMessage());
         }
+        return response;
+    }
+
+    @GetMapping("/todayProof")
+    @ApiOperation(value = "오늘의 손모양 ", notes = "오늘의 손모양 사진 조회")
+    public BaseResponse getTodayProof() {
+        BaseResponse response = null;
+        try {
+            List<ProofExample> todayProofList = proofService.getTodayProofList();
+
+            Random rand = new Random();
+            rand.setSeed(LocalDate.now().toEpochDay());
+
+            ProofExample todayProof = todayProofList.get(rand.nextInt(todayProofList.size()));
+
+            response = new BaseResponse("success", todayProof);
+        } catch (IllegalStateException e) {
+            response = new BaseResponse("fail", e.getMessage());
+        }
+
         return response;
     }
 
@@ -243,8 +257,6 @@ public class ChallengeController {
 
 
     // 특정 챌린지 1개 가져오기
-    // TODO: 챌린지 참여 안함 / 참여 중 / 성공 / 실패
-    // TODO : 리뷰작성 완료 / 예정
     @GetMapping("/{challengeId}")
     @ApiOperation(value="챌린지 상세 정보 조회", notes="특정 챌린지 1개 조회")
     public BaseResponse getChallenge(@PathVariable Long challengeId, @RequestParam(required = false, defaultValue = "") String userEmail) {

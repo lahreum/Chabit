@@ -1,6 +1,7 @@
 package backend.repository;
 
 import backend.domain.user.Proof;
+import backend.domain.user.ProofExample;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -30,6 +31,13 @@ public class JPAProofRepository implements ProofRepository {
     @Override
     public void deleteOne(Proof proof) {
         entityManager.remove(proof);
+    }
+
+    @Override
+    public List<ProofExample> findAllProofExample() {
+        List<ProofExample> proofExampleList = entityManager.createQuery("select pe from ProofExample pe", ProofExample.class)
+                .getResultList();
+        return proofExampleList;
     }
 
 }

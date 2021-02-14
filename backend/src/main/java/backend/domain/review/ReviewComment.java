@@ -6,14 +6,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter @Setter
 @NoArgsConstructor
 public class ReviewComment {
 
-    @Id
-    @GeneratedValue
+    @Id @GeneratedValue
+    @Column(name = "review_comment_id")
     private Long reviewCommentId;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -27,17 +28,31 @@ public class ReviewComment {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String commentContent;
 
-    //Todo : 대댓글 작성 컬럼 추가 예정.
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "review_comment_id", referencedColumnName = "parent_comment_id")
-//    private ReviewComment parentCommentId;
-//
-//    @OneToMany(mappedBy = "parentCommentId")
-//    private List<ReviewComment> childrenComment;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_comment_id")
+    private ReviewComment parentCommentId;
 
-    @Column(columnDefinition = "INT DEFAULT NULL")
-    private int commentOrder;
+    @OneToMany(mappedBy = "parentCommentId", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ReviewComment> childrenComment;
 
+    @Column(columnDefinition = "INT DEFAULT 0")
+    private int commentOrder = 0;
+
+    // 연관관계
+    public void addReply(ReviewComment reply) {
+        this.childrenComment.add(reply);
+        reply.setParentCommentId(this);
+    }
+
+    public static ReviewComment createCommentReply(Review reviewId, User user, ReviewComment parent, String commentContent) {
+        ReviewComment reply = new ReviewComment();
+        reply.setReviewId(reviewId);
+        reply.setUserId(user);
+        reply.setCommentContent(commentContent);
+        reply.setParentCommentId(parent);
+
+        return reply;
+    }
 }
 
 /**

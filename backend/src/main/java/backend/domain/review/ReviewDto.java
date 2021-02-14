@@ -15,8 +15,12 @@ public class ReviewDto {
     private String reviewContent;
     private LocalDateTime reviewDate;
     private int coolCount;
+    private boolean pressCool;
     private int commentCount;
     private Long userId;
+    private String userNickname;
+    private String userImage;
+    private String userLevelImage;
     private Long challengeId;
     private List<String> reviewImages = new ArrayList<>();
 
@@ -27,10 +31,21 @@ public class ReviewDto {
         this.coolCount = review.getCoolCount();
         this.commentCount = review.getCommentCount();
         this.userId = review.getUserId().getUserId();
+        this.userNickname = review.getUserId().getUserNickname();
+        this.userImage = review.getUserId().getUserImage();
         this.challengeId = review.getChallengeId().getChallengeId();
     }
 
     public void addReviewImage(ReviewImage reviewImage){
         this.reviewImages.add(reviewImage.getReviewImage());
     }
+
+    public void setPressCool(boolean pressCool) {
+        this.pressCool = pressCool;
+    }
+
+    public void setReviewId(Long reviewId) {
+        this.reviewId = reviewId;
+    }
+
 }
