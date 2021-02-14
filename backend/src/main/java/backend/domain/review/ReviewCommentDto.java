@@ -14,12 +14,17 @@ public class ReviewCommentDto {
     Long reviewCommentId;
     Long userId;
     Long reviewId;
+    String userImage;
+    String userNickname;
+    String userLevelImage;
     String commentContent;
     List<ReviewCommentDto> replies = new ArrayList<>();
 
     public ReviewCommentDto(ReviewComment reviewComment){
         this.reviewId = reviewComment.getReviewId().getReviewId();
         this.userId = reviewComment.getUserId().getUserId();
+        this.userImage = reviewComment.getUserId().getUserImage();
+        this.userNickname = reviewComment.getUserId().getUserNickname();
         this.reviewCommentId = reviewComment.getReviewCommentId();
         this.commentContent = reviewComment.getCommentContent();
     }
