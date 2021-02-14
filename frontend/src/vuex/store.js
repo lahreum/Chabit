@@ -10,7 +10,7 @@ export const store = new Vuex.Store({
     createPersistedState(),
   ],
   state: {        // data
-    host: 'http://i4b207.p.ssafy.io/api',
+    host: 'https://i4b207.p.ssafy.io/api',
     /*로그인한 회원의 정보*/
     user: {},
     currentChallengeDetailId: 0,
