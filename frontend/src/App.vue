@@ -29,10 +29,10 @@
                     로그인하기
                   </v-list-item-title>
                   <v-list-item-subtitle v-if="checkLogin()" color="white">
-                    {{ level }}
+                    {{ userLevel.level }}
                   </v-list-item-subtitle>
                   <v-list-item-subtitle v-if="checkLogin()">
-                    {{ userPoints }}/{{ levelMaxPoint }}p
+                    {{ userPoints }}/{{ userLevel.levelMaxPoint }}p
                   </v-list-item-subtitle>
                 </div>
               </v-list-item-content>
@@ -102,11 +102,10 @@ export default {
   props: ["pageTitle"],
   computed: {
     ...mapGetters({ userEmail: "getUserEmail" }),
-    ...mapGetters({ level: "getUserLevel" }),
+    ...mapGetters({ userLevel: "getUserLevel" }),
     ...mapGetters({ userNickname: "getUserNickname" }),
     ...mapGetters({ userImage: "getUserImage" }),
     ...mapGetters({ userPoints: "getUserPoints" }),
-    ...mapGetters({ levelMaxPoint: "getUserMaxPoint" }),
   },
   watch: {
     group() {

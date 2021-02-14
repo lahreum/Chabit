@@ -81,6 +81,7 @@ export default {
       ckrqNum: false, // 인증번호 입력 후 확인버튼 클릭 여부
       submitStatus: null, // 다음버튼 기능 활성화 수준
       certNum: "", // 인증번호 요청 후 sms를 통해 수령한 인증번호
+      rqNumberHasClicked: false, // 연락처 인증버튼을 눌렀을 때 타이머 띄워주기 위한 확인
       timerOut: false, // 3분 타이머가 아웃되었는지 확인
       callReset: false, // 3분 타이머가 만료되었을 경우 다시 초기화
       // 비밀번호 변경 시 넘겨 줄 데이터
@@ -157,6 +158,7 @@ export default {
               alert("인증번호가 전송되었습니다.");
               this.timer(180);
               this.rqNumber = true;
+              this.rqNumberHasClicked = true;
               this.timerOut = false;
               this.certNum = res.data.data.certificateNum;
               document.getElementById("btnCkPN").disabled = true;
@@ -185,6 +187,7 @@ export default {
           if (this.certificationNumber == this.certNum) {
             alert("인증번호가 일치합니다.");
             this.ckrqNum = true;
+            this.rqNumberHasClicked = false;
             document.getElementById("btnCkCN").disabled = true;
           } else {
             alert("인증번호가 일치하지 않습니다. 다시 입력해주세요");
