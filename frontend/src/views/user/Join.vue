@@ -383,7 +383,7 @@ export default {
             if (res.data.data.joinResult == "success") {
               clearInterval(countdown);
               alert("가입이 완료되었습니다.");
-              this.$router.push("/login");
+              this.$router.push("/instruction");
             } else {
               console.log(res);
               alert("가입을 할 수 없습니다.");
