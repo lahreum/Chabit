@@ -74,6 +74,32 @@ public class UserController {
         return response;
     }
 
+    @ApiOperation(value="유저 닉네임 검색", notes="유저 검색용. 일부만 포함되도 찾도록 설정")
+    @ApiImplicitParam(name = "nickname", value = "사용자 닉네임", required = true)
+    @GetMapping("/search/{nickname}")
+    public BaseResponse searchByNickname(@PathVariable String nickname){
+        BaseResponse response = null;
+        try {
+            List<User> findUsers = userService.findUserContainNickname(nickname);
+            List<UserDto> result = new ArrayList<>();
+
+            for (User user : findUsers) {
+                UserDto userDto = new UserDto(user);
+
+                String userLevel = levelService.findUserLevel(userDto.getUserPoints());
+                Optional<Level> level = levelService.findOne(userLevel);
+                level.ifPresent(l -> userDto.addUserLevel(new LevelDto(l)));
+
+                result.add(userDto);
+            }
+
+            response = new BaseResponse("success", result);
+        } catch (IllegalStateException e) {
+            response = new BaseResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
     @ApiOperation(value="사용자 한명 조회", notes="사용자 한명 조회")
     @ApiImplicitParam(name = "userEmail", value = "사용자 이메일", required = true)
     @GetMapping("/{userEmail}")

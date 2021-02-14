@@ -315,4 +315,8 @@ public class UserService {
             user.addSuccessCount(new UserCategory(user, c, 0));
         }
     }
+
+    public List<User> findUserContainNickname(String nickname) {
+        return userRepository.findUserContainNickname(nickname);
+    }
 }
