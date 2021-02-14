@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.time.ZoneId;
 import java.util.*;
 
 @Service
@@ -88,7 +89,7 @@ public class ChallengeService {
         }
         // 포인트 감소
         user.changePoint(-challenge.getChallengePoint());
-        user.addHistory(new PointHistory(user, challenge, LocalDateTime.now(), -challenge.getChallengePoint()));
+        user.addHistory(new PointHistory(user, challenge, LocalDateTime.now(ZoneId.of("Asia/Seoul")), -challenge.getChallengePoint()));
 
         // 없는 유저면 추가
         challenge.join(new UserChallenge(user, challenge));
@@ -101,7 +102,7 @@ public class ChallengeService {
         Map<Long, User> winners = new HashMap<>(); // 성공한 사람들
         for (Challenge challenge : challenges) {
             // 챌린지 중 종료 날짜가 어제인 챌린지들만
-            if (challenge.getChallengeEnddate().toLocalDate().isEqual(LocalDateTime.now().toLocalDate().minusDays(1))) {
+            if (challenge.getChallengeEnddate().toLocalDate().isEqual(LocalDateTime.now(ZoneId.of("Asia/Seoul")).toLocalDate().minusDays(1))) {
                 challenge.setChallengeOngoing(ChallengeOngoing.END);
 
                 // 챌린지 참여 유저들 인증 내역 체크
@@ -132,7 +133,7 @@ public class ChallengeService {
                     int point = (int) (challenge.getChallengePoint() * peopleIncentive * proofIncentive);
                     if(point != 0) {
                         user.changePoint(point);
-                        user.addHistory(new PointHistory(user, challenge, LocalDateTime.now(), point));
+                        user.addHistory(new PointHistory(user, challenge, LocalDateTime.now(ZoneId.of("Asia/Seoul")), point));
                     }
                     
                     // 성공시 카테고리별 성공 횟수 증가후 뱃지 조건 체크
@@ -219,7 +220,7 @@ public class ChallengeService {
     public void startChallenges() {
         List<Challenge> challenges = findChallenges();
         for (Challenge challenge : challenges) {
-            if (!challenge.getChallengeStartdate().toLocalDate().isAfter(LocalDateTime.now().toLocalDate()) && challenge.getChallengeOngoing().equals(ChallengeOngoing.READY)){
+            if (!challenge.getChallengeStartdate().toLocalDate().isAfter(LocalDateTime.now(ZoneId.of("Asia/Seoul")).toLocalDate()) && challenge.getChallengeOngoing().equals(ChallengeOngoing.READY)){
                 challenge.setChallengeOngoing(ChallengeOngoing.ONGOING);
             }
         }

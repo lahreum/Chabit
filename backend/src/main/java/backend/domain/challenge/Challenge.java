@@ -11,6 +11,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -114,7 +115,7 @@ public class Challenge { // Challenge 코드리뷰 필수.
                 DateTimeFormatter.ofPattern("HH:mm")));
         challenge.setAuthHoliday(request.isAuthHoliday() ? 1 : 0);
 
-        if(challenge.challengeStartdate.toLocalDate().isEqual(LocalDateTime.now().toLocalDate())){
+        if(challenge.challengeStartdate.toLocalDate().isEqual(LocalDateTime.now(ZoneId.of("Asia/Seoul")).toLocalDate())){
             challenge.setChallengeOngoing(ChallengeOngoing.ONGOING);
         } else {
             challenge.setChallengeOngoing(ChallengeOngoing.READY);

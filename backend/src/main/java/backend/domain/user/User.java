@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,7 +73,7 @@ public class User {
         user.setUserPhone(request.getUserPhone());
         user.setUserRole(UserRole.USER);
         user.setUserPoints(1000);
-        user.setUserJoindate(LocalDateTime.now());
+        user.setUserJoindate(LocalDateTime.now(ZoneId.of("Asia/Seoul")));
         user.setUserImage("https://ssafychabit.s3.ap-northeast-2.amazonaws.com/users/avatardefault_92824.png"); // 기본 프사
 
         return user;

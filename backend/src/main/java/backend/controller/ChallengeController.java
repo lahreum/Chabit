@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -66,7 +67,7 @@ public class ChallengeController {
     public BaseResponse putChallengeThumbnail(@RequestPart(value = "thumbnail", required = false) MultipartFile thumbnail) {
         BaseResponse response = null;
         try {
-            String unique = "thumbnail_" + LocalDateTime.now() + "_" + (int)(Math.random() * 100000) + "_";
+            String unique = "thumbnail_" + LocalDateTime.now(ZoneId.of("Asia/Seoul")) + "_" + (int)(Math.random() * 100000) + "_";
             String thumbnailUrl = uploader.upload(thumbnail, "challenges", unique);
 
             response = new BaseResponse("success", thumbnailUrl);
@@ -81,7 +82,7 @@ public class ChallengeController {
     public BaseResponse putChallengeAuthExample(@RequestPart(value = "authExample", required = false) MultipartFile authExample) {
         BaseResponse response = null;
         try {
-            String unique = "authExample_" + LocalDateTime.now() + "_" + (int)(Math.random() * 100000) + "_";
+            String unique = "authExample_" + LocalDateTime.now(ZoneId.of("Asia/Seoul")) + "_" + (int)(Math.random() * 100000) + "_";
             String authExampleUrl = uploader.upload(authExample, "challenges", unique);
 
             response = new BaseResponse("success", authExampleUrl);

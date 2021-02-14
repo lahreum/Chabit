@@ -23,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -296,7 +298,7 @@ public class UserController {
         BaseResponse response = null;
         try {
             User user = userService.findUser(userEmail);
-            String uniqueName = user.getUserId() + "_userImage_" + LocalDate.now() + "_";
+            String uniqueName = user.getUserId() + "_userImage_" + LocalDate.now(ZoneId.of("Asia/Seoul")) + "_";
             String imageUrl = uploader.upload(userImage, "users", uniqueName);
 
             userService.putUserImage(user, imageUrl);
