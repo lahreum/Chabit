@@ -1,32 +1,24 @@
 <template>
-  <v-container>
-    <v-carousel
-      class="slide"
-      hide-delimiters 
-      cycle 
-      :show-arrows-on-hover="true"
-      height="450"
+  <v-sheet
+    class="mx-auto"
+    max-width="1800"
+  >
+    <v-slide-group
+      center-active
     >
-      <v-carousel-item
+      <v-slide-item
         v-for="(item,i) in items"
         :key="i"
+        v-slot="{ toggle }"
       >
         <v-card
-          class="mx-auto my-5 rounded-xl"
-          max-width="380"
-          :loading="loading"
-          @click="reverse, moveToChallengeDetail(item)"
-          style="background-color: white;"
+          class="ma-2 rounded-lg"
+          height="390"
+          width="370"
+          @click="toggle, moveToChallengeDetail(item)"
         >
-          <template slot="progress">
-            <v-progress-linear
-              color="red darken-4"
-              height="10"
-              indeterminate
-            ></v-progress-linear>
-          </template>
-
           <v-img
+            class="rounded-lg"
             height="250"
             :src="item.challengeThumbnail"
           ></v-img>
@@ -53,9 +45,9 @@
             </div>
           </v-card-text>
         </v-card>
-      </v-carousel-item>
-    </v-carousel>
-  </v-container>
+      </v-slide-item>
+    </v-slide-group>
+  </v-sheet>
 </template>
 
 <script>
@@ -65,24 +57,18 @@ export default {
   data () {
     return {
       items: [],
-      loading: false,
     }
   },
   created() {
     this.$Axios.get(`${this.$store.state.host}/v1/challenges/hot`)
       .then(res => {
-        // console.log(res.data)
+        console.log(res.data)
         this.items = res.data.data
       }).catch(err => {
         console.log(err)
       })
   },
   methods: {
-    reverse () {
-      this.loading = true
-
-      setTimeout(() => (this.loading = false), 2000)
-    },
     moveToChallengeDetail(item) {
       this.$store.commit("SELECTEDCHALLENGE", item.challengeID);
       this.$router.push("/challenge-detail");

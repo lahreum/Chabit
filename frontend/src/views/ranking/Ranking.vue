@@ -1,9 +1,9 @@
 <template>
-  <div id="Ranking">
+  <div id="ranking">
     <v-app id="inspire">
       <v-container fluid>
         <v-row justify="center" dense align="center">
-          <div class="r-menu">
+          <div class="ranking-nav">
             <v-col class="d-flex" cols="3.5" sm="1">
               <v-select
                 v-model="selectedFol"
@@ -24,7 +24,6 @@
                 label="카테고리"
                 return-value
               >
-                <!-- v-on:select="$emit('select', $event.target.value)" -->
               </v-select>
             </v-col>
             <div class="r-toggle">
@@ -56,6 +55,8 @@
 
 <script>
 import RankingList from "./RankingList.vue";
+import "../ranking/ranking.css";
+
 export default {
   components: { RankingList },
   data() {
@@ -63,8 +64,6 @@ export default {
       selectedCate: 0,
       selectedMon: false,
       selectedFol: false,
-      // selectOf: { title: "전체", value: false },
-      // selectCi: { title: "전체", value: false },
       monthlyRanking: false,
       onlyFollowing: [
         {
@@ -122,18 +121,3 @@ export default {
   },
 };
 </script>
-<style scoped>
-.r-toggle {
-  display: inline-flex;
-  padding-right: 12px;
-}
-.v-label {
-  margin: 0px 4px;
-}
-.r-menu {
-  display: inline-flex;
-}
-.v-label theme--light {
-  margin-right: 2rem;
-}
-</style>

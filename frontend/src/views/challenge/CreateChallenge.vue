@@ -6,260 +6,388 @@
     <p></p>
     <v-stepper
       v-model="e6"
+      vertical
     >
-      <v-stepper-header>
-        <v-stepper-step
-          :complete="e6 > 1"
-          step="1"
-          color="red darken-4"
+      <v-stepper-step
+        :complete="e6 > 1"
+        step="1"
+        color="red darken-4"
+      >
+        <span>카테고리</span>
+        <span style="font-size:0.5rem; margin-top: 0.3rem; color: grey;">원하는 카테고리가 무엇인가요?</span>
+      </v-stepper-step>
+
+      <v-stepper-content step="1">
+        <v-card
+          flat
+          class="mb-12"
+          height="300px"
         >
-          <span>카테고리</span>
-          <span style="font-size:0.5rem; margin-top: 0.3rem; color: grey;">원하는 카테고리가 무엇인가요?</span>
-        </v-stepper-step>
-
-        <v-divider></v-divider>
-
-        <v-stepper-step
-          :complete="e6 > 2"
-          step="2"
+          <v-row>
+            <v-col
+              cols="4"
+            >
+              <v-btn
+                depressed
+                width="80"
+                height="80"
+                ripple
+                v-ripple="{class: 'error--text'}"
+                @click="selected.categoryName = '운동'"
+              >
+                운동
+              </v-btn>
+            </v-col>
+            <v-col
+              cols="4"
+            >
+              <v-btn
+                depressed
+                width="80"
+                height="80"
+                ripple
+                v-ripple="{class: 'error--text'}"
+                @click="selected.categoryName = '공부'"
+              >
+                공부
+              </v-btn>
+            </v-col>
+            <v-col
+              cols="4"
+            >
+              <v-btn
+                depressed
+                width="80"
+                height="80"
+                ripple
+                v-ripple="{class: 'error--text'}"
+                @click="selected.categoryName = '돌봄'"
+              >
+                돌봄
+              </v-btn>
+            </v-col>
+            <v-col
+              cols="4"
+            >
+              <v-btn
+                depressed
+                width="80"
+                height="80"
+                ripple
+                v-ripple="{class: 'error--text'}"
+                @click="selected.categoryName = '취미'"
+              >
+                취미
+              </v-btn>
+            </v-col>
+            <v-col
+              cols="4"
+            >
+              <v-btn
+                depressed
+                width="80"
+                height="80"
+                ripple
+                v-ripple="{class: 'error--text'}"
+                @click="selected.categoryName = '생활습관'"
+              >
+                생활습관
+              </v-btn>
+            </v-col>
+            <v-col
+              cols="4"
+            >
+              <v-btn
+                depressed
+                width="80"
+                height="80"
+                ripple
+                v-ripple="{class: 'error--text'}"
+                @click="selected.categoryName = '다이어트'"
+              >
+                다이어트
+              </v-btn>
+            </v-col>
+            <v-col
+              cols="4"
+            >
+              <v-btn
+                depressed
+                width="80"
+                height="80"
+                ripple
+                v-ripple="{class: 'error--text'}"
+                @click="selected.categoryName = '독서'"
+              >
+                독서
+              </v-btn>
+            </v-col>
+            <v-col
+              cols="4"
+            >
+              <v-btn
+                depressed
+                width="80"
+                height="80"
+                ripple
+                v-ripple="{class: 'error--text'}"
+                @click="selected.categoryName = '돈관리'"
+              >
+                돈관리
+              </v-btn>
+            </v-col>
+            <v-col
+              cols="4"
+            >
+              <v-btn
+                depressed
+                width="80"
+                height="80"
+                ripple
+                v-ripple="{class: 'error--text'}"
+                @click="selected.categoryName = '감정관리'"
+              >
+                감정관리
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-card>
+        <p style="color: black; font-size: 1rem;">'{{selected.categoryName}}' 선택</p>
+        <v-btn
           color="red darken-4"
+          dark
+          @click="e6 = 2"
         >
-          <span>챌린지 소개</span>
-          <span style="font-size:0.5rem; margin-top: 0.3rem; color: grey;">챌린지를 소개해주세요!</span>
-        </v-stepper-step>
+          다음
+        </v-btn>
+        <v-btn 
+          text
+          disabled
+        >
+          이전
+        </v-btn>
+      </v-stepper-content>
 
-        <v-divider></v-divider>
+      <v-stepper-step
+        :complete="e6 > 2"
+        step="2"
+        color="red darken-4"
+      >
+        <span>챌린지 소개</span>
+        <span style="font-size:0.5rem; margin-top: 0.3rem; color: grey;">챌린지를 소개해주세요!</span>
+      </v-stepper-step>
 
-        <v-stepper-step
-          :complete="e6 > 3"
-          step="3"
+      <v-stepper-content step="2">
+        <v-card
+          color="grey lighten-5"
+          flat
+          class="mb-12"
+          height="500"
+        > 
+          <v-card-text>
+            <p style="font-size: 1rem; font-weight: 600;">챌린지명</p>
+            <v-text-field
+              flat
+              solo
+              v-model="title"
+            ></v-text-field>
+            <p style="font-size: 1rem; font-weight: 600;">챌린지 설명</p>
+            <v-textarea
+              flat
+              solo
+              height="300"
+              :rules="textRules"
+              v-model="texts"
+            ></v-textarea>
+          </v-card-text>
+        </v-card>
+        <v-btn
           color="red darken-4"
+          dark
+          @click="e6 = 3"
         >
-          <span>인증 방식</span>
-          <span style="font-size:0.5rem; margin-top: 0.3rem; color: grey;">인증 방식을 지정해주세요!</span>
-        </v-stepper-step>
+          다음
+        </v-btn>
+        <v-btn 
+          text
+          @click="e6 = 1"
+        >
+          이전
+        </v-btn>
+      </v-stepper-content>
 
-        <v-divider></v-divider>
+      <v-stepper-step
+        :complete="e6 > 3"
+        step="3"
+        color="red darken-4"
+      >
+        <span>인증 방식</span>
+        <span style="font-size:0.5rem; margin-top: 0.3rem; color: grey;">인증 방식을 지정해주세요!</span>
+      </v-stepper-step>
 
-        <v-stepper-step
-          :complete="e6 > 4" 
-          step="4"
+      <v-stepper-content step="3">
+        <v-card
+          color="grey lighten-5"
+          flat
+          class="mb-12"
+          height="650px"
+        >
+          <v-card-text>
+            <p style="font-size: 1rem; font-weight: 600;">인증 방식</p>
+            <v-textarea
+              placeholder="예) 영단어 5개를 메모한 노트와 오늘의 손동작을 함께 찍은 사진을 올려주세요."
+              flat
+              solo
+              height="100"
+              v-model="proofType"
+            ></v-textarea>
+            <p style="font-size: 1rem; font-weight: 600;">인증샷 예시</p>
+            <v-row>
+              <v-col
+                cols="8"
+              >
+                <v-file-input
+                  label="터치하세요"
+                  outlined
+                  dense
+                  accept="image/png, image/jpeg, image/bmp"
+                  v-model="proofFiles"
+                ></v-file-input>
+              </v-col>
+              <v-col
+                cols="4"
+              >
+                <v-btn
+                  rounded-lg
+                  color="red darken-4"
+                  dark
+                  height="40px"
+                  @click="proofUpload"
+                >
+                  업로드
+                </v-btn>
+              </v-col>
+            </v-row>
+            <p style="font-size: 1rem; font-weight: 600;">공휴일 인증</p>
+            <v-switch
+              color="red darken-4"
+              v-model="switch2"
+              inset
+              hide-details
+            >
+            </v-switch>
+            <p></p>
+            <p style="font-size: 1rem; font-weight: 600;">인증 빈도</p>
+            <div>
+              <span>주 {{count+1}}회</span>
+              <v-slider
+                v-model="count"
+                :tick-labels="ticksLabels"
+                :max="6"
+                step="1"
+                ticks="always"
+                tick-size="4"
+              ></v-slider>
+            </div>
+            <p></p>
+            <p style="font-size: 1rem; font-weight: 600;">인증 시간</p>
+            <el-time-select
+              size="small"
+              placeholder="시작"
+              v-model="startTime"
+              :picker-options="{
+                start: '00:00',
+                step: '00:10',
+                end: '23:59'
+              }">
+            </el-time-select>
+            ~
+            <el-time-select
+              size="small"
+              placeholder="마감"
+              v-model="endTime"
+              :picker-options="{
+                start: '00:00',
+                step: '00:10',
+                end: '23:59',
+                minTime: startTime
+              }">
+            </el-time-select>
+          </v-card-text>
+        </v-card>
+        <v-btn
           color="red darken-4"
+          dark
+          @click="e6 = 4"
         >
-          <span>챌린지 기간</span>
-          <span style="font-size:0.5rem; margin-top: 0.3rem; color: grey;">챌린지 기간을 지정해주세요!</span>
-        </v-stepper-step>
+          다음
+        </v-btn>
+        <v-btn 
+          text
+          @click="e6 = 2"
+        >
+          이전
+        </v-btn>
+      </v-stepper-content>
 
-        <v-divider></v-divider>
-
-        <v-stepper-step
-          :complete="e6 > 5"
-          step="5"
+      <v-stepper-step
+        :complete="e6 > 4" 
+        step="4"
+        color="red darken-4"
+      >
+        <span>챌린지 기간</span>
+        <span style="font-size:0.5rem; margin-top: 0.3rem; color: grey;">챌린지 기간을 지정해주세요!</span>
+      </v-stepper-step>
+      <v-stepper-content step="4">
+        <v-card
+          color="grey lighten-5"
+          class="mb-12"
+          height="570px"
+          flat
+        >
+          <v-card-text>
+            <p style="font-size: 1rem; font-weight: 600;">챌린지 기간</p>
+            <p>챌린지 기간은 <b>1주일</b> 단위로만 가능합니다. 예) 시작일이 화요일이면 종료일은 월요일이어야 함.</p>
+            <v-row>
+              <v-col
+                cols="12"
+                sm="6"
+              >
+                <v-date-picker
+                  v-model="dates"
+                  range
+                  no-title
+                  color="red darken-4"
+                ></v-date-picker>
+              </v-col>
+              <v-col
+                cols="12"
+                sm="6"
+              >
+                <div class="text-center">
+                  <p style="font-weight: 600; font-size: 1rem;">얼마나 진행하실 건가요?</p>
+                  <p>시작일: {{ dates[0] }}</p> 
+                  <p>종료일: {{ dates[1] }}</p>
+                </div>
+                
+              </v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
+        <v-btn
           color="red darken-4"
+          @click="e6 = 5"
+          dark
         >
-          <span>대표 이미지</span>
-          <span style="font-size:0.5rem; margin-top: 0.3rem; color: grey;">챌린지를 잘 나타내는 이미지를 올려주세요!</span>
-        </v-stepper-step>
-
-      </v-stepper-header>
-
-      <v-stepper-items>
-
-        <v-stepper-content step="1">
-          <v-card
-            flat
-            class="mb-12"
-            height="300"
-          >
-            <!-- <v-container> -->
-              <v-row>
-                <v-col
-                  cols="4"
-                >
-                  <v-btn
-                    depressed
-                    width="60"
-                    height="70"
-                    ripple
-                    v-ripple="{class: 'error--text'}"
-                    @click="selected.categoryName = '운동'"
-                  >
-                    운동
-                  </v-btn>
-                </v-col>
-                <v-col
-                  cols="4"
-                >
-                  <v-btn
-                    depressed
-                    width="60"
-                    height="70"
-                    ripple
-                    v-ripple="{class: 'error--text'}"
-                    @click="selected.categoryName = '공부'"
-                  >
-                    공부
-                  </v-btn>
-                </v-col>
-                <v-col
-                  cols="4"
-                >
-                  <v-btn
-                    depressed
-                    width="60"
-                    height="70"
-                    ripple
-                    v-ripple="{class: 'error--text'}"
-                    @click="selected.categoryName = '돌봄'"
-                  >
-                    돌봄
-                  </v-btn>
-                </v-col>
-                <v-col
-                  cols="4"
-                >
-                  <v-btn
-                    depressed
-                    width="60"
-                    height="70"
-                    ripple
-                    v-ripple="{class: 'error--text'}"
-                    @click="selected.categoryName = '취미'"
-                  >
-                    취미
-                  </v-btn>
-                </v-col>
-                <v-col
-                  cols="4"
-                >
-                  <v-btn
-                    depressed
-                    width="60"
-                    height="70"
-                    ripple
-                    v-ripple="{class: 'error--text'}"
-                    @click="selected.categoryName = '생활습관'"
-                  >
-                    생활습관
-                  </v-btn>
-                </v-col>
-                <v-col
-                  cols="4"
-                >
-                  <v-btn
-                    depressed
-                    width="60"
-                    height="70"
-                    ripple
-                    v-ripple="{class: 'error--text'}"
-                    @click="selected.categoryName = '다이어트'"
-                  >
-                    다이어트
-                  </v-btn>
-                </v-col>
-                <v-col
-                  cols="4"
-                >
-                  <v-btn
-                    depressed
-                    width="60"
-                    height="70"
-                    ripple
-                    v-ripple="{class: 'error--text'}"
-                    @click="selected.categoryName = '독서'"
-                  >
-                    독서
-                  </v-btn>
-                </v-col>
-                <v-col
-                  cols="4"
-                >
-                  <v-btn
-                    depressed
-                    width="60"
-                    height="70"
-                    ripple
-                    v-ripple="{class: 'error--text'}"
-                    @click="selected.categoryName = '돈관리'"
-                  >
-                    돈관리
-                  </v-btn>
-                </v-col>
-                <v-col
-                  cols="4"
-                >
-                  <v-btn
-                    depressed
-                    width="60"
-                    height="70"
-                    ripple
-                    v-ripple="{class: 'error--text'}"
-                    @click="selected.categoryName = '감정관리'"
-                  >
-                    감정관리
-                  </v-btn>
-                </v-col>
-              </v-row>
-            <!-- </v-container> -->
-          </v-card>
-          <p style="color: black; font-size: 1rem;">'{{selected.categoryName}}' 선택</p>
-          <v-btn
-            color="red darken-4"
-            dark
-            @click="e6 = 2"
-          >
-            다음
-          </v-btn>
-          <v-btn 
-            text
-            disabled
-          >
-            이전
-          </v-btn>
-        </v-stepper-content>
-
-        
-
-        <v-stepper-content step="2">
-          <v-card
-            color="grey lighten-5"
-            flat
-            class="mb-12"
-            height="500"
-          > 
-            <v-card-text>
-              <p style="font-size: 1rem; font-weight: 600;">챌린지명</p>
-              <v-text-field
-                flat
-                solo
-                v-model="title"
-              ></v-text-field>
-              <p style="font-size: 1rem; font-weight: 600;">챌린지 설명</p>
-              <v-textarea
-                flat
-                solo
-                height="300"
-                :rules="textRules"
-                v-model="texts"
-              ></v-textarea>
-            </v-card-text>
-          </v-card>
-          <v-btn
-            color="red darken-4"
-            dark
-            @click="e6 = 3"
-          >
-            다음
-          </v-btn>
-          <v-btn 
-            text
-            @click="e6 = 1"
-          >
-            이전
-          </v-btn>
-        </v-stepper-content>
-
-        
+          다음
+        </v-btn>
+        <v-btn
+          text
+          @click="e6 = 3"
+        >
+          이전
+        </v-btn>
+      </v-stepper-content>
 
         <v-stepper-content step="3">
           <v-card
@@ -312,13 +440,16 @@
                 width="100"
                 height="100"
               >
-              </v-img>
-              <p style="font-size: 1rem; font-weight: 600; margin-top: 1rem;">공휴일 인증</p>
-              <v-switch
-                color="red darken-4"
-                v-model="switch2"
-                inset
-                hide-details
+                <v-file-input
+                  label="터치하세요"
+                  outlined
+                  dense
+                  accept="image/png, image/jpeg, image/bmp"
+                  v-model="challengeFiles"
+                ></v-file-input>
+              </v-col>
+              <v-col
+                cols="4"
               >
               </v-switch>
               
@@ -405,92 +536,26 @@
                   cols="12"
                   sm="6"
                 >
-                  <div class="text-center">
-                    <p style="font-weight: 600; font-size: 1rem;">얼마나 진행하실 건가요?</p>
-                    <p>시작일: {{ dates[0] }}</p> 
-                    <p>종료일: {{ dates[1] }}</p>
-                  </div>
-                  
-                </v-col>
-              </v-row>
-            </v-card-text>
-          </v-card>
-          <v-btn
-            color="red darken-4"
-            @click="e6 = 5"
-            dark
-          >
-            다음
-          </v-btn>
-          <v-btn
-            text
-            @click="e6 = 3"
-          >
-            이전
-          </v-btn>
-        </v-stepper-content>
-
-        
-        <v-stepper-content step="5">
-          <v-card
-            color="grey lighten-5"
-            flat
-            class="mb-12"
-            height="250px"
-          >
-            <v-card-text>
-              <p style="font-size: 1rem; font-weight: 600;">챌린지 대표 이미지</p>
-              <v-row>
-                <v-col
-                  cols="8"
-                >
-                  <v-file-input
-                    label="터치하세요"
-                    outlined
-                    dense
-                    accept="image/png, image/jpeg, image/bmp"
-                    v-model="challengeFiles"
-                  ></v-file-input>
-                </v-col>
-                <v-col
-                  cols="4"
-                >
-                  <v-btn
-                    rounded-lg
-                    color="red darken-4"
-                    dark
-                    width="20"
-                    height="40"
-                    @click="challengeUpload"
-                  >
-                    업로드
-                  </v-btn>
-                </v-col>
-              </v-row>
-              <v-img
-                v-if="this.selected.thumbnail"
-                :src="this.selected.thumbnail"
-                width="100"
-                height="100"
-              >
-              </v-img>
-            </v-card-text>
-          </v-card>
-          <v-btn
-            color="red darken-4"
-            dark
-            @click="createChallenge"
-          >
-            완료
-          </v-btn>
-          <v-btn 
-            text
-            @click="e6 = 4"
-          >
-            이전
-          </v-btn>
-        </v-stepper-content>
-      </v-stepper-items>
+                  업로드
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
+        <v-btn
+          color="red darken-4"
+          dark
+          @click="createChallenge"
+        >
+          완료
+        </v-btn>
+        <v-btn 
+          text
+          @click="e6 = 4"
+        >
+          이전
+        </v-btn>
+      </v-stepper-content>
     </v-stepper>
   </v-container>
 </template>
@@ -605,11 +670,9 @@
             ).then(res => {
               // console.log('전송 성공');
               console.log(res.data)
-              alert("파일이 성공적으로 업로드 되었습니다.")
               this.selected.authExample = res.data.data
             }).catch(function () {
               console.log('전송 실패')
-              alert("파일 업로드에 실패하였습니다.")
             })
           
       },
@@ -627,10 +690,8 @@
               // console.log('전송 성공');
               console.log(res.data)
               this.selected.challengeThumbnail = res.data.data
-              alert("파일이 성공적으로 업로드 되었습니다.")
             }).catch(function () {
               console.log('전송 실패')
-              alert("파일 업로드에 실패하였습니다.")
             })
           
       },

@@ -7,9 +7,10 @@
     <v-card
       class="mx-auto rounded-xl"
       max-width="385"
-      flat
+      color="red darken-4"
+      outlined
     >
-      <v-list color="grey lighten-5">
+      <v-list>
         <v-list-item
           v-for="(item,idx) in ranking"
           :key="idx"
@@ -40,7 +41,7 @@ export default {
     }
   },
   created() {
-    this.$Axios.get(`${this.$store.state.host}/v1/users/ranking/jihae@ssafy.com?categoryId=0&monthlyRanking=false&onlyFollowing=false`)
+    this.$Axios.get("http://i4b207.p.ssafy.io/api/v1/users/ranking/jihae@ssafy.com?categoryId=0&monthlyRanking=false&onlyFollowing=false")
       .then(res => {
         console.log(res.data.data)
         const allRankings = res.data.data.userRanking

@@ -85,7 +85,7 @@ export default {
   created() {
     this.$Axios.get(`${this.$store.state.host}/v1/challenges/hot`)
       .then(res => {
-        // console.log(res.data)
+        console.log(res.data)
         this.items = res.data.data
       }).catch(err => {
         console.log(err)

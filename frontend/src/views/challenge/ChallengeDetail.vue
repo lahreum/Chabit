@@ -18,7 +18,7 @@
           {{item.challengeName}}
         </p>
         <i class="far fa-smile" style="font-size: 1.2rem; margin-left: 0.6rem;"></i>
-        <span style="font-size: 1.1rem; margin-left: 0.5rem;"><span style="font-weight: 600; color: #B71C1C;">{{item.challengeUserCount}}</span>명 참여 중</span>
+        <span style="font-size: 1.1rem; margin-left: 0.5rem;"><span style="font-weight: 600">{{item.challengeUserCount}}</span>명 참여 중</span>
         <div class="hash-tag-bundle">
           <hash-tag :content="item.hashtags.hashtags[0].hashtagName"/>
           <hash-tag :content="item.hashtags.hashtags[1].hashtagName"/>
