@@ -176,7 +176,7 @@ export default {
         .then(({ data }) => {
           if (data == "success") {
             alert("가입이 완료되었습니다.");
-            this.$router.push("/login");
+            this.$router.push("/instruction");
           } else if (data == "fail") {
             alert("가입을 할 수 없습니다.");
           }
