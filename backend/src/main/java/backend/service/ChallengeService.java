@@ -156,7 +156,7 @@ public class ChallengeService {
         } else if (userNum >= 5) {
             incentive = 1.1f;
         } else {
-            incentive = 0.0f;
+            incentive = 1.0f;
         }
         return incentive;
     }
@@ -171,7 +171,7 @@ public class ChallengeService {
         } else if (proofRatio >= 80.0) {
             incentive = 1.1f;
         } else {
-            incentive = 0.0f;
+            incentive = 1.0f;
         }
         return incentive;
     }
