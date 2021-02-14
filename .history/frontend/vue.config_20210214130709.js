@@ -8,6 +8,7 @@ module.exports = {
           content: 'upgrade-insecure-requests',
         },
       ];
+
       return args;
     });
   },

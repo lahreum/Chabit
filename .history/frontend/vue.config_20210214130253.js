@@ -4,10 +4,15 @@ module.exports = {
     config.plugin('html').tap((args) => {
       args[0].meta = [
         {
-          'http-equiv': 'Content-Security-Policy',
+          property: 'http-equiv',
+          content: 'Content-Security-Policy',
+        },
+        {
+          property: 'content',
           content: 'upgrade-insecure-requests',
         },
       ];
+
       return args;
     });
   },
