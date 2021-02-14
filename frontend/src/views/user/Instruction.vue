@@ -7,7 +7,6 @@
           height = 58vh
           :show-arrows-on-hover = true
           :hide-delimiters = true
-          :continuous = false
   >
     <v-carousel-item v-for="(Item,i) in Items" :key="i">
     <div classs="instruction-container">
