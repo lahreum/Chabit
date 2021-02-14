@@ -85,4 +85,12 @@ public class JPAUserRepository implements UserRepository{
     public void clearStore() {
 
     }
+
+    @Override
+    public List<User> findUserContainNickname(String nickname) {
+        List<User> users = entityManager.createQuery("select u from User u where u.userNickname like :nickname", User.class)
+                .setParameter("nickname", "%" + nickname + "%")
+                .getResultList();
+        return users;
+    }
 }
