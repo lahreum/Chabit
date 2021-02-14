@@ -160,10 +160,22 @@ public class ReviewController {
                 if (reviewComment.getParentCommentId() == null) {
                     ReviewCommentDto newReviewCommentDto = new ReviewCommentDto(reviewComment);
 
+                    // 레벨
+                    String userLevel = levelService.findUserLevel(reviewComment.getUserId().getUserPoints());
+                    Optional<Level> level = levelService.findOne(userLevel);
+                    level.ifPresent(l -> newReviewCommentDto.setUserLevelImage(l.getLevelImage()));
+
                     // 대댓글 있으면 넣음
                     List<ReviewComment> childrenComment = reviewComment.getChildrenComment();
                     for (ReviewComment reply : childrenComment) {
-                        newReviewCommentDto.addReply(new ReviewCommentDto(reply));
+                        ReviewCommentDto replyDto = new ReviewCommentDto(reply);
+
+                        // 레벨
+                        String replyUserLevel = levelService.findUserLevel(reply.getUserId().getUserPoints());
+                        Optional<Level> replyLevel = levelService.findOne(replyUserLevel);
+                        replyLevel.ifPresent(l -> replyDto.setUserLevelImage(l.getLevelImage()));
+
+                        newReviewCommentDto.addReply(replyDto);
                     }
 
                     reviewCommentDtoList.add(newReviewCommentDto);
