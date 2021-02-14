@@ -4,7 +4,7 @@
   <v-carousel :show-arrows="true"
           :cycle = true
           :interval = 3700
-          height = 58vh
+          height = 55vh
           :show-arrows-on-hover = true
           :hide-delimiters = true
   >
