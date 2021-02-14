@@ -266,7 +266,7 @@
             color="grey lighten-5"
             flat
             class="mb-12"
-            height="850"
+            max-height="850"
           >
             <v-card-text>
               <p style="font-size: 1rem; font-weight: 600;">인증 방식</p>
@@ -391,13 +391,15 @@
                   cols="12"
                   sm="6"
                 >
+                <div style="display: flex; justify-content: center;">
                   <v-date-picker
-                    width="215"
+                    width="225"
                     v-model="dates"
                     range
                     no-title
                     color="red darken-4"
                   ></v-date-picker>
+                </div>
                 </v-col>
                 <v-col
                   cols="12"
