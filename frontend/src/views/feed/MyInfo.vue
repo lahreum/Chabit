@@ -24,7 +24,7 @@
                 <v-icon v-else>
                   mdi-pencil
                 </v-icon>
-               </v-btn>
+              </v-btn>
           </div>
         </div>
 
