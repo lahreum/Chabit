@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @Api
@@ -35,7 +36,7 @@ public class FollowController {
         try {
             follow.setUserId(userService.findUser(request.getUserEmail()));
             follow.setFollowingId(userService.findUser(request.getFollowingEmail()));
-            follow.setFollowDate(LocalDateTime.now());
+            follow.setFollowDate(LocalDateTime.now(ZoneId.of("Asia/Seoul")));
 
             followService.follow(follow);
             response = new BaseResponse("success", follow.getUserId().getUserId());

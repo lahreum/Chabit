@@ -389,26 +389,56 @@
         </v-btn>
       </v-stepper-content>
 
-      <v-stepper-step
-        :complete="e6 > 5"
-        step="5"
-        color="red darken-4"
-      >
-        <span>대표 이미지</span>
-        <span style="font-size:0.5rem; margin-top: 0.3rem; color: grey;">챌린지를 잘 나타내는 이미지를 올려주세요!</span>
-      </v-stepper-step>
-      <v-stepper-content step="5">
-        <v-card
-          color="grey lighten-5"
-          flat
-          class="mb-12"
-          height="250px"
-        >
-          <v-card-text>
-            <p style="font-size: 1rem; font-weight: 600;">챌린지 대표 이미지</p>
-            <v-row>
-              <v-col
-                cols="8"
+        <v-stepper-content step="3">
+          <v-card
+            color="grey lighten-5"
+            flat
+            class="mb-12"
+            max-height="850"
+          >
+            <v-card-text>
+              <p style="font-size: 1rem; font-weight: 600;">인증 방식</p>
+              <v-textarea
+                placeholder="예) 영단어 5개를 메모한 노트와 오늘의 손동작을 함께 찍은 사진을 올려주세요."
+                flat
+                solo
+                height="100"
+                v-model="proofType"
+              ></v-textarea>
+              <p style="font-size: 1rem; font-weight: 600; margin-top: 1rem;">인증샷 예시</p>
+              
+              <v-row>
+                <v-col
+                  cols="8"
+                >
+                  <v-file-input
+                    label="터치하세요"
+                    outlined
+                    dense
+                    accept="image/png, image/jpeg, image/bmp"
+                    v-model="proofFiles"
+                  ></v-file-input>
+                </v-col>
+                <v-col
+                  cols="4"
+                >
+                  <v-btn
+                    rounded-lg
+                    color="red darken-4"
+                    dark
+                    width="20"
+                    height="40"
+                    @click="proofUpload"
+                  >
+                    업로드
+                  </v-btn>
+                </v-col>
+              </v-row>
+              <v-img
+                v-if="this.selected.authExample"
+                :src="this.selected.authExample"
+                width="100"
+                height="100"
               >
                 <v-file-input
                   label="터치하세요"
@@ -421,12 +451,90 @@
               <v-col
                 cols="4"
               >
-                <v-btn
-                  rounded-lg
-                  color="red darken-4"
-                  dark
-                  height="40px"
-                  @click="challengeUpload"
+              </v-switch>
+              
+              <p style="font-size: 1rem; font-weight: 600; margin-top: 2.5rem;">인증 빈도</p>
+              <div>
+                <span>주 {{count+1}}회</span>
+                <v-slider
+                  v-model="count"
+                  :tick-labels="ticksLabels"
+                  :max="6"
+                  step="1"
+                  ticks="always"
+                  tick-size="4"
+                ></v-slider>
+              </div>
+              
+              <p style="font-size: 1rem; font-weight: 600; margin-top: 2rem;">인증 시간</p>
+              <el-time-select
+                size="small"
+                placeholder="시작"
+                v-model="startTime"
+                :picker-options="{
+                  start: '00:00',
+                  step: '00:15',
+                  end: '23:59'
+                }">
+              </el-time-select>
+              ~
+              <el-time-select
+                size="small"
+                placeholder="마감"
+                v-model="endTime"
+                :picker-options="{
+                  start: '00:00',
+                  step: '00:15',
+                  end: '23:59',
+                  minTime: startTime
+                }">
+              </el-time-select>
+            </v-card-text>
+          </v-card>
+          <v-btn
+            color="red darken-4"
+            dark
+            @click="e6 = 4"
+          >
+            다음
+          </v-btn>
+          <v-btn 
+            text
+            @click="e6 = 2"
+          >
+            이전
+          </v-btn>
+        </v-stepper-content>
+
+        
+        <v-stepper-content step="4">
+          <v-card
+            color="grey lighten-5"
+            class="mb-12"
+            height="590"
+            flat
+          >
+            <v-card-text>
+              <p style="font-size: 1rem; font-weight: 600;">챌린지 기간</p>
+              <p>챌린지 기간은 <b>1주일</b> 단위로만 가능합니다. 예) 시작일이 화요일이면 종료일은 월요일이어야 함.</p>
+              <v-row>
+                <v-col
+                  cols="12"
+                  sm="6"
+                >
+                <div style="display: flex; justify-content: center;">
+                  <v-date-picker
+                    width="225"
+                    v-model="dates"
+                    range
+                    no-title
+                    color="red darken-4"
+                  ></v-date-picker>
+                </div>
+                </v-col>
+                <v-col
+                  cols="12"
+                  sm="6"
                 >
                   업로드
                 </v-btn>

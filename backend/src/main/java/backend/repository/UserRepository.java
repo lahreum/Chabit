@@ -17,4 +17,6 @@ public interface UserRepository {
     Optional<UserCategory> findSuccessCountByUserAndCategory(Long userId, Long categoryId);
     void deleteUser(User user);
     void clearStore();
+
+    List<User> findUserContainNickname(String nickname);
 }

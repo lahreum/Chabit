@@ -6,13 +6,14 @@
           <article class="media">
             <div class="media-left">
               <figure class="image">
-                <Profile :src="talk.img" style="margin-right:20px;"/>
+                <Profile :src="talk.userImage" style="margin-right:20px;"/>
               </figure>
             </div>
             <div class="media-content" >
               <div class="content">
-                <p><strong>{{talk.name}}</strong></p>
-                <p>{{talk.talk}}</p>
+                <p><strong>{{talk.userNickname}}</strong></p>
+                <p>{{talk.commentContent}}</p>
+                <p style="color:gray; font-size:10px; font-weight:600;">답글달기</p>
               </div>
             </div>
           </article>

@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Entity
 @Getter @Setter
@@ -40,7 +41,7 @@ public class Proof {
         proof.user = user;
         proof.challenge = challenge;
         proof.proofImage = proofImage;
-        proof.proofDate = LocalDateTime.now();
+        proof.proofDate = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
 
         return proof;
     }

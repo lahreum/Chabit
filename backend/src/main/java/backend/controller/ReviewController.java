@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -54,7 +55,7 @@ public class ReviewController {
             List<String> urls = new ArrayList<>();
 
             for (MultipartFile file : request.getReviewImages()) {
-                String unique = "reviewImage_" + user.getUserId() + "_" + challenge.getChallengeId() + "_" + LocalDateTime.now() + "_";
+                String unique = "reviewImage_" + user.getUserId() + "_" + challenge.getChallengeId() + "_" + LocalDateTime.now(ZoneId.of("Asia/Seoul")) + "_";
                 String reviews = uploader.upload(file, "reviews", unique);
 
                 urls.add(reviews);
@@ -159,10 +160,22 @@ public class ReviewController {
                 if (reviewComment.getParentCommentId() == null) {
                     ReviewCommentDto newReviewCommentDto = new ReviewCommentDto(reviewComment);
 
+                    // 레벨
+                    String userLevel = levelService.findUserLevel(reviewComment.getUserId().getUserPoints());
+                    Optional<Level> level = levelService.findOne(userLevel);
+                    level.ifPresent(l -> newReviewCommentDto.setUserLevelImage(l.getLevelImage()));
+
                     // 대댓글 있으면 넣음
                     List<ReviewComment> childrenComment = reviewComment.getChildrenComment();
                     for (ReviewComment reply : childrenComment) {
-                        newReviewCommentDto.addReply(new ReviewCommentDto(reply));
+                        ReviewCommentDto replyDto = new ReviewCommentDto(reply);
+
+                        // 레벨
+                        String replyUserLevel = levelService.findUserLevel(reply.getUserId().getUserPoints());
+                        Optional<Level> replyLevel = levelService.findOne(replyUserLevel);
+                        replyLevel.ifPresent(l -> replyDto.setUserLevelImage(l.getLevelImage()));
+
+                        newReviewCommentDto.addReply(replyDto);
                     }
 
                     reviewCommentDtoList.add(newReviewCommentDto);
@@ -179,19 +192,19 @@ public class ReviewController {
      * ReviewComment 저장
      *
      * @param reviewId       해당 리뷰의 id
-     * @param commentContent 저장할 reviewComment정보
+     * @param request 저장할 reviewComment정보
      * @return 저장 성공 여부
      */
     @PostMapping("/{reviewId}/comment")
     @ApiOperation(value="리뷰 댓글 작성", notes="리뷰 댓글 작성")
-    public BaseResponse saveReviewComment(@PathVariable Long reviewId, @RequestBody String commentContent) {
+    public BaseResponse saveReviewComment(@PathVariable Long reviewId, @RequestBody CommentRequest request) {
         BaseResponse response = null;
         try {
             Review review = reviewService.findByReviewId(reviewId); //아이디값으로 어떤 review인가 구한다.
             ReviewComment newReviewComment = new ReviewComment();//새 리뷰답장을 만든다.
             newReviewComment.setUserId(review.getUserId());
             newReviewComment.setReviewId(review);
-            newReviewComment.setCommentContent(commentContent);
+            newReviewComment.setCommentContent(request.getCommentContent());
             reviewService.saveReviewComment(newReviewComment);
             response = new BaseResponse("success", "저장성공");
         } catch (IllegalStateException e) {
