@@ -5,16 +5,15 @@
                 <v-list subheader>
                     <v-subheader>
                         <div class="text-darken-1 mb-2 font-weight-black black--text" id="title">
-                            <span>검색결과</span>
+                            <span>  '{{ this.searchWord }}' 검색결과</span>
                         </div>
                     </v-subheader>
-                    <v-list-item v-for="user in users" :key="user.name">
+                    <v-list-item v-for="item in this.items" :key="item.userNickname">
                         <v-list-item-avatar>
-                            <v-img :alt="`${user.name} avatar`" :src="user.avatar"></v-img>
+                            <v-img :alt="`${item.userImage} avatar`" :src="item.userImage"/>
                         </v-list-item-avatar>
                         <v-list-item-content>
-                            <v-list-item-title  class="name black--text" v-text="user.name"></v-list-item-title>
-                            <v-list-item-title class="msg gray--text" v-text="user.msg"></v-list-item-title>
+                            <v-list-item-title  class="name black--text" v-text="item.userNickname"></v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
                 </v-list>
@@ -24,51 +23,26 @@
 </template>
 
 <script>
+
 export default {
-    data: () => ({
-      users: [
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-          name: 'walkinglife',
-          msg: '맨날 걷는 사람'
-        },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
-          name: 'workaholic',
-          msg: '워커홀릭...'
-        },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-          name: 'ILoveChicken',
-          msg: '치킨 도살자'
-        },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
-          name: 'LoveEating',
-          msg: '예비 푸드파이터'
-        },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg',
-          name: 'goodFriend',
-          msg: '으리으리'
-        },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
-          name: 'goodFriend2',
-          msg: '의리빼면 시체'
-        },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-          name: 'saljjingae',
-          msg: '소통하면서 지내요 :)'
-        },
-        {
-          avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
-          name: 'ssafy4th',
-          msg: '싸피4기 친추해주세요 :)'
-        },
-      ],
-    }),
+  props: ['searchWord'],
+  data: () => ({
+    items: [],
+  }),
+  created() {
+    this.$Axios
+    .get(`${this.$store.state.host}/v1/users/search/` + this.searchWord)
+    .then((res) => {
+      if(res.data.status == "success"){
+        this.items = res.data.data;
+      } else {
+        console.log('검색 실패');
+      }
+    })
+    .catch((error)=> {
+            console.log(error);
+        })
+  },
 }
 </script>
 
