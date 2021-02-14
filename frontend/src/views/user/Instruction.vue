@@ -1,15 +1,17 @@
 <template>
   <div class="carousel-container">
-  <h1>환영합니다.</h1>
-  <v-carousel :show-arrows="false"
-          cycle
-          interval = 3700
-          height = 55vh
-          hide-delimiter-background
+  <h1 id ="instruction-headline">환영합니다.</h1>
+  <v-carousel :show-arrows="true"
+          :cycle = true
+          :interval = 3700
+          height = 58vh
+          :show-arrows-on-hover = true
+          :hide-delimiters = true
+          :continuous = false
   >
     <v-carousel-item v-for="(Item,i) in Items" :key="i">
     <div classs="instruction-container">
-      <img id="InstructionImage" :src="Item.src">
+      <img id="instructionImage" :src="Item.src">
       <v-list light>
         <v-list-item>
           <div class="item-content">
@@ -21,10 +23,16 @@
     </div>
     </v-carousel-item>
   </v-carousel>
+    <div>
+          <button class="btn-skip" @click="onSkip">
+            건너뛰기
+          </button>
+    </div>
   </div>
 </template>
 
 <script>
+import "./user.css";
   export default {
     data () {
       return {
@@ -57,40 +65,10 @@
         ],
       }
     },
+    methods : {
+      onSkip(){
+        this.$router.push("/login");
+      }
+    }
   }
 </script>
-
-<style>
-  h1{
-    margin-bottom : 5vh;
-  }
-  #InstructionImage{
-    width : 80vw;
-    height: 35vh;
-    max-width : 350px;
-    max-heigth : 240px;
-  }
-  .carousel-container{
-    width:100vw;
-    height:100vh;
-    text-align : center;
-  }
-  .item-content{
-    align-items: center;
-    align-self: center;
-    flex-wrap: wrap;
-    flex: 1 1;
-    overflow: hidden;
-  }
-  .item-title{
-      color:black;
-      font-size : 2.7vh;
-      font-weight: 600;
-      margin-bottom : 1vh;
-  }
-  .item-subtitle{
-    color : rgba(0, 0, 0, 0.6);
-    font-size : 2.1vh;
-    font-weight : 500;
-  }
-</style>
