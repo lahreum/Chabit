@@ -7,6 +7,7 @@
                 <div class="searchbar" style="margin:0 auto">
                     <v-container style="width:85%;">
                         <v-text-field
+                                clearable
                                 solo-inverted
                                 label="검색"
                                 append-icon="fas fa-search"
