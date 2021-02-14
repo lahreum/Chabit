@@ -192,19 +192,19 @@ public class ReviewController {
      * ReviewComment 저장
      *
      * @param reviewId       해당 리뷰의 id
-     * @param commentContent 저장할 reviewComment정보
+     * @param request 저장할 reviewComment정보
      * @return 저장 성공 여부
      */
     @PostMapping("/{reviewId}/comment")
     @ApiOperation(value="리뷰 댓글 작성", notes="리뷰 댓글 작성")
-    public BaseResponse saveReviewComment(@PathVariable Long reviewId, @RequestBody String commentContent) {
+    public BaseResponse saveReviewComment(@PathVariable Long reviewId, @RequestBody CommentRequest request) {
         BaseResponse response = null;
         try {
             Review review = reviewService.findByReviewId(reviewId); //아이디값으로 어떤 review인가 구한다.
             ReviewComment newReviewComment = new ReviewComment();//새 리뷰답장을 만든다.
             newReviewComment.setUserId(review.getUserId());
             newReviewComment.setReviewId(review);
-            newReviewComment.setCommentContent(commentContent);
+            newReviewComment.setCommentContent(request.getCommentContent());
             reviewService.saveReviewComment(newReviewComment);
             response = new BaseResponse("success", "저장성공");
         } catch (IllegalStateException e) {
