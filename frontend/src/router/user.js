@@ -1,10 +1,11 @@
-import Login from "../views/user/Login.vue";
-import Join from "../views/user/Join.vue";
-import Find from "../views/user/Find.vue";
-import FindPw from "../views/user/FindPw.vue";
-import FindEmail from "../views/user/FindEmail.vue";
-import FindEmailFinish from "../views/user/FindEmailFinish.vue";
-import ChangePw from "../views/user/ChangePw.vue";
+import Login from '../views/user/Login.vue'
+import Join from '../views/user/Join.vue'
+import Find from '../views/user/Find.vue'
+import FindPw from '../views/user/FindPw.vue'
+import FindEmail from '../views/user/FindEmail.vue'
+import FindEmailFinish from '../views/user/FindEmailFinish.vue'
+import ChangePw from '../views/user/ChangePw.vue'
+import Instruction from '../views/user/Instruction.vue'
 
 export default [
   {
@@ -18,8 +19,13 @@ export default [
     component: Join,
   },
   {
-    path: "/find",
-    name: "Find",
+    path: '/instruction',
+    name: 'Instruction',
+    component: Instruction
+  },
+  {
+    path: '/find',
+    name: 'Find',
     component: Find,
     children: [
       {

@@ -1,4 +1,9 @@
 /* 공통 */
+/* 폰트 Nanum Gothic*/
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+* {
+    font-family: 'Nanum Gothic', sans-serif;
+}
 
 .input-with-btn {
   width: 80%;
@@ -119,12 +124,14 @@
 }
 .btn-next,
 .btn-ok,
-.btn-signup {
+.btn-signup, 
+.btn-skip{
   background-color: #942706;
   color: white;
   border-radius: 30px;
   width: 215px;
   height: 40px;
+  font-size: 2vh;
 }
 .find-email .v-input {
   margin-top: 15px;
@@ -255,3 +262,40 @@
   transition: 0.3s ease all;
   z-index: 1;
 }
+
+  #instruction-headline{
+    margin-bottom: 10vh;
+  }
+  #instructionImage{
+    width : 80vw;
+    height: 35vh;
+    max-width : 350px;
+    max-height : 240px;
+  }
+  .instruction-container{
+    padding : 2vh;
+  }
+  .carousel-container{
+    width:100vw;
+    height:90vh;
+    text-align : center;
+  }
+  .item-content{
+    align-items: center;
+    align-self: center;
+    flex-wrap: wrap;
+    flex: 1 1;
+    overflow: hidden;
+    vertical-align: center;
+  }
+  .item-title{
+      color:black;
+      font-size : 2.6vh;
+      font-weight: 700;
+      margin-bottom : 1vh;
+  }
+  .item-subtitle{
+    color : rgba(0, 0, 0, 0.5);
+    font-size : 2vh;
+    font-weight : 600;
+  }
