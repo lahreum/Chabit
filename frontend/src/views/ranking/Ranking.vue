@@ -4,7 +4,7 @@
       <v-container fluid>
         <v-row justify="center" dense align="center">
           <div class="ranking-nav">
-            <v-col class="d-flex" cols="3.5" sm="1">
+            <v-col class="d-flex" cols="2.5" sm="1">
               <v-select
                 v-model="selectedFol"
                 :items="onlyFollowing"
@@ -15,7 +15,7 @@
               >
               </v-select>
             </v-col>
-            <v-col class="d-flex" cols="3.5" sm="2">
+            <v-col class="d-flex" cols="4" sm="2">
               <v-select
                 v-model="selectedCate"
                 :items="categoryId"
