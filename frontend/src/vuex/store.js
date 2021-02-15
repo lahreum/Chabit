@@ -21,10 +21,6 @@ export const store = new Vuex.Store({
     prooflistChallengeId: 0,
     reviewDetailId: 0,
     typeOfChallenge: "",
-    // changedImage: "",
-    // changedNickname: "",
-    // changedPassword: "",
-    // changedPhone: "",
   },
   getters: {
     // computed
