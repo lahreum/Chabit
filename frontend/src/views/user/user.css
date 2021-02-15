@@ -1,8 +1,8 @@
 /* 공통 */
 /* 폰트 Nanum Gothic*/
-@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
 * {
-  font-family: "Nanum Gothic", sans-serif;
+    font-family: 'Nanum Gothic', sans-serif;
 }
 
 .input-with-btn {
@@ -104,7 +104,7 @@
   background-color: #fcebeb;
 }
 
-/* ChangePw.vue */
+/* 비밀번호 변경 */
 .change-password > p,
 .modify-user > p,
 .signup > p,
@@ -114,23 +114,18 @@
   color: #942706;
   margin: 0 30px;
 }
-.modify-user .v-input,
-.login .v-input,
-.signup .v-input,
-.find-pw .v-input,
-.find-email .v-input,
 .change-password .v-input {
   margin-top: 15px;
 }
-/* FindEmail.vue */
+/* 이메일 찾기 */
 .find-email,
 .find-pw {
   margin: 70px 0 30px 0;
 }
 .btn-next,
 .btn-ok,
-.btn-signup,
-.btn-skip {
+.btn-signup, 
+.btn-skip{
   background-color: #942706;
   color: white;
   border-radius: 30px;
@@ -138,7 +133,10 @@
   height: 40px;
   font-size: 2vh;
 }
-/* FindEmailFinish.vue */
+.find-email .v-input {
+  margin-top: 15px;
+}
+/* 이메일 찾기 완료 */
 .find-email-finish {
   margin: 40px 30px 70px 30px;
   text-align: center;
@@ -147,12 +145,15 @@
   font-size: small;
 }
 
-/* FindPw.vue */
+/* 비밀번호 찾기 */
 .find-pw .btn-get-check {
   margin: 0;
   width: 20%;
 }
-/* ModifyUser.vue */
+.find-pw .v-input {
+  margin-top: 15px;
+}
+/* 회원정보 수정 */
 .modify-user .btn-left {
   background-color: white;
   color: black;
@@ -162,15 +163,11 @@
   margin: 0;
   width: 20%;
 }
-.modify-user .origin-avatar {
-  margin-bottom: 12px !important;
-}
-
 .modify-user img {
   margin: 0;
 }
-/* Join.vue */
-.modify-user .display-timer,
+
+/* 회원가입 */
 .signup .display-timer {
   width: 35%;
   float: right;
@@ -179,12 +176,15 @@
 .signup .input {
   color: white;
 }
+.signup .v-input {
+  margin-top: 15px;
+}
 .signup .btn-get-check {
   margin: 0;
   width: 20%;
 }
 
-/* Login.vue */
+/* 로그인 */
 .btn-login {
   background-color: #942706;
   color: white;
@@ -209,7 +209,10 @@
   justify-content: space-evenly;
   margin: 30px 0;
 }
-/* Find.vue */
+.login .v-input {
+  margin-top: 15px;
+}
+/* Email, Password 선택 checkbox */
 .btn-login-signup {
   text-align: center;
   font-size: small;
@@ -260,39 +263,39 @@
   z-index: 1;
 }
 
-#instruction-headline {
-  margin-bottom: 10vh;
-}
-#instructionImage {
-  width: 80vw;
-  height: 35vh;
-  max-width: 350px;
-  max-height: 240px;
-}
-.instruction-container {
-  padding: 2vh;
-}
-.carousel-container {
-  width: 100vw;
-  height: 90vh;
-  text-align: center;
-}
-.item-content {
-  align-items: center;
-  align-self: center;
-  flex-wrap: wrap;
-  flex: 1 1;
-  overflow: hidden;
-  vertical-align: center;
-}
-.item-title {
-  color: black;
-  font-size: 2.6vh;
-  font-weight: 700;
-  margin-bottom: 1vh;
-}
-.item-subtitle {
-  color: rgba(0, 0, 0, 0.5);
-  font-size: 2vh;
-  font-weight: 600;
-}
+  #instruction-headline{
+    margin-bottom: 10vh;
+  }
+  #instructionImage{
+    width : 80vw;
+    height: 35vh;
+    max-width : 350px;
+    max-height : 240px;
+  }
+  .instruction-container{
+    padding : 2vh;
+  }
+  .carousel-container{
+    width:100vw;
+    height:90vh;
+    text-align : center;
+  }
+  .item-content{
+    align-items: center;
+    align-self: center;
+    flex-wrap: wrap;
+    flex: 1 1;
+    overflow: hidden;
+    vertical-align: center;
+  }
+  .item-title{
+      color:black;
+      font-size : 2.6vh;
+      font-weight: 700;
+      margin-bottom : 1vh;
+  }
+  .item-subtitle{
+    color : rgba(0, 0, 0, 0.5);
+    font-size : 2vh;
+    font-weight : 600;
+  }
