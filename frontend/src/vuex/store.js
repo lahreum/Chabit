@@ -1,21 +1,20 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-import createPersistedState from 'vuex-persistedstate';
+import Vue from "vue";
+import Vuex from "vuex";
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   // modules,
-  plugins: [
-    createPersistedState(),
-  ],
-  state: {        // data
-    host: 'https://i4b207.p.ssafy.io/api',
+  plugins: [createPersistedState()],
+  state: {
+    // data
+    host: "https://i4b207.p.ssafy.io/api",
     /*로그인한 회원의 정보*/
     user: {},
-    yourEmail: '',
-    yourImage: '',
-    yourNickname:'',
+    yourEmail: "",
+    yourImage: "",
+    yourNickname: "",
     currentChallengeDetailId: 0,
     proofChallengeId: 0,
     writeReviewChallengeId: 0,
@@ -23,7 +22,8 @@ export const store = new Vuex.Store({
     reviewDetailId: 0,
     typeOfChallenge: "",
   },
-  getters: {    // computed
+  getters: {
+    // computed
     getUserEmail(state) {
       return state.user.userEmail;
     },
@@ -64,14 +64,15 @@ export const store = new Vuex.Store({
       return state.user.userImage;
     },
   },
-  mutations: {    // methods
+  mutations: {
+    // methods
     LOGIN(state, payload) {
       state.user = payload;
     },
     LOGOUT(state) {
       if (state.user) {
         state.user = {};
-        alert('로그아웃되었습니다.');
+        alert("로그아웃되었습니다.");
       }
     },
     SELECTEDCHALLENGE(state, id) {
@@ -90,13 +91,20 @@ export const store = new Vuex.Store({
       state.reviewDetailId = id;
     },
     MOVETOPERSONALCHALLENGE(state, type) {
-      state.typeOfChallenge = type
+      state.typeOfChallenge = type;
     },
     SETYOURINFO(state, payload) {
       state.yourEmail = payload.yourEmail;
       state.yourImage = payload.yourImage;
       state.yourNickname = payload.yourNickname;
-    }
+    },
+    UPDATEUSERINFO(state, payload) {
+      state.user.userNickname = payload.userNickname;
+      state.user.userPassword = payload.userPassword;
+      state.user.userPhone = payload.userPhone;
+    },
+    UPDATEUSERAVATAR(state, payload) {
+      state.user.userImage = payload;
+    },
   },
-  
 });
