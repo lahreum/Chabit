@@ -302,7 +302,7 @@ public class UserController {
             String imageUrl = uploader.upload(userImage, "users", uniqueName);
 
             userService.putUserImage(user, imageUrl);
-            response = new BaseResponse("success", "이미지 등록 성공");
+            response = new BaseResponse("success", imageUrl);
         } catch (IllegalStateException | IOException | IllegalArgumentException e) {
             response = new BaseResponse("fail", e.getMessage());
         }
