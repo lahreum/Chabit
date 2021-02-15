@@ -72,4 +72,12 @@ public class Review {
         this.coolList.remove(cool);
         this.coolCount -= 1; // 멋져요 수 감소
     }
+
+    public void upCommentCount(){
+        this.commentCount +=1;
+    }
+    public void downCommentCount(){
+        this.commentCount -=1;
+    }
+
 }
