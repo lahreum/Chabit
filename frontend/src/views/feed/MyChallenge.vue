@@ -15,6 +15,7 @@
               </v-btn>
             </v-col>
             <v-col
+              cols="4"
             > 
               <v-btn elevation="0" color="white" width="100%" @click="finish">
                 <p style="font-size: 1.5rem;">{{item.terminatedChallenge.length}}</p>
@@ -24,6 +25,7 @@
               </v-btn>
             </v-col>
             <v-col
+              cols="4"
             > 
               <v-btn elevation="0" color="white" width="100%" @click="manage">
                 <p style="font-size: 1.5rem;">{{item.ownChallenge.length}}</p>
