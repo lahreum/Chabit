@@ -15,7 +15,7 @@
     color="primary"
     horizontal fixed height="80"
     >
-        <Profile :src="this.userImage" style="margin:20px;"/><br>
+        <Profile :src="this.userImage" style="margin:10px;"/><br>
         <v-text-field label="댓글 달기..." v-model="oneComment" v-on:keyup.enter="addComment" style="margin-top:20px;"></v-text-field>
         <v-btn @click="addComment" >게시</v-btn>
   
