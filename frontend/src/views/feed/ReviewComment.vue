@@ -56,7 +56,7 @@ export default {
     methods: {
       addComment: function() {
         this.$Axios
-        .post(`${this.$store.state.host}/v1/review/${this.$store.state.reviewDetailId}/comment`,{"commentContent": this.oneComment})
+        .post(`${this.$store.state.host}/v1/review/${this.$store.state.reviewDetailId}/comment`,{"commentContent": this.oneComment, "userEmail": this.email })
         .then((res) => {
           if(res.data.status === "success") {
             console.log('댓글작성 성공');
@@ -68,6 +68,7 @@ export default {
           console.log(error);
         })
         this.clearInput();
+        window.location.reload();
       },
       clearInput: function() {
         this.oneComment = ' ';
@@ -104,7 +105,7 @@ export default {
         .catch((error)=> {
           console.log(error);
         })
-      }
+      },
     },
     created() {
       this.getCommentList();
