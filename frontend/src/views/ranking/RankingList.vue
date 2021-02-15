@@ -35,34 +35,66 @@
                 clearable
                 label="검색"
                 return-object
-                :menu-props="{ top: false, bottom: true, offsetY: true, offsetX: true }"
+                :menu-props="{
+                  top: false,
+                  bottom: true,
+                  offsetY: true,
+                  offsetX: true,
+                }"
               >
               </v-autocomplete>
             </div>
             <v-expand-transition>
               <v-list v-if="search" rounded color="rgb(100, 100, 100,.1)">
-                <v-list-item :items="users" item-key="search" show-select sort :search="search">
+                <v-list-item
+                  :items="users"
+                  item-key="search"
+                  show-select
+                  sort
+                  :search="search"
+                >
                   <v-list-item-avatar class="avatar" size="60">
-                    <v-img :alt="`${search.userNickname} avatar`" :src="search.userImage"></v-img>
+                    <v-img
+                      :alt="`${search.userNickname} avatar`"
+                      :src="search.userImage"
+                    ></v-img>
                   </v-list-item-avatar>
                   <v-list-item-content>
-                    <v-list-item-title class="black--text" v-text="search.userNickname">
+                    <v-list-item-title
+                      class="black--text"
+                      v-text="search.userNickname"
+                    >
                     </v-list-item-title>
-                    <v-list-item-subtitle class="point gray--text" v-text="search.userPoints">
+                    <v-list-item-subtitle
+                      class="point gray--text"
+                      v-text="search.userPoints"
+                    >
                     </v-list-item-subtitle>
                   </v-list-item-content>
                   <v-icon
-                    v-if="users.findIndex((i) => i.userNickname == search.userNickname) == 0"
+                    v-if="
+                      users.findIndex(
+                        (i) => i.userNickname == search.userNickname
+                      ) == 0
+                    "
                     color="yellow darken-2"
                     >mdi-crown</v-icon
                   >
                   <v-icon
-                    v-if="users.findIndex((i) => i.userNickname == search.userNickname) == 1"
+                    v-if="
+                      users.findIndex(
+                        (i) => i.userNickname == search.userNickname
+                      ) == 1
+                    "
                     color="grey lighten-2"
                     >mdi-crown</v-icon
                   >
                   <v-icon
-                    v-if="users.findIndex((i) => i.userNickname == search.userNickname) == 2"
+                    v-if="
+                      users.findIndex(
+                        (i) => i.userNickname == search.userNickname
+                      ) == 2
+                    "
                     color="brown lighten-2"
                     >mdi-crown</v-icon
                   >
@@ -70,7 +102,11 @@
                     <v-list-item
                       class="black--text"
                       v-text="
-                        users.findIndex((i) => i.userNickname == search.userNickname) + 1 + `위`
+                        users.findIndex(
+                          (i) => i.userNickname == search.userNickname
+                        ) +
+                        1 +
+                        `위`
                       "
                     ></v-list-item>
                   </v-footer>
@@ -91,14 +127,24 @@
                       >{{ user.userPoints }}
                     </v-list-item-subtitle>
                   </v-list-item-content>
-                  <v-icon v-if="index == 0" color="yellow darken-2">mdi-crown</v-icon>
-                  <v-icon v-if="index == 1" color="grey lighten-2">mdi-crown</v-icon>
-                  <v-icon v-if="index == 2" color="brown lighten-2">mdi-crown</v-icon>
+                  <v-icon v-if="index == 0" color="yellow darken-2"
+                    >mdi-crown</v-icon
+                  >
+                  <v-icon v-if="index == 1" color="grey lighten-2"
+                    >mdi-crown</v-icon
+                  >
+                  <v-icon v-if="index == 2" color="brown lighten-2"
+                    >mdi-crown</v-icon
+                  >
                   <v-footer color="transparent">
                     <v-list-item
                       class="black--text"
                       v-text="
-                        users.findIndex((i) => i.userNickname == user.userNickname) + 1 + `위`
+                        users.findIndex(
+                          (i) => i.userNickname == user.userNickname
+                        ) +
+                        1 +
+                        `위`
                       "
                     ></v-list-item>
                   </v-footer>
@@ -118,7 +164,7 @@ import { mapGetters } from "vuex";
 export default {
   props: {
     monthlyRanking: Boolean,
-    categoryId: Number,
+    categoryId: String,
     onlyFollowing: Boolean,
   },
 
@@ -156,6 +202,10 @@ export default {
             if (res.data.status == "success") {
               this.mine = res.data.data.myRanking;
               this.users = res.data.data.userRanking;
+              console.log(res.data);
+              if (res.data.data.userRanking.length <= 0) {
+                alert("해당되는 데이터가 없습니다.");
+              }
             } else {
               console.log(res);
             }
@@ -171,17 +221,14 @@ export default {
     this.checkLog();
   },
   watch: {
-    monthlyRanking: function() {
+    monthlyRanking: function () {
       this.getRankList();
-      console.log("월별");
     },
-    categoryId: function() {
+    categoryId: function () {
       this.getRankList();
-      console.log("카테");
     },
-    onlyFollowing: function() {
+    onlyFollowing: function () {
       this.getRankList();
-      console.log("팔로");
     },
   },
 };

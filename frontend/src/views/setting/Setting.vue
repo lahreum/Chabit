@@ -4,22 +4,33 @@
       <!-- 계정설정 -->
       <v-list-group color="#B71C1C" no-action>
         <template v-slot:activator>
-          <v-list-item-title class="font-weight-black">계정설정</v-list-item-title>
+          <v-list-item-title class="font-weight-black"
+            >계정설정</v-list-item-title
+          >
         </template>
         <v-list-item router-link :to="{ name: 'ModifyUser' }">
           <v-list-item-content>
-            <v-list-item-title class="font-weight-medium">회원정보 수정</v-list-item-title>
+            <v-list-item-title class="font-weight-medium"
+              >회원정보 수정</v-list-item-title
+            >
           </v-list-item-content>
         </v-list-item>
-        <v-list-item>
+        <v-list-item v-ripple="{ center: true }">
           <v-list-item-content>
-            <v-list-item-title class="font-weight-medium" @click="dialog = !dialog"
+            <v-list-item-title
+              class="font-weight-medium"
+              @click="dialog = !dialog"
               >회원탈퇴</v-list-item-title
             >
             <!-- Start Popup dialog -->
             <p v-if="dialog">
               <v-row justify="center">
-                <v-dialog v-model="dialog" persistent max-width="290" content-class="rounded-xl">
+                <v-dialog
+                  v-model="dialog"
+                  persistent
+                  max-width="290"
+                  content-class="rounded-xl"
+                >
                   <v-card class="rounded-xl justify-center text-sm-center">
                     <v-card-title class="headline justify-center rounded-xl">
                       <strong>회원탈퇴</strong>
@@ -31,13 +42,17 @@
                     <v-divider></v-divider>
                     <v-card-actions class="rounded-xl">
                       <v-spacer></v-spacer>
-                      <v-btn text @click="dialog = false">
-                        취소
-                      </v-btn>
+                      <v-btn text @click="dialog = false"> 취소 </v-btn>
                       <v-spacer></v-spacer>
                       <v-divider vertical></v-divider>
                       <v-spacer></v-spacer>
-                      <v-btn color="red darken-4" plain :ripple="false" text @click="deleteUser()">
+                      <v-btn
+                        color="red darken-4"
+                        plain
+                        :ripple="false"
+                        text
+                        @click="deleteUser()"
+                      >
                         탈퇴
                       </v-btn>
                       <v-spacer></v-spacer> </v-card-actions
@@ -63,7 +78,13 @@
                     <v-divider></v-divider>
                     <v-card-actions class="rounded-xl">
                       <v-spacer></v-spacer>
-                      <v-btn color="red darken-4" plain :ripple="false" text @click="movePage()">
+                      <v-btn
+                        color="red darken-4"
+                        plain
+                        :ripple="false"
+                        text
+                        @click="movePage()"
+                      >
                         확인
                       </v-btn>
                       <v-spacer></v-spacer> </v-card-actions
@@ -82,7 +103,9 @@
         @click="$router.push({ name: 'ManageMember' })"
       >
         <template v-slot:activator>
-          <v-list-item-title class="font-weight-black">회원관리</v-list-item-title>
+          <v-list-item-title class="font-weight-black"
+            >회원관리</v-list-item-title
+          >
         </template>
       </v-list-group>
     </v-list>
