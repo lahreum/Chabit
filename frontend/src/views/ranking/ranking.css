@@ -1,0 +1,31 @@
+/* Rnaking.vue */
+.ranking-nav .r-toggle {
+  display: inline-flex;
+  padding-right: 12px;
+}
+.ranking-nav .v-label {
+  margin: 0px 4px;
+}
+.ranking-nav {
+  display: inline-flex;
+}
+.ranking-nav .v-label theme--light {
+  margin-right: 2rem;
+}
+
+/* RankingList.vue */
+.ranking-list {
+  position: sticky;
+  margin-bottom: 10px;
+}
+.ranking-list .avatar {
+  border: white solid 1px;
+}
+.ranking-list .v-input {
+  max-width: 70%;
+}
+.ranking-list .searchBox {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}

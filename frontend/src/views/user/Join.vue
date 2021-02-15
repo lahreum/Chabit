@@ -93,7 +93,6 @@
           </div>
           <!-- 타이머 -->
         </v-card-text>
-        <div v-if="rqNumberHasClicked"></div>
         <div class="bottom">
           <button
             class="btn-signup"
@@ -151,7 +150,6 @@ export default {
       form: "",
       submitStatus: null, // 가입하기 기능 활성화 수준
       certNum: "", // 인증번호 요청 후 sms를 통해 수령한 인증번호
-      rqNumberHasClicked: false, // 연락처 인증버튼을 눌렀을 때 타이머 띄워주기 위한 확인
       timerOut: false, // 3분 타이머가 아웃되었는지 확인
       callReset: false, // 3분 타이머가 만료되었을 경우 다시 초기화
     };
@@ -270,7 +268,6 @@ export default {
 
     // 닉네임 중복체크
     checkNickname() {
-      this.timer(180);
       if (this.userNickname.length != 0 && !this.ckNickname) {
         this.$Axios
           .get(`${this.$store.state.host}/v1/users/` + this.userNickname)
@@ -304,7 +301,6 @@ export default {
               this.timer(180);
               this.rqNumber = true;
               this.timerOut = false;
-              this.rqNumberHasClicked = true;
               this.certNum = res.data.data.certificateNum;
               document.getElementById("btnCkPN").disabled = true;
             } else {
@@ -332,7 +328,6 @@ export default {
           if (this.certificationNumber == this.certNum) {
             alert("인증번호가 일치합니다.");
             this.ckrqNum = true;
-            this.rqNumberHasClicked = false;
             document.getElementById("btnCkCN").disabled = true;
           } else {
             alert("인증번호가 일치하지 않습니다. 다시 입력해주세요");
