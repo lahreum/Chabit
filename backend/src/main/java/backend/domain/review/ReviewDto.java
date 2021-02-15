@@ -18,6 +18,7 @@ public class ReviewDto {
     private boolean pressCool;
     private int commentCount;
     private Long userId;
+    private String userEmail;
     private String userNickname;
     private String userImage;
     private String userLevelImage;
@@ -31,6 +32,7 @@ public class ReviewDto {
         this.coolCount = review.getCoolCount();
         this.commentCount = review.getCommentCount();
         this.userId = review.getUserId().getUserId();
+        this.userEmail = review.getUserId().getUserEmail();
         this.userNickname = review.getUserId().getUserNickname();
         this.userImage = review.getUserId().getUserImage();
         this.challengeId = review.getChallengeId().getChallengeId();
