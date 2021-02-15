@@ -202,7 +202,7 @@ public class ReviewController {
         try {
             Review review = reviewService.findByReviewId(reviewId); //아이디값으로 어떤 review인가 구한다.
             ReviewComment newReviewComment = new ReviewComment();//새 리뷰답장을 만든다.
-            newReviewComment.setUserId(review.getUserId());
+            newReviewComment.setUserId(userService.findUser(request.getUserEmail()));
             newReviewComment.setReviewId(review);
             newReviewComment.setCommentContent(request.getCommentContent());
             reviewService.saveReviewComment(newReviewComment);

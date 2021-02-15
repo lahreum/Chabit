@@ -103,6 +103,7 @@ public class ReviewService {
 
     @Transactional
     public ReviewComment saveReviewComment(ReviewComment reviewComment){
+        reviewComment.getReviewId().upCommentCount();
         return reviewCommentRepository.saveReviewComment(reviewComment);
     }
 
@@ -127,6 +128,7 @@ public class ReviewService {
 
     @Transactional
     public void deleteReviewComment(ReviewComment reviewComment){
+        reviewComment.getReviewId().downCommentCount();
         reviewCommentRepository.deleteReviewComment(reviewComment);
     }
     /**
