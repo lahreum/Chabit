@@ -34,6 +34,10 @@ public class ChallengeService {
     @Transactional
     public Challenge makeChallenge(Challenge challenge) throws IllegalStateException{
         challengeRepoistory.save(challenge);
+
+        User owner = challenge.getChallengeOwner();
+        owner.changePoint(-challenge.getChallengePoint());
+        owner.addHistory(new PointHistory(owner, challenge, LocalDateTime.now(ZoneId.of("Asia/Seoul")), -challenge.getChallengePoint()));
         return challenge;
     }
 
