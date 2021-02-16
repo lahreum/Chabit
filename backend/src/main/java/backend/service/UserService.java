@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -236,12 +237,12 @@ public class UserService {
             Category category = findCategory.get();
             final Comparator<User> comp = (u1, u2) ->
                     Integer.compare(u1.getPointHistories().stream()
-                                    .filter(h -> !monthlyRanking || h.getPointDate().getMonth().equals(LocalDate.now().getMonth()))
+                                    .filter(h -> !monthlyRanking || h.getPointDate().getMonth().equals(LocalDate.now(ZoneId.of("Asia/Seoul")).getMonth()))
                                     .filter(h -> h.getChallenge().getChallengeCategory().equals(category))
                                     .mapToInt(PointHistory::getPointChange)
                                     .sum(),
                             u2.getPointHistories().stream()
-                                    .filter(h -> !monthlyRanking || h.getPointDate().getMonth().equals(LocalDate.now().getMonth()))
+                                    .filter(h -> !monthlyRanking || h.getPointDate().getMonth().equals(LocalDate.now(ZoneId.of("Asia/Seoul")).getMonth()))
                                     .filter(h -> h.getChallenge().getChallengeCategory().equals(category))
                                     .mapToInt(PointHistory::getPointChange)
                                     .sum());
@@ -253,7 +254,7 @@ public class UserService {
                     .sorted(comp.reversed())
                     .map(u -> new UserDto(u,
                             u.getPointHistories().stream()
-                            .filter(h -> !monthlyRanking || h.getPointDate().getMonth().equals(LocalDate.now().getMonth()))
+                            .filter(h -> !monthlyRanking || h.getPointDate().getMonth().equals(LocalDate.now(ZoneId.of("Asia/Seoul")).getMonth()))
                             .filter(h -> h.getChallenge().getChallengeCategory().equals(category))
                             .mapToInt(PointHistory::getPointChange)
                             .sum()))
@@ -263,22 +264,22 @@ public class UserService {
             final Comparator<User> comp = (u1, u2) ->
                     Integer.compare(
                             u1.getPointHistories().stream()
-                                    .filter(h -> !monthlyRanking || h.getPointDate().getMonth().equals(LocalDate.now().getMonth()))
+                                    .filter(h -> h.getPointDate().getMonth().equals(LocalDate.now(ZoneId.of("Asia/Seoul")).getMonth()))
                                     .mapToInt(PointHistory::getPointChange)
-                                    .sum() + u1.getUserPoints(),
-                            u1.getPointHistories().stream()
-                                    .filter(h -> !monthlyRanking || h.getPointDate().getMonth().equals(LocalDate.now().getMonth()))
+                                    .sum(),
+                            u2.getPointHistories().stream()
+                                    .filter(h -> h.getPointDate().getMonth().equals(LocalDate.now(ZoneId.of("Asia/Seoul")).getMonth()))
                                     .mapToInt(PointHistory::getPointChange)
-                                    .sum() + u2.getUserPoints()
+                                    .sum()
                     );
             result = userList.stream()
                     .filter(u ->
-                            !monthlyRanking || u.getPointHistories().stream()
-                                    .anyMatch(h -> h.getPointDate().getMonth().equals(LocalDate.now().getMonth())))
+                            u.getPointHistories().stream()
+                                    .anyMatch(h -> h.getPointDate().getMonth().equals(LocalDate.now(ZoneId.of("Asia/Seoul")).getMonth())))
                     .sorted(comp.reversed())
                     .map(u -> new UserDto(u,
                             u.getPointHistories().stream()
-                            .filter(h -> !monthlyRanking || h.getPointDate().getMonth().equals(LocalDate.now().getMonth()))
+                            .filter(h -> h.getPointDate().getMonth().equals(LocalDate.now(ZoneId.of("Asia/Seoul")).getMonth()))
                             .mapToInt(PointHistory::getPointChange)
                             .sum()))
                     .collect(Collectors.toList());
