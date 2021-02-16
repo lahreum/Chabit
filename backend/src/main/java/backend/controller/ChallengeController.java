@@ -100,7 +100,7 @@ public class ChallengeController {
             List<ProofExample> todayProofList = proofService.getTodayProofList();
 
             Random rand = new Random();
-            rand.setSeed(LocalDate.now().toEpochDay());
+            rand.setSeed(LocalDate.now(ZoneId.of("Asia/Seoul")).toEpochDay());
 
             ProofExample todayProof = todayProofList.get(rand.nextInt(todayProofList.size()));
 
@@ -144,7 +144,7 @@ public class ChallengeController {
             if(challenge == null)
                 response = new BaseResponse("fail", "잘못된 챌린지 아이디입니다");
             else {
-                String uniqueName = user.getUserId() + "_" + challengeId + "_" + LocalDate.now() + "_";
+                String uniqueName = user.getUserId() + "_" + challengeId + "_" + LocalDate.now(ZoneId.of("Asia/Seoul")) + "_";
                 String proofUrl = uploader.upload(file, "proofs", uniqueName);
                 userService.proofChallenge(user, challenge, proofUrl);
                 response = new BaseResponse("success", "인증 성공");
