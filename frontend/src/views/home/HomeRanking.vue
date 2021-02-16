@@ -9,20 +9,21 @@
       max-width="385"
       flat
     >
-      <v-list color="grey lighten-5">
+      <v-list color="grey lighten-4">
         <v-list-item
+
           v-for="(item,idx) in ranking"
           :key="idx"
         >
-          <v-list-item-subtitle class="text-left" style="font-size: 1.2rem; font-weight: 600;">
+          <v-list-item-subtitle class="text-left" style="font-size: 2.2vh; font-weight: 600;">
             {{ idx + 1 }}위
           </v-list-item-subtitle>
 
-          <v-list-item-subtitle class="text-left" style="font-size: 1.1rem; font-weight: 600;">
+          <v-list-item-subtitle class="text-left" style="font-size: 2.2vh; font-weight: 600;">
             {{ item.userNickname }}
           </v-list-item-subtitle>
 
-          <v-list-item-subtitle class="text-right" style="font-size: 1.2rem; font-weight: 600; color: #B71C1C;">
+          <v-list-item-subtitle class="text-right" style="font-size: 2.2vh; font-weight: 600; color: #B71C1C;">
             {{ item.userPoints }}
           </v-list-item-subtitle>
         </v-list-item>
@@ -60,7 +61,6 @@ export default {
 
 <style scoped>
 .all-ranking {
-  margin-top: 1rem;
   padding-left: 0.5rem;
   padding-bottom: 1rem;
   font-size: 1.5rem;
@@ -70,5 +70,9 @@ export default {
 .all-ranking > .fa-plus {
   padding-left: 0.5rem;
   color: #B71C1C;
+}
+.v-list-item{
+  min-height: 33px;
+  padding : 0px 30px; 
 }
 </style>

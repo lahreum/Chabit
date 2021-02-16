@@ -6,7 +6,8 @@
     </div>
     <v-carousel
       class="slide"
-      hide-delimiters 
+      hide-delimiters
+      height="450px" 
       cycle 
       :show-arrows-on-hover="true"
     >
@@ -42,10 +43,10 @@
               class="mx-0"
               v-if="item.challengeOwner.userRole === 'ADMIN'"
             >
-              <div style="color: #B71C1C; font-size: 1.1rem; font-weight: 600;" >
+              <div style="color: #B71C1C; font-size: 0.9rem; font-weight: 600;" >
                 <i class="fas fa-gem"></i>
               </div>
-              <div class="grey--text ml-1" style="font-size: 1.1rem; font-weight: 600;">
+              <div class="grey--text ml-1" style="font-size: 0.9rem; font-weight: 600;">
                 공식 챌린지
               </div>
             </v-row>
@@ -97,7 +98,6 @@ export default {
 <style scoped>
 .hot-challenge {
   padding-left: 0.5rem;
-  margin-top: 2.5rem;
   /* margin-bottom: -1.5rem; */
   font-size: 1.5rem;
   font-weight: 600;

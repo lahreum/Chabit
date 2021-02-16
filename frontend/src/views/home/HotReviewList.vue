@@ -74,7 +74,7 @@ export default {
 }
 
 .hot-review-info {
-  margin: 0.5rem 0 -1rem 0;
+  margin: 0.5rem 0.5rem -1rem 0.5rem;
   display: flex;
   justify-content: space-between;
   font-size: 1rem;
