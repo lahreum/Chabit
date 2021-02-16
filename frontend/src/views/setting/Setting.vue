@@ -109,17 +109,14 @@
         </template>
       </v-list-group>
     </v-list>
-    <Footer />
   </v-app>
 </template>
 
 <script>
 import "./setting.css";
-import Footer from "../../components/include/Footer.vue";
 import { mapGetters } from "vuex";
 
 export default {
-  components: { Footer },
   data: () => ({
     dialog: false,
     afterDialog: false,
