@@ -278,10 +278,18 @@ public class UserController {
             
             // 내 랭킹 찾기
             int myRank = 1;
+            boolean findMe = false;
             for (UserDto user : ranking) {
-                if(user.getUserEmail().equals(userEmail))
+                if(user.getUserEmail().equals(userEmail)) {
+                    findMe = true;
                     break;
+                }
                 myRank++;
+            }
+
+            if (!findMe) {
+                User me = userService.findUser(userEmail);
+                ranking.add(new UserDto(me, 0));
             }
 
             response = new BaseResponse("success", new RankingResponse(myRank, ranking));
