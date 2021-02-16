@@ -152,22 +152,24 @@ export default {
     },
   },
   updated() {
-    this.$Axios
-      .get(`${this.$store.state.host}/v1/users/` + this.userEmail)
-      .then((res) => {
-        if (res.data.status == "success") {
-          this.userLevel = res.data.data.userLevel.level;
-          this.userNickname = res.data.data.userNickname;
-          this.userImage = res.data.data.userImage;
-          this.userPoints = res.data.data.userPoints;
-          this.userMaxPoint = res.data.data.userLevel.levelMaxPoint;
-        } else {
-          alert("회원 정보를 찾을 수가 없습니다.");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (this.userEmail != null) {
+      this.$Axios
+        .get(`${this.$store.state.host}/v1/users/` + this.userEmail)
+        .then((res) => {
+          if (res.data.status == "success") {
+            this.userLevel = res.data.data.userLevel.level;
+            this.userNickname = res.data.data.userNickname;
+            this.userImage = res.data.data.userImage;
+            this.userPoints = res.data.data.userPoints;
+            this.userMaxPoint = res.data.data.userLevel.levelMaxPoint;
+          } else {
+            alert("회원 정보를 찾을 수가 없습니다.");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   },
   created() {
     window.addEventListener("scroll", this.scroll);
