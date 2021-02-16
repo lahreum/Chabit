@@ -12,7 +12,13 @@
 .ranking-nav .v-label theme--light {
   margin-right: 2rem;
 }
-
+.ranking-nav .-select__selectin.v-select__selection--comma {
+  font-size: 2rem;
+  font-size: 10px;
+}
+.ranking-nav .v-input {
+  font-size: 3.5vmin;
+}
 /* RankingList.vue */
 .ranking-list {
   position: sticky;
