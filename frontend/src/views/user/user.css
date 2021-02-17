@@ -14,9 +14,12 @@
   background-color: #942706;
   padding: 100px 15px 100px 15px;
   display: flex;
+  align-items: center;
   justify-content: center;
 }
 .logo {
+  z-index: 2;
+  text-align: center;
   background-color: #ffffff;
   width: 115px;
   height: 115px;
@@ -26,6 +29,7 @@
   top: 60px;
 }
 .chabit-logo {
+  z-index: 2;
   width: 95px;
   height: 70px;
   position: absolute;
@@ -38,6 +42,7 @@
   padding: 100px 1% 0px;
   min-width: 320px;
   max-width: 320px;
+  
 }
 .text-input {
   margin: 10px 5% 20px;
