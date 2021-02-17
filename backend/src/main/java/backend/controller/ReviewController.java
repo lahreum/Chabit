@@ -224,7 +224,7 @@ public class ReviewController {
     @PutMapping("/comment/{reviewCommentId}")
     @ApiOperation(value="리뷰 댓글 수정", notes="댓글 작성자만 수정 가능")
     public BaseResponse updateReviewComment
-    (@PathVariable Long reviewCommentId, @RequestBody ReviewRequest request) {
+    (@PathVariable Long reviewCommentId, @RequestBody CommentRequest request) {
         BaseResponse response = null;
         try {
             User commentUser = reviewService.findReviewCommentByReviewCommentId(reviewCommentId).getUserId();
@@ -233,7 +233,7 @@ public class ReviewController {
             if (loginUser.getUserId().equals(commentUser.getUserId())) {
                 ReviewComment reviewComment = new ReviewComment();
                 reviewComment.setReviewCommentId(reviewCommentId);
-                reviewComment.setCommentContent(request.getReviewContent());
+                reviewComment.setCommentContent(request.getCommentContent());
                 reviewService.updateReviewComment(reviewComment);
                 response = new BaseResponse("success", "수정성공");
             } else {
