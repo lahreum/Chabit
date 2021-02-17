@@ -12,11 +12,31 @@
             <div class="media-content">
               <div class="content">
                 <p><strong>{{talk.userNickname}}</strong></p>
-                <!-- 댓글을 클릭하면 수정,또는 삭제 팝업이 나옴 -->
-                <p>{{talk.commentContent}}</p>
-                <span @click="toggleReply" style="color:gray; font-size:10px; font-weight:600; margin-right:10px;">답글달기</span>
-                <span @click="modifyComment" v-if="talk.userNickname == nickname" style="color:gray; font-size:10px; font-weight:600;margin-right:10px;">수정</span>
-                <span @click="deleteComment" v-if="talk.userNickname == nickname" style="color:gray; font-size:10px; font-weight:600;margin-right:10px;">삭제</span>
+                <!-- 댓글 내의 수정 또는 삭제 버튼을 클릭하면 이벤트 발생, 처리 -->
+                <p v-if="!modifying2">{{talk.commentContent}}</p>
+                <div v-if="modifying2">
+                  <v-textarea
+                    v-if="talk.reviewCommentId == modifyNumber"
+                    name="input-7-1"
+                    v-model="modifyContent"
+                  ></v-textarea>
+                </div>
+                <!-- 수정중 아닐때-> 수정, 삭제 -->
+                <div v-if="!modifying2">
+                  <span @click="toggleReply" style="color:gray; font-size:10px; font-weight:600; margin-right:10px;">답글달기</span>
+                  <span @click="sendCommentInfo2(talk.reviewCommentId, talk.commentContent)" v-if="talk.userNickname == nickname" style="color:gray; font-size:10px; font-weight:600;margin-right:10px;">수정</span>
+                  <span @click="deleteComment(talk.reviewCommentId)" v-if="talk.userNickname == nickname" style="color:gray; font-size:10px; font-weight:600;margin-right:10px;">삭제</span>
+                </div>
+                <!-- 수정중일때 -> 저장 -->
+                <div v-if="modifying2">
+                  <span @click="modifyComment(modifyNumber, modifyContent)" v-if="talk.userNickname == nickname" style="color:gray; font-size:10px; font-weight:600;margin-right:10px;">저장</span>
+                  <span @click="toggleModify" v-if="talk.userNickname == nickname" style="color:gray; font-size:10px; font-weight:600;margin-right:10px;">취소</span>
+                </div>
+
+                <!-- <span @click="modifyComment" v-if="talk.userNickname == nickname" style="color:gray; font-size:10px; font-weight:600;margin-right:10px;">수정</span>
+                <span @click="deleteComment" v-if="talk.userNickname == nickname" style="color:gray; font-size:10px; font-weight:600;margin-right:10px;">삭제</span> -->
+                
+                <!-- 답글달기 부분 -->
                 <div v-if="writingReply">
                   <v-col
                   cols="12"
@@ -30,8 +50,8 @@
                     full-width
                     v-model="reply" @keyup.enter="addReply"
                     ></v-textarea>
-                    <button @click="addReply" style="margin-right:20px;">등록하기</button>
-                    <button @click="toggleReply">취소</button>
+                    <button @click="addReply" style="margin-right:20px;color:gray; font-size:10px; font-weight:600;">등록하기</button>
+                    <button @click="toggleReply" style="color:gray; font-size:10px; font-weight:600;margin-right:10px;">취소</button>
                   </v-col>
                 </div>
               </div>
@@ -48,11 +68,28 @@
               </figure>
             </div>
             <div class="media-content" >
+              <!-- 대댓글 내용 -->
               <div class="content">
                 <p><strong>{{ reply.userNickname }}</strong></p>
-                <p>{{ reply.commentContent }}</p>
-                <span @click="modifyComment" v-if="reply.userNickname == nickname" style="color:gray; font-size:10px; font-weight:600;margin-right:10px;">수정</span>
-                <span @click="deleteComment" v-if="reply.userNickname == nickname" style="color:gray; font-size:10px; font-weight:600;margin-right:10px;">삭제</span>
+                <!-- 수정버튼을 눌러 modifying = true 만들었다면 기존 내용 적힌 textatrea로 대체함 -->
+                <p v-if="!modifying">{{ reply.commentContent }}</p>
+                <div v-if="modifying">
+                  <v-textarea
+                    v-if="reply.reviewCommentId == modifyNumber"
+                    name="input-7-1"
+                    v-model="modifyContent"
+                  ></v-textarea>
+                </div>
+                <!-- 수정, 삭제 이벤트 처리 부분 -->
+                <div v-if="!modifying">
+                  <span @click="sendCommentInfo(reply.reviewCommentId, reply.commentContent)" v-if="reply.userNickname == nickname" style="color:gray; font-size:10px; font-weight:600;margin-right:10px;">수정</span>
+                  <span @click="deleteComment(reply.reviewCommentId)" v-if="reply.userNickname == nickname" style="color:gray; font-size:10px; font-weight:600;margin-right:10px;">삭제</span>
+                </div>
+                <!-- 수정중일때 -> 저장, -->
+                <div v-if="modifying">
+                  <span @click="modifyComment(modifyNumber, modifyContent)" v-if="reply.userNickname == nickname" style="color:gray; font-size:10px; font-weight:600;margin-right:10px;">저장</span>
+                  <span @click="toggleModify" v-if="reply.userNickname == nickname" style="color:gray; font-size:10px; font-weight:600;margin-right:10px;">취소</span>
+                </div>
               </div>
             </div>
           </article>
@@ -70,6 +107,11 @@ export default {
     return {
       reply: "",
       writingReply: false,
+      modifying: false,
+      modifying2: false,
+      deleting: false,
+      modifyContent: "",
+      modifyNumber: 0,
     }
   },
   components: {
@@ -104,15 +146,57 @@ export default {
     toggleReply() {
       this.writingReply = !this.writingReply;
     },
+    toggleModify() {
+      this.modifying = !this.modifying;
+    },
+    toggleModify2() {
+      this.modifying2 = !this.modifying2;
+    },
+    toggleDelete() {
+      this.deleting = !this.deleting;
+    },
     clearInput: function() {
       this.reply = "";
     },
-    modifyComment() {   // 댓글 수정
-      this.$Axios
-      .put(`${this.$store.state.host}/v1/`)
+    sendCommentInfo(reviewCommentId, commentContent) {   // 댓글 수정
+      this.toggleModify();
+      this.modifyNumber = reviewCommentId;
+      this.modifyContent = commentContent;
     },
-    deleteComment() {   // 댓글 삭제
-
+    sendCommentInfo2(reviewCommentId, commentContent) {   // 댓글 수정
+      this.toggleModify2();
+      this.modifyNumber = reviewCommentId;
+      this.modifyContent = commentContent;
+    },
+    modifyComment() {
+      this.$Axios
+      .put(`${this.$store.state.host}/v1/review/comment/` + this.modifyNumber, {"commentContent":this.modifyContent, "userEmail": this.email })
+      .then((res)=> {
+        if(res.data.status === "success") {
+          console.log('댓글 수정 성공');
+          window.location.reload();
+        } else {
+          console.log('댓글 수정 실패');
+        }
+      })
+      .catch((error)=> {
+        console.log(error);
+      })
+    },
+    deleteComment(reviewCommentId) {   // 댓글 삭제
+      this.$Axios
+      .delete(`${this.$store.state.host}/v1/review/comment/` + this.email + '/' + reviewCommentId) 
+      .then((res)=> {
+        if(res.data.status === "success") {
+          console.log('댓글 삭제 성공!');
+          window.location.reload();
+        } else {
+          console.log('댓글 삭제 실패');
+        }
+      })
+      .catch((error)=> {
+        console.log(error);
+      })
     }
   }
 }
