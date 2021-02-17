@@ -13,8 +13,10 @@
                             <v-img :alt="`${following.userImage} avatar`" :src="following.userImage"></v-img>
                         </v-list-item-avatar>
                         <v-list-item-content>
-                            <v-list-item-title  class="name black--text" v-text="following.userNickname"></v-list-item-title>
+                            <v-list-item-title  class="name black--text" v-text="following.userNickname">
+                            </v-list-item-title>
                         </v-list-item-content>
+                            <v-btn @click="cancelFollowing(following.userEmail)">팔로우 해제</v-btn>
                     </v-list-item>
                 </v-list>
             </v-flex>
@@ -47,6 +49,26 @@ export default {
           .catch((error)=> {
               console.log(error);
           })
+      },
+      cancelFollowing(userEmail) {
+        this.$Axios
+        .delete(`${this.$store.state.host}/v1/follow`,{
+            data:{          //////// 질문 필요
+                "followingEmail": userEmail, 
+                "userEmail": this.email
+            }
+        })
+        .then((res)=> {
+            if(res.data.status === "success") {
+                window.location.reload();
+                console.log('팔로우 취소 성공');
+            } else {
+                console.log('팔로우 취소 실패');
+            }
+        })
+        .catch((error)=>{
+            console.log(error);
+        })
       }
     },
     computed: {
