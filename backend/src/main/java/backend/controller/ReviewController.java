@@ -250,19 +250,19 @@ public class ReviewController {
      * @param reviewCommentId 삭제될 Comment에 대한 Id 정보
      * @return 삭제 되었는가에 대한 정보
      */
-    @DeleteMapping("/comment/{userEmail}/{reviewCommentId}")
+    @DeleteMapping("/comment/{loginUserEmail}/{reviewCommentId}")
     @ApiOperation(value="리뷰 댓글 삭제", notes="리뷰 댓글 삭제")
     public BaseResponse deleteReviewComment
     (@PathVariable String loginUserEmail, @PathVariable Long reviewCommentId) {
         BaseResponse response = null;
         try {
-            User reviewUser = reviewService.findReviewCommentByReviewCommentId(reviewCommentId).getReviewId().getUserId(); //리뷰 작성자
-            User commentUser = reviewService.findReviewCommentByReviewCommentId(reviewCommentId).getUserId();
+            ReviewComment comment = reviewService.findReviewCommentByReviewCommentId(reviewCommentId);
+            User reviewUser = comment.getReviewId().getUserId(); //리뷰 작성자
+            User commentUser = comment.getUserId(); // 댓글 작성자
             //reviewCommentId로 리뷰코멘트 데이터 -> 코멘트 작성자Id찾기
             User loginUser = userService.findUser(loginUserEmail); //현재 수정하려는 사용자
             if (loginUser.getUserId().equals(reviewUser.getUserId()) || loginUser.getUserId().equals(commentUser.getUserId())) {
-                ReviewComment reviewComment = reviewService.findReviewCommentByReviewCommentId(reviewCommentId);
-                reviewService.deleteReviewComment(reviewComment);
+                reviewService.deleteReviewComment(comment);
                 response = new BaseResponse("success", "삭제되었습니다.");
             } else {
                 response = new BaseResponse("fail", "동일한 작성자 또는 리뷰 작성자가 아닙니다.");
