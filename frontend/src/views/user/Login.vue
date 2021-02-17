@@ -1,8 +1,10 @@
 <template>
+<sequential-entrance fromBottom> 
   <div class="outside">
     <div class="logo"></div>
     <img class="chabit-logo" src="../../assets/img/chabit.jpg" alt="chabit" />
     <div class="inside">
+      <sequential-entrance fromBottom>
       <div class="login">
         <p>로그인</p>
         <v-card-text class="text-input">
@@ -46,9 +48,10 @@
           <div class="btn-social-login"></div>
         </div>
       </div>
+      </sequential-entrance> 
     </div>
-    <br />
   </div>
+  </sequential-entrance> 
 </template>
 
 <script>
