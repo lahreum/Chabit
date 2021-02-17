@@ -15,15 +15,15 @@
           v-for="(item,idx) in ranking"
           :key="idx"
         >
-          <v-list-item-subtitle class="text-left" style="font-size: 2.2vh; font-weight: 600;">
+          <v-list-item-subtitle class="text-left font-size-subtitle" >
             {{ idx + 1 }}위
           </v-list-item-subtitle>
 
-          <v-list-item-subtitle class="text-left" style="font-size: 2.2vh; font-weight: 600;">
+          <v-list-item-subtitle class="text-middle font-size-subtitle">
             {{ item.userNickname }}
           </v-list-item-subtitle>
 
-          <v-list-item-subtitle class="text-right" style="font-size: 2.2vh; font-weight: 600; color: #B71C1C;">
+          <v-list-item-subtitle class="text-right font-size-subtitle" style="color: #B71C1C;">
             {{ item.userPoints }}
           </v-list-item-subtitle>
         </v-list-item>
@@ -73,6 +73,13 @@ export default {
 }
 .v-list-item{
   min-height: 33px;
-  padding : 0px 30px; 
+  padding : 0px 20px; 
 }
+.v-list-item > .text-left{
+  max-width: 15vw;
+}
+.v-list-item > .text-right{
+  max-width: 25vw;
+}
+
 </style>

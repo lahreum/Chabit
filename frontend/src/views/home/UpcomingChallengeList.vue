@@ -51,7 +51,7 @@
               </div>
             </v-row>
             <p></p>
-            <div class="hash-tag-bundle font-size-subtitle">
+            <div class="hash-tag-bundle">
               <hash-tag :content="item.hashtags.hashtags[0].hashtagName"/>
               <hash-tag :content="item.hashtags.hashtags[1].hashtagName"/>
             </div>

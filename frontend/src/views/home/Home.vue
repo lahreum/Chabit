@@ -1,9 +1,11 @@
 <template>
   <div>
+  <sequential-entrance fromBottom>
     <home-ranking />
     <upcoming-challenge-list />
     <hot-review-list />
     <deadline-challenge-list />
+    </sequential-entrance>
   </div>
 </template>
 
