@@ -17,13 +17,25 @@
         :menu-props="{ top: false, bottom: true, offsetY: true, offsetX: true }"
       ></v-autocomplete>
       <v-spacer></v-spacer>
-      <v-btn elevation="1" rounded plain depressed color="error" @click="dialog = !dialog">
+      <v-btn
+        elevation="1"
+        rounded
+        plain
+        depressed
+        color="error"
+        @click="dialog = !dialog"
+      >
         Forced</v-btn
       >
       <!-- Start Popup dialog -->
       <p v-if="dialog">
         <v-row justify="center">
-          <v-dialog v-model="dialog" persistent max-width="290" content-class="rounded-xl">
+          <v-dialog
+            v-model="dialog"
+            persistent
+            max-width="290"
+            content-class="rounded-xl"
+          >
             <v-card class="rounded-xl justify-center text-sm-center">
               <v-card-title class="headline justify-center rounded-xl">
                 <strong>회원삭제</strong>
@@ -32,13 +44,17 @@
               <v-divider></v-divider>
               <v-card-actions class="rounded-xl">
                 <v-spacer></v-spacer>
-                <v-btn text @click="dialog = false">
-                  취소
-                </v-btn>
+                <v-btn text @click="dialog = false"> 취소 </v-btn>
                 <v-spacer></v-spacer>
                 <v-divider vertical></v-divider>
                 <v-spacer></v-spacer>
-                <v-btn color="red darken-4" plain :ripple="false" text @click="deleteUserForced()">
+                <v-btn
+                  color="red darken-4"
+                  plain
+                  :ripple="false"
+                  text
+                  @click="deleteUserForced()"
+                >
                   탈퇴
                 </v-btn>
                 <v-spacer></v-spacer> </v-card-actions
@@ -50,7 +66,12 @@
       <!-- Start AfterPopup -->
       <p v-if="afterDialog">
         <v-row justify="center">
-          <v-dialog v-model="afterDialog" persistent max-width="290" content-class="rounded-xl">
+          <v-dialog
+            v-model="afterDialog"
+            persistent
+            max-width="290"
+            content-class="rounded-xl"
+          >
             <v-card class="rounded-xl justify-center text-sm-center">
               <v-card-title class="headline justify-center rounded-xl">
                 <strong>회원삭제 결과</strong>
@@ -87,8 +108,9 @@
       class="elevation-1"
       hide-default-footer
     >
-      <!-- @toggle-select-all="selectAllToggle" -->
-      <template v-slot:[`item.data-table-select`]="{ item, isSelected, select }">
+      <template
+        v-slot:[`item.data-table-select`]="{ item, isSelected, select }"
+      >
         <v-simple-checkbox
           v-ripple
           :value="isSelected"
@@ -131,17 +153,6 @@ export default {
     ...mapGetters({ userRole: "getUserRole" }),
   },
   methods: {
-    // 전체선택 자동 계산
-    // selectAllToggle(props) {
-    //   if (this.selected.length != this.memberInfo.length - this.disabledCount) {
-    //     this.selected = [];
-    //     props.items.forEach((item) => {
-    //       if (!this.checkRole(item.userRole)) {
-    //         this.selected.push(item);
-    //       }
-    //     });
-    //   } else this.selected = [];
-    // },
     // 사용자 권한 확인
     checkRole(input) {
       if (input != "USER") return true;
@@ -155,10 +166,6 @@ export default {
         .then((res) => {
           if (res.data.status == "success") {
             this.memberInfo = res.data.data;
-            // 관리자 권한일 경우 선택 못하도록 카운트
-            // this.memberInfo.map((item) => {
-            //   if (this.checkRole(item.userRole)) this.disabledCount += 1;
-            // });
           }
         })
         .catch((err) => {

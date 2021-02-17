@@ -83,14 +83,10 @@ export default {
       const errors = [];
       if (!this.$v.userPassword.$dirty) return errors;
       !this.$v.userPassword.minLength &&
-        errors.push(
-          "영문, 숫자, 특수문자(!@#$%^&*)로 5글자 이상 입력해주세요."
-        );
+        errors.push("비밀번호 입력 형식이 올바르지 않습니다.");
       !this.$v.userPassword.required && errors.push("필수 입력입력항목입니다.");
       !this.$v.userPassword.password &&
-        errors.push(
-          "영문, 숫자, 특수문자(!@#$%^&*)로 5글자 이상 입력해주세요."
-        );
+        errors.push("비밀번호 입력 형식이 올바르지 않습니다.");
       return errors;
     },
   },

@@ -333,7 +333,7 @@ export default {
       if (this.ckNickname == false) {
         alert("닉네임 중복 확인을 해주세요!");
       } else if (this.ckPassword == false) {
-        alert("비밀번호를 확인을 재입력해주세요.");
+        alert("비밀번호 확인이 필요합니다!");
       } else if (this.rqNumber == false) {
         alert("휴대전화번호 인증이 필요합니다!");
       } else if (this.ckrqNum == false) {
@@ -420,7 +420,7 @@ export default {
             console.log(err);
           });
       } else if (this.ckNickname) {
-        alert("이미 중복확인을 하였습니다.");
+        alert("사용 가능합니다!");
       } else {
         alert("닉네임을 입력해주세요!");
       }
@@ -448,7 +448,7 @@ export default {
             console.log(err);
           });
       } else if (this.rqNumber) {
-        alert("이미 등록된 핸드폰 번호입니다.");
+        alert("사용가능합니다!");
       } else {
         alert("올바른 연락처를 입력해주세요!");
       }
@@ -473,7 +473,7 @@ export default {
             alert("인증번호가 일치하지 않습니다. 다시 입력해주세요");
           }
         } else if (this.ckrqNum) {
-          alert("이미 인증번호 확인이 완료되었습니다.");
+          alert("인증번호 확인이 완료되었습니다!");
         } else {
           alert("인증번호를 입력해주세요!");
         }
