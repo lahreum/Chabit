@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <div class="hot-challenge">
+    <div class="hot-challenge font-title">
       <span class="hot">HOT</span><span>챌린지</span>
       <i class="fas fa-plus" @click="$router.push('/challenge')" ></i>
     </div>
@@ -96,13 +96,6 @@ export default {
 </script>
 
 <style scoped>
-.hot-challenge {
-  padding-left: 0.5rem;
-  /* margin-bottom: -1.5rem; */
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-
 .hot-challenge > .fa-plus {
   padding-left: 0.5rem;
   color: #B71C1C;

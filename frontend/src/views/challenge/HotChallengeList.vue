@@ -1,5 +1,9 @@
 <template>
+<sequential-entrance fromBottom> 
   <v-container>
+      <div class="hot-challenge font-title">
+        <span class="hot">HOT</span><span>챌린지</span>
+    </div>
     <v-carousel
       class="slide"
       hide-delimiters 
@@ -31,7 +35,7 @@
             :src="item.challengeThumbnail"
           ></v-img>
 
-          <v-card-title style="color: black; font-weight: 600;">{{item.challengeName}}</v-card-title>
+          <v-card-title style="color: black;" class="font-size-title">{{item.challengeName}}</v-card-title>
 
           <v-card-text>
             <v-row
@@ -39,10 +43,10 @@
               class="mx-0"
               v-if="item.challengeOwner.userRole === 'ADMIN'"
             >
-              <div style="color: #B71C1C; font-size: 1.1rem; font-weight: 600;" >
+              <div style="color: #B71C1C;" class="font-size-subtitle">
                 <i class="fas fa-gem"></i>
               </div>
-              <div class="grey--text ml-1" style="font-size: 1.1rem; font-weight: 600;">
+              <div class="grey--text ml-1 font-size-subtitle">
                 공식 챌린지
               </div>
             </v-row>
@@ -56,6 +60,7 @@
       </v-carousel-item>
     </v-carousel>
   </v-container>
+  </sequential-entrance> 
 </template>
 
 <script>
@@ -95,5 +100,9 @@ export default {
 .hash-tag-bundle {
   display: flex;
   align-items: flex-start;
+}
+.hot-challenge > .hot {
+  color: #B71C1C;
+  padding-right: 0.5rem;
 }
 </style>

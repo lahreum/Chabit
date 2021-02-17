@@ -1,17 +1,21 @@
 <template>
+
   <div>
+    <sequential-entrance fromBottom> 
     <div class="search">
       <div class="my-search-bar">
           <v-text-field
                 label="검색"
                 append-icon="fas fa-search"
                 clearable
+                dense
+                outlined
                 v-on:keyup.enter="search"
                 v-model="searchItem"
             ></v-text-field>
       </div>
-      <!-- <i class="fas fa-filter"></i> -->
     </div>
+    </sequential-entrance> 
     <div v-if="!searchItem">
       <hot-challenge-list />
       <new-challenge-list />
@@ -20,7 +24,9 @@
       <span class="search-result">'{{searchItem}}' 검색 결과</span>
       <search-challenge-list v-if="isSearch" :searchWord="searchItem"/>
     </div>
+
   </div>
+
 </template>
 
 <script>
@@ -56,7 +62,7 @@ export default {
 
 <style scoped>
 .my-search-bar {
-  width: 100%;
+  width: 85%;
 }
 
 .searchBtn {
