@@ -23,7 +23,7 @@
           <v-row no-gutters>
             <v-col
               v-for="badge in bestBadges"
-              :key="badge.badgeName"
+              :key="badge.badgeId"
               cols="4"
             >
               <div class="text-center">
@@ -35,12 +35,19 @@
                   <!-- 뱃지 모음을 보여주는 모달 팝업 -->
                   <v-card>
                     <v-card-title>
-                      <span>{{ categoryBadges.badgeCategory }}</span>
+                      <span>{{ categoryBadges[0].badgeCategory }}</span>
                     </v-card-title>
                     <v-card-text>
                       <!-- 이미지 출력 오류 부분 -->
-                      <v-col v-for="oneBadge in categoryBadges" :key="oneBadge.badgeName" >
-                          <img :src="oneBadge.badgeImage" style="float:left;" />
+                      <v-col v-for="oneBadge in categoryBadges" :key="oneBadge.badgeId" >
+                          <div>
+                            <div style="float:left;">
+                              <img :src="oneBadge.badgeImage"/>
+                              <p>
+                                {{ oneBadge.badgeName }}
+                              </p>
+                            </div>
+                          </div>
                       </v-col>
                     </v-card-text>
                     <v-divider></v-divider>
@@ -88,7 +95,16 @@ export default {
     },
     dialog: false,
     category: "",
-    categoryBadges: [],
+    categoryBadges: [
+      {
+            badgeId: '',
+            badgeName: '',
+            badgeType: '',
+            badgeCategory: '',
+            userGet: '',
+            badgeImage: ''
+        }
+    ],
   }),
   created(){
     this.getBadge();
@@ -100,10 +116,8 @@ export default {
   },
   methods: {
     clickModal(badge) {
-      // console.log(this.badgeData);
       this.category = badge.badgeCategory;
       this.getCategoryBadges(this.category);
-      // this.badgeData = badge
     },
     getBadge() {
       this.$Axios
@@ -111,7 +125,6 @@ export default {
       .then((res) => {
         if(res.data.status === "success") {
           this.badges = res.data.data.badges;
-          console.log('뱃지 가져오기 성공');
           this.getBestBadge();
           // console.log(this.badges.badge.감정관리[0]);
         } else {
@@ -125,159 +138,119 @@ export default {
     },
     getBestBadge() {
         // 독서 카테고리에서의 최고뱃지
-        let flag = false;
         let temp1 = this.badges.badge.독서[0];  // 첫 브론즈 뱃지로 초기화(미획득이라면 미획득 이미지)
         for(let j=0; j<3; j++) {
           if(this.badges.badge.독서[j].userGet) {   // 유저가 가지고 있는 뱃지에 대해서만 
             // 더 큰 뱃지를 temp에 넣고
             temp1 = this.badges.badge.독서[j];
-            flag = true;
+          } else {
+            this.badges.badge.독서[j].badgeName = "획득하러 가기";
           }
-        }
-        if(!flag)  {  // 해당 카테고리에서 취득한 뱃지가 없다면
-          //뱃지 이름을 획득하러가기로 바꿈
-          temp1.badgeName = "취득하러 가기";
         }
         this.bestBadges.push(temp1);  // 최종 temp를 bestBadges 배열에 push
         
         // 생활습관 카테고리에서의 최고뱃지
-        flag = false;
         let temp2 = this.badges.badge.생활습관[0];  // 첫 브론즈 뱃지로 초기화(미획득이라면 미획득 이미지)
         for(let j=0; j<3; j++) {
           if(this.badges.badge.생활습관[j].userGet) {   // 유저가 가지고 있는 뱃지에 대해서만 
             // 더 큰 뱃지를 temp에 넣고
             temp2 = this.badges.badge.생활습관[j];
-            flag = true;
+          } else {
+            this.badges.badge.생활습관[j].badgeName = "획득하러 가기";
           }
-        }
-        if(!flag)  {  // 해당 카테고리에서 취득한 뱃지가 없다면
-          //뱃지 이름을 획득하러가기로 바꿈
-          temp2.badgeName = "취득하러 가기";
         }
         this.bestBadges.push(temp2);   // 최종 temp를 bestBadges 배열에 push
         
         // 다이어트 카테고리에서의 최고뱃지
-        flag = false;
         let temp3 = this.badges.badge.다이어트[0];  // 첫 브론즈 뱃지로 초기화(미획득이라면 미획득 이미지)
         for(let j=0; j<3; j++) {
           if(this.badges.badge.다이어트[j].userGet) {   // 유저가 가지고 있는 뱃지에 대해서만 
             // 더 큰 뱃지를 temp에 넣고
             temp3 = this.badges.badge.다이어트[j];
-            flag = true;
+          } else {
+            this.badges.badge.다이어트[j].badgeName = "획득하러 가기";
           }
-        }
-        if(!flag)  {  // 해당 카테고리에서 취득한 뱃지가 없다면
-          //뱃지 이름을 획득하러가기로 바꿈
-          temp3.badgeName = "취득하러 가기";
         }
         this.bestBadges.push(temp3);  // 최종 temp를 bestBadges 배열에 push
 
         // 취미 카테고리에서의 최고뱃지
-        flag = false;
         let temp4 = this.badges.badge.취미[0];  // 첫 브론즈 뱃지로 초기화(미획득이라면 미획득 이미지)
         for(let j=0; j<3; j++) {
           if(this.badges.badge.취미[j].userGet) {   // 유저가 가지고 있는 뱃지에 대해서만 
             // 더 큰 뱃지를 temp에 넣고
             temp4 = this.badges.badge.취미[j];
-            flag = true;
+          } else {
+            this.badges.badge.취미[j].badgeName = "획득하러 가기";
           }
-        }
-        if(!flag)  {  // 해당 카테고리에서 취득한 뱃지가 없다면
-          //뱃지 이름을 획득하러가기로 바꿈
-          temp4.badgeName = "취득하러 가기";
         }
         this.bestBadges.push(temp4);    // 최종 temp를 bestBadges 배열에 push
 
         // 감정관리 카테고리에서의 최고뱃지
-        flag = false;
         let temp5 = this.badges.badge.감정관리[0];  // 첫 브론즈 뱃지로 초기화(미획득이라면 미획득 이미지)
         for(let j=0; j<3; j++) {
           if(this.badges.badge.감정관리[j].userGet) {   // 유저가 가지고 있는 뱃지에 대해서만 
             // 더 큰 뱃지를 temp에 넣고
             temp5 = this.badges.badge.감정관리[j];
-            flag = true;
+          } else {
+            this.badges.badge.감정관리[j].badgeName = "획득하러 가기";
           }
-        }
-        if(!flag)  {  // 해당 카테고리에서 취득한 뱃지가 없다면
-          //뱃지 이름을 획득하러가기로 바꿈
-          temp5.badgeName = "취득하러 가기";
         }
         this.bestBadges.push(temp5);  // 최종 temp를 bestBadges 배열에 push
 
         // 돈관리 카테고리에서의 최고뱃지
-        flag = false;
         let temp6 = this.badges.badge.돈관리[0];  // 첫 브론즈 뱃지로 초기화(미획득이라면 미획득 이미지)
         for(let j=0; j<3; j++) {
           if(this.badges.badge.돈관리[j].userGet) {   // 유저가 가지고 있는 뱃지에 대해서만 
             // 더 큰 뱃지를 temp에 넣고
             temp6 = this.badges.badge.돈관리[j];
-            flag = true;
+          } else {
+            this.badges.badge.돈관리[j].badgeName = "획득하러 가기";
           }
-        }
-        if(!flag)  {  // 해당 카테고리에서 취득한 뱃지가 없다면
-          //뱃지 이름을 획득하러가기로 바꿈
-          temp6.badgeName = "취득하러 가기";
         }
         this.bestBadges.push(temp6);  // 최종 temp를 bestBadges 배열에 push
         
         // 운동 카테고리에서의 최고뱃지
-        flag = false;
         let temp7 = this.badges.badge.운동[0];  // 첫 브론즈 뱃지로 초기화(미획득이라면 미획득 이미지)
         for(let j=0; j<3; j++) {
           if(this.badges.badge.운동[j].userGet) {   // 유저가 가지고 있는 뱃지에 대해서만 
             // 더 큰 뱃지를 temp에 넣고
             temp7 = this.badges.badge.운동[j];
-            flag = true;
+          } else {
+            this.badges.badge.운동[j].badgeName = "획득하러 가기";
           }
-        }
-        if(!flag)  {  // 해당 카테고리에서 취득한 뱃지가 없다면
-          //뱃지 이름을 획득하러가기로 바꿈
-          temp7.badgeName = "취득하러 가기";
         }
         this.bestBadges.push(temp7);  // 최종 temp를 bestBadges 배열에 push
 
         // 공부 카테고리에서의 최고뱃지
-        flag = false;
         let temp8 = this.badges.badge.공부[0];  // 첫 브론즈 뱃지로 초기화(미획득이라면 미획득 이미지)
         for(let j=0; j<3; j++) {
           if(this.badges.badge.공부[j].userGet) {   // 유저가 가지고 있는 뱃지에 대해서만 
             // 더 큰 뱃지를 temp에 넣고
             temp8 = this.badges.badge.공부[j];
-            flag = true;
+          } else {
+            this.badges.badge.공부[j].badgeName = "획득하러 가기";
           }
-        }
-        if(!flag)  {  // 해당 카테고리에서 취득한 뱃지가 없다면
-          //뱃지 이름을 획득하러가기로 바꿈
-          temp8.badgeName = "취득하러 가기";
         }
         this.bestBadges.push(temp8);  // 최종 temp를 bestBadges 배열에 push
 
         // 돌봄 카테고리에서의 최고뱃지
-        flag = false;
         let temp9 = this.badges.badge.돌봄[0];  // 첫 브론즈 뱃지로 초기화(미획득이라면 미획득 이미지)
         for(let j=0; j<3; j++) {
           if(this.badges.badge.돌봄[j].userGet) {   // 유저가 가지고 있는 뱃지에 대해서만 
             // 더 큰 뱃지를 temp에 넣고
             temp9 = this.badges.badge.돌봄[j];
-            flag = true;
+          } else {
+            this.badges.badge.돌봄[j].badgeName = "획득하러 가기";
           }
-        }
-        if(!flag)  {  // 해당 카테고리에서 취득한 뱃지가 없다면
-          //뱃지 이름을 획득하러가기로 바꿈
-          temp9.badgeName = "취득하러 가기";
         }
         this.bestBadges.push(temp9);  // 최종 temp를 bestBadges 배열에 push
     },
     getCategoryBadges(aaa) {
       const categorys = this.badges.badge;
-      // console.log("categorys = " + categorys);
 
       for(var bbb in categorys) {
-        console.log("bbb = "+bbb);
         if(bbb === aaa) {
-          console.log("aaa = "+aaa);
           this.categoryBadges = this.badges.badge[bbb];
-          console.log("categoryBadges =" + this.categoryBadges);
         }
       }
     }
@@ -291,4 +264,5 @@ export default {
     font-weight: 600;
     padding-bottom: 0;
 }
+
 </style>

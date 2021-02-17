@@ -9,29 +9,33 @@
               <Profile :src="talk.userImage" style="margin-right:20px;"/>
             </figure>
           </div>
-          <div class="media-content" >
-            <div class="content">
-              <p><strong>{{talk.userNickname}}</strong></p>
-              <p>{{talk.commentContent}}</p>
-              <p @click="toggleReply" style="color:gray; font-size:10px; font-weight:600;">답글달기</p>
-              <div v-if="writingReply">
-                <v-col
-                cols="12"
-                md="6"
-                >
-                  <v-textarea
+            <div class="media-content">
+              <div class="content">
+                <p><strong>{{talk.userNickname}}</strong></p>
+                <!-- 댓글을 클릭하면 수정,또는 삭제 팝업이 나옴 -->
+                <p>{{talk.commentContent}}</p>
+                <span @click="toggleReply" style="color:gray; font-size:10px; font-weight:600; margin-right:10px;">답글달기</span>
+                <span @click="modifyComment" v-if="talk.userNickname == nickname" style="color:gray; font-size:10px; font-weight:600;margin-right:10px;">수정</span>
+                <span @click="deleteComment" v-if="talk.userNickname == nickname" style="color:gray; font-size:10px; font-weight:600;margin-right:10px;">삭제</span>
+                <div v-if="writingReply">
+                  <v-col
+                  cols="12"
+                  md="6"
+                  >
+                    <v-textarea
+                    solo
                     name="input-7-4"
-                    placeholder="답글 달기"
                     clearable
+                    placeholder="답글 달기"
                     full-width
                     v-model="reply" @keyup.enter="addReply"
-                  ></v-textarea>
-                  <button @click="addReply" style="margin-right:20px;">등록하기</button>
-                  <button @click="toggleReply">취소</button>
-                </v-col>
+                    ></v-textarea>
+                    <button @click="addReply" style="margin-right:20px;">등록하기</button>
+                    <button @click="toggleReply">취소</button>
+                  </v-col>
+                </div>
               </div>
             </div>
-          </div>
         </article>
       </div>
       <!-- 대댓글 부분 -->
@@ -47,6 +51,8 @@
               <div class="content">
                 <p><strong>{{ reply.userNickname }}</strong></p>
                 <p>{{ reply.commentContent }}</p>
+                <span @click="modifyComment" v-if="reply.userNickname == nickname" style="color:gray; font-size:10px; font-weight:600;margin-right:10px;">수정</span>
+                <span @click="deleteComment" v-if="reply.userNickname == nickname" style="color:gray; font-size:10px; font-weight:600;margin-right:10px;">삭제</span>
               </div>
             </div>
           </article>
@@ -73,7 +79,9 @@ export default {
     talk: Object  
   },
   computed: {
-    ...mapGetters({ email: 'getUserEmail',})
+    ...mapGetters({ 
+      email: 'getUserEmail',
+      nickname: 'getUserNickname',}),
   },
   methods: {
     addReply() {
@@ -99,6 +107,12 @@ export default {
     clearInput: function() {
       this.reply = "";
     },
+    modifyComment() {   // 댓글 수정
+      
+    },
+    deleteComment() {   // 댓글 삭제
+
+    }
   }
 }
 </script>
