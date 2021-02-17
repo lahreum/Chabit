@@ -108,7 +108,8 @@ export default {
       this.reply = "";
     },
     modifyComment() {   // 댓글 수정
-      
+      this.$Axios
+      .put(`${this.$store.state.host}/v1/`)
     },
     deleteComment() {   // 댓글 삭제
 
