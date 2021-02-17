@@ -54,16 +54,9 @@ export default {
     moveToReviewDetail(item) {
       this.$store.commit("MOVETOREVIEWDETAIL", item.reviewId)
       if(this.$store.state.user.userEmail == item.userEmail) {
-        this.$router.push('/review-detail')
-      } else {
-        let reviewer = {
-          'yourEmail': item.userEmail,
-          'yourImage': item.userImage,
-          'yourNickname': item.userNickname
-        }
-        this.$store.commit("SETYOURINFO", reviewer);
-        this.$router.push('/your-review-detail')
+        console.log("아이디가 같다");
       }
+      this.$router.push('/review-detail')
     }
   }
 }
