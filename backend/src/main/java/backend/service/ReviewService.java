@@ -157,6 +157,7 @@ public class ReviewService {
 
     @Transactional
     public void saveCommentReply(Review review, User user, ReviewComment parent, CommentRequest request) {
+        review.upCommentCount();
         parent.addReply(ReviewComment.createCommentReply(review, user, parent, request.getCommentContent()));
     }
 }
