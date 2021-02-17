@@ -7,7 +7,7 @@
       cols="4"
     >
       <div @click="moveToReviewDetail(review)">
-        <v-img :src="review.reviewImages[0]" alt="photo" class="review-photo" style="width:100px;height:100px;"/>
+        <v-img v-if="review.reviewId" :src="review.reviewImages[0]" alt="photo" class="review-photo" style="width:100px;height:100px;"/>
       </div>
         <template v-slot:placeholder>
           <v-row
@@ -48,7 +48,6 @@ export default {
       .get(`${this.$store.state.host}/v1/review/` + this.email)
       .then((res) => {
         if(res.data.status === "success") {
-          console.log("리뷰 리스트 잘 넘어옴");
           this.reviews = res.data.data;
         }
       })
