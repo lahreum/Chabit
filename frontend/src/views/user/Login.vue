@@ -39,7 +39,7 @@
             로그인
           </button>
           <div class="btn-forget-signup">
-            <a href="/find">아이디/비밀번호찾기</a>
+            <a href="/find">이메일/비밀번호찾기</a>
             <span> | </span>
             <a href="/join">회원가입</a>
           </div>
