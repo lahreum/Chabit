@@ -2,20 +2,20 @@
 
 .intro-h1 {
 	font-family: 'Lobster Two', cursive;
-	font-size: 13vh;
-	text-shadow: 4px 4px 0px rgba(255, 255, 255, 1);
-	color: #343434;
+	font-size: 11vh;
+	text-shadow: 4px 4px 0px rgba(150,7,7);
+	color: #ffffff;
 }
 
 .intro-container {
     margin-top: -8vh;
 	position: relative;
 	z-index: 0;
-	background-color: #ffffff;
+	background-color: #B71C1C;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	min-height: 100vh;
+	min-height: 102vh;
 	overflow: hidden;
 
 }
@@ -48,7 +48,7 @@
             animation: pulse 5s 2.25s cubic-bezier(.5,.5,0,1)infinite;
         }
         circle:nth-child(5) {
-            fill: #b8b8b8;
+            fill: #FFFFFF;
             animation: pulse 5s 3s cubic-bezier(.5,.5,0,1)infinite;
         }
 }
@@ -57,7 +57,7 @@
 
 @keyframes pulse {
 	25% {
-		opacity: 0.4;
+		opacity: 0.7;
 	}
 	100% {
 		transform: scale(1);
