@@ -7,16 +7,18 @@
             <v-list-item>
               <v-list-item-content>
                 <div class="nav-top-avatar">
-                  <v-list-item-avatar style="height:63px; width:63px; background-color:white; ">
+                  <v-list-item-avatar
+                    style="height: 63px; width: 63px; background-color: white"
+                  >
                     <!-- 프로필 사진 입력 -->
                     <v-img
                       v-if="checkLogin()"
-                      style="height:60px; min-width: 60px; width:60px;"
+                      style="height: 60px; min-width: 60px; width: 60px"
                       :src="userImage"
                     ></v-img>
                     <v-img
                       v-else
-                      style="height:60px; min-width: 60px; width:60px;"
+                      style="height: 60px; min-width: 60px; width: 60px"
                       src="./assets/img/avatardefault.png"
                     ></v-img>
                   </v-list-item-avatar>
@@ -25,14 +27,18 @@
                   <v-list-item-title v-if="checkLogin()" class="title">
                     {{ userNickname }}
                   </v-list-item-title>
-                  <v-list-item-title v-else class="title" @click="$router.push('/login')">
+                  <v-list-item-title
+                    v-else
+                    class="title"
+                    @click="$router.push('/login')"
+                  >
                     로그인하기
                   </v-list-item-title>
                   <v-list-item-subtitle v-if="checkLogin()" color="white">
-                    {{ level }}
+                    {{ userLevel }}
                   </v-list-item-subtitle>
                   <v-list-item-subtitle v-if="checkLogin()">
-                    {{ userPoints }}/{{ levelMaxPoint }}p
+                    {{ userPoints }}/{{ userMaxPoint }}p
                   </v-list-item-subtitle>
                 </div>
               </v-list-item-content>
@@ -42,7 +48,9 @@
           <div id="nav-mid" class="nav-mid">
             <v-list-item-group v-model="group" active-class="text--accent-4">
               <v-list-item>
-                <v-list-item-title @click="$router.push({ name: 'Home' })">Home</v-list-item-title>
+                <v-list-item-title @click="$router.push({ name: 'Home' })"
+                  >Home</v-list-item-title
+                >
               </v-list-item>
 
               <v-list-item @click="$router.push({ name: 'Feed' })">
@@ -61,11 +69,18 @@
                 <v-list-item-title>랭킹</v-list-item-title>
               </v-list-item>
 
-              <v-list-item v-if="this.userEmail" @click="$router.push({ name: 'Setting' })">
+              <v-list-item
+                v-if="this.userEmail"
+                @click="$router.push({ name: 'Setting' })"
+              >
                 <v-list-item-title>설정</v-list-item-title>
               </v-list-item>
 
-              <v-list-item v-if="this.userEmail" class="logout-list" @click="logout">
+              <v-list-item
+                v-if="this.userEmail"
+                class="logout-list"
+                @click="logout"
+              >
                 <v-icon class="logout-icon" color="white">mdi-logout</v-icon>
                 <v-list-item-title>로그아웃</v-list-item-title>
               </v-list-item>
@@ -98,22 +113,25 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "App",
-  data: () => ({ drawer: null, group: null, showNavbar: false }),
+  data: () => ({
+    drawer: null,
+    group: null,
+    showNavbar: false,
+    userLevel: "",
+    userNickname: "",
+    userImage: "",
+    userPoints: "",
+    userMaxPoint: "",
+  }),
+
   props: ["pageTitle"],
+
   computed: {
     ...mapGetters({ userEmail: "getUserEmail" }),
-    ...mapGetters({ level: "getUserLevel" }),
-    ...mapGetters({ userNickname: "getUserNickname" }),
-    ...mapGetters({ userImage: "getUserImage" }),
-    ...mapGetters({ userPoints: "getUserPoints" }),
-    ...mapGetters({ levelMaxPoint: "getUserMaxPoint" }),
   },
   watch: {
     group() {
       this.drawer = false;
-    },
-    userImage() {
-      this.userImage = this.$store.state.user.userImage;
     },
   },
   methods: {
@@ -122,7 +140,9 @@ export default {
       else return false;
     },
     scroll() {
-      window.pageYOffset > 0 ? (this.showNavbar = true) : (this.showNavbar = false);
+      window.pageYOffset > 0
+        ? (this.showNavbar = true)
+        : (this.showNavbar = false);
     },
     logout() {
       localStorage.removeItem("vuex");
@@ -130,6 +150,26 @@ export default {
       alert("로그아웃 되었습니다.");
       window.location.reload();
     },
+  },
+  updated() {
+    if (this.userEmail != null) {
+      this.$Axios
+        .get(`${this.$store.state.host}/v1/users/` + this.userEmail)
+        .then((res) => {
+          if (res.data.status == "success") {
+            this.userLevel = res.data.data.userLevel.level;
+            this.userNickname = res.data.data.userNickname;
+            this.userImage = res.data.data.userImage;
+            this.userPoints = res.data.data.userPoints;
+            this.userMaxPoint = res.data.data.userLevel.levelMaxPoint;
+          } else {
+            alert("회원 정보를 찾을 수가 없습니다.");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   },
   created() {
     window.addEventListener("scroll", this.scroll);

@@ -39,14 +39,11 @@
             로그인
           </button>
           <div class="btn-forget-signup">
-            <a href="/find">아이디/비밀번호찾기</a>
+            <a href="/find">이메일/비밀번호찾기</a>
             <span> | </span>
             <a href="/join">회원가입</a>
           </div>
-          <div class="btn-social-login">
-            <Google />
-            <Kakao />
-          </div>
+          <div class="btn-social-login"></div>
         </div>
       </div>
     </div>
@@ -57,11 +54,12 @@
 <script>
 import "./user.css";
 import { required, minLength, email, helpers } from "vuelidate/lib/validators";
-import Kakao from "../../components/user/snsLogin/Kakao.vue";
-import Google from "../../components/user/snsLogin/Google.vue";
 import { mapGetters } from "vuex";
 
-const password = helpers.regex("password", /^.*(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).*$/);
+const password = helpers.regex(
+  "password",
+  /^.*(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).*$/
+);
 
 export default {
   validations: {
@@ -75,7 +73,8 @@ export default {
     emailErrors() {
       const errors = [];
       if (!this.$v.userEmail.$dirty) return errors;
-      !this.$v.userEmail.email && errors.push("이메일 형식이 올바르지 않습니다.");
+      !this.$v.userEmail.email &&
+        errors.push("이메일 형식이 올바르지 않습니다.");
       !this.$v.userEmail.required && errors.push("필수 입력항목입니다.");
       return errors;
     },
@@ -84,17 +83,12 @@ export default {
       const errors = [];
       if (!this.$v.userPassword.$dirty) return errors;
       !this.$v.userPassword.minLength &&
-        errors.push("영문, 숫자, 특수문자(!@#$%^&*)로 5글자 이상 입력해주세요.");
+        errors.push("비밀번호 입력 형식이 올바르지 않습니다.");
       !this.$v.userPassword.required && errors.push("필수 입력입력항목입니다.");
       !this.$v.userPassword.password &&
-        errors.push("영문, 숫자, 특수문자(!@#$%^&*)로 5글자 이상 입력해주세요.");
+        errors.push("비밀번호 입력 형식이 올바르지 않습니다.");
       return errors;
     },
-  },
-
-  components: {
-    Kakao,
-    Google,
   },
 
   data() {

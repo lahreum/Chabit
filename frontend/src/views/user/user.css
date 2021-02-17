@@ -204,11 +204,6 @@
   color: #942706;
   font-weight: 600;
 }
-.btn-social-login {
-  display: flex;
-  justify-content: space-evenly;
-  margin: 30px 0;
-}
 /* Find.vue */
 .btn-login-signup {
   text-align: center;
@@ -295,4 +290,14 @@
   color: rgba(0, 0, 0, 0.5);
   font-size: 2vh;
   font-weight: 600;
+}
+
+/* ManageMember.vue */
+.manage-member .v-data-table > .v-data-table__wrapper > table > thead > tr > th {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-size: 0.75rem;
+  height: 70px;
 }

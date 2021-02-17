@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class BadgeDto {
+    private Long badgeId;
     private String badgeName;
     private String badgeType;
     private String badgeCategory;
@@ -13,6 +14,7 @@ public class BadgeDto {
     private String badgeImage;
 
     public BadgeDto (Badge badge, boolean userGet) {
+        this.badgeId = badge.getBadgeId();
         this.badgeName = badge.getBadgeName();
         this.badgeType = badge.getBadgeType().equals(BadgeType.BRONZE) ? "BRONZE" :  (badge.getBadgeType().equals(BadgeType.SILVER) ? "SILVER" : "GOLD");
         this.badgeCategory = badge.getBadgeCategory().getCategoryName();
