@@ -1,11 +1,11 @@
 <template>
   <v-container>
+    <sequential-entrance fromBottom> 
     <div class="new-challenge">
       <span class="hot">새로운</span><span>챌린지</span>
     </div>
     <v-container>
-      <v-row
-      >
+      <v-row>
         <v-col
           cols="6"
           sm
@@ -29,29 +29,31 @@
             class="mx-0"
             v-if="item.challengeOwner.userRole === 'ADMIN'"
           >
-            <div style="color: #B71C1C; font-size: 0.8rem; font-weight: 600;" >
+            <div style="color: #B71C1C;" class="font-size-sub-subtitle">
               <i class="fas fa-gem"></i>
             </div>
-            <div class="grey--text ml-1" style="font-size: 0.8rem; font-weight: 600;">
+            <div class="grey--text ml-1 font-size-sub-subtitle">
               공식 챌린지
             </div>
           </v-row>
-          <div class="new-challenge-info">
+          <v-else></v-else>
+          <div class="new-challenge-info font-size-subtitle">
             <span>{{item.challengeName}}</span>
           </div>
         </v-col>
       </v-row>
     </v-container>
+    </sequential-entrance> 
     <div class="create-challenge">
       <v-btn
-        elevation="2"
         color="red darken-4"
-        x-large
+        medium
         fab
         @click="$router.push('/create-challenge')"
       ><span class="plus">+</span></v-btn>
     </div>
   </v-container>
+
 </template>
 
 <script>
@@ -88,8 +90,8 @@ export default {
 <style scoped>
 .new-challenge {
   padding-left: 0.5rem;
-  margin-top: 1.5rem;
-  margin-bottom: 1rem;
+  margin-top: -2.5rem;
+  margin-bottom: 0.5rem;
   font-size: 1.5rem;
   font-weight: 600;
 }
@@ -100,23 +102,22 @@ export default {
 }
 
 .new-challenge-info {
-  margin: 0.5rem 0 -1rem 0;
+  margin: 0.7rem 0 1rem 0;
   display: flex;
   justify-content: space-between;
-  font-size: 1rem;
   font-weight: 600;
   max-width: 12rem;
 }
 
 .create-challenge {
   position: fixed;
-  right: 2rem;
-  bottom: 2rem;
+  right: 3vh;
+  bottom: 3vh;
 }
 
 .plus {
   margin-top: -0.1rem;
-  font-size: 4rem;
+  font-size: 3.5rem;
   color: white;
 }
 </style>

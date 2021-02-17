@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <div class="hot-challenge">
+    <div class="hot-challenge font-title">
       <span class="hot">HOT</span><span>챌린지</span>
       <i class="fas fa-plus" @click="$router.push('/challenge')" ></i>
     </div>
@@ -35,7 +35,7 @@
             :src="item.challengeThumbnail"
           ></v-img>
 
-          <v-card-title style="color: black; font-weight: 600;">{{item.challengeName}}</v-card-title>
+          <v-card-title style="color: black;" class="font-size-title">{{item.challengeName}}</v-card-title>
 
           <v-card-text>
             <v-row
@@ -43,10 +43,10 @@
               class="mx-0"
               v-if="item.challengeOwner.userRole === 'ADMIN'"
             >
-              <div style="color: #B71C1C; font-size: 0.9rem; font-weight: 600;" >
+              <div style="color: #B71C1C;" class="font-size-subtitle">
                 <i class="fas fa-gem"></i>
               </div>
-              <div class="grey--text ml-1" style="font-size: 0.9rem; font-weight: 600;">
+              <div class="grey--text ml-1 font-size-subtitle">
                 공식 챌린지
               </div>
             </v-row>
@@ -96,13 +96,6 @@ export default {
 </script>
 
 <style scoped>
-.hot-challenge {
-  padding-left: 0.5rem;
-  /* margin-bottom: -1.5rem; */
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-
 .hot-challenge > .fa-plus {
   padding-left: 0.5rem;
   color: #B71C1C;

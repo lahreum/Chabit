@@ -28,10 +28,10 @@
   border: white solid 1px;
 }
 .ranking-list .v-input {
-  max-width: 70%;
+  max-width: 80%;
 }
 .ranking-list .searchBox {
   display: flex;
   justify-content: center;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }

@@ -33,6 +33,8 @@
                 item-text="userNickname"
                 append-icon="mdi-magnify"
                 clearable
+                dense
+                outlined
                 label="검색"
                 return-object
                 :menu-props="{

@@ -23,9 +23,9 @@
           <hash-tag :content="item.hashtags.hashtags[0].hashtagName"/>
           <hash-tag :content="item.hashtags.hashtags[1].hashtagName"/>
         </div>
-        <p style="margin-top: 2rem"></p>
+        <p style="margin-top: 1rem"></p>
         <hr>
-        <p style="margin-top: 2rem"></p>
+        <p style="margin-top: 1rem"></p>
         <v-row>
           <v-col cols="4" class="py-1">
             <span style="font-weight: 600;">챌린지 기간</span>
@@ -110,7 +110,7 @@
         </div>
         <p></p>
         <div style="text-align: center;">
-          <span>오늘의 제스처와 함께 사진을 찍어 올려주세요.</span>
+          <span class="py-1">오늘의 제스처와 함께 사진을 찍어 올려주세요.</span>
         </div>
         <p style="margin: 1rem 0 7rem 0"></p>
         <div style="margin-left: 7%;" v-if="item.challengeJoinStatus === 'NO'">
@@ -262,5 +262,9 @@ export default {
 
 .challenge-detail {
   font-size: 1.1rem;
+}
+.py-1{
+  font-size: 1.9vh;
+  font-weight: 600;
 }
 </style>

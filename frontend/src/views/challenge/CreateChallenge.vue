@@ -1,4 +1,5 @@
 <template>
+  <sequential-entrance fromBottom> 
   <v-container>
     <div class="create-challenge">
       <span>챌린지 생성</span>
@@ -69,7 +70,7 @@
           <v-card
             flat
             class="mb-12"
-            height="300"
+            height="275"
           >
             <!-- <v-container> -->
               <v-row>
@@ -78,7 +79,7 @@
                 >
                   <v-btn
                     depressed
-                    width="60"
+                    width="100%"
                     height="70"
                     ripple
                     v-ripple="{class: 'error--text'}"
@@ -92,7 +93,7 @@
                 >
                   <v-btn
                     depressed
-                    width="60"
+                    width="100%"
                     height="70"
                     ripple
                     v-ripple="{class: 'error--text'}"
@@ -106,7 +107,7 @@
                 >
                   <v-btn
                     depressed
-                    width="60"
+                    width="100%"
                     height="70"
                     ripple
                     v-ripple="{class: 'error--text'}"
@@ -120,7 +121,7 @@
                 >
                   <v-btn
                     depressed
-                    width="60"
+                    width="100%"
                     height="70"
                     ripple
                     v-ripple="{class: 'error--text'}"
@@ -134,7 +135,7 @@
                 >
                   <v-btn
                     depressed
-                    width="60"
+                    width="100%"
                     height="70"
                     ripple
                     v-ripple="{class: 'error--text'}"
@@ -148,7 +149,7 @@
                 >
                   <v-btn
                     depressed
-                    width="60"
+                    width="100%"
                     height="70"
                     ripple
                     v-ripple="{class: 'error--text'}"
@@ -162,7 +163,7 @@
                 >
                   <v-btn
                     depressed
-                    width="60"
+                    width="100%"
                     height="70"
                     ripple
                     v-ripple="{class: 'error--text'}"
@@ -176,7 +177,7 @@
                 >
                   <v-btn
                     depressed
-                    width="60"
+                    width="100%"
                     height="70"
                     ripple
                     v-ripple="{class: 'error--text'}"
@@ -190,7 +191,7 @@
                 >
                   <v-btn
                     depressed
-                    width="60"
+                    width="100%"
                     height="70"
                     ripple
                     v-ripple="{class: 'error--text'}"
@@ -380,7 +381,7 @@
           <v-card
             color="grey lighten-5"
             class="mb-12"
-            height="590"
+            height="70%"
             flat
           >
             <v-card-text>
@@ -393,7 +394,7 @@
                 >
                 <div style="display: flex; justify-content: center;">
                   <v-date-picker
-                    width="225"
+                    width = "80%"
                     v-model="dates"
                     range
                     no-title
@@ -493,6 +494,7 @@
       </v-stepper-items>
     </v-stepper>
   </v-container>
+  </sequential-entrance> 
 </template>
 
 <script>
@@ -678,5 +680,8 @@
   text-align: center; 
   font-size: 1.7rem; 
   font-weight: bold;
+}
+.col{
+  text-align: center;
 }
 </style>

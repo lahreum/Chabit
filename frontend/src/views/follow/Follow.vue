@@ -8,6 +8,8 @@
                     <v-container style="width:85%;">
                         <v-text-field
                                 clearable
+                                outlined
+                                dense
                                 placeholder="유저 검색"
                                 append-icon="fas fa-search"
                                 v-on:keyup.enter="search"

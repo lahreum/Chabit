@@ -1,4 +1,5 @@
 <template>
+<sequential-entrance fromBottom> 
   <div id="ranking">
     <v-app id="inspire">
       <v-container fluid>
@@ -51,6 +52,8 @@
       </v-container>
     </v-app>
   </div>
+  </sequential-entrance> 
+
 </template>
 
 <script>
