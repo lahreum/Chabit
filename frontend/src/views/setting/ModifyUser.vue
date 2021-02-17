@@ -1,4 +1,5 @@
 <template>
+<sequential-entrance fromBottom>
   <div class="outside">
     <div class="logo"></div>
     <img class="chabit-logo" src="../../assets/img/chabit.jpg" alt="chabit" />
@@ -119,6 +120,7 @@
       </div>
     </div>
   </div>
+  </sequential-entrance>
 </template>
 
 <script>

@@ -1,4 +1,5 @@
 <template>
+<sequential-entrance fromBottom> 
   <v-card class="manage-member" flat>
     <v-card-title color="white">
       <v-spacer></v-spacer>
@@ -122,6 +123,7 @@
       </template>
     </v-data-table>
   </v-card>
+  </sequential-entrance> 
 </template>
 
 <script>

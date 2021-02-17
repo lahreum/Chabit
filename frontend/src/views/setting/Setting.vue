@@ -1,4 +1,5 @@
 <template>
+<sequential-entrance fromBottom> 
   <v-app class="setting">
     <v-list>
       <!-- 계정설정 -->
@@ -110,6 +111,7 @@
       </v-list-group>
     </v-list>
   </v-app>
+  </sequential-entrance> 
 </template>
 
 <script>
