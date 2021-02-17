@@ -22,6 +22,6 @@ public class BadgeDto {
         if (userGet)
             this.badgeImage = badge.getBadgeImage();
         else
-            this.badgeImage = "https://ssafychabit.s3.ap-northeast-2.amazonaws.com/badges/g12-office-block_97340.png"; // 기본 이미지
+            this.badgeImage = "https://ssafychabit.s3.ap-northeast-2.amazonaws.com/badges/questionmark_99738.png"; // 기본 이미지
     }
 }
