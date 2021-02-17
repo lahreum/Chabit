@@ -27,7 +27,7 @@
               cols="4"
             >
               <div class="text-center">
-                <v-dialog v-model="dialog" width="500" persistent :retain-focus="false">
+                <v-dialog v-model="dialog" persistent :retain-focus="false">
                   <template v-slot:activator="{ on, attrs }">
                     <div v-bind="attrs" v-on="on"><img :src="badge.badgeImage" @click="clickModal(badge)"></div>
                   </template>
@@ -37,18 +37,17 @@
                     <v-card-title>
                       <span>{{ categoryBadges[0].badgeCategory }}</span>
                     </v-card-title>
-                    <v-card-text>
-                      <!-- 이미지 출력 오류 부분 -->
-                      <v-col v-for="oneBadge in categoryBadges" :key="oneBadge.badgeId" >
-                          <div>
-                            <div style="float:left;">
+                    <v-card-text style="display:flex;">
+                      <div v-for="oneBadge in categoryBadges" :key="oneBadge.badgeId" >
+                            <!-- <div style="flex:initial;"> -->
+                              <div style="text-align:center;padding:19px;">
                               <img :src="oneBadge.badgeImage"/>
                               <p>
                                 {{ oneBadge.badgeName }}
                               </p>
-                            </div>
-                          </div>
-                      </v-col>
+                              </div>
+                            <!-- </div> -->
+                      </div>
                     </v-card-text>
                     <v-divider></v-divider>
                     <v-card-actions>
@@ -95,7 +94,8 @@ export default {
     },
     dialog: false,
     category: "",
-    categoryBadges: [
+    // 라이프 사이클 돌 때 데이터가 마운트 되기 전에 템플릿이 먼저 created 되서 그런 것 같습니다!
+    categoryBadges: [     // 여기까진 잡을 수 있는데, badgeCategory는 아예 정의가 안되어 있어 못잡음.각 요소 정의필요
       {
             badgeId: '',
             badgeName: '',
