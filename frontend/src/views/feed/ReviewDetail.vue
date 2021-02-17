@@ -1,7 +1,7 @@
 <template>
 <div style="width:100%; height:100%;">
   <div>
-    <Profile :src="this.userImage" style="float:left;margin-left:10px;margin-bottom:10px;margin-top:20px;"/><br>
+    <Profile :src="userImage" alt="profile" :userLevelImage="userLevelImage" style="float:left;margin-left:10px;margin-bottom:10px;margin-top:20px;"/><br>
     <div style="float:left; margin-left:12px;margin-top:15px;"><strong>{{ this.userNickname }}</strong></div>
   </div>
     <v-carousel :show-arrows="false" height="280" style="margin-top:10px;" >
@@ -88,7 +88,7 @@ export default {
           console.log("리뷰상세보기 성공");
           this.review.reviewId = res.data.data.reviewId;
           this.review.reviewContent = res.data.data.reviewContent;
-          this.review.reviewData = res.data.data.reviewData;
+          this.review.reviewDate = res.data.data.reviewDate;
           this.review.coolCount = res.data.data.coolCount;
           this.review.pressCool = res.data.data.pressCool;
           this.review.commentCount = res.data.data.commentCount;
@@ -108,7 +108,8 @@ export default {
     ...mapGetters({ 
       email: 'getUserEmail',
       userImage: 'getUserImage',
-      userNickname: 'getUserNickname',}),
+      userNickname: 'getUserNickname',
+      userLevelImage: 'getUserLevelImage'}),
   },
   created() {
     this.getReviewDetail();

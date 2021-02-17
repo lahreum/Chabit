@@ -9,14 +9,16 @@
                         </div>
                     </v-subheader>
                     <v-list-item v-for="following in this.followings" :key="following.userEmail">
-                        <v-list-item-avatar>
+                        <v-list-item-avatar style="width:50px; height:50px; margin-top:10px;margin-bottom:10px;">
                             <v-img :alt="`${following.userImage} avatar`" :src="following.userImage"></v-img>
                         </v-list-item-avatar>
-                        <v-list-item-content>
-                            <v-list-item-title  class="name black--text" v-text="following.userNickname">
-                            </v-list-item-title>
+                        <v-list-item-content @click="setInfo(following.userEmail)">
+                            <!-- <router-link :to="{ name: 'YourFeed' }" style="text-decoration:none;"> -->
+                                <v-list-item-title  class="name black--text" v-text="following.userNickname" style="font-size:18px;">
+                                </v-list-item-title>
+                            <!-- </router-link> -->
                         </v-list-item-content>
-                            <v-btn @click="cancelFollowing(following.userEmail)">팔로우 해제</v-btn>
+                            <v-btn @click="cancelFollowing(following.userEmail)" color="#BDBDBD" small elevation="2"><span style="color:white;">언팔로우</span></v-btn>
                     </v-list-item>
                 </v-list>
             </v-flex>
@@ -35,22 +37,22 @@ export default {
       this.getFollowingList();
     },
     methods: {
-      getFollowingList() {
+        getFollowingList() {
         this.$Axios
-          .get(`${this.$store.state.host}/v1/follow/` + this.email)
-          .then((res) => {
-              if(res.data.status === "success") {
-                  console.log("팔로잉 리스트 잘 넘어옴");
-                  this.followings = res.data.data.followings.followings;
-              } else {
+            .get(`${this.$store.state.host}/v1/follow/` + this.email)
+            .then((res) => {
+                if(res.data.status === "success") {
+                    console.log("팔로잉 리스트 잘 넘어옴");
+                    this.followings = res.data.data.followings.followings;
+                } else {
                 console.log("팔로잉 리스트 받아오기 실패");
-              }
-          })
-          .catch((error)=> {
-              console.log(error);
-          })
-      },
-      cancelFollowing(userEmail) {
+                }
+            })
+            .catch((error)=> {
+                console.log(error);
+            })
+        },
+        cancelFollowing(userEmail) {
         this.$Axios
         .delete(`${this.$store.state.host}/v1/follow`,{
             data:{          //////// 질문 필요
@@ -69,7 +71,27 @@ export default {
         .catch((error)=>{
             console.log(error);
         })
-      }
+        },
+        setInfo(userEmail) {
+            this.$Axios
+            .get(`${this.$store.state.host}/v1/users/` + userEmail)
+            .then((res)=> {
+                if(res.data.status === "success") {
+                    console.log('유저 한명 정보 저장 성공!')
+                    this.$store.commit("SETYOURINFO", res.data.data );
+                    setTimeout(this.tempfunc, 2000);
+                    this.$router.push('/your-feed');
+                } else {
+                    console.log('유저 한명 정보 저장 실패');
+                }
+            })
+            .catch((error)=> {
+                console.log(error);
+            })
+        },
+        tempfunc() {
+            console.log('시간벌기~');
+        }
     },
     computed: {
     ...mapGetters({ email: 'getUserEmail'}),

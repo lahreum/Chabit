@@ -22,6 +22,7 @@
 import YourInfo from './YourInfo.vue';
 import YourReview from './YourReview.vue';
 import YourReward from './YourReward.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   data() {
@@ -29,9 +30,9 @@ export default {
       activetab: 1,
     }
   },
-  // computed: {
-  //     ...mapGetters({ email: "getUserEmail" }),
-  // },
+  computed: {
+      ...mapGetters({ email: "getYourEmail" }),
+  },
   components: {
     YourInfo,
     YourReview,
@@ -67,7 +68,7 @@ export default {
   float: left;
   cursor: pointer;
   padding: 12px 24px;
-  width: 33%;
+  width: 50%;
   transition: background-color 0.2s; 
   border-right: none;
   background-color: #f1f1f1;

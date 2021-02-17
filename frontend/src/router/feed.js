@@ -5,7 +5,12 @@ import MyReview from '../views/feed/MyReview.vue';
 import Reward from '../views/feed/Reward.vue';
 import ReviewDetail from '../views/feed/ReviewDetail.vue';
 import ReviewComment from '../views/feed/ReviewComment.vue';
+import YourFeed from '../views/feed/YourFeed.vue';
+import YourReview from '../views/feed/YourReview.vue';
 import YourReviewDetail from '../views/feed/YourReviewDetail.vue';
+import YourReviewComment from '../views/feed/YourReviewComment.vue';
+import YourReward from '../views/feed/YourReward.vue';
+
 
 export default [
   {
@@ -46,8 +51,28 @@ export default [
     component: ReviewComment,
   },
   {
+    path: '/your-feed',
+    name: 'YourFeed',
+    component: YourFeed,
+  },
+  {
+    path: '/your-review',
+    name: 'YourReview',
+    component: YourReview,
+  },
+  {
     path: '/your-review-detail',
     name: 'YourReviewDetail',
     component: YourReviewDetail,
+  },
+  {
+    path: '/your-review-comment',
+    name: 'YourReviewComment',
+    component: YourReviewComment,
+  },
+  {
+    path: '/your-review-reward',
+    name: 'YourReward',
+    component: YourReward,
   },
 ];

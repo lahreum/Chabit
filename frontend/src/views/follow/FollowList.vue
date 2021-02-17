@@ -9,13 +9,13 @@
                         </div>
                     </v-subheader>
                     <v-list-item v-for="follower in followers" :key="follower.userEmail">
-                        <v-list-item-avatar>
-                            <v-img :alt="`${follower.userImage} avatar`" :src="follower.userImage"></v-img>
+                        <v-list-item-avatar style="width:50px; height:50px; margin-top:10px;margin-bottom:10px;">
+                            <v-img :alt="`${follower.userImage} avatar`" :src="follower.userImage" style="width:50px;"></v-img>
                         </v-list-item-avatar>
-                        <v-list-item-content>
-                            <v-list-item-title  class="name black--text" v-text="follower.userNickname"></v-list-item-title>
+                        <v-list-item-content @click="setInfo(follower.userEmail)">
+                            <router-link :to="{ name: 'YourFeed' }" style="text-decoration:none;"><v-list-item-title  class="name black--text" v-text="follower.userNickname" style="font-size:18px;"></v-list-item-title></router-link>
                         </v-list-item-content>
-                        <v-btn v-if="!checkFollowing(follower.userEmail)" @click="doFollowing(follower.userEmail)">팔로우 </v-btn>
+                        <v-btn v-if="!checkFollowing(follower.userEmail)" @click="doFollowing(follower.userEmail)" color="#424242" small elevation="2"><span style="color:#E0E0E0;">팔로우</span></v-btn>
                     </v-list-item>
                 </v-list>
             </v-flex>
@@ -43,7 +43,6 @@ export default {
             .get(`${this.$store.state.host}/v1/follow/` + this.email)
             .then((res) => {
                 if(res.data.status === "success") {
-                    console.log("팔로워 리스트 잘 넘어옴");
                     this.followers = res.data.data.followers.followers;
                     this.followings = res.data.data.followings.followings;
                     //   console.log("followings = " + this.followings);
@@ -67,8 +66,7 @@ export default {
             )
             .then((res)=> {
                 if(res.data.status === "success") {
-                    // window.location.reload();
-                    console.log('팔로잉 성공');
+                    window.location.reload();
                 } else {
                     console.log('팔로잉 실패');
                 }
@@ -86,6 +84,23 @@ export default {
                 }
             })
             return bothFollowing;
+        },
+         setInfo(userEmail) {
+            this.$Axios
+            .get(`${this.$store.state.host}/v1/users/` + userEmail)
+            .then((res)=> {
+                if(res.data.status === "success") {
+                    console.log('유저 한명 정보 저장 성공!')
+                    this.$store.commit("SETYOURINFO", res.data.data );
+                    setTimeout(this.tempfunc, 2000);
+                    this.$router.push('/your-feed');
+                } else {
+                    console.log('유저 한명 정보 저장 실패');
+                }
+            })
+            .catch((error)=> {
+                console.log(error);
+            })
         },
     },
     computed: {

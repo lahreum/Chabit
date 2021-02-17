@@ -8,8 +8,7 @@
                     <v-container style="width:85%;">
                         <v-text-field
                                 clearable
-                                solo-inverted
-                                label="모든 유저 검색"
+                                placeholder="유저 검색"
                                 append-icon="fas fa-search"
                                 v-on:keyup.enter="search"
                                 v-model="searchItem" 
@@ -23,8 +22,8 @@
                     <v-list-item three-line>
                         <v-list-item-content>
                             <v-list-item-title class="headline mb-1 text-center">
-                            <strong style="margin-right:15px;"><router-link :to="{ name: 'FollowList' }">{{ this.followerCnt }}</router-link></strong>
-                            <strong style="margin-left:15px;"><router-link :to="{ name: 'FollowingList' }">{{ this.followingCnt }}</router-link></strong>
+                            <strong style="margin-right:15px;"><router-link :to="{ name: 'FollowList' }">{{ followerCnt }}</router-link></strong>
+                            <strong style="margin-left:15px;"><router-link :to="{ name: 'FollowingList' }">{{ followingCnt }}</router-link></strong>
                             </v-list-item-title>
                             <v-list-item-subtitle class="mb-1 text-center">
                                 <span style="margin:10px;">팔로워</span>

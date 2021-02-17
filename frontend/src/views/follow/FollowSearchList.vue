@@ -15,6 +15,7 @@
                         <v-list-item-content>
                             <v-list-item-title  class="name black--text" v-text="item.userNickname"></v-list-item-title>
                         </v-list-item-content>
+                        <v-btn v-if="!checkFollowing(item.userEmail)" @click="doFollowing(item.userEmail)">팔로우 </v-btn>
                     </v-list-item>
                 </v-list>
             </v-flex>
@@ -23,11 +24,14 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 
 export default {
   props: ['searchWord'],
   data: () => ({
     items: [],
+    followers: [],
+    followings: [],
   }),
   created() {
     this.$Axios
@@ -43,6 +47,59 @@ export default {
             console.log(error);
         })
   },
+  computed: {
+        ...mapGetters({ email: 'getUserEmail'}),
+    },
+  methods: {
+    getFollowList() {
+    this.$Axios
+        .get(`${this.$store.state.host}/v1/follow/` + this.email)
+        .then((res) => {
+            if(res.data.status === "success") {
+                this.followers = res.data.data.followers.followers;
+                this.followings = res.data.data.followings.followings;
+                //   console.log("followings = " + this.followings);
+            } else {
+                console.log("팔로워 리스트 받아오기 실패");
+            }
+        })
+        .catch((error)=> {
+            console.log(error);
+        })
+    },
+    doFollowing(userEmail) {
+            console.log(userEmail);
+            console.log(this.email);
+            this.$Axios
+            .post(`${this.$store.state.host}/v1/follow`,
+                {
+                    "followingEmail": userEmail,
+                    "userEmail": this.email
+                }
+            )
+            .then((res)=> {
+                if(res.data.status === "success") {
+                    // window.location.reload();
+                    console.log('팔로잉 성공');
+                } else {
+                    console.log('팔로잉 실패');
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+        },
+        checkFollowing(userEmail) {
+            let bothFollowing = false;     // 다른 사람 검사마다 초기화
+
+            this.followings.forEach(function(element){
+                if(element.userEmail === userEmail) {
+                    bothFollowing = true;
+                }
+            })
+            return bothFollowing;
+        },
+  }
 }
 </script>
 

@@ -7,7 +7,7 @@
       cols="4"
     >
       <div @click="moveToReviewDetail(review)">
-        <v-img :src="review.reviewImages[0]" alt="photo" class="review-photo" style="width:100px;height:100px;"/>
+        <v-img v-if="review.reviewId" :src="review.reviewImages[0]" alt="photo" class="review-photo" style="width:100px;height:100px;"/>
       </div>
         <template v-slot:placeholder>
           <v-row
@@ -36,11 +36,11 @@ export default {
       ],
     }
   },
-  created() {
-    this.getReviewList(); // 페이지 열자마자 리뷰리스트 출력
-  },
   computed: {
     ...mapGetters({ email: 'getYourEmail'}),
+  },
+  created() {
+    this.getReviewList(); // 페이지 열자마자 리뷰리스트 출력
   },
   methods: {
     getReviewList() {
@@ -48,8 +48,10 @@ export default {
       .get(`${this.$store.state.host}/v1/review/` + this.email)
       .then((res) => {
         if(res.data.status === "success") {
-          console.log("리뷰 리스트 잘 넘어옴");
+          console.log('리뷰리스트 잘 가져옴');
           this.reviews = res.data.data;
+        } else {
+          console.log('리뷰리스트 가져오기 실패!!!!!!!!');
         }
       })
       .catch((error) => {
@@ -58,7 +60,7 @@ export default {
     },
     moveToReviewDetail(review){
       this.$store.commit("MOVETOREVIEWDETAIL", review.reviewId);
-      this.$router.push("/review-detail");
+      this.$router.push("/your-review-detail");
     }
   },
 }
