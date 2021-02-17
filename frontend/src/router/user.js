@@ -6,8 +6,13 @@ import FindEmail from '../views/user/FindEmail.vue'
 import FindEmailFinish from '../views/user/FindEmailFinish.vue'
 import ChangePw from '../views/user/ChangePw.vue'
 import Instruction from '../views/user/Instruction.vue'
-
+import Intro from '../views/user/Intro.vue'
 export default [
+  {
+    path: "/intro",
+    name: "Intro",
+    component : Intro,
+  },
   {
     path: "/login",
     name: "Login",
