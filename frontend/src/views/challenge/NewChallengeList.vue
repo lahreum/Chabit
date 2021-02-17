@@ -1,6 +1,6 @@
 <template>
-<sequential-entrance fromBottom> 
   <v-container>
+    <sequential-entrance fromBottom> 
     <div class="new-challenge">
       <span class="hot">새로운</span><span>챌린지</span>
     </div>
@@ -43,9 +43,9 @@
         </v-col>
       </v-row>
     </v-container>
+    </sequential-entrance> 
     <div class="create-challenge">
       <v-btn
-        elevation="2"
         color="red darken-4"
         medium
         fab
@@ -53,7 +53,7 @@
       ><span class="plus">+</span></v-btn>
     </div>
   </v-container>
-  </sequential-entrance> 
+
 </template>
 
 <script>
