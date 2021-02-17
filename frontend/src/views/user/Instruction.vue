@@ -1,7 +1,7 @@
 <template>
   <sequential-entrance fromRight>
   <div class="carousel-container">
-  <h1 id ="instruction-headline">환영합니다.</h1>
+  <h1 id ="instruction-headline" class="big-title">환영합니다.</h1>
   <v-carousel :show-arrows="true"
           :cycle = true
           :interval = 3700
@@ -33,7 +33,9 @@
 </template>
 
 <script>
+
 import "./user.css";
+import "../../assets/css/font.css"
   export default {
     data () {
       return {

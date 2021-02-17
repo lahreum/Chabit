@@ -4,8 +4,7 @@
       <span class="hot">새로운</span><span>챌린지</span>
     </div>
     <v-container>
-      <v-row
-      >
+      <v-row>
         <v-col
           cols="6"
           sm
@@ -88,7 +87,7 @@ export default {
 <style scoped>
 .new-challenge {
   padding-left: 0.5rem;
-  margin-top: 1.5rem;
+  margin-top: -2.5rem;
   margin-bottom: 1rem;
   font-size: 1.5rem;
   font-weight: 600;

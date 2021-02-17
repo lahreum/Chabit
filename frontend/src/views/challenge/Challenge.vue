@@ -2,17 +2,15 @@
   <div>
     <div class="search">
       <div class="my-search-bar">
-        <v-container>
           <v-text-field
-                solo-inverted
                 label="검색"
                 append-icon="fas fa-search"
+                clearable
                 v-on:keyup.enter="search"
                 v-model="searchItem"
             ></v-text-field>
-        </v-container>
       </div>
-      <i class="fas fa-filter"></i>
+      <!-- <i class="fas fa-filter"></i> -->
     </div>
     <div v-if="!searchItem">
       <hot-challenge-list />
