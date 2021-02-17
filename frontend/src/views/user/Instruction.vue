@@ -1,4 +1,5 @@
 <template>
+  <sequential-entrance fromRight>
   <div class="carousel-container">
   <h1 id ="instruction-headline">환영합니다.</h1>
   <v-carousel :show-arrows="true"
@@ -28,6 +29,7 @@
           </button>
     </div>
   </div>
+    </sequential-entrance>
 </template>
 
 <script>
