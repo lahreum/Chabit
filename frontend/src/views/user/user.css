@@ -291,3 +291,13 @@
   font-size: 2vh;
   font-weight: 600;
 }
+
+/* ManageMember.vue */
+.manage-member .v-data-table > .v-data-table__wrapper > table > thead > tr > th {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-size: 0.75rem;
+  height: 70px;
+}
