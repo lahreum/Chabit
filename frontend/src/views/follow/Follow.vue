@@ -9,7 +9,7 @@
                         <v-text-field
                                 clearable
                                 solo-inverted
-                                label="검색"
+                                label="모든 유저 검색"
                                 append-icon="fas fa-search"
                                 v-on:keyup.enter="search"
                                 v-model="searchItem" 
@@ -27,7 +27,7 @@
                             <strong style="margin-left:15px;"><router-link :to="{ name: 'FollowingList' }">{{ this.followingCnt }}</router-link></strong>
                             </v-list-item-title>
                             <v-list-item-subtitle class="mb-1 text-center">
-                                <span style="margin:10px;">팔로우</span>
+                                <span style="margin:10px;">팔로워</span>
                                 <span style="margin:10px;">팔로잉</span>
                             </v-list-item-subtitle>
                         </v-list-item-content>
@@ -36,10 +36,11 @@
             </v-flex>
         </v-layout>
       </v-container>
-            <!-- <follow-nav></follow-nav> -->
+            <!-- 검색 안할때에는 팔로워, 팔로잉 보여줌 -->
             <div v-if="!searchItem">
                 <router-view/>
             </div>
+            <!-- 검색 할때에는 검색내역 보여줌 -->
             <div v-else>
                 <follow-search-list v-if="isSearch" :searchWord="searchItem"/>
             </div>
@@ -49,7 +50,6 @@
 <script>
 import { mapGetters } from 'vuex'
 import FollowSearchList from './FollowSearchList.vue';
-// import FollowNav from '../../components/include/FollowNav.vue';
 
 export default {
     components: {
