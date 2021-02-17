@@ -10,11 +10,10 @@ export const store = new Vuex.Store({
   state: {
     // data
     host: 'https://i4b207.p.ssafy.io/api',
-    /*로그인한 회원의 정보*/
+    /* 로그인한 회원의 정보 */
     user: {},
-    yourEmail: '',
-    yourImage: '',
-    yourNickname: '',
+    /* 선택한 다른 유저의 정보 */
+    you: {},
     currentChallengeDetailId: 0,
     proofChallengeId: 0,
     writeReviewChallengeId: 0,
@@ -22,19 +21,10 @@ export const store = new Vuex.Store({
     reviewDetailId: 0,
     typeOfChallenge: '',
   },
-  getters: {
-    // computed
+  getters: {  // computed
+    /* 로그인한 유저의 정보 */
     getUserEmail(state) {
       return state.user.userEmail;
-    },
-    getYourEmail(state) {
-      return state.yourEmail;
-    },
-    getYourImage(state) {
-      return state.yourImage;
-    },
-    getYourNickname(state) {
-      return state.yourNickname;
     },
     getUserNickname(state) {
       return state.user.userNickname;
@@ -69,9 +59,46 @@ export const store = new Vuex.Store({
     getUserImage(state) {
       return state.user.userImage;
     },
+    /* 선택한 다른 유저의 정보 */
+    getYourEmail(state) {
+      return state.you.userEmail;
+    },
+    getYourNickname(state) {
+      return state.you.userNickname;
+    },
+    getYourName(state) {
+      return state.you.userName;
+    },
+    getYourPhone(state) {
+      return state.you.userPhone;
+    },
+    getYourPoints(state) {
+      return state.you.userPoints;
+    },
+    getYourHashtags(state) {
+      return state.you.hashtags;
+    },
+    getYourProfileMessage(state) {
+      return state.you.userProfileMessage;
+    },
+    getYourLevel(state) {
+      return state.you.userLevel.level;
+    },
+    getYourMaxPoint(state) {
+      return state.you.userLevel.levelMaxPoint;
+    },
+    getYourLevelImage(state) {
+      return state.you.userLevel.levelImage;
+    },
+    getYourRole(state) {
+      return state.you.userRole;
+    },
+    getYourImage(state) {
+      return state.you.userImage;
+    },
   },
-  mutations: {
-    // methods
+  mutations: {  // methods
+    
     LOGIN(state, payload) {
       state.user = payload;
     },
@@ -80,6 +107,10 @@ export const store = new Vuex.Store({
         state.user = {};
         alert('로그아웃되었습니다.');
       }
+    },
+    SETYOURINFO(state, payload) { // 다른 유저 정보 선택하면 저장
+      state.you = payload;
+      // window.location.reload();
     },
     SELECTEDCHALLENGE(state, id) {
       state.currentChallengeDetailId = id;
@@ -98,11 +129,6 @@ export const store = new Vuex.Store({
     },
     MOVETOPERSONALCHALLENGE(state, type) {
       state.typeOfChallenge = type;
-    },
-    SETYOURINFO(state, payload) {
-      state.yourEmail = payload.yourEmail;
-      state.yourImage = payload.yourImage;
-      state.yourNickname = payload.yourNickname;
     },
     UPDATEUSERINFO(state, payload) {
       state.user.userNickname = payload.userNickname;

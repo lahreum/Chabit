@@ -5,15 +5,15 @@
         <v-list-item>
             <div class="top-text" style="width:90%; margin:0 auto;text-align:center;">
                 <div style="float:left;width:30%;">{{ this.badges.userGetSilver}}</div>
-                <div style="float:left;margin-left:5%;width:30%;">{{ this.badges.userGetGold}}</div>
-                <div style="float:right;width:30%;">{{ this.badges.userGetBronze}}</div>
+                <div style="float:left;margin-left:4%;width:30%;">{{ this.badges.userGetGold}}</div>
+                <div style="float:right;width:30%;margin-right:1%;">{{ this.badges.userGetBronze}}</div>
             </div>
         </v-list-item>
         <v-list-item>
             <div style="width:90%; margin:0 auto; text-align:center;">
-                <div style="float:left;width:30%;"><img src="https://ifh.cc/g/rUZBvq.jpg" style="width:50px;"></div>
+                <div style="float:left;width:30%;margin-left:1%;"><img src="https://ifh.cc/g/rUZBvq.jpg" style="width:50px;"></div>
                 <div style="float:left;margin-left:5%;width:30%;"><img src="https://ifh.cc/g/wd7WQg.jpg" style="width:50px;"></div>
-                <div style="float:right;width:30%;"><img src="https://ifh.cc/g/pNp80t.jpg" style="width:50px;"></div>
+                <div style="float:right;width:30%;margin-left:4%;"><img src="https://ifh.cc/g/pNp80t.jpg" style="width:50px;"></div>
             </div>
         </v-list-item>
       </v-card>

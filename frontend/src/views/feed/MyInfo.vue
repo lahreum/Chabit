@@ -6,12 +6,12 @@
     <div>
       <div style="margin-top: 20px; width:100%;">
           <div style="float:left;">
-            <Profile :src="this.user.userImage" alt="profile" style="width:70px;height:70px;"/>
+            <FeedProfile :src="user.userImage" alt="profile" :userLevelImage="user.userLevel.levelImage" style="width:70px;height:70px;"/>
           </div>
           <div>
-            <span style="color:#424242;font-weight:600; margin-left:10px; font-size:20px;"> {{ this.user.userNickname }} <br></span>
-            <span style="color:#424242;font-weight:600; margin-left:10px; font-size:20px;">({{ this.user.userPoints }}/{{ this.user.userMaxPoint }})p<br></span>
-            <span style="color:#424242;margin-left:10px; font-size:12px;">{{ this.user.userLevel.level }} </span>
+            <span style="color:#424242;font-weight:600; margin-left:10px; font-size:20px;"> {{ user.userNickname }} <br></span>
+            <span style="color:#424242;font-weight:600; margin-left:10px; font-size:20px;">({{ user.userPoints }}/{{ user.userMaxPoint }})p<br></span>
+            <span style="color:#424242;margin-left:10px; font-size:12px;">{{ user.userLevel.level }} </span>
               <v-btn
                 color="gray darken-4"
                 fab
@@ -30,7 +30,7 @@
 
       <v-text-field
         :disabled="!isEditing"
-        placeholder="상태메세지" v-model="this.user.userProfileMessage" style="margin-top:15px;"
+        placeholder="상태메세지" v-model="msg" style="margin-top:15px;"
       ></v-text-field>
     </div>
     <v-card-actions>
@@ -48,18 +48,18 @@
 </template>
 
 <script>
-import Profile from '../../components/common/Profile.vue'
+import FeedProfile from '../../components/common/FeedProfile.vue'
 import { mapGetters } from 'vuex'
 
   export default {
     components: {
-      Profile
+      FeedProfile
     },
     data () {
       return {
         hasSaved: false,
         isEditing: null,
-        status: '',
+        msg: "",
         chips: [],
         user: {                 // 유저 정보를 한번에 가져와서 저장해 놓을 객체
           "userEmail" : "",
@@ -89,7 +89,6 @@ import { mapGetters } from 'vuex'
         .get(`${this.$store.state.host}/v1/users/` + this.email)
         .then((res) => {
           if(res.data.status == "success") {
-            console.log('상단 유저정보 잘 넘어옴');
             this.user.userNickname = res.data.data.userNickname;
             this.user.userName = res.data.data.userName;
             this.user.userPhone = res.data.data.userPhone;
@@ -100,6 +99,7 @@ import { mapGetters } from 'vuex'
             this.user.userLevel.levelMaxPoint = res.data.data.userLevel.levelMaxPoint;
             this.user.userLevel.levelImage = res.data.data.userLevel.levelImage;
             this.user.userImage = res.data.data.userImage;
+            this.msg = res.data.data.userProfileMessage;
             // this.badges = data.data.userNickname;
           } else {
             console.log('데이터 안넘어옴..');
@@ -110,20 +110,19 @@ import { mapGetters } from 'vuex'
         })
       },
       save () {
-        this.hasSaved = true;
+        
         this.$Axios
-        // .post(`${this.$store.state.host}/v1/users/hashtag/${this.$store.state.user.userEmail}`, this.chips)
-        .patch(`${this.$store.state.host}/v1/users/`+ this.user.userEmail  + '/profile', {
-          userEmail: this.user.userEmail,
-          userName: this.user.userName,
-          userNickname: this.user.userNickname,
-          userPassword: this.user.userPassword,
-          userPhone: this.user.userPhone,
-          userProfileMessage: this.user.userProfileMessage
+        .patch(`${this.$store.state.host}/v1/users/`+ this.email + '/profile', {
+          "userEmail": this.user.userEmail,
+          "userName": this.user.userName,
+          "userNickname": this.user.userNickname,
+          "userPassword": this.user.userPassword,
+          "userPhone": this.user.userPhone,
+          "userProfileMessage": this.msg
         })
         .then((res) => {
           if(res.data.status == "success") {
-            console.log('상태메세지 잘 저장됨');
+            this.hasSaved = true;
           } else {
             console.log('상메 안보내짐....');
           }

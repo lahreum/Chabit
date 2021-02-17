@@ -6,7 +6,7 @@
         <article class="media">
           <div class="media-left">
             <figure class="image">
-              <Profile :src="talk.userImage" style="margin-right:20px;"/>
+              <Profile :src="talk.userImage" :userLevelImage="talk.userLevelImage" style="margin-right:20px;"/>
             </figure>
           </div>
             <div class="media-content">
@@ -43,10 +43,11 @@
                   md="6"
                   >
                     <v-textarea
-                    solo
                     name="input-7-4"
                     clearable
-                    placeholder="답글 달기"
+                    auto-grow
+                    rows="5"
+                    style="font-size:12px;"
                     full-width
                     v-model="reply" @keyup.enter="addReply"
                     ></v-textarea>
@@ -64,7 +65,7 @@
           <article class="media">
             <div class="media-left">
               <figure class="image">
-                <Profile :src="reply.userImage" style="margin-right:20px;"/>
+                <Profile :src="reply.userImage" :userLevelImage="reply.userLevelImage" style="margin-right:20px;"/>
               </figure>
             </div>
             <div class="media-content" >

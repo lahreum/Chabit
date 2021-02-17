@@ -6,25 +6,12 @@
     <div>
       <div style="margin-top: 20px; width:100%;">
           <div style="float:left;">
-            <Profile :src="this.user.userImage" alt="profile" style="width:70px;height:70px;"/>
+            <FeedProfile :src="user.userImage" alt="profile" :userLevelImage="user.userLevel.levelImage" style="width:70px;height:70px;"/>
           </div>
           <div>
             <span style="color:#424242;font-weight:600; margin-left:10px; font-size:20px;"> {{ this.user.userNickname }} <br></span>
             <span style="color:#424242;font-weight:600; margin-left:10px; font-size:20px;">({{ this.user.userPoints }}/{{ this.user.userMaxPoint }})p<br></span>
             <span style="color:#424242;margin-left:10px; font-size:12px;">{{ this.user.userLevel.level }} </span>
-              <!-- <v-btn
-                color="gray darken-4"
-                fab
-                x-small
-                @click="isEditing = !isEditing" style="float:right; margin-right:10px;"
-              >
-                <v-icon v-if="isEditing" @click="save">
-                  mdi-close
-                </v-icon>
-                <v-icon v-else>
-                  mdi-pencil
-                </v-icon>
-              </v-btn> -->
           </div>
         </div>
 
@@ -33,27 +20,17 @@
         placeholder="상태메세지" v-model="this.user.userProfileMessage" style="margin-top:15px;"
       ></v-text-field>
     </div>
-    <!-- <v-card-actions>
-      <v-spacer></v-spacer>
-    </v-card-actions>
-    <v-snackbar
-      v-model="hasSaved"
-      :timeout="1000"
-      absolute
-      top
-    >
-      저장되었습니다.
-    </v-snackbar> -->
+
   </div>
 </template>
 
 <script>
-import Profile from '../../components/common/Profile.vue'
+import FeedProfile from '../../components/common/FeedProfile.vue'
 import { mapGetters } from 'vuex'
 
   export default {
     components: {
-      Profile
+      FeedProfile
     },
     data () {
       return {
@@ -89,7 +66,6 @@ import { mapGetters } from 'vuex'
         .get(`${this.$store.state.host}/v1/users/` + this.email)
         .then((res) => {
           if(res.data.status == "success") {
-            console.log('상단 유저정보 잘 넘어옴');
             this.user.userNickname = res.data.data.userNickname;
             this.user.userName = res.data.data.userName;
             this.user.userPhone = res.data.data.userPhone;

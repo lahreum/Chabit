@@ -11,7 +11,7 @@
       </v-avatar>
     </template>
 
-    <v-avatar size="60">
+    <v-avatar size="70">
         <img
           :src="src"
           :alt="alt" style="margin:0 auto;"
