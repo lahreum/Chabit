@@ -106,6 +106,7 @@
       sort
       :search="search"
       class="elevation-1"
+      disable-pagination="true"
       hide-default-footer
     >
       <template
