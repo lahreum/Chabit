@@ -1,6 +1,6 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-import createPersistedState from 'vuex-persistedstate';
+import Vue from "vue";
+import Vuex from "vuex";
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
@@ -9,18 +9,18 @@ export const store = new Vuex.Store({
   plugins: [createPersistedState()],
   state: {
     // data
-    host: 'https://i4b207.p.ssafy.io/api',
+    host: "https://i4b207.p.ssafy.io/api",
     /*로그인한 회원의 정보*/
     user: {},
-    yourEmail: '',
-    yourImage: '',
-    yourNickname: '',
+    yourEmail: "",
+    yourImage: "",
+    yourNickname: "",
     currentChallengeDetailId: 0,
     proofChallengeId: 0,
     writeReviewChallengeId: 0,
     prooflistChallengeId: 0,
     reviewDetailId: 0,
-    typeOfChallenge: '',
+    typeOfChallenge: "",
   },
   getters: {
     // computed
@@ -29,12 +29,6 @@ export const store = new Vuex.Store({
     },
     getYourEmail(state) {
       return state.yourEmail;
-    },
-    getYourImage(state) {
-      return state.yourImage;
-    },
-    getYourNickname(state) {
-      return state.yourNickname;
     },
     getUserNickname(state) {
       return state.user.userNickname;
@@ -78,7 +72,7 @@ export const store = new Vuex.Store({
     LOGOUT(state) {
       if (state.user) {
         state.user = {};
-        alert('로그아웃되었습니다.');
+        alert("로그아웃되었습니다.");
       }
     },
     SELECTEDCHALLENGE(state, id) {

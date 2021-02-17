@@ -62,7 +62,6 @@ export default {
           'yourNickname': item.userNickname
         }
         this.$store.commit("SETYOURINFO", reviewer);
-        this.$router.push('/your-review-detail')
       }
     }
   }
