@@ -1,10 +1,10 @@
 <template>
   <v-container>
     <sequential-entrance fromBottom> 
-    <div class="new-challenge">
+    <div class="new-challenge font-title">
       <span class="hot">새로운</span><span>챌린지</span>
     </div>
-    <v-container>
+    <v-container fluid style="width:95%;">
       <v-row>
         <v-col
           cols="6"
@@ -91,7 +91,7 @@ export default {
 .new-challenge {
   padding-left: 0.5rem;
   margin-bottom: 0.5rem;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 600;
 }
 

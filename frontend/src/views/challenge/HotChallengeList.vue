@@ -17,7 +17,7 @@
       >
         <v-card
           class="mx-auto my-5 rounded-xl"
-          max-width="380"
+          max-width="370"
           :loading="loading"
           @click="reverse, moveToChallengeDetail(item)"
           style="background-color: white;"
