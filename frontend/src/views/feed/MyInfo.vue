@@ -10,7 +10,7 @@
           </div>
           <div>
             <span style="color:#424242;font-weight:600; margin-left:10px; font-size:20px;"> {{ user.userNickname }} <br></span>
-            <span style="color:#424242;font-weight:600; margin-left:10px; font-size:20px;">({{ user.userPoints }}/{{ user.userMaxPoint }})p<br></span>
+            <span style="color:#424242;font-weight:600; margin-left:10px; font-size:20px;">({{ user.userPoints }}/{{ user.userLevel.levelMaxPoint }})p<br></span>
             <span style="color:#424242;margin-left:10px; font-size:12px;">{{ user.userLevel.level }} </span>
               <v-btn
                 color="gray darken-4"
