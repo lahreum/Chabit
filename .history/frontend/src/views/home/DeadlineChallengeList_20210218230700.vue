@@ -1,22 +1,22 @@
 <template>
   <v-container>
-    <div class="hot-challenge font-title" style="margin-top:25px;">
-      <span class="hot">HOT</span><span style="font-size: 1.3rem;">챌린지</span>
-      <i class="fas fa-plus" @click="$router.push('/challenge')" ></i>
+    <div class="deadline-challenge" style="margin-top:20px;">
+      <span class="hot" style="margin-left:1.0rem;">시작 임박</span><span>챌린지</span>
     </div>
-    <v-carousel
-      class="slide"
-      hide-delimiters
-      height="450px" 
+    <v-carousel 
+      hide-delimiters 
       cycle 
       :show-arrows-on-hover="true"
+      height="450px"
     >
       <v-carousel-item
         v-for="(item,i) in items"
         :key="i"
+        reverse-transition="fade-transition"
+        transition="fade-transition"
       >
         <v-card
-          class="mx-auto my-5 rounded-xl"
+          class="mx-auto my-12 rounded-xl"
           max-width="370"
           :loading="loading"
           @click="reverse, moveToChallengeDetail(item)"
@@ -51,7 +51,7 @@
               </div>
             </v-row>
             <p></p>
-            <div class="hash-tag-bundle" >
+            <div class="hash-tag-bundle">
               <hash-tag :content="item.hashtags.hashtags[0].hashtagName"/>
               <hash-tag :content="item.hashtags.hashtags[1].hashtagName"/>
             </div>
@@ -63,13 +63,8 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import HashTag from '../../components/common/HashTag.vue'
-
 export default {
-  computed: {
-    ...mapGetters({ userEmail: "getUserEmail" }),
-  },
   components: { HashTag },
   data () {
     return {
@@ -84,20 +79,33 @@ export default {
       setTimeout(() => (this.loading = false), 2000)
     },
     moveToChallengeDetail(item) {
-      if(this.userEmail) {
-        this.$store.commit("SELECTEDCHALLENGE", item.challengeID);
-        this.$router.push("/challenge-detail");
-      } else {
-        alert("로그인 후 확인 가능합니다.");
-        this.$router.push({ name: 'Login' });
-      }
+      this.$store.commit("SELECTEDCHALLENGE", item.challengeID);
+      this.$router.push("/challenge-detail");
     }
   },
   created() {
-    this.$Axios.get(`${this.$store.state.host}/v1/challenges/hot`)
+    this.$Axios.get(`${this.$store.state.host}/v1/challenges`)
       .then(res => {
-        // console.log(res.data)
-        this.items = res.data.data
+        // this.items = res.data.data
+        const challenges = res.data.data
+        const currentDay = new Date()
+        let dates = ""
+        let year = ""
+        let month = ""
+        let day = ""
+        let date = ""
+        for (let i=0; i < challenges.length; i++) {
+          dates = String(challenges[i].challengeStartDate.substr(0,10));
+          year = parseInt(dates.slice(0,4));
+          month = parseInt(dates.slice(5,7));
+          day = parseInt(dates.slice(8,10));
+          date = new Date(year, month-1, day);
+          const elapsedMSec = date.getTime() - currentDay.getTime();
+          const elapsedDay = elapsedMSec / (1000 * 60 * 60 * 24);
+          if (elapsedDay <= 3 && elapsedDay >= 1) {
+            this.items.push(challenges[i])
+          }
+        }
       }).catch(err => {
         console.log(err)
       })
@@ -106,22 +114,21 @@ export default {
 </script>
 
 <style scoped>
-.hot-challenge > .fa-plus {
+.deadline-challenge {
   padding-left: 0.5rem;
-  color: #B71C1C;
-  
+  /* margin-top: 2.5rem; */
+  margin-bottom: -1.5rem;
+  font-size: 1.3rem;
+  font-weight: 600;
 }
 
-.hot-challenge > .hot {
+.deadline-challenge > .hot {
   color: #B71C1C;
   padding-right: 0.5rem;
-  font-size: 1.3rem;
-  padding-left: 0.8rem;
 }
 
 .hash-tag-bundle {
   display: flex;
   align-items: flex-start;
-  font-size: 1.0rem;
 }
 </style>
