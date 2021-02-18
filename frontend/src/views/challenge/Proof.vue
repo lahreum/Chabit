@@ -90,10 +90,11 @@
         <v-btn
           rounded
           color="red darken-4"
-          dark
+          class="white--text"
           width="100%"
           height="60px"
           @click="proof"
+          :disabled="this.proofImage === ''"
         >
           인증하기
         </v-btn>
