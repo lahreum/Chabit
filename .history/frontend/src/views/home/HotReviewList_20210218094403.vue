@@ -57,9 +57,9 @@ export default {
         this.$router.push('/review-detail')
       } else {
         let reviewer = {
-          'userEmail': item.userEmail,
-          'userImage': item.userImage,
-          'userNickname': item.userNickname
+          'yourEmail': item.userEmail,
+          'yourImage': item.userImage,
+          'yourNickname': item.userNickname
         }
         this.$store.commit("SETYOURINFO", reviewer);
         this.$router.push('/your-review-detail')
@@ -72,7 +72,7 @@ export default {
 <style scoped>
 .hot-review {
   padding-left: 0.5rem;
-  /* margin-top: -2.5rem; */
+  margin-top: -2.5rem;
   margin-bottom: 1rem;
   font-size: 1.5rem;
   font-weight: 600;
@@ -84,7 +84,7 @@ export default {
 }
 
 .hot-review-info {
-  margin: 0.5rem 0.5rem 0 0.5rem;
+  margin: 0.5rem 0.5rem -1rem 0.5rem;
   display: flex;
   justify-content: space-between;
   font-size: 1rem;
