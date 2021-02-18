@@ -67,7 +67,7 @@ export default {
   methods: {
     addgood: function() {
       this.$Axios
-      .post(`${this.$store.state.host}/v1/review/` + this.review.reviewId + '/cool?userEmail=' + this.yourEmail)
+      .post(`${this.$store.state.host}/v1/review/` + this.review.reviewId + '/cool?userEmail=' + this.email)
       .then((res) => {
         if(res.data.status == "success") {
           this.getReviewDetail();   // 좋아요 누르고나서 다시 내역 받아옴
@@ -81,7 +81,7 @@ export default {
     },
     getReviewDetail() {
       this.$Axios
-      .get(`${this.$store.state.host}/v1/review/detail/${this.$store.state.reviewDetailId}` + '?userEmail=' + this.yourEmail)
+      .get(`${this.$store.state.host}/v1/review/detail/${this.$store.state.reviewDetailId}` + '?userEmail=' + this.email)
       .then((res) =>{
         if(res.data.status === "success") {
           this.review.reviewId = res.data.data.reviewId;
@@ -125,6 +125,7 @@ export default {
   computed: {
     ...mapGetters({ 
       yourEmail: 'getYourEmail',
+      email: 'getUserEmail',
       yourImage: 'getYourImage',
       yourNickname: 'getYourNickname',
       yourLevelImage: 'getYourLevelImage'}),
