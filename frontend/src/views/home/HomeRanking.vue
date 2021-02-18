@@ -1,12 +1,12 @@
 <template>
   <v-container>
-    <div class="all-ranking">
+    <div class="all-ranking font-title" style="margin-top:20px;">
       <span>전체 랭킹</span>
       <i class="fas fa-plus" @click="$router.push('/ranking')"></i>
     </div>
     <v-card
       class="mx-auto rounded-xl"
-      max-width="385"
+      max-width="370"
       flat
     >
       <v-list color="grey lighten-4">
@@ -63,7 +63,7 @@ export default {
 .all-ranking {
   padding-left: 0.5rem;
   padding-bottom: 1rem;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 600;
 }
 

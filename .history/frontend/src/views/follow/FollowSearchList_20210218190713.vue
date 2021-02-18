@@ -14,20 +14,13 @@
                             <v-img :alt="`${item.userImage} avatar`" :src="item.userImage"/>
                         </v-list-item-avatar>
                         <v-list-item-content @click="setInfo(item.userEmail)">
-                            <v-list-item-title  class="fix-font-mid-bold-half black--text" v-text="item.userNickname" ></v-list-item-title>
+                            <v-list-item-title  class="name black--text" v-text="item.userNickname" style="font-size:17px;"></v-list-item-title>
                         </v-list-item-content>
                         <v-btn v-if="!checkFollowing(item.userEmail)" @click="doFollowing(item.userEmail)"
                         color="#e1f5fe" 
                         small
                         elevation="0">
-                        <span style="color:#1565c0;" class="fix-font-mid">팔로우</span></v-btn>
-                        <v-btn 
-                            v-else
-                            @click="cancelFollowing(item.userEmail)" 
-                            color="#fff1f1" small
-                            elevation="0"
-                        >
-                        <span style="color:#B71C1C;" class="font-size-sub-subtitle">언팔로우</span></v-btn>
+                        <span style="color:#1565c0;" class="font-size-sub-subtitle">팔로우</span></v-btn>
                     </v-list-item>
                 </v-list>
             </v-flex>
@@ -52,14 +45,13 @@ export default {
     .then((res) => {
       if(res.data.status == "success"){
         this.items = res.data.data;
-        this.getFollowList(); // 처음 팔로우 & 팔로잉 명단 가져와 비교
       } else {
         console.log('검색 실패');
       }
     })
     .catch((error)=> {
             console.log(error);
-    })
+        })
   },
   computed: {
         ...mapGetters({ email: 'getUserEmail'}),
@@ -95,33 +87,11 @@ export default {
                 if(res.data.status === "success") {
                     // window.location.reload();
                     console.log('팔로잉 성공');
-                    this.getFollowList();
-                    this.$emit('doFollowing');
                 } else {
                     console.log('팔로잉 실패');
                 }
             })
             .catch((error) => {
-                console.log(error);
-            })
-        },
-        cancelFollowing(userEmail) {
-            this.$Axios
-            .delete(`${this.$store.state.host}/v1/follow`,{
-                data:{          //////// 질문 필요
-                    "followingEmail": userEmail, 
-                    "userEmail": this.email
-                }
-            })
-            .then((res)=> {
-                if(res.data.status === "success") {
-                    this.getFollowList();
-                    this.$emit('doFollowing');
-                } else {
-                    console.log('팔로우 취소 실패');
-                }
-            })
-            .catch((error)=>{
                 console.log(error);
             })
         },

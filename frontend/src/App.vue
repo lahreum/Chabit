@@ -52,7 +52,7 @@
                   >Home</v-list-item-title
                 >
               </v-list-item>
-          
+
               <v-list-item @click="moveToFeed">
                 <v-list-item-title>마이피드</v-list-item-title>
               </v-list-item>
@@ -93,7 +93,7 @@
         <v-app-bar app flat id="navbar" v-if="showNavbar">
           <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
           <!-- <v-toolbar-title  class="flex text-center">{{ pageTitle }}</v-toolbar-title> -->
-          <p
+          <!-- <p
             id="goToHome"
             @click="goToHome"
             style="font-size: 20px; margin-top: 20px"
@@ -101,14 +101,14 @@
             <span
               id="logoletter"
               style="color: #942706; font-weight: 600; padding-right: 50px"
-              >CHABIT</span
+              ><i class="fas fa-home"></i></span
             >
-          </p>
+          </p> -->
         </v-app-bar>
         <v-app-bar app flat id="navbar" color="transparent" v-else>
           <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
           <!-- <v-toolbar-title  class="flex text-center">{{ pageTitle }}</v-toolbar-title> -->
-          <p
+          <!-- <p
             id="goToHome"
             @click="goToHome"
             style="font-size: 20px; margin-top: 20px"
@@ -116,9 +116,9 @@
             <span
               id="logoletter"
               style="color: #942706; font-weight: 600; padding-right: 50px"
-              >CHABIT</span
+              ><i class="fas fa-home"></i></span
             >
-          </p>
+          </p> -->
         </v-app-bar>
       </transition>
       <v-main>
@@ -158,7 +158,7 @@ export default {
   },
   methods: {
     goToHome() {
-      this.$router.push("/");
+      this.$router.push("/home");
     },
     checkLogin() {
       if (this.userEmail != null) return true;
@@ -176,19 +176,22 @@ export default {
       window.location.reload();
     },
     moveToFeed() {
-      if(this.userEmail) {   //로그인 정보가 있을때에만 이동
-        this.$router.push({ name: 'Feed' });
+      if (this.userEmail) {
+        //로그인 정보가 있을때에만 이동
+        this.$router.push({ name: "Feed" });
       } else {
-        this.$router.push({ name: 'Login' });
+        alert("로그인 후 확인 가능합니다.");
+        this.$router.push({ name: "Login" });
       }
     },
     moveToFollow() {
-      if(this.userEmail) {
-        this.$router.push('/follow')
+      if (this.userEmail) {
+        this.$router.push("/follow");
       } else {
-        this.$router.push({ name: 'Login' });
+        alert("로그인 후 확인 가능합니다.");
+        this.$router.push({ name: "Login" });
       }
-    }
+    },
   },
   updated() {
     if (this.userEmail != null) {
@@ -293,8 +296,5 @@ export default {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
-}
-#goToHome {
-  text-align: center;
 }
 </style>

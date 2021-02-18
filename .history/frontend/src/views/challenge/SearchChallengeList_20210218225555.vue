@@ -1,11 +1,8 @@
 <template>
   <v-container>
-    <sequential-entrance fromBottom> 
-    <div class="new-challenge font-title">
-      <span class="hot">새로운</span><span>챌린지</span>
-    </div>
-    <v-container fluid style="width:95%;">
-      <v-row>
+    <v-container>
+      <v-row
+      >
         <v-col
           cols="6"
           sm
@@ -29,31 +26,29 @@
             class="mx-0"
             v-if="item.challengeOwner.userRole === 'ADMIN'"
           >
-            <div style="color: #B71C1C;" class="font-size-sub-subtitle">
+            <div style="color: #B71C1C; font-size: 0.8rem; font-weight: 600;" >
               <i class="fas fa-gem"></i>
             </div>
-            <div class="grey--text ml-1 font-size-sub-subtitle">
+            <div class="grey--text ml-1" style="font-size: 0.8rem; font-weight: 600;">
               공식 챌린지
             </div>
           </v-row>
-          <v-else></v-else>
-          <div class="new-challenge-info font-size-subtitle">
+          <div class="new-challenge-info">
             <span>{{item.challengeName}}</span>
           </div>
         </v-col>
       </v-row>
     </v-container>
-    </sequential-entrance> 
     <div class="create-challenge">
       <v-btn
+        elevation="2"
         color="red darken-4"
-        medium
+        x-large
         fab
         @click="moveToCreateChallenge"
       ><span class="plus">+</span></v-btn>
     </div>
   </v-container>
-
 </template>
 
 <script>
@@ -63,6 +58,7 @@ export default {
   computed: {
     ...mapGetters({ userEmail: "getUserEmail" }),
   },
+  props: ['searchWord'],
   data() {
     return {
       items: [],
@@ -72,15 +68,15 @@ export default {
     this.$Axios.get(`${this.$store.state.host}/v1/challenges`)
       .then(res => {
         // console.log(res.data.data)
+        // console.log(this.searchWord)
         const challenges = res.data.data
-        challenges.sort(function(a, b) {
-          return b.challengeID - a.challengeID
-        })
-        // console.log(challenges)
-        this.items = challenges
-      })
-      .catch(err => {
-        console.log(err)
+        for (let i = 0; i < challenges.length; i++) {
+          // console.log(challenges[i])
+          if(challenges[i].challengeName.includes(this.searchWord)) {
+            this.items.push(challenges[i])
+          }
+        // console.log(this.items)
+        }
       })
   },
   methods: {
@@ -95,7 +91,7 @@ export default {
     },
     moveToCreateChallenge() {
       if(this.userEmail) {
-        this.$router.push('/create-challenge');
+        $router.push('/create-challenge');
       } else {
         alert("로그인 후 확인 가능합니다.");
         this.$router.push({ name: 'Login' });
@@ -106,35 +102,24 @@ export default {
 </script>
 
 <style scoped>
-.new-challenge {
-  padding-left: 0.5rem;
-  margin-bottom: 0.5rem;
-  font-size: 1.3rem;
-  font-weight: 600;
-}
-
-.new-challenge > .hot {
-  color: #B71C1C;
-  padding-right: 0.5rem;
-}
-
 .new-challenge-info {
-  margin: 0.7rem 0 1rem 0;
+  margin: 0.5rem 0 -1rem 0;
   display: flex;
   justify-content: space-between;
+  font-size: 1rem;
   font-weight: 600;
   max-width: 12rem;
 }
 
 .create-challenge {
   position: fixed;
-  right: 3vh;
-  bottom: 3vh;
+  right: 2rem;
+  bottom: 2rem;
 }
 
 .plus {
   margin-top: -0.1rem;
-  font-size: 3.5rem;
+  font-size: 4rem;
   color: white;
 }
 </style>

@@ -123,7 +123,7 @@ export default {
               alert("로그인 정보가 없습니다.");
             } else {
               this.$store.commit("LOGIN", res.data.data);
-              this.$router.push("/");
+              this.$router.push("/home");
             }
           })
           .catch((err) => {
@@ -137,7 +137,7 @@ export default {
   },
   created() {
     if (this.userNickname != null) {
-      this.$router.push("/");
+      this.$router.push("/home");
     }
   },
 };

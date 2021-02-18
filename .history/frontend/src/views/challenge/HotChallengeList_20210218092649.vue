@@ -17,7 +17,7 @@
       >
         <v-card
           class="mx-auto my-5 rounded-xl"
-          max-width="370"
+          max-width="380"
           :loading="loading"
           @click="reverse, moveToChallengeDetail(item)"
           style="background-color: white;"
@@ -64,13 +64,8 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
 import HashTag from '../../components/common/HashTag.vue'
-
 export default {
-  computed: {
-    ...mapGetters({ userEmail: "getUserEmail" }),
-  },
   components: { HashTag },
   data () {
     return {
@@ -94,13 +89,8 @@ export default {
       setTimeout(() => (this.loading = false), 2000)
     },
     moveToChallengeDetail(item) {
-      if(this.userEmail) {
-        this.$store.commit("SELECTEDCHALLENGE", item.challengeID);
-        this.$router.push("/challenge-detail");
-      } else {
-        alert("로그인 후 확인 가능합니다.");
-        this.$router.push({ name: 'Login' });
-      }
+      this.$store.commit("SELECTEDCHALLENGE", item.challengeID);
+      this.$router.push("/challenge-detail");
     }
   }
 }

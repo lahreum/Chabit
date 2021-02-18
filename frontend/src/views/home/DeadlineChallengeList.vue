@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <div class="deadline-challenge">
+    <div class="deadline-challenge font-title" style="margin-top:20px;">
       <span class="hot">시작 임박</span><span>챌린지</span>
     </div>
     <v-carousel 
@@ -17,7 +17,7 @@
       >
         <v-card
           class="mx-auto my-12 rounded-xl"
-          max-width="380"
+          max-width="370"
           :loading="loading"
           @click="reverse, moveToChallengeDetail(item)"
           style="background-color: white;"
@@ -63,8 +63,13 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import HashTag from '../../components/common/HashTag.vue'
+
 export default {
+  computed: {
+    ...mapGetters({ userEmail: "getUserEmail" }),
+  },
   components: { HashTag },
   data () {
     return {
@@ -79,8 +84,13 @@ export default {
       setTimeout(() => (this.loading = false), 2000)
     },
     moveToChallengeDetail(item) {
-      this.$store.commit("SELECTEDCHALLENGE", item.challengeID);
-      this.$router.push("/challenge-detail");
+      if(this.userEmail) {
+        this.$store.commit("SELECTEDCHALLENGE", item.challengeID);
+        this.$router.push("/challenge-detail");
+      } else {
+        alert("로그인 후 확인 가능합니다.");
+        this.$router.push({ name: 'Login' });
+      }
     }
   },
   created() {
@@ -118,7 +128,7 @@ export default {
   padding-left: 0.5rem;
   /* margin-top: 2.5rem; */
   margin-bottom: -1.5rem;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 600;
 }
 

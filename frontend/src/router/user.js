@@ -9,7 +9,7 @@ import Instruction from '../views/user/Instruction.vue'
 import Intro from '../views/user/Intro.vue'
 export default [
   {
-    path: "/intro",
+    path: "/",
     name: "Intro",
     component : Intro,
   },

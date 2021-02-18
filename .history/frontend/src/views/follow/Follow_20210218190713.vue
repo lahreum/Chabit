@@ -24,12 +24,12 @@
                     <v-list-item two-line>
                         <v-list-item-content>
                             <v-list-item-title class="headline text-center">
-                            <strong class = "fix-font-big" style="margin-right:15px;"><router-link :to="{ name: 'FollowList' }">{{ followerCnt }}</router-link></strong>
-                            <strong class = "fix-font-big" style="margin-left:15px;"><router-link :to="{ name: 'FollowingList' }">{{ followingCnt }}</router-link></strong>
+                            <strong class = "font-size-title" style="margin-right:15px;"><router-link :to="{ name: 'FollowList' }">{{ followerCnt }}</router-link></strong>
+                            <strong class = "font-size-title" style="margin-left:15px;"><router-link :to="{ name: 'FollowingList' }">{{ followingCnt }}</router-link></strong>
                             </v-list-item-title>
                             <v-list-item-subtitle class="text-center">
-                                <span class="fix-font-mid" style="margin:10px;">팔로워</span>
-                                <span class="fix-font-mid" style="margin:10px;">팔로잉</span>
+                                <span class="font-size-sub-subtitle" style="margin:10px;">팔로워</span>
+                                <span class="font-size-sub-subtitle" style="margin:10px;">팔로잉</span>
                             </v-list-item-subtitle>
                         </v-list-item-content>
                     </v-list-item>
@@ -44,10 +44,7 @@
             </div>
             <!-- 검색 할때에는 검색내역 보여줌 -->
             <div v-else>
-                <follow-search-list 
-                    v-if="isSearch" 
-                    :searchWord="searchItem"
-                    v-on:doFollowing="getFollowCnt" />
+                <follow-search-list v-if="isSearch" :searchWord="searchItem"/>
             </div>
  
     </v-app>
