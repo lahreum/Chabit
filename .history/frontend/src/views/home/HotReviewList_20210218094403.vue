@@ -57,9 +57,9 @@ export default {
         this.$router.push('/review-detail')
       } else {
         let reviewer = {
-          'userEmail': item.userEmail,
-          'userImage': item.userImage,
-          'userNickname': item.userNickname
+          'yourEmail': item.userEmail,
+          'yourImage': item.userImage,
+          'yourNickname': item.userNickname
         }
         this.$store.commit("SETYOURINFO", reviewer);
         this.$router.push('/your-review-detail')

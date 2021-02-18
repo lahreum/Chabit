@@ -37,7 +37,22 @@
 export default {
   data() {
     return {
-      items: []
+      items: [],
+      reviewer: {                 // 리뷰 작성자 정보
+          "userEmail" : "",
+          "userName" : "",
+          "userNickname": "",
+          "userPhone": "",
+          "userPassword": "",
+          "userProfileMessage": "",
+          "userPoints": "",
+          "userLevel": {
+            "level": "",
+            "levelMaxPoint": "",
+            "levelImage": "",
+          },
+          "userImage": "",          
+        }
     }
   },
   created() {
@@ -56,13 +71,27 @@ export default {
       if(this.$store.state.user.userEmail == item.userEmail) {
         this.$router.push('/review-detail')
       } else {
-        let reviewer = {
-          'userEmail': item.userEmail,
-          'userImage': item.userImage,
-          'userNickname': item.userNickname
-        }
-        this.$store.commit("SETYOURINFO", reviewer);
-        this.$router.push('/your-review-detail')
+        this.$Axios
+        .get(`${this.$store.state.host}/v1/users/` + item.userEmail)
+        .then((res) => {
+          if(res.data.status == "success") {
+            this.reviewer.userNickname = res.data.data.userNickname;
+            this.reviewer.userName = res.data.data.userName;
+            this.reviewer.userPhone = res.data.data.userPhone;
+            this.reviewer.userPassword = res.data.data.userPassword;
+            this.reviewer.userProfileMessage = res.data.data.userProfileMessage;
+            this.reviewer.userPoints = res.data.data.userPoints;
+            this.reviewer.userLevel.level = res.data.data.userLevel.level;
+            this.reviewer.userLevel.levelMaxPoint = res.data.data.userLevel.levelMaxPoint;
+            this.reviewer.userLevel.levelImage = res.data.data.userLevel.levelImage;
+            this.reviewer.userImage = res.data.data.userImage;
+            this.$router.push('/your-review-detail')
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        
       }
     }
   }
