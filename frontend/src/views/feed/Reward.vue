@@ -144,7 +144,7 @@ export default {
             // 더 큰 뱃지를 temp에 넣고
             temp1 = this.badges.badge.독서[j];
           } else {
-            this.badges.badge.독서[j].badgeName = "획득하러 가기";
+            this.badges.badge.독서[j].badgeName = "뱃지 없음";
           }
         }
         this.bestBadges.push(temp1);  // 최종 temp를 bestBadges 배열에 push
@@ -156,7 +156,7 @@ export default {
             // 더 큰 뱃지를 temp에 넣고
             temp2 = this.badges.badge.생활습관[j];
           } else {
-            this.badges.badge.생활습관[j].badgeName = "획득하러 가기";
+            this.badges.badge.생활습관[j].badgeName = "뱃지 없음";
           }
         }
         this.bestBadges.push(temp2);   // 최종 temp를 bestBadges 배열에 push
@@ -168,7 +168,7 @@ export default {
             // 더 큰 뱃지를 temp에 넣고
             temp3 = this.badges.badge.다이어트[j];
           } else {
-            this.badges.badge.다이어트[j].badgeName = "획득하러 가기";
+            this.badges.badge.다이어트[j].badgeName = "뱃지 없음";
           }
         }
         this.bestBadges.push(temp3);  // 최종 temp를 bestBadges 배열에 push
@@ -180,7 +180,7 @@ export default {
             // 더 큰 뱃지를 temp에 넣고
             temp4 = this.badges.badge.취미[j];
           } else {
-            this.badges.badge.취미[j].badgeName = "획득하러 가기";
+            this.badges.badge.취미[j].badgeName = "뱃지 없음";
           }
         }
         this.bestBadges.push(temp4);    // 최종 temp를 bestBadges 배열에 push
@@ -192,7 +192,7 @@ export default {
             // 더 큰 뱃지를 temp에 넣고
             temp5 = this.badges.badge.감정관리[j];
           } else {
-            this.badges.badge.감정관리[j].badgeName = "획득하러 가기";
+            this.badges.badge.감정관리[j].badgeName = "뱃지 없음";
           }
         }
         this.bestBadges.push(temp5);  // 최종 temp를 bestBadges 배열에 push
@@ -204,7 +204,7 @@ export default {
             // 더 큰 뱃지를 temp에 넣고
             temp6 = this.badges.badge.돈관리[j];
           } else {
-            this.badges.badge.돈관리[j].badgeName = "획득하러 가기";
+            this.badges.badge.돈관리[j].badgeName = "뱃지 없음";
           }
         }
         this.bestBadges.push(temp6);  // 최종 temp를 bestBadges 배열에 push
@@ -216,7 +216,7 @@ export default {
             // 더 큰 뱃지를 temp에 넣고
             temp7 = this.badges.badge.운동[j];
           } else {
-            this.badges.badge.운동[j].badgeName = "획득하러 가기";
+            this.badges.badge.운동[j].badgeName = "뱃지 없음";
           }
         }
         this.bestBadges.push(temp7);  // 최종 temp를 bestBadges 배열에 push
@@ -228,7 +228,7 @@ export default {
             // 더 큰 뱃지를 temp에 넣고
             temp8 = this.badges.badge.공부[j];
           } else {
-            this.badges.badge.공부[j].badgeName = "획득하러 가기";
+            this.badges.badge.공부[j].badgeName = "뱃지 없음";
           }
         }
         this.bestBadges.push(temp8);  // 최종 temp를 bestBadges 배열에 push
@@ -240,7 +240,7 @@ export default {
             // 더 큰 뱃지를 temp에 넣고
             temp9 = this.badges.badge.돌봄[j];
           } else {
-            this.badges.badge.돌봄[j].badgeName = "획득하러 가기";
+            this.badges.badge.돌봄[j].badgeName = "뱃지 없음";
           }
         }
         this.bestBadges.push(temp9);  // 최종 temp를 bestBadges 배열에 push
@@ -269,5 +269,7 @@ export default {
   height: 50px;
   margin: 0%;
 }
-
+img{
+  margin: 0%;
+}
 </style>
