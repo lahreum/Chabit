@@ -72,7 +72,13 @@
                     </v-list-item-title>
                     <v-list-item-subtitle
                       class="point gray--text"
-                      v-text="search.userPoints"
+                      v-text="
+                        users[
+                          users.findIndex(
+                            (i) => i.userNickname == search.userNickname
+                          ) + 1
+                        ].userPoints
+                      "
                     >
                     </v-list-item-subtitle>
                   </v-list-item-content>
@@ -121,7 +127,11 @@
             <div>
               <!-- 검색하지 않았을 때 다른 유저 순위 -->
               <v-list>
-                <v-list-item v-for="(user, index) in users" :key="index" @click="setInfo(user.userEmail)">
+                <v-list-item
+                  v-for="(user, index) in users"
+                  :key="index"
+                  @click="setInfo(user.userEmail)"
+                >
                   <v-list-item-avatar class="avatar" size="60">
                     <v-img :src="user.userImage"></v-img>
                   </v-list-item-avatar>
@@ -222,28 +232,28 @@ export default {
       }
     },
     setInfo(userEmail) {
-            this.$Axios
-            .get(`${this.$store.state.host}/v1/users/` + userEmail)
-            .then((res)=> {
-                if(res.data.status === "success") {
-                    console.log('유저 한명 정보 저장 성공!')
-                    this.$store.commit("SETYOURINFO", res.data.data );
-                    setTimeout(this.tempfunc, 2000);
-                    this.$router.push('/your-feed');
-                } else {
-                    console.log('유저 한명 정보 저장 실패');
-                }
-            })
-            .catch((error)=> {
-                console.log(error);
-            })
-        },
-        tempfunc() {
-            console.log('시간벌기~');
-        },
-        moveToFeed() {
-            this.$router.push('/feed');
-        }
+      this.$Axios
+        .get(`${this.$store.state.host}/v1/users/` + userEmail)
+        .then((res) => {
+          if (res.data.status === "success") {
+            console.log("유저 한명 정보 저장 성공!");
+            this.$store.commit("SETYOURINFO", res.data.data);
+            setTimeout(this.tempfunc, 2000);
+            this.$router.push("/your-feed");
+          } else {
+            console.log("유저 한명 정보 저장 실패");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    tempfunc() {
+      console.log("시간벌기~");
+    },
+    moveToFeed() {
+      this.$router.push("/feed");
+    },
   },
   created() {
     this.getRankList();
