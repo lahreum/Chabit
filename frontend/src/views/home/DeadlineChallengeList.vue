@@ -86,11 +86,9 @@ export default {
   created() {
     this.$Axios.get(`${this.$store.state.host}/v1/challenges`)
       .then(res => {
-        console.log(res.data.data)
         // this.items = res.data.data
         const challenges = res.data.data
         const currentDay = new Date()
-        console.log(currentDay)
         let dates = ""
         let year = ""
         let month = ""
@@ -102,14 +100,12 @@ export default {
           month = parseInt(dates.slice(5,7));
           day = parseInt(dates.slice(8,10));
           date = new Date(year, month-1, day);
-          console.log(date)
           const elapsedMSec = date.getTime() - currentDay.getTime();
           const elapsedDay = elapsedMSec / (1000 * 60 * 60 * 24);
           if (elapsedDay <= 3 && elapsedDay >= 1) {
             this.items.push(challenges[i])
           }
         }
-        console.log(this.items)
       }).catch(err => {
         console.log(err)
       })
