@@ -1,4 +1,5 @@
 <template>
+    <sequential-entrance fromBottom> 
     <v-container>
         <v-layout>
             <v-flex class="section">
@@ -28,6 +29,7 @@
             </v-flex>
         </v-layout>
     </v-container>
+    </sequential-entrance> 
 </template>
 
 <script>

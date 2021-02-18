@@ -36,9 +36,9 @@
                 </v-card>
             </v-flex>
         </v-layout>
+        <v-divider class ="center" style="margin-top : 15px; max-width : 80%; margin : 3% 15% 0% 15%"></v-divider>
       </v-container>
             <!-- 검색 안할때에는 팔로워, 팔로잉 보여줌 -->
-            <v-divider class ="center" style="max-width : 80%; margin : 0px 15%"></v-divider>
             <div v-if="!searchItem">
                 <router-view/>
             </div>
@@ -46,6 +46,7 @@
             <div v-else>
                 <follow-search-list v-if="isSearch" :searchWord="searchItem"/>
             </div>
+ 
     </v-app>
 </template>
 
