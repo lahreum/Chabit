@@ -44,10 +44,7 @@
             </div>
             <!-- 검색 할때에는 검색내역 보여줌 -->
             <div v-else>
-                <follow-search-list 
-                    v-if="isSearch" 
-                    :searchWord="searchItem"
-                    v-on:doFollowing="getFollowCnt" />
+                <follow-search-list v-if="isSearch" :searchWord="searchItem"/>
             </div>
  
     </v-app>
