@@ -15,11 +15,19 @@
                 <!-- 댓글 내의 수정 또는 삭제 버튼을 클릭하면 이벤트 발생, 처리 -->
                 <p v-if="!modifying2">{{talk.commentContent}}</p>
                 <div v-if="modifying2">
-                  <v-textarea
+                <v-col
+                  cols="12"
+                  md="6"
+                  >
+                  <v-textarea                 
                     v-if="talk.reviewCommentId == modifyNumber"
                     name="input-7-1"
+                    rows="1"
+                    row-height="5"
+                    auto-grow
                     v-model="modifyContent"
                   ></v-textarea>
+                </v-col>
                 </div>
                 <!-- 수정중 아닐때-> 수정, 삭제 -->
                 <div v-if="!modifying2">
@@ -46,8 +54,9 @@
                     name="input-7-4"
                     clearable
                     auto-grow
-                    rows="5"
-                    style="font-size:12px;"
+                    rows="1"
+                    row-height="5"
+                    style="font-size:15px;"
                     full-width
                     v-model="reply" @keyup.enter="addReply"
                     ></v-textarea>
