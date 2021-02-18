@@ -93,10 +93,32 @@
         <v-app-bar app flat id="navbar" v-if="showNavbar">
           <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
           <!-- <v-toolbar-title  class="flex text-center">{{ pageTitle }}</v-toolbar-title> -->
+          <p
+            id="goToHome"
+            @click="goToHome"
+            style="font-size: 20px; margin-top: 20px"
+          >
+            <span
+              id="logoletter"
+              style="color: #942706; font-weight: 600; padding-right: 50px"
+              >CHABIT</span
+            >
+          </p>
         </v-app-bar>
         <v-app-bar app flat id="navbar" color="transparent" v-else>
           <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
           <!-- <v-toolbar-title  class="flex text-center">{{ pageTitle }}</v-toolbar-title> -->
+          <p
+            id="goToHome"
+            @click="goToHome"
+            style="font-size: 20px; margin-top: 20px"
+          >
+            <span
+              id="logoletter"
+              style="color: #942706; font-weight: 600; padding-right: 50px"
+              >CHABIT</span
+            >
+          </p>
         </v-app-bar>
       </transition>
       <v-main>
@@ -135,6 +157,9 @@ export default {
     },
   },
   methods: {
+    goToHome() {
+      this.$router.push("/");
+    },
     checkLogin() {
       if (this.userEmail != null) return true;
       else return false;
@@ -254,5 +279,8 @@ export default {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+}
+#goToHome {
+  text-align: center;
 }
 </style>

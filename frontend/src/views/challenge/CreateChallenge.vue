@@ -206,8 +206,9 @@
           <p style="color: black; font-size: 1rem;">'{{selected.categoryName}}' 선택</p>
           <v-btn
             color="red darken-4"
-            dark
+            class="white--text"
             @click="e6 = 2"
+            :disabled="this.selected.categoryName === ''"
           >
             다음
           </v-btn>
@@ -247,7 +248,8 @@
           </v-card>
           <v-btn
             color="red darken-4"
-            dark
+            class="white--text"
+            :disabled="this.title === '' || this.texts === ''"
             @click="e6 = 3"
           >
             다음
@@ -298,9 +300,10 @@
                   <v-btn
                     rounded-lg
                     color="red darken-4"
-                    dark
+                    class="white--text"
                     width="20"
                     height="40"
+                    :disabled="this.proofFiles.length === 0"
                     @click="proofUpload"
                   >
                     업로드
@@ -363,7 +366,8 @@
           </v-card>
           <v-btn
             color="red darken-4"
-            dark
+            class="white--text"
+            :disabled="this.proofType === '' || this.selected.authExample === '' || this.startTime === '' || this.endTime === ''"
             @click="e6 = 4"
           >
             다음
@@ -419,7 +423,8 @@
           <v-btn
             color="red darken-4"
             @click="e6 = 5"
-            dark
+            class="white--text"
+            :disabled="this.dates[0] === '' || this.dates[1] === ''"
           >
             다음
           </v-btn>
@@ -459,7 +464,8 @@
                   <v-btn
                     rounded-lg
                     color="red darken-4"
-                    dark
+                    class="white--text"
+                    :disabled="this.challengeFiles.length === 0"
                     width="20"
                     height="40"
                     @click="challengeUpload"
@@ -479,7 +485,8 @@
           </v-card>
           <v-btn
             color="red darken-4"
-            dark
+            class="white--text"
+            :disabled="this.selected.challengeThumbnail === ''"
             @click="createChallenge"
           >
             완료
