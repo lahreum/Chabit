@@ -49,7 +49,8 @@
           <v-btn
             rounded-lg
             color="red darken-4"
-            dark
+            class="white--text"
+            :disabled="this.files === ''"
             height="40px"
             @click="upload"
           >
@@ -57,7 +58,7 @@
           </v-btn>
         </v-col>
       </v-row>
-      <v-row>
+      <!-- <v-row>
         <v-col
           cols="4"
           v-for="(reviewImage, idx) in reviewImages"
@@ -68,13 +69,14 @@
             class="rounded-lg"
           ></v-img>
         </v-col>
-      </v-row>
+      </v-row> -->
       <p></p>
       <div>
         <v-btn
           rounded
           color="red darken-4"
-          dark
+          class="white--text"
+          :disabled="this.reviewImages.length === 0 || this.texts === ''"
           width="100%"
           height="60px"
           @click="onSubmit"

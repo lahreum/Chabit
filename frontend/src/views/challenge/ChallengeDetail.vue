@@ -50,14 +50,14 @@
             <span>{{item.challengePoint}}채빗</span>
           </v-col>
         </v-row>
-        <v-row>
+        <!-- <v-row>
           <v-col cols="4" class="py-1">
             <span style="font-weight: 600;">보상</span>
           </v-col>
           <v-col cols="8" class="py-1">
             <span>인증서 수여</span>
           </v-col>
-        </v-row>
+        </v-row> -->
         <v-row>
           <v-col cols="4" class="py-1">
             <span style="font-weight: 600;">공휴일 인증</span>
@@ -127,19 +127,37 @@
             참여하기
           </v-btn>
         </div>
-        <div style="margin-left: 7%;" v-else-if="item.challengeJoinStatus === 'JOIN'">
-          <v-btn
-            rounded
-            color="red darken-4"
-            dark
-            width="80%"
-            height="60px"
-            fixed
-            bottom
-            @click="proof(item)"
-          >
-            인증하기
-          </v-btn>
+        <div style="margin-left: 2%;" v-else-if="item.challengeJoinStatus === 'JOIN'">
+          <v-row>
+            <v-col cols="6" class="mx-0">
+              <v-btn
+                rounded
+                color="red darken-4"
+                dark
+                width="40%"
+                height="40px"
+                fixed
+                bottom
+                @click="proof(item)"
+              >
+                인증하기
+              </v-btn>
+            </v-col>
+            <v-col cols="6">
+              <v-btn
+                rounded
+                color="red darken-4"
+                dark
+                width="40%"
+                height="40px"
+                fixed
+                bottom
+                @click="proofList(item)"
+              >
+                인증목록
+              </v-btn>
+            </v-col>
+          </v-row>
         </div>
         <div style="margin-left: 7%;" v-else-if="item.challengeJoinStatus === 'SUCCESS' && item.reviewStatus === 'YET'">
           <v-btn
@@ -159,11 +177,12 @@
           <v-btn
             rounded
             color="grey lighten-1"
-            dark
+            class="white--text"
             width="80%"
             height="60px"
             fixed
             bottom
+            disabled
           >
             종료
           </v-btn>
@@ -246,6 +265,11 @@ export default {
       this.$store.commit("MOVETOWRITEREVIEW", item.challengeID);
       this.$router.push("/write-challenge-review");
     },
+    proofList(item) {
+      alert("인증목록으로 이동합니다.")
+      this.$store.commit("MOVETOPROOFLIST", item.challengeID);
+      this.$router.push('/proof-list')
+    }
   }
 }
 </script>
