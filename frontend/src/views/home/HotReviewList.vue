@@ -1,9 +1,9 @@
 <template>
   <v-container>
-    <div class="hot-review">
-      <span class="hot">인기</span><span>리뷰</span>
+    <div class="hot-review" >
+      <span class="hot" style="margin-left:1.0rem;">인기</span><span>리뷰</span>
     </div>
-    <v-container>
+    <v-container fluid style="width:97%;">
       <v-row
       >
         <v-col
@@ -89,7 +89,7 @@ export default {
   padding-left: 0.5rem;
   /* margin-top: -2.5rem; */
   margin-bottom: 1rem;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 600;
 }
 
