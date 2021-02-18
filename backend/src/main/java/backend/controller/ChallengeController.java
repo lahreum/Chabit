@@ -328,14 +328,16 @@ public class ChallengeController {
             List<ChallengeDto> collect = new ArrayList<>();
 
             for (Challenge challenge : challenges) {
-                List<ChallengeHashtag> hashtags = challenge.getHashtags();
-                HashtagDto hashtagDto = new HashtagDto();
-                hashtags.forEach(h -> hashtagDto.addHashtag(h.getHashtag()));
+                if (!challenge.getChallengeOngoing().equals(ChallengeOngoing.END)) {
+                    List<ChallengeHashtag> hashtags = challenge.getHashtags();
+                    HashtagDto hashtagDto = new HashtagDto();
+                    hashtags.forEach(h -> hashtagDto.addHashtag(h.getHashtag()));
 
-                ChallengeDto dto = new ChallengeDto(challenge);
-                dto.addHashtag(hashtagDto);
+                    ChallengeDto dto = new ChallengeDto(challenge);
+                    dto.addHashtag(hashtagDto);
 
-                collect.add(dto);
+                    collect.add(dto);
+                }
             }
 
             response = new BaseResponse("success", collect);
