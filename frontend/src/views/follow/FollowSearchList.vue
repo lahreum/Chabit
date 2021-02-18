@@ -14,7 +14,7 @@
                             <v-img :alt="`${item.userImage} avatar`" :src="item.userImage"/>
                         </v-list-item-avatar>
                         <v-list-item-content @click="setInfo(item.userEmail)">
-                            <v-list-item-title  class="fix-font-mid-bold-half black--text" v-text="item.userNickname" ></v-list-item-title>
+                            <v-list-item-title  class="fix-font-semi-big-bold-half black--text" v-text="item.userNickname" ></v-list-item-title>
                         </v-list-item-content>
                         <v-btn v-if="!checkFollowing(item.userEmail)" @click="doFollowing(item.userEmail)"
                         color="#e1f5fe" 
@@ -27,7 +27,7 @@
                             color="#fff1f1" small
                             elevation="0"
                         >
-                        <span style="color:#B71C1C;" class="font-size-sub-subtitle">언팔로우</span></v-btn>
+                        <span style="color:#B71C1C;" class="fix-font-small">언팔로우</span></v-btn>
                     </v-list-item>
                 </v-list>
             </v-flex>

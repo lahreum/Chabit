@@ -24,8 +24,8 @@
                     <v-list-item two-line>
                         <v-list-item-content>
                             <v-list-item-title class="headline text-center">
-                            <strong class = "fix-font-big" style="margin-right:15px;"><router-link :to="{ name: 'FollowList' }">{{ followerCnt }}</router-link></strong>
-                            <strong class = "fix-font-big" style="margin-left:15px;"><router-link :to="{ name: 'FollowingList' }">{{ followingCnt }}</router-link></strong>
+                            <strong class = "font-title-none" style="margin-right:15px;"><router-link :to="{ name: 'FollowList' }">{{ followerCnt }}</router-link></strong>
+                            <strong class = "font-title-none" style="margin-left:15px;"><router-link :to="{ name: 'FollowingList' }">{{ followingCnt }}</router-link></strong>
                             </v-list-item-title>
                             <v-list-item-subtitle class="text-center">
                                 <span class="fix-font-mid" style="margin:10px;">팔로워</span>
