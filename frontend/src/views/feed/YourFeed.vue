@@ -31,13 +31,16 @@ export default {
     }
   },
   computed: {
-      ...mapGetters({ email: "getYourEmail" }),
+      ...mapGetters({ 
+        yourEmail: "getYourEmail",
+        email: "getUserEmail" }),
   },
   components: {
     YourInfo,
     YourReview,
     YourReward,
   },
+  
 }
 </script>
 

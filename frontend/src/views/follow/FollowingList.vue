@@ -53,24 +53,24 @@ export default {
             })
         },
         cancelFollowing(userEmail) {
-        this.$Axios
-        .delete(`${this.$store.state.host}/v1/follow`,{
-            data:{          //////// 질문 필요
-                "followingEmail": userEmail, 
-                "userEmail": this.email
-            }
-        })
-        .then((res)=> {
-            if(res.data.status === "success") {
-                window.location.reload();
-                console.log('팔로우 취소 성공');
-            } else {
-                console.log('팔로우 취소 실패');
-            }
-        })
-        .catch((error)=>{
-            console.log(error);
-        })
+            this.$Axios
+            .delete(`${this.$store.state.host}/v1/follow`,{
+                data:{          //////// 질문 필요
+                    "followingEmail": userEmail, 
+                    "userEmail": this.email
+                }
+            })
+            .then((res)=> {
+                if(res.data.status === "success") {
+                    window.location.reload();
+                    console.log('팔로우 취소 성공');
+                } else {
+                    console.log('팔로우 취소 실패');
+                }
+            })
+            .catch((error)=>{
+                console.log(error);
+            })
         },
         setInfo(userEmail) {
             this.$Axios
