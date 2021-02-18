@@ -4,9 +4,9 @@
       <sequential-entrance fromBottom> 
       <div id="tabs" class="feedcontainer">
         <div class="tabs" style="text-align:center;">
-            <a v-on:click="activetab=1" v-bind:class="[ activetab === 1 ? 'active' : '' ]">챌린지</a>
-            <a v-on:click="activetab=2" v-bind:class="[ activetab === 2 ? 'active' : '' ]">마이리뷰</a>
-            <a v-on:click="activetab=3" v-bind:class="[ activetab === 3 ? 'active' : '' ]">업적</a>
+            <a class="font-size-sub-subtitle-bold-half" v-on:click="activetab=1" v-bind:class="[ activetab === 1 ? 'active' : '' ]">챌린지</a>
+            <a class="font-size-sub-subtitle-bold-half" v-on:click="activetab=2" v-bind:class="[ activetab === 2 ? 'active' : '' ]">마이리뷰</a>
+            <a class="font-size-sub-subtitle-bold-half" v-on:click="activetab=3" v-bind:class="[ activetab === 3 ? 'active' : '' ]">업적</a>
         </div>
         <div class="content">
           <div v-if="activetab === 1" class="tabcontent">
@@ -55,7 +55,7 @@ export default {
   width: 90%;
   margin: 40px auto;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 0.9em;
+  /* font-size: 0.9em; */
   color: #888;
 }
 
@@ -101,12 +101,12 @@ export default {
 
 /* Style the tab content */
 .tabcontent {
-  padding: 30px;
+  padding: 20px;
   border: 1px solid #fff;
   border-radius: 10px;
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
-  box-shadow: 3px 3px 6px #e1e1e1
+  box-shadow: 0px 3px 6px #e1e1e1
 }
 
 </style>

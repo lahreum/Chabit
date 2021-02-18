@@ -4,16 +4,16 @@
       <v-card>
         <v-list-item>
             <div class="top-text" style="width:90%; margin:0 auto;text-align:center;">
-                <div style="float:left;width:30%;">{{ badges.userGetSilver}}</div>
-                <div style="float:left;margin-left:5%;width:30%;">{{ badges.userGetGold}}</div>
-                <div style="float:right;width:30%;">{{ badges.userGetBronze}}</div>
+                <div class = "font-size-title" style="float:left;width:30%;">{{ badges.userGetSilver}}</div>
+                <div class = "font-size-title" style="float:left;margin-left:5%;width:30%;">{{ badges.userGetGold}}</div>
+                <div class = "font-size-title" style="float:right;width:30%;">{{ badges.userGetBronze}}</div>
             </div>
         </v-list-item>
         <v-list-item>
             <div style="width:90%; margin:0 auto; text-align:center;">
                 <div style="float:left;width:30%;"><img src="https://ifh.cc/g/rUZBvq.jpg" style="width:50px;"></div>
-                <div style="float:left;margin-left:5%;width:30%;"><img src="https://ifh.cc/g/wd7WQg.jpg" style="width:50px;"></div>
-                <div style="float:right;width:30%;"><img src="https://ifh.cc/g/pNp80t.jpg" style="width:50px;"></div>
+                <div style="float:left;margin-left:5%;width:30%;"><img  src="https://ifh.cc/g/wd7WQg.jpg" style="width:50px;"></div>
+                <div style="float:right;width:30%;"><img  src="https://ifh.cc/g/pNp80t.jpg" style="width:50px;"></div>
             </div>
         </v-list-item>
       </v-card>
@@ -37,11 +37,11 @@
                     <v-card-title>
                       <span>{{ categoryBadges[0].badgeCategory }}</span>
                     </v-card-title>
-                    <v-card-text style="display:flex;">
+                    <v-card-text class="center" style="display:flex;  padding :0px;">
                       <div v-for="oneBadge in categoryBadges" :key="oneBadge.badgeId" >
-                              <div style="text-align:center;padding:19px;">
-                              <img :src="oneBadge.badgeImage"/>
-                              <p>
+                              <div style="padding:10px;">
+                              <img class ="bedgeImage" :src="oneBadge.badgeImage"/>
+                              <p class = "font-size-sub-subtitle">
                                 {{ oneBadge.badgeName }}
                               </p>
                               </div>
@@ -62,7 +62,7 @@
                   </v-card>
                 </v-dialog>
 
-                <div><p>{{badge.badgeName}}</p></div>
+                <div><p class = "font-size-sub-subtitle">{{badge.badgeName}}</p></div>
               </div>
             </v-col>
 
@@ -138,7 +138,7 @@ export default {
             // 더 큰 뱃지를 temp에 넣고
             temp1 = this.badges.badge.독서[j];
           } else {
-            this.badges.badge.독서[j].badgeName = "획득하러 가기";
+            this.badges.badge.독서[j].badgeName = "뱃지 없음";
           }
         }
         this.bestBadges.push(temp1);  // 최종 temp를 bestBadges 배열에 push
@@ -150,7 +150,7 @@ export default {
             // 더 큰 뱃지를 temp에 넣고
             temp2 = this.badges.badge.생활습관[j];
           } else {
-            this.badges.badge.생활습관[j].badgeName = "획득하러 가기";
+            this.badges.badge.생활습관[j].badgeName = "뱃지 없음";
           }
         }
         this.bestBadges.push(temp2);   // 최종 temp를 bestBadges 배열에 push
@@ -162,7 +162,7 @@ export default {
             // 더 큰 뱃지를 temp에 넣고
             temp3 = this.badges.badge.다이어트[j];
           } else {
-            this.badges.badge.다이어트[j].badgeName = "획득하러 가기";
+            this.badges.badge.다이어트[j].badgeName = "뱃지 없음";
           }
         }
         this.bestBadges.push(temp3);  // 최종 temp를 bestBadges 배열에 push
@@ -174,7 +174,7 @@ export default {
             // 더 큰 뱃지를 temp에 넣고
             temp4 = this.badges.badge.취미[j];
           } else {
-            this.badges.badge.취미[j].badgeName = "획득하러 가기";
+            this.badges.badge.취미[j].badgeName = "뱃지 없음";
           }
         }
         this.bestBadges.push(temp4);    // 최종 temp를 bestBadges 배열에 push
@@ -186,7 +186,7 @@ export default {
             // 더 큰 뱃지를 temp에 넣고
             temp5 = this.badges.badge.감정관리[j];
           } else {
-            this.badges.badge.감정관리[j].badgeName = "획득하러 가기";
+            this.badges.badge.감정관리[j].badgeName = "뱃지 없음";
           }
         }
         this.bestBadges.push(temp5);  // 최종 temp를 bestBadges 배열에 push
@@ -198,7 +198,7 @@ export default {
             // 더 큰 뱃지를 temp에 넣고
             temp6 = this.badges.badge.돈관리[j];
           } else {
-            this.badges.badge.돈관리[j].badgeName = "획득하러 가기";
+            this.badges.badge.돈관리[j].badgeName = "뱃지 없음";
           }
         }
         this.bestBadges.push(temp6);  // 최종 temp를 bestBadges 배열에 push
@@ -210,7 +210,7 @@ export default {
             // 더 큰 뱃지를 temp에 넣고
             temp7 = this.badges.badge.운동[j];
           } else {
-            this.badges.badge.운동[j].badgeName = "획득하러 가기";
+            this.badges.badge.운동[j].badgeName = "뱃지 없음";
           }
         }
         this.bestBadges.push(temp7);  // 최종 temp를 bestBadges 배열에 push
@@ -222,7 +222,7 @@ export default {
             // 더 큰 뱃지를 temp에 넣고
             temp8 = this.badges.badge.공부[j];
           } else {
-            this.badges.badge.공부[j].badgeName = "획득하러 가기";
+            this.badges.badge.공부[j].badgeName = "뱃지 없음";
           }
         }
         this.bestBadges.push(temp8);  // 최종 temp를 bestBadges 배열에 push
@@ -234,7 +234,7 @@ export default {
             // 더 큰 뱃지를 temp에 넣고
             temp9 = this.badges.badge.돌봄[j];
           } else {
-            this.badges.badge.돌봄[j].badgeName = "획득하러 가기";
+            this.badges.badge.돌봄[j].badgeName = "뱃지 없음";
           }
         }
         this.bestBadges.push(temp9);  // 최종 temp를 bestBadges 배열에 push
@@ -258,5 +258,12 @@ export default {
     font-weight: 600;
     padding-bottom: 0;
 }
-
+div > .bedgeImage{
+  width: 50px;
+  height: 50px;
+  margin: 0%;
+}
+img{
+  margin: 0%;
+}
 </style>
