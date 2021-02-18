@@ -21,7 +21,7 @@
             <!-- 팔로우, 팔로잉 -->
             <v-flex class="section">
                 <v-card class="mx-auto rounded-lg" max-width="80%" outlined>
-                    <v-list-item two-line dense>
+                    <v-list-item two-line>
                         <v-list-item-content>
                             <v-list-item-title class="headline text-center">
                             <strong class = "font-size-title" style="margin-right:15px;"><router-link :to="{ name: 'FollowList' }">{{ followerCnt }}</router-link></strong>
