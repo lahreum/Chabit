@@ -469,8 +469,8 @@
                 </v-col>
               </v-row>
               <v-img
-                v-if="this.selected.thumbnail"
-                :src="this.selected.thumbnail"
+                v-if="this.selected.challengeThumbnail"
+                :src="this.selected.challengeThumbnail"
                 width="100"
                 height="100"
               >
