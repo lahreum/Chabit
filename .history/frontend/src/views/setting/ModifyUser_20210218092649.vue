@@ -359,7 +359,7 @@ export default {
               clearInterval(countdown);
               this.$store.commit("UPDATEUSERINFO", this.form);
               alert("회원정보 변경이 완료되었습니다.");
-              this.$router.push("/home");
+              this.$router.push("/");
             } else {
               console.log(res);
               alert("회원정보 변경에 실패하였습니다.");
