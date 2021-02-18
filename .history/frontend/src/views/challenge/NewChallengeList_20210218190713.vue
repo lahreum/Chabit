@@ -49,7 +49,7 @@
         color="red darken-4"
         medium
         fab
-        @click="moveToCreateChallenge"
+        @click="$router.push('/create-challenge')"
       ><span class="plus">+</span></v-btn>
     </div>
   </v-container>
@@ -57,12 +57,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-
 export default {
-  computed: {
-    ...mapGetters({ userEmail: "getUserEmail" }),
-  },
   data() {
     return {
       items: [],
@@ -85,21 +80,8 @@ export default {
   },
   methods: {
     moveToChallengeDetail(item) {
-      if(this.userEmail) {
-        this.$store.commit("SELECTEDCHALLENGE", item.challengeID);
-        this.$router.push("/challenge-detail");
-      } else {
-        alert("로그인 후 확인 가능합니다.");
-        this.$router.push({ name: 'Login' });
-      }
-    },
-    moveToCreateChallenge() {
-      if(this.userEmail) {
-        this.$router.push('/create-challenge');
-      } else {
-        alert("로그인 후 확인 가능합니다.");
-        this.$router.push({ name: 'Login' });
-      }
+      this.$store.commit("SELECTEDCHALLENGE", item.challengeID);
+      this.$router.push("/challenge-detail");
     }
   }
 }
