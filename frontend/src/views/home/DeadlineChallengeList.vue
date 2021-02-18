@@ -1,7 +1,7 @@
 <template>
   <v-container>
-    <div class="deadline-challenge">
-      <span class="hot">시작 임박</span><span>챌린지</span>
+    <div class="deadline-challenge" style="margin-top:20px;">
+      <span class="hot" style="margin-left:1.0rem;">시작 임박</span><span>챌린지</span>
     </div>
     <v-carousel 
       hide-delimiters 
@@ -17,7 +17,7 @@
       >
         <v-card
           class="mx-auto my-12 rounded-xl"
-          max-width="380"
+          max-width="370"
           :loading="loading"
           @click="reverse, moveToChallengeDetail(item)"
           style="background-color: white;"
@@ -31,11 +31,11 @@
           </template>
 
           <v-img
-            height="250"
+            height="230"
             :src="item.challengeThumbnail"
           ></v-img>
 
-          <v-card-title style="color: black;" class="font-size-title">{{item.challengeName}}</v-card-title>
+          <v-card-title style="color: black; font-size: 1.2rem;" class="font-size-title">{{item.challengeName}}</v-card-title>
 
           <v-card-text>
             <v-row
@@ -44,9 +44,9 @@
               v-if="item.challengeOwner.userRole === 'ADMIN'"
             >
               <div style="color: #B71C1C;" class="font-size-subtitle">
-                <i class="fas fa-gem"></i>
+                <i class="fas fa-gem" style="font-size: 1.0rem;"></i>
               </div>
-              <div class="grey--text ml-1 font-size-subtitle">
+              <div class="grey--text ml-1 font-size-subtitle" style="font-size: 1.0rem;">
                 공식 챌린지
               </div>
             </v-row>
@@ -118,7 +118,7 @@ export default {
   padding-left: 0.5rem;
   /* margin-top: 2.5rem; */
   margin-bottom: -1.5rem;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 600;
 }
 
