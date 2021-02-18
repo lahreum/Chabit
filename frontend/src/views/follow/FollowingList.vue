@@ -23,7 +23,7 @@
                         color="#fff1f1" small
                         elevation="0"
                         >
-                        <span style="color:#B71C1C;" class="fix-font-semi-mid">언팔로우</span></v-btn>
+                        <span style="color:#B71C1C;" class="fix-font-small">언팔로우</span></v-btn>
                     </v-list-item>
                 </v-list>
             </v-flex>

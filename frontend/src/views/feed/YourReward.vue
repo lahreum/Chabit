@@ -4,9 +4,9 @@
       <v-card>
         <v-list-item>
             <div class="top-text" style="width:90%; margin:0 auto;text-align:center;">
-                <div class = "font-size-title" style="float:left;width:30%;">{{ badges.userGetSilver}}</div>
-                <div class = "font-size-title" style="float:left;margin-left:5%;width:30%;">{{ badges.userGetGold}}</div>
-                <div class = "font-size-title" style="float:right;width:30%;">{{ badges.userGetBronze}}</div>
+                <div class = "fix-font-big" style="float:left;width:30%;">{{ badges.userGetSilver}}</div>
+                <div class = "fix-font-big" style="float:left;margin-left:5%;width:30%;">{{ badges.userGetGold}}</div>
+                <div class = "fix-font-big" style="float:right;width:30%;">{{ badges.userGetBronze}}</div>
             </div>
         </v-list-item>
         <v-list-item>
@@ -41,7 +41,7 @@
                       <div v-for="oneBadge in categoryBadges" :key="oneBadge.badgeId" >
                               <div style="padding:10px;">
                               <img class ="bedgeImage" :src="oneBadge.badgeImage"/>
-                              <p class = "font-size-sub-subtitle">
+                              <p class = "fix-font-small">
                                 {{ oneBadge.badgeName }}
                               </p>
                               </div>
@@ -62,7 +62,7 @@
                   </v-card>
                 </v-dialog>
 
-                <div><p class = "font-size-sub-subtitle">{{badge.badgeName}}</p></div>
+                <div><p class = "fix-font-small">{{badge.badgeName}}</p></div>
               </div>
             </v-col>
 

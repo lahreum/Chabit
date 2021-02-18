@@ -29,12 +29,12 @@
     <v-btn
       @click="doFollowing"
       v-if="!flag" style="margin-bottom:20px;" elevation="0" color="rgb(225, 245, 254)" width="100%"
-      ><span class ="font-size-sub-subtitle" style="color:rgb(21, 101, 192);">팔로우 하기</span>
+      ><span class ="fix-font-mid" style="color:rgb(21, 101, 192);">팔로우 하기</span>
       </v-btn>
     <v-btn
       @click="cancelFollowing"
       v-else style="margin-bottom:20px;" elevation="0" color="rgb(255, 241, 241)" width="100%"
-      ><span class ="font-size-sub-subtitle" style="color:rgb(183, 28, 28);">언팔로우 하기</span>
+      ><span class ="fix-font-mid" style="color:rgb(183, 28, 28);">언팔로우 하기</span>
       </v-btn>
   </div>
   </div>
