@@ -158,7 +158,7 @@ export default {
   },
   methods: {
     goToHome() {
-      this.$router.push("/");
+      this.$router.push("/home");
     },
     checkLogin() {
       if (this.userEmail != null) return true;
@@ -179,6 +179,7 @@ export default {
       if(this.userEmail) {   //로그인 정보가 있을때에만 이동
         this.$router.push({ name: 'Feed' });
       } else {
+        alert("로그인 후 확인 가능합니다.");
         this.$router.push({ name: 'Login' });
       }
     },
@@ -186,6 +187,7 @@ export default {
       if(this.userEmail) {
         this.$router.push('/follow')
       } else {
+        alert("로그인 후 확인 가능합니다.");
         this.$router.push({ name: 'Login' });
       }
     }

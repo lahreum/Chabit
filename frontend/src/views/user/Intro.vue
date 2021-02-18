@@ -15,7 +15,7 @@ import "./Intro.scss";
 export default {
     methods : {
       onSkip(){
-        this.$router.push("/instruction");
+        this.$router.push("/home");
       }
     }
 }
