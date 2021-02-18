@@ -89,7 +89,7 @@ export default {
                     // window.location.reload();
                     console.log('팔로잉 성공');
                     this.getFollowList();
-                    this.$emit('doFollowing');
+                    window.location.reload();
                 } else {
                     console.log('팔로잉 실패');
                 }
