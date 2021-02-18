@@ -51,7 +51,7 @@
     <div style="margin: 15px">
       <p style="font-weight: 600">멋져요 {{ this.review.coolCount }} 개</p>
     </div>
-    <div style="margin: 15px">
+    <div style="margin: 15px; word-break: break-all">
       {{ this.review.reviewContent }}
       <br />
     </div>
