@@ -85,7 +85,7 @@
                 >저장</span
               >
               <span
-                @click="toggleModify"
+                @click="toggleModify2"
                 v-if="talk.userNickname == nickname"
                 style="
                   color: gray;
