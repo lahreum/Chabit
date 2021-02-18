@@ -1,12 +1,12 @@
 <template>
   <div>
     <!-- 상단 금,은,동 계기판 -->
-      <v-card>
+      <v-card elevation="0" outlined>
         <v-list-item>
             <div class="top-text" style="width:90%; margin:0 auto;text-align:center;">
-                <div style="float:left;width:30%;">{{ this.badges.userGetSilver}}</div>
-                <div style="float:left;margin-left:4%;width:30%;">{{ this.badges.userGetGold}}</div>
-                <div style="float:right;width:30%;margin-right:1%;">{{ this.badges.userGetBronze}}</div>
+                <div class = "font-size-title" style="float:left;width:30%;">{{ this.badges.userGetSilver}}</div>
+                <div class = "font-size-title" style="float:left;margin-left:4%;width:30%;">{{ this.badges.userGetGold}}</div>
+                <div class = "font-size-title" style="float:right;width:30%;margin-right:1%;">{{ this.badges.userGetBronze}}</div>
             </div>
         </v-list-item>
         <v-list-item>
@@ -37,12 +37,12 @@
                     <v-card-title>
                       <span>{{ categoryBadges[0].badgeCategory }}</span>
                     </v-card-title>
-                    <v-card-text style="display:flex;">
+                    <v-card-text class="center" style="display:flex; padding :0px;">
                       <div v-for="oneBadge in categoryBadges" :key="oneBadge.badgeId" >
                             <!-- <div style="flex:initial;"> -->
-                              <div style="text-align:center;padding:19px;">
-                              <img :src="oneBadge.badgeImage"/>
-                              <p>
+                              <div style="padding:10px;">
+                              <img class ="bedgeImage" :src="oneBadge.badgeImage"/>
+                              <p class = "font-size-sub-subtitle">
                                 {{ oneBadge.badgeName }}
                               </p>
                               </div>
@@ -64,7 +64,7 @@
                   </v-card>
                 </v-dialog>
 
-                <div><p>{{badge.badgeName}}</p></div>
+                <div><p class = "font-size-sub-subtitle">{{badge.badgeName}}</p></div>
               </div>
             </v-col>
 
@@ -263,6 +263,11 @@ export default {
     font-size: 20px;
     font-weight: 600;
     padding-bottom: 0;
+}
+.bedgeImage{
+  width: 50px;
+  height: 50px;
+  margin: 0%;
 }
 
 </style>
