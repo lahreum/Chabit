@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <div class="all-ranking" style="margin-top:25px;">
+    <div class="all-ranking font-title" style="margin-top:20px;">
       <span>전체 랭킹</span>
       <i class="fas fa-plus" @click="$router.push('/ranking')"></i>
     </div>
@@ -61,19 +61,18 @@ export default {
 
 <style scoped>
 .all-ranking {
-  padding-left: 1.0rem;
+  padding-left: 0.5rem;
   padding-bottom: 1rem;
   font-size: 1.3rem;
   font-weight: 600;
 }
 
 .all-ranking > .fa-plus {
-  padding-left: 0.3rem;
+  padding-left: 0.5rem;
   color: #B71C1C;
 }
 .v-list-item{
   min-height: 33px;
-  
   padding : 0px 20px; 
 }
 .v-list-item > .text-left{
@@ -82,7 +81,5 @@ export default {
 .v-list-item > .text-right{
   max-width: 25vw;
 }
-.font-size-subtitle {
-  font-size: 1.1rem;
-}
+
 </style>

@@ -123,7 +123,7 @@ export default {
       this.$router.push('/challenge-detail');
     },
     goHome() {
-      this.$router.push('/');
+      this.$router.push('/home');
     }
   },
   created() {
