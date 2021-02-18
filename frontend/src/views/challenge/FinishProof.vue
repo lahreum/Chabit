@@ -16,7 +16,7 @@
           class="proof-btn"
           @click="toHome"
         >
-          <span>홈으로</span> 
+          <span>홈으로</span>
         </v-btn>
         <v-spacer></v-spacer>
         <v-btn
@@ -39,13 +39,13 @@
 export default {
   methods: {
     toHome() {
-      this.$router.push('/')
+      this.$router.push("/home");
     },
     toProofList() {
-      this.$router.push('/proof-list')
-    }
-  }
-}
+      this.$router.push("/proof-list");
+    },
+  },
+};
 </script>
 
 <style>
