@@ -20,7 +20,8 @@
         placeholder="상태메세지" v-model="this.user.userProfileMessage" style="margin-top:15px;"
       ></v-text-field>
     </div>
-
+    <v-btn @click="doFollowing" v-if="!flag" style="margin-bottom:20px;" color="#5E35B1" width="100%"><span style="color:white;">팔로우 하기</span></v-btn>
+    <v-btn @click="cancelFollowing" v-else style="margin-bottom:20px;" color="#BDBDBD" width="100%"><span style="color:white;">언팔로우 하기</span></v-btn>
   </div>
 </template>
 
@@ -34,6 +35,8 @@ import { mapGetters } from 'vuex'
     },
     data () {
       return {
+        flag: false,
+        followings: [],
         hasSaved: false,
         isEditing: null,
         status: '',
@@ -52,18 +55,18 @@ import { mapGetters } from 'vuex'
             "levelImage": "",
           },
           "userImage": "",
-          // "badges": {
-            // },            
         }
       }
     },
     computed: {
-      ...mapGetters({ email: 'getYourEmail' }),
+      ...mapGetters({ 
+        yourEmail: 'getYourEmail',
+        email: 'getUserEmail' }),
     },
     methods: {
       getUserInfo()  {
         this.$Axios
-        .get(`${this.$store.state.host}/v1/users/` + this.email)
+        .get(`${this.$store.state.host}/v1/users/` + this.yourEmail)
         .then((res) => {
           if(res.data.status == "success") {
             this.user.userNickname = res.data.data.userNickname;
@@ -76,7 +79,6 @@ import { mapGetters } from 'vuex'
             this.user.userLevel.levelMaxPoint = res.data.data.userLevel.levelMaxPoint;
             this.user.userLevel.levelImage = res.data.data.userLevel.levelImage;
             this.user.userImage = res.data.data.userImage;
-            // this.badges = data.data.userNickname;
           } else {
             console.log('데이터 안넘어옴..');
           }
@@ -85,39 +87,69 @@ import { mapGetters } from 'vuex'
           console.log(error);
         })
       },
-    //   save () {
-    //     this.hasSaved = true;
-    //     this.$Axios
-    //     // .post(`${this.$store.state.host}/v1/users/hashtag/${this.$store.state.user.userEmail}`, this.chips)
-    //     .patch(`${this.$store.state.host}/v1/users/`+ this.user.userEmail  + '/profile', {
-    //       userEmail: this.user.userEmail,
-    //       userName: this.user.userName,
-    //       userNickname: this.user.userNickname,
-    //       userPassword: this.user.userPassword,
-    //       userPhone: this.user.userPhone,
-    //       userProfileMessage: this.user.userProfileMessage
-    //     })
-    //     .then((res) => {
-    //       if(res.data.status == "success") {
-    //         console.log('상태메세지 잘 저장됨');
-    //       } else {
-    //         console.log('상메 안보내짐....');
-    //       }
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    //   },
-    //   remove (item) {
-    //     this.chips.splice(this.chips.indexOf(item), 1)
-    //     this.chips = [...this.chips]
-    //   },
+      getFollowings(){
+        this.$Axios
+        .get(`${this.$store.state.host}/v1/follow/` + this.email) 
+        .then((res)=> {
+          if(res.data.status === "success") {
+            this.followings = res.data.data.followings.followings;
+          
+            for(var follow of this.followings) {
+              if(follow.userEmail === this.yourEmail) {
+                this.flag = true;
+              } 
+            }
+          } else {
+            console.log('팔로잉 정보 가져오지 못함');
+          }
+        })
+      },
+     doFollowing() {
+        this.$Axios
+        .post(`${this.$store.state.host}/v1/follow`,
+            {
+                "followingEmail": this.yourEmail,
+                "userEmail": this.email
+            }
+        )
+        .then((res)=> {
+            if(res.data.status === "success") {
+              console.log('팔로잉 성공!');
+              window.location.reload();
+            } else {
+              console.log('팔로잉 실패');
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+      },
+      cancelFollowing() {
+        this.$Axios
+        .delete(`${this.$store.state.host}/v1/follow`,{
+            data:{          //////// 질문 필요
+                "followingEmail": this.yourEmail, 
+                "userEmail": this.email
+            }
+        })
+        .then((res)=> {
+            if(res.data.status === "success") {
+                window.location.reload();
+                console.log('팔로우 취소 성공');
+            } else {
+                console.log('팔로우 취소 실패');
+            }
+        })
+        .catch((error)=>{
+            console.log(error);
+        })
+      },
     },
     created() {
-    //   this.user.userEmail = this.email;   // 유저 이메일 정보를 로그인한 사람의 정보로
-    //   console.log(this.user.userEmail);
-      this.getUserInfo();    // 페이지 열자마자 유저 정보 가져옴.
-    }
+      this.getUserInfo();     // 페이지 열자마자 유저 정보 가져옴.
+      this.getFollowings();   // 팔로우 정보 가져옴
+    },
+    
   }
 </script>
 
