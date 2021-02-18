@@ -15,7 +15,7 @@
                         </v-list-item-avatar>
                         <v-list-item-content @click="setInfo(follower.userEmail)">
                             <!-- <router-link :to="{ name: 'YourFeed' }" style="text-decoration:none;"> -->
-                                <v-list-item-title  class="font-size-mid-subtitle-bold-half black--text" v-text="follower.userNickname"></v-list-item-title>
+                                <v-list-item-title  class="fix-font-mid-bold-half black--text" v-text="follower.userNickname"></v-list-item-title>
                             <!-- </router-link> -->
                         </v-list-item-content>
                         <v-btn v-if="!checkFollowing(follower.userEmail)" 
@@ -23,7 +23,7 @@
                         color="#e1f5fe" 
                         small
                         elevation="0">
-                        <span style="color: #1565c0;" class="font-size-sub-subtitle">팔로우</span></v-btn>
+                        <span style="color: #1565c0;" class="fix-font-mid">팔로우</span></v-btn>
                     </v-list-item>
                 </v-list>
             </v-flex>
