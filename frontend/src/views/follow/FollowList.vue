@@ -1,4 +1,5 @@
 <template>
+    <sequential-entrance fromBottom> 
     <v-container>
         <v-layout>
             <v-flex class="section">
@@ -10,19 +11,25 @@
                     </v-subheader>
                     <v-list-item v-for="follower in followers" :key="follower.userEmail">
                         <v-list-item-avatar style="width:45px; height:45px; margin-top:10px;margin-bottom:10px;" @click="setInfo(follower.userEmail)">
-                            <v-img :alt="`${follower.userImage} avatar`" :src="follower.userImage" style="width:50px;"></v-img>
+                            <v-img :alt="`${follower.userImage} avatar`" :src="follower.userImage"></v-img>
                         </v-list-item-avatar>
                         <v-list-item-content @click="setInfo(follower.userEmail)">
                             <!-- <router-link :to="{ name: 'YourFeed' }" style="text-decoration:none;"> -->
-                                <v-list-item-title  class="name black--text" v-text="follower.userNickname" style="font-size:17px;"></v-list-item-title>
+                                <v-list-item-title  class="font-size-mid-subtitle-bold-half black--text" v-text="follower.userNickname"></v-list-item-title>
                             <!-- </router-link> -->
                         </v-list-item-content>
-                        <v-btn v-if="!checkFollowing(follower.userEmail)" @click="doFollowing(follower.userEmail)" color="#424242" small elevation="2"><span style="color:#E0E0E0;">팔로우</span></v-btn>
+                        <v-btn v-if="!checkFollowing(follower.userEmail)" 
+                        @click="doFollowing(follower.userEmail)" 
+                        color="#e1f5fe" 
+                        small
+                        elevation="0">
+                        <span style="color: #1565c0;" class="font-size-sub-subtitle">팔로우</span></v-btn>
                     </v-list-item>
                 </v-list>
             </v-flex>
         </v-layout>
     </v-container>
+    </sequential-entrance> 
 </template>
 
 <script>
@@ -120,14 +127,6 @@ export default {
 }
 #title{
     font-size: 1.5rem;
-    margin-top: 30px;
-}
-.v-subheader{
-    margin-bottom: 30px;
-}
-.name{
-    font-weight: 500;
-    font-size: 1rem;
 }
 .v-list-item__title.msg{
     font-weight: 400;

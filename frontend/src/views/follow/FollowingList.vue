@@ -1,4 +1,5 @@
 <template>
+    <sequential-entrance fromBottom> 
     <v-container>
         <v-layout>
             <v-flex class="section">
@@ -14,16 +15,21 @@
                         </v-list-item-avatar>
                         <v-list-item-content @click="setInfo(following.userEmail)">
                             <!-- <router-link :to="{ name: 'YourFeed' }" style="text-decoration:none;"> -->
-                                <v-list-item-title  class="name black--text" v-text="following.userNickname" style="font-size:17px;">
+                                <v-list-item-title  class="font-size-mid-subtitle-bold-half black--text" v-text="following.userNickname" >
                                 </v-list-item-title>
                             <!-- </router-link> -->
                         </v-list-item-content>
-                            <v-btn @click="cancelFollowing(following.userEmail)" color="#BDBDBD" small elevation="2"><span style="color:white;">언팔로우</span></v-btn>
+                        <v-btn @click="cancelFollowing(following.userEmail)" 
+                        color="#fff1f1" small
+                        elevation="0"
+                        >
+                        <span style="color:#B71C1C;" class="font-size-sub-subtitle">언팔로우</span></v-btn>
                     </v-list-item>
                 </v-list>
             </v-flex>
         </v-layout>
     </v-container>
+    </sequential-entrance> 
 </template>
 
 <script>
@@ -105,14 +111,6 @@ export default {
 }
 #title{
     font-size: 1.5rem;
-    margin-top: 30px;
-}
-.v-subheader{
-    margin-bottom: 30px;
-}
-.name{
-    font-weight: 500;
-    font-size: 1rem;
 }
 .v-list-item__title.msg{
     font-weight: 400;
