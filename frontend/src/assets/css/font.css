@@ -43,6 +43,10 @@
   font-size: 2.1vh;
   font-weight: 400;
 }
+.font-size-sub-subtitle-bold-half{
+  font-size: 1.8vh;
+  font-weight: 400;
+}
 
 .font-title{
   padding-left: 0.5rem;

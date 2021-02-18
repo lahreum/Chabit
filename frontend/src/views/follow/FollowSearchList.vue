@@ -15,7 +15,11 @@
                         <v-list-item-content @click="setInfo(item.userEmail)">
                             <v-list-item-title  class="name black--text" v-text="item.userNickname" style="font-size:17px;"></v-list-item-title>
                         </v-list-item-content>
-                        <v-btn v-if="!checkFollowing(item.userEmail)" @click="doFollowing(item.userEmail)">팔로우 </v-btn>
+                        <v-btn v-if="!checkFollowing(item.userEmail)" @click="doFollowing(item.userEmail)"
+                        color="#e1f5fe" 
+                        small
+                        elevation="0">
+                        <span style="color:#1565c0;" class="font-size-sub-subtitle">팔로우</span></v-btn>
                     </v-list-item>
                 </v-list>
             </v-flex>

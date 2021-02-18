@@ -13,8 +13,7 @@
   margin-right: 2rem;
 }
 .ranking-nav .-select__selectin.v-select__selection--comma {
-  font-size: 2rem;
-  font-size: 10px;
+  font-size: 2.1vh;
 }
 .ranking-nav .v-input {
   font-size: 3.5vmin;

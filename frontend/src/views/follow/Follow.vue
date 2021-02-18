@@ -23,11 +23,11 @@
                 <v-card class="mx-auto rounded-lg" max-width="80%" outlined>
                     <v-list-item two-line dense>
                         <v-list-item-content>
-                            <v-list-item-title class="headline mb-1 text-center">
+                            <v-list-item-title class="headline text-center">
                             <strong class = "font-size-title" style="margin-right:15px;"><router-link :to="{ name: 'FollowList' }">{{ followerCnt }}</router-link></strong>
                             <strong class = "font-size-title" style="margin-left:15px;"><router-link :to="{ name: 'FollowingList' }">{{ followingCnt }}</router-link></strong>
                             </v-list-item-title>
-                            <v-list-item-subtitle class="mb-1 text-center">
+                            <v-list-item-subtitle class="text-center">
                                 <span class="font-size-sub-subtitle" style="margin:10px;">팔로워</span>
                                 <span class="font-size-sub-subtitle" style="margin:10px;">팔로잉</span>
                             </v-list-item-subtitle>

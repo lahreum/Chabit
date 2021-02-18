@@ -17,7 +17,12 @@
                                 <v-list-item-title  class="font-size-mid-subtitle-bold-half black--text" v-text="follower.userNickname"></v-list-item-title>
                             <!-- </router-link> -->
                         </v-list-item-content>
-                        <v-btn v-if="!checkFollowing(follower.userEmail)" @click="doFollowing(follower.userEmail)" color="#424242" small elevation="2"><span style="color:#E0E0E0;">팔로우</span></v-btn>
+                        <v-btn v-if="!checkFollowing(follower.userEmail)" 
+                        @click="doFollowing(follower.userEmail)" 
+                        color="#e1f5fe" 
+                        small
+                        elevation="0">
+                        <span style="color: #1565c0;" class="font-size-sub-subtitle">팔로우</span></v-btn>
                     </v-list-item>
                 </v-list>
             </v-flex>

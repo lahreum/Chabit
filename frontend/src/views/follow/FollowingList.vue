@@ -18,7 +18,11 @@
                                 </v-list-item-title>
                             <!-- </router-link> -->
                         </v-list-item-content>
-                        <v-btn @click="cancelFollowing(following.userEmail)" color="#BDBDBD" small elevation="2"><span style="color:white;">언팔로우</span></v-btn>
+                        <v-btn @click="cancelFollowing(following.userEmail)" 
+                        color="#fff1f1" small
+                        elevation="0"
+                        >
+                        <span style="color:#B71C1C;" class="font-size-sub-subtitle">언팔로우</span></v-btn>
                     </v-list-item>
                 </v-list>
             </v-flex>
