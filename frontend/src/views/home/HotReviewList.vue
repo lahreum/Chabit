@@ -37,7 +37,23 @@
 export default {
   data() {
     return {
-      items: []
+      items: [],
+      // you: {
+      //   "userEmail": "",
+      //   "userNickname": "",
+      //   "userName": "",
+      //   "userPhone": "",
+      //   "userProfileMessage": "",
+      //   "userPoints": 0,
+      //   "userJoindate": "",
+      //   "userLevel": {
+      //   "level": "DIAMOND",
+      //   "levelMaxPoint": 31999,
+      //   "levelImage": "https://ssafychabit.s3.ap-northeast-2.amazonaws.com/level/dia.png"
+      //   },
+      //   "userRole": "USER",
+      //   "userImage": "https://ifh.cc/g/x3UpNd.jpg",
+      // }
     }
   },
   created() {
@@ -52,19 +68,34 @@ export default {
   },
   methods: {
     moveToReviewDetail(item) {
-      this.$store.commit("MOVETOREVIEWDETAIL", item.reviewId)
+      this.$store.commit("MOVETOREVIEWDETAIL", item.reviewId);
       if(this.$store.state.user.userEmail == item.userEmail) {
         this.$router.push('/review-detail')
       } else {
-        let reviewer = {
-          'userEmail': item.userEmail,
-          'userImage': item.userImage,
-          'userNickname': item.userNickname
-        }
-        this.$store.commit("SETYOURINFO", reviewer);
-        this.$router.push('/your-review-detail')
+        this.$store.commit("MOVETOREVIEWDETAIL", item.reviewId);
+        this.setInfo(item.userEmail); 
       }
-    }
+    },
+    setInfo(userEmail) {
+            this.$Axios
+            .get(`${this.$store.state.host}/v1/users/` + userEmail)
+            .then((res)=> {
+                if(res.data.status === "success") {
+                    console.log('유저 한명 정보 저장 성공!')
+                    this.$store.commit("SETYOURINFO", res.data.data );
+                    setTimeout(this.tempfunc, 2000);
+                    this.$router.push('/your-review-detail');
+                } else {
+                    console.log('유저 한명 정보 저장 실패');
+                }
+            })
+            .catch((error)=> {
+                console.log(error);
+            })
+        },
+        tempfunc() {
+            console.log('시간벌기~');
+        }
   }
 }
 </script>

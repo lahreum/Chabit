@@ -9,11 +9,11 @@
                         </div>
                     </v-subheader>
                     <v-list-item v-for="item in this.items" :key="item.userNickname">
-                        <v-list-item-avatar>
+                        <v-list-item-avatar style="width:45px; height:45px; margin-top:10px;margin-bottom:10px;" @click="setInfo(item.userEmail)">
                             <v-img :alt="`${item.userImage} avatar`" :src="item.userImage"/>
                         </v-list-item-avatar>
-                        <v-list-item-content>
-                            <v-list-item-title  class="name black--text" v-text="item.userNickname"></v-list-item-title>
+                        <v-list-item-content @click="setInfo(item.userEmail)">
+                            <v-list-item-title  class="name black--text" v-text="item.userNickname" style="font-size:17px;"></v-list-item-title>
                         </v-list-item-content>
                         <v-btn v-if="!checkFollowing(item.userEmail)" @click="doFollowing(item.userEmail)">팔로우 </v-btn>
                     </v-list-item>
@@ -99,6 +99,26 @@ export default {
             })
             return bothFollowing;
         },
+        setInfo(userEmail) {
+            this.$Axios
+            .get(`${this.$store.state.host}/v1/users/` + userEmail)
+            .then((res)=> {
+                if(res.data.status === "success") {
+                    console.log('유저 한명 정보 저장 성공!')
+                    this.$store.commit("SETYOURINFO", res.data.data );
+                    setTimeout(this.tempfunc, 2000);
+                    this.$router.push('/your-feed');
+                } else {
+                    console.log('유저 한명 정보 저장 실패');
+                }
+            })
+            .catch((error)=> {
+                console.log(error);
+            })
+        },
+        tempfunc() {
+            console.log('시간벌기~');
+        }
   }
 }
 </script>
