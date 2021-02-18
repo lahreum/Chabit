@@ -1,7 +1,7 @@
 <template>
   <v-container>
-    <div class="hot-review font-title">
-      <span class="hot">인기</span><span>리뷰</span>
+    <div class="hot-review" >
+      <span class="hot" style="margin-left:1.0rem;">인기</span><span>리뷰</span>
     </div>
     <v-container fluid style="width:97%;">
       <v-row
