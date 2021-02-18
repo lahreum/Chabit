@@ -1,5 +1,6 @@
 <template>
   <div>
+    <sequential-entrance fromBottom> 
     <v-card
       class="mx-auto"
     >
@@ -10,6 +11,7 @@
         top
       ></v-img>
     </v-card>
+
     <v-card
       class="mx-auto rounded-t-xl challenge-content"
     >
@@ -189,6 +191,7 @@
         </div>
       </v-card-text>
     </v-card>
+    </sequential-entrance> 
   </div>
 </template>
 
