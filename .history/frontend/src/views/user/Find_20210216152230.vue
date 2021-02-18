@@ -47,7 +47,7 @@ export default {
     },
     // 로그인여부 확인
     checkLogin() {
-      if (this.userRole != null) this.$router.push("/home");
+      if (this.userRole != null) this.$router.push("/");
     },
   },
   created() {
