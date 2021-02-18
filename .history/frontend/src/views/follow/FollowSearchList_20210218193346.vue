@@ -45,14 +45,13 @@ export default {
     .then((res) => {
       if(res.data.status == "success"){
         this.items = res.data.data;
-        this.getFollowList(); // 처음 팔로우 & 팔로잉 명단 가져와 비교
       } else {
         console.log('검색 실패');
       }
     })
     .catch((error)=> {
             console.log(error);
-    })
+        })
   },
   computed: {
         ...mapGetters({ email: 'getUserEmail'}),
