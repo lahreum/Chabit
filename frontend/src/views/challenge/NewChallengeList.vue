@@ -29,15 +29,15 @@
             class="mx-0"
             v-if="item.challengeOwner.userRole === 'ADMIN'"
           >
-            <div style="color: #B71C1C;" class="font-size-sub-subtitle">
+            <div style="color: #B71C1C;" class="fix-font-small">
               <i class="fas fa-gem"></i>
             </div>
-            <div class="grey--text ml-1 font-size-sub-subtitle">
+            <div class="grey--text ml-1 fix-font-small">
               공식 챌린지
             </div>
           </v-row>
           <v-else></v-else>
-          <div class="new-challenge-info font-size-subtitle">
+          <div class="new-challenge-info fix-font-mid">
             <span>{{item.challengeName}}</span>
           </div>
         </v-col>

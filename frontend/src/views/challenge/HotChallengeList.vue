@@ -35,7 +35,7 @@
             :src="item.challengeThumbnail"
           ></v-img>
 
-          <v-card-title style="color: black;" class="font-size-title">{{item.challengeName}}</v-card-title>
+          <v-card-title style="color: black;" class="fix-font-semi-big">{{item.challengeName}}</v-card-title>
 
           <v-card-text>
             <v-row
@@ -43,10 +43,10 @@
               class="mx-0"
               v-if="item.challengeOwner.userRole === 'ADMIN'"
             >
-              <div style="color: #B71C1C;" class="font-size-subtitle">
+              <div style="color: #B71C1C;" class="fix-font-semi-mid">
                 <i class="fas fa-gem"></i>
               </div>
-              <div class="grey--text ml-1 font-size-subtitle">
+              <div class="grey--text ml-1 fix-font-semi-mid">
                 공식 챌린지
               </div>
             </v-row>
