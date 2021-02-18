@@ -3,7 +3,10 @@
     <div class="proof-list">
       <span>인증 목록</span>
       <hr>
+      <v-btn style="margin:10px;" color="#E57373" @click="goChallenge"><span style="color:white;">챌린지 상세보기</span></v-btn>
+      <v-btn style="margin:10px;" color="#424242" @click="goHome"><span style="color:white;"><i class="fas fa-home"></i> 홈으로</span></v-btn>
     </div>
+
     <v-container
       my-15
     >
@@ -115,6 +118,12 @@ export default {
             history.go(0)
           })
       }
+    },
+    goChallenge() {
+      this.$router.push('/challenge-detail');
+    },
+    goHome() {
+      this.$router.push('/');
     }
   },
   created() {
@@ -142,7 +151,7 @@ export default {
 
 <style scoped>
 .proof-list {
-  position: fixed;
+  /* position: fixed; */
   z-index: 1;
   top: 3rem;
   width: 100%;
