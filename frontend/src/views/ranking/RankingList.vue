@@ -5,7 +5,8 @@
         <v-flex class="section">
           <v-card class="mx-auto rounded-xl" max-width="100%" flat>
             <v-list rounded color="rgb(183,28,28,.1)">
-              <v-list-item>
+              <!-- 나의 순위 -->
+              <v-list-item @click="moveToFeed">
                 <v-list-item-avatar class="avatar" size="60">
                   <v-img :src="this.users[this.mine - 1].userImage"></v-img>
                 </v-list-item-avatar>
@@ -25,6 +26,7 @@
               </v-list-item>
             </v-list>
             <v-divider></v-divider>
+            <!-- 검색바(자동완성) -->
             <div class="searchBox">
               <v-autocomplete
                 v-model="search"
@@ -47,6 +49,7 @@
               </v-autocomplete>
             </div>
             <v-expand-transition>
+              <!-- 검색했을때 검색 결과 유저 리스트 -->
               <v-list v-if="search" rounded color="rgb(100, 100, 100,.1)">
                 <v-list-item
                   :items="users"
@@ -116,8 +119,9 @@
               </v-list>
             </v-expand-transition>
             <div>
+              <!-- 검색하지 않았을 때 다른 유저 순위 -->
               <v-list>
-                <v-list-item v-for="(user, index) in users" :key="index">
+                <v-list-item v-for="(user, index) in users" :key="index" @click="setInfo(user.userEmail)">
                   <v-list-item-avatar class="avatar" size="60">
                     <v-img :src="user.userImage"></v-img>
                   </v-list-item-avatar>
@@ -217,6 +221,29 @@ export default {
           });
       }
     },
+    setInfo(userEmail) {
+            this.$Axios
+            .get(`${this.$store.state.host}/v1/users/` + userEmail)
+            .then((res)=> {
+                if(res.data.status === "success") {
+                    console.log('유저 한명 정보 저장 성공!')
+                    this.$store.commit("SETYOURINFO", res.data.data );
+                    setTimeout(this.tempfunc, 2000);
+                    this.$router.push('/your-feed');
+                } else {
+                    console.log('유저 한명 정보 저장 실패');
+                }
+            })
+            .catch((error)=> {
+                console.log(error);
+            })
+        },
+        tempfunc() {
+            console.log('시간벌기~');
+        },
+        moveToFeed() {
+            this.$router.push('/feed');
+        }
   },
   created() {
     this.getRankList();

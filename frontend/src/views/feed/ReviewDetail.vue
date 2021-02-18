@@ -1,6 +1,6 @@
 <template>
 <div style="width:100%; height:100%;">
-  <div>
+  <div @click="moveToFeed">
     <Profile :src="userImage" alt="profile" :userLevelImage="userLevelImage" style="float:left;margin-left:10px;margin-bottom:10px;margin-top:20px;"/><br>
     <div style="float:left; margin-left:12px;margin-top:15px;"><strong>{{ this.userNickname }}</strong></div>
   </div>
@@ -103,6 +103,9 @@ export default {
         console.log(error);
       })
     },
+    moveToFeed() {
+      this.$router.push('/feed');
+    }
   },
   computed: {
     ...mapGetters({ 

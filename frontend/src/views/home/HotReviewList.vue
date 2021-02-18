@@ -38,22 +38,6 @@ export default {
   data() {
     return {
       items: [],
-      // you: {
-      //   "userEmail": "",
-      //   "userNickname": "",
-      //   "userName": "",
-      //   "userPhone": "",
-      //   "userProfileMessage": "",
-      //   "userPoints": 0,
-      //   "userJoindate": "",
-      //   "userLevel": {
-      //   "level": "DIAMOND",
-      //   "levelMaxPoint": 31999,
-      //   "levelImage": "https://ssafychabit.s3.ap-northeast-2.amazonaws.com/level/dia.png"
-      //   },
-      //   "userRole": "USER",
-      //   "userImage": "https://ifh.cc/g/x3UpNd.jpg",
-      // }
     }
   },
   created() {
