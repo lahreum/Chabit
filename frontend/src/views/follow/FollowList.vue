@@ -9,11 +9,13 @@
                         </div>
                     </v-subheader>
                     <v-list-item v-for="follower in followers" :key="follower.userEmail">
-                        <v-list-item-avatar style="width:50px; height:50px; margin-top:10px;margin-bottom:10px;">
+                        <v-list-item-avatar style="width:45px; height:45px; margin-top:10px;margin-bottom:10px;" @click="setInfo(follower.userEmail)">
                             <v-img :alt="`${follower.userImage} avatar`" :src="follower.userImage" style="width:50px;"></v-img>
                         </v-list-item-avatar>
                         <v-list-item-content @click="setInfo(follower.userEmail)">
-                            <router-link :to="{ name: 'YourFeed' }" style="text-decoration:none;"><v-list-item-title  class="name black--text" v-text="follower.userNickname" style="font-size:18px;"></v-list-item-title></router-link>
+                            <!-- <router-link :to="{ name: 'YourFeed' }" style="text-decoration:none;"> -->
+                                <v-list-item-title  class="name black--text" v-text="follower.userNickname" style="font-size:17px;"></v-list-item-title>
+                            <!-- </router-link> -->
                         </v-list-item-content>
                         <v-btn v-if="!checkFollowing(follower.userEmail)" @click="doFollowing(follower.userEmail)" color="#424242" small elevation="2"><span style="color:#E0E0E0;">팔로우</span></v-btn>
                     </v-list-item>
@@ -102,6 +104,9 @@ export default {
                 console.log(error);
             })
         },
+        tempfunc() {
+            console.log('시간벌기~');
+        }
     },
     computed: {
         ...mapGetters({ email: 'getUserEmail'}),

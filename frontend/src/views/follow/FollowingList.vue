@@ -9,12 +9,12 @@
                         </div>
                     </v-subheader>
                     <v-list-item v-for="following in this.followings" :key="following.userEmail">
-                        <v-list-item-avatar style="width:50px; height:50px; margin-top:10px;margin-bottom:10px;">
-                            <v-img :alt="`${following.userImage} avatar`" :src="following.userImage"></v-img>
+                        <v-list-item-avatar style="width:45px; height:45px; margin-top:10px;margin-bottom:10px;" @click="setInfo(following.userEmail)">
+                            <v-img :alt="`${following.userImage} avatar`" :src="following.userImage" ></v-img>
                         </v-list-item-avatar>
                         <v-list-item-content @click="setInfo(following.userEmail)">
                             <!-- <router-link :to="{ name: 'YourFeed' }" style="text-decoration:none;"> -->
-                                <v-list-item-title  class="name black--text" v-text="following.userNickname" style="font-size:18px;">
+                                <v-list-item-title  class="name black--text" v-text="following.userNickname" style="font-size:17px;">
                                 </v-list-item-title>
                             <!-- </router-link> -->
                         </v-list-item-content>

@@ -1,8 +1,8 @@
 <template>
 <div style="width:100%; height:100%;">
   <!-- <router-link to="/your-review" style="text-decoration:none;color:inherit;"> -->
-    <div>
-      <Profile :src="yourImage" style="float:left;margin-left:10px;margin-bottom:10px;margin-top:20px;"/><br>
+    <div @click="setInfo(yourEmail)">
+      <Profile :src="yourImage" :userLevelImage="yourLevelImage" style="float:left;margin-left:10px;margin-bottom:10px;margin-top:20px;"/><br>
       <div style="float:left; margin-left:12px;margin-top:15px;"><strong>{{ yourNickname }}</strong></div>
     </div>
   <!-- </router-link> -->
@@ -101,12 +101,33 @@ export default {
         console.log(error);
       })
     },
+    setInfo(userEmail) {
+            this.$Axios
+            .get(`${this.$store.state.host}/v1/users/` + userEmail)
+            .then((res)=> {
+                if(res.data.status === "success") {
+                    console.log('유저 한명 정보 저장 성공!')
+                    this.$store.commit("SETYOURINFO", res.data.data );
+                    setTimeout(this.tempfunc, 2000);
+                    this.$router.push('/your-feed');
+                } else {
+                    console.log('유저 한명 정보 저장 실패');
+                }
+            })
+            .catch((error)=> {
+                console.log(error);
+            })
+        },
+        tempfunc() {
+            console.log('시간벌기~');
+        }
   },
   computed: {
     ...mapGetters({ 
       yourEmail: 'getYourEmail',
       yourImage: 'getYourImage',
-      yourNickname: 'getYourNickname',}),
+      yourNickname: 'getYourNickname',
+      yourLevelImage: 'getYourLevelImage'}),
   },
   created() {
     this.getReviewDetail();
