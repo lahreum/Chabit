@@ -20,16 +20,16 @@
             </v-flex>
             <!-- 팔로우, 팔로잉 -->
             <v-flex class="section">
-                <v-card elevation="2" class="mx-auto rounded-lg" max-width="80%" outlined>
-                    <v-list-item three-line>
+                <v-card class="mx-auto rounded-lg" max-width="80%" outlined>
+                    <v-list-item two-line dense>
                         <v-list-item-content>
                             <v-list-item-title class="headline mb-1 text-center">
-                            <strong style="margin-right:15px;"><router-link :to="{ name: 'FollowList' }">{{ followerCnt }}</router-link></strong>
-                            <strong style="margin-left:15px;"><router-link :to="{ name: 'FollowingList' }">{{ followingCnt }}</router-link></strong>
+                            <strong class = "font-size-title" style="margin-right:15px;"><router-link :to="{ name: 'FollowList' }">{{ followerCnt }}</router-link></strong>
+                            <strong class = "font-size-title" style="margin-left:15px;"><router-link :to="{ name: 'FollowingList' }">{{ followingCnt }}</router-link></strong>
                             </v-list-item-title>
                             <v-list-item-subtitle class="mb-1 text-center">
-                                <span style="margin:10px;">팔로워</span>
-                                <span style="margin:10px;">팔로잉</span>
+                                <span class="font-size-sub-subtitle" style="margin:10px;">팔로워</span>
+                                <span class="font-size-sub-subtitle" style="margin:10px;">팔로잉</span>
                             </v-list-item-subtitle>
                         </v-list-item-content>
                     </v-list-item>
@@ -38,6 +38,7 @@
         </v-layout>
       </v-container>
             <!-- 검색 안할때에는 팔로워, 팔로잉 보여줌 -->
+            <v-divider class ="center" style="max-width : 80%; margin : 0px 15%"></v-divider>
             <div v-if="!searchItem">
                 <router-view/>
             </div>
@@ -51,7 +52,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import FollowSearchList from './FollowSearchList.vue';
-
+import "../../assets/css/font.css"
 export default {
     components: {
         FollowSearchList

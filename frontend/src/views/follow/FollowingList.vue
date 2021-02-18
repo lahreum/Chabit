@@ -14,11 +14,11 @@
                         </v-list-item-avatar>
                         <v-list-item-content @click="setInfo(following.userEmail)">
                             <!-- <router-link :to="{ name: 'YourFeed' }" style="text-decoration:none;"> -->
-                                <v-list-item-title  class="name black--text" v-text="following.userNickname" style="font-size:18px;">
+                                <v-list-item-title  class="font-size-mid-subtitle-bold-half black--text" v-text="following.userNickname" >
                                 </v-list-item-title>
                             <!-- </router-link> -->
                         </v-list-item-content>
-                            <v-btn @click="cancelFollowing(following.userEmail)" color="#BDBDBD" small elevation="2"><span style="color:white;">언팔로우</span></v-btn>
+                        <v-btn @click="cancelFollowing(following.userEmail)" color="#BDBDBD" small elevation="2"><span style="color:white;">언팔로우</span></v-btn>
                     </v-list-item>
                 </v-list>
             </v-flex>
@@ -105,14 +105,6 @@ export default {
 }
 #title{
     font-size: 1.5rem;
-    margin-top: 30px;
-}
-.v-subheader{
-    margin-bottom: 30px;
-}
-.name{
-    font-weight: 500;
-    font-size: 1rem;
 }
 .v-list-item__title.msg{
     font-weight: 400;

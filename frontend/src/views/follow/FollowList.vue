@@ -10,10 +10,12 @@
                     </v-subheader>
                     <v-list-item v-for="follower in followers" :key="follower.userEmail">
                         <v-list-item-avatar style="width:50px; height:50px; margin-top:10px;margin-bottom:10px;">
-                            <v-img :alt="`${follower.userImage} avatar`" :src="follower.userImage" style="width:50px;"></v-img>
+                            <v-img :alt="`${follower.userImage} avatar`" :src="follower.userImage"></v-img>
                         </v-list-item-avatar>
                         <v-list-item-content @click="setInfo(follower.userEmail)">
-                            <router-link :to="{ name: 'YourFeed' }" style="text-decoration:none;"><v-list-item-title  class="name black--text" v-text="follower.userNickname" style="font-size:18px;"></v-list-item-title></router-link>
+                            <router-link :to="{ name: 'YourFeed' }">
+                                <v-list-item-title  class="font-size-mid-subtitle-bold-half black--text" v-text="follower.userNickname">
+                            </v-list-item-title></router-link>
                         </v-list-item-content>
                         <v-btn v-if="!checkFollowing(follower.userEmail)" @click="doFollowing(follower.userEmail)" color="#424242" small elevation="2"><span style="color:#E0E0E0;">팔로우</span></v-btn>
                     </v-list-item>
@@ -115,14 +117,6 @@ export default {
 }
 #title{
     font-size: 1.5rem;
-    margin-top: 30px;
-}
-.v-subheader{
-    margin-bottom: 30px;
-}
-.name{
-    font-weight: 500;
-    font-size: 1rem;
 }
 .v-list-item__title.msg{
     font-weight: 400;

@@ -109,10 +109,6 @@ export default {
 }
 #title{
     font-size: 1.5rem;
-    margin-top: 30px;
-}
-.v-subheader{
-    margin-bottom: 30px;
 }
 .name{
     font-weight: 500;

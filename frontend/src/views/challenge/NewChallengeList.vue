@@ -90,7 +90,6 @@ export default {
 <style scoped>
 .new-challenge {
   padding-left: 0.5rem;
-  margin-top: -2.5rem;
   margin-bottom: 0.5rem;
   font-size: 1.5rem;
   font-weight: 600;
