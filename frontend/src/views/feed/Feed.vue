@@ -1,6 +1,7 @@
 <template>
   <div>
       <MyInfo/>
+      <sequential-entrance fromBottom> 
       <div id="tabs" class="feedcontainer">
         <div class="tabs" style="text-align:center;">
             <a v-on:click="activetab=1" v-bind:class="[ activetab === 1 ? 'active' : '' ]">챌린지</a>
@@ -19,6 +20,7 @@
           </div>
         </div>
       </div>
+      </sequential-entrance> 
   </div>
 </template>
 
@@ -79,7 +81,7 @@ export default {
   background-color: #f1f1f1;
   border-radius: 10px 10px 0 0;
   font-weight: bold;
-  box-shadow: 3px 3px 6px #ccc
+  box-shadow: 0px 3px 6px #ccc
 }
 
 
@@ -102,6 +104,8 @@ export default {
   padding: 30px;
   border: 1px solid #fff;
   border-radius: 10px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
   box-shadow: 3px 3px 6px #e1e1e1
 }
 
