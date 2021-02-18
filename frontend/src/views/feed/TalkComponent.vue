@@ -169,11 +169,16 @@
               <!-- 수정버튼을 눌러 modifying = true 만들었다면 기존 내용 적힌 textatrea로 대체함 -->
               <p v-if="!modifying">{{ reply.commentContent }}</p>
               <div v-if="modifying">
+              <v-col cols="12" md="6">
                 <v-textarea
                   v-if="reply.reviewCommentId == modifyNumber"
                   name="input-7-1"
                   v-model="modifyContent"
+                  auto-grow
+                  rows="1"
+                  row-height="5"
                 ></v-textarea>
+              </v-col>
               </div>
               <!-- 수정, 삭제 이벤트 처리 부분 -->
               <div v-if="!modifying">
