@@ -53,6 +53,24 @@
   font-size: 1.5rem;
   font-weight: 600;
 }
+.fix-font-big{
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+.fix-font-big-bold-half{
+  font-size: 1.2rem;
+  font-weight: 300;
+}
+.fix-font-mid{
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.fix-font-mid-bold-half{
+  font-size: 0.8rem;
+  font-weight: 300;
+}
+
 
 a { text-decoration:none }
 .center{
