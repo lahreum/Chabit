@@ -15,7 +15,7 @@
                         </v-list-item-avatar>
                         <v-list-item-content @click="setInfo(follower.userEmail)">
                             <!-- <router-link :to="{ name: 'YourFeed' }" style="text-decoration:none;"> -->
-                                <v-list-item-title  class="fix-font-mid-bold-half black--text" v-text="follower.userNickname"></v-list-item-title>
+                                <v-list-item-title  class="fix-font-semi-big-bold-half black--text" v-text="follower.userNickname"></v-list-item-title>
                             <!-- </router-link> -->
                         </v-list-item-content>
                         <v-btn v-if="!checkFollowing(follower.userEmail)" 

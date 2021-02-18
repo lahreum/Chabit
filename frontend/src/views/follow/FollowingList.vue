@@ -15,7 +15,7 @@
                         </v-list-item-avatar>
                         <v-list-item-content @click="setInfo(following.userEmail)">
                             <!-- <router-link :to="{ name: 'YourFeed' }" style="text-decoration:none;"> -->
-                                <v-list-item-title  class="fix-font-mid-bold-half black--text" v-text="following.userNickname" >
+                                <v-list-item-title  class="fix-font-semi-big-bold-half black--text" v-text="following.userNickname" >
                                 </v-list-item-title>
                             <!-- </router-link> -->
                         </v-list-item-content>
@@ -23,7 +23,7 @@
                         color="#fff1f1" small
                         elevation="0"
                         >
-                        <span style="color:#B71C1C;" class="fix-font-mid">언팔로우</span></v-btn>
+                        <span style="color:#B71C1C;" class="fix-font-small">언팔로우</span></v-btn>
                     </v-list-item>
                 </v-list>
             </v-flex>

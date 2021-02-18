@@ -8,30 +8,30 @@
               cols="4"
             > 
               <v-btn elevation="0" color="white" width="100%" @click="participate">
-                <p class = "font-size-title">{{item.ongoingChallenge.length}}</p>
+                <p class = "fix-font-big">{{item.ongoingChallenge.length}}</p>
               </v-btn>
               <v-btn elevation="0" color="white" width="100%" @click="participate">
-                <p class = "font-size-sub-subtitle">참가중</p>
+                <p class = "fix-font-mid">참가중</p>
               </v-btn>
             </v-col>
             <v-col
               cols="4"
             > 
               <v-btn elevation="0" color="white" width="100%" @click="finish">
-                <p class = "font-size-title">{{item.terminatedChallenge.length}}</p>
+                <p class = "fix-font-big">{{item.terminatedChallenge.length}}</p>
               </v-btn>
               <v-btn elevation="0" color="white" width="100%" @click="finish">
-                <p class = "font-size-sub-subtitle">완료</p>
+                <p class = "fix-font-mid">완료</p>
               </v-btn>
             </v-col>
             <v-col
               cols="4"
             > 
               <v-btn elevation="0" color="white" width="100%" @click="manage">
-                <p class = "font-size-title">{{item.ownChallenge.length}}</p>
+                <p class = "fix-font-big">{{item.ownChallenge.length}}</p>
               </v-btn>
               <v-btn elevation="0" color="white" width="100%" @click="manage">
-                <p class = "font-size-sub-subtitle">개설한</p>
+                <p class = "fix-font-mid">개설한</p>
               </v-btn>
             </v-col>
           </v-row>

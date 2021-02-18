@@ -4,9 +4,9 @@
       <sequential-entrance fromBottom> 
       <div id="tabs" class="feedcontainer">
         <div class="tabs" style="text-align:center;">
-            <a class="font-size-sub-subtitle-bold-half" v-on:click="activetab=1" v-bind:class="[ activetab === 1 ? 'active' : '' ]">챌린지</a>
-            <a class="font-size-sub-subtitle-bold-half" v-on:click="activetab=2" v-bind:class="[ activetab === 2 ? 'active' : '' ]">마이리뷰</a>
-            <a class="font-size-sub-subtitle-bold-half" v-on:click="activetab=3" v-bind:class="[ activetab === 3 ? 'active' : '' ]">업적</a>
+            <a class="fix-font-semi-mid" v-on:click="activetab=1" v-bind:class="[ activetab === 1 ? 'active' : '' ]">챌린지</a>
+            <a class="fix-font-semi-mid" v-on:click="activetab=2" v-bind:class="[ activetab === 2 ? 'active' : '' ]">마이리뷰</a>
+            <a class="fix-font-semi-mid" v-on:click="activetab=3" v-bind:class="[ activetab === 3 ? 'active' : '' ]">업적</a>
         </div>
         <div class="content">
           <div v-if="activetab === 1" class="tabcontent">

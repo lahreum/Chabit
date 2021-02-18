@@ -54,6 +54,11 @@
   font-size: 1.3rem;
   font-weight: 600;
 }
+.font-title-none{
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
 .fix-font-big{
   font-size: 1.2rem;
   font-weight: 600;
@@ -62,16 +67,43 @@
   font-size: 1.2rem;
   font-weight: 300;
 }
+
+.fix-font-semi-big{
+  font-size: 1rem;
+  font-weight: 600;
+}
+.fix-font-semi-big-bold-half{
+  font-size: 1rem;
+  font-weight: 300;
+}
+
 .fix-font-mid{
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 600;
 }
 
 .fix-font-mid-bold-half{
+  font-size: 0.9rem;
+  font-weight: 300;
+}
+.fix-font-semi-mid{
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.fix-font-semi-mid-bold-half{
   font-size: 0.8rem;
   font-weight: 300;
 }
+.fix-font-small{
+  font-size: 0.7rem;
+  font-weight: 600;
+}
 
+.fix-font-small-bold-half{
+  font-size: 0.7rem;
+  font-weight: 300;
+}
 
 a { text-decoration:none }
 .center{
