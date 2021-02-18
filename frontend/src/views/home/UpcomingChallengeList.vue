@@ -1,7 +1,7 @@
 <template>
   <v-container>
-    <div class="hot-challenge font-title">
-      <span class="hot">HOT</span><span>챌린지</span>
+    <div class="hot-challenge font-title" style="margin-top:25px;">
+      <span class="hot">HOT</span><span style="font-size: 1.3rem;">챌린지</span>
       <i class="fas fa-plus" @click="$router.push('/challenge')" ></i>
     </div>
     <v-carousel
@@ -17,7 +17,7 @@
       >
         <v-card
           class="mx-auto my-5 rounded-xl"
-          max-width="380"
+          max-width="370"
           :loading="loading"
           @click="reverse, moveToChallengeDetail(item)"
           style="background-color: white;"
@@ -31,11 +31,11 @@
           </template>
 
           <v-img
-            height="250"
+            height="230"
             :src="item.challengeThumbnail"
           ></v-img>
 
-          <v-card-title style="color: black;" class="font-size-title">{{item.challengeName}}</v-card-title>
+          <v-card-title style="color: black; font-size: 1.2rem;" class="font-size-title">{{item.challengeName}}</v-card-title>
 
           <v-card-text>
             <v-row
@@ -44,14 +44,14 @@
               v-if="item.challengeOwner.userRole === 'ADMIN'"
             >
               <div style="color: #B71C1C;" class="font-size-subtitle">
-                <i class="fas fa-gem"></i>
+                <i class="fas fa-gem" style="font-size: 1.0rem;"></i>
               </div>
-              <div class="grey--text ml-1 font-size-subtitle">
+              <div class="grey--text ml-1 font-size-subtitle" style="font-size: 1.0rem;">
                 공식 챌린지
               </div>
             </v-row>
             <p></p>
-            <div class="hash-tag-bundle">
+            <div class="hash-tag-bundle" >
               <hash-tag :content="item.hashtags.hashtags[0].hashtagName"/>
               <hash-tag :content="item.hashtags.hashtags[1].hashtagName"/>
             </div>
@@ -99,15 +99,19 @@ export default {
 .hot-challenge > .fa-plus {
   padding-left: 0.5rem;
   color: #B71C1C;
+  
 }
 
 .hot-challenge > .hot {
   color: #B71C1C;
   padding-right: 0.5rem;
+  font-size: 1.3rem;
+  padding-left: 0.8rem;
 }
 
 .hash-tag-bundle {
   display: flex;
   align-items: flex-start;
+  font-size: 1.0rem;
 }
 </style>
