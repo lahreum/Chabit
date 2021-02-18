@@ -16,6 +16,7 @@
         <strong>{{ this.userNickname }}</strong>
       </div>
     </div>
+    <sequential-entrance> 
     <v-carousel :show-arrows="false" height="280" style="margin-top: 10px">
       <v-carousel-item
         v-for="(oneImage, i) in this.review.reviewImages"
@@ -23,7 +24,7 @@
         :src="oneImage"
       ></v-carousel-item>
     </v-carousel>
-
+    </sequential-entrance> 
     <div style="margin: 20px">
       <span style="font-size: 12px">
         <!-- 채워진 하트, 안채워진 하트 -->
