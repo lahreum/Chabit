@@ -37,23 +37,7 @@
 export default {
   data() {
     return {
-      items: [],
-      // you: {
-      //   "userEmail": "",
-      //   "userNickname": "",
-      //   "userName": "",
-      //   "userPhone": "",
-      //   "userProfileMessage": "",
-      //   "userPoints": 0,
-      //   "userJoindate": "",
-      //   "userLevel": {
-      //   "level": "DIAMOND",
-      //   "levelMaxPoint": 31999,
-      //   "levelImage": "https://ssafychabit.s3.ap-northeast-2.amazonaws.com/level/dia.png"
-      //   },
-      //   "userRole": "USER",
-      //   "userImage": "https://ifh.cc/g/x3UpNd.jpg",
-      // }
+      items: []
     }
   },
   created() {
@@ -68,34 +52,19 @@ export default {
   },
   methods: {
     moveToReviewDetail(item) {
-      this.$store.commit("MOVETOREVIEWDETAIL", item.reviewId);
+      this.$store.commit("MOVETOREVIEWDETAIL", item.reviewId)
       if(this.$store.state.user.userEmail == item.userEmail) {
         this.$router.push('/review-detail')
       } else {
-        this.$store.commit("MOVETOREVIEWDETAIL", item.reviewId);
-        this.setInfo(item.userEmail); 
-      }
-    },
-    setInfo(userEmail) {
-            this.$Axios
-            .get(`${this.$store.state.host}/v1/users/` + userEmail)
-            .then((res)=> {
-                if(res.data.status === "success") {
-                    console.log('유저 한명 정보 저장 성공!')
-                    this.$store.commit("SETYOURINFO", res.data.data );
-                    setTimeout(this.tempfunc, 2000);
-                    this.$router.push('/your-review-detail');
-                } else {
-                    console.log('유저 한명 정보 저장 실패');
-                }
-            })
-            .catch((error)=> {
-                console.log(error);
-            })
-        },
-        tempfunc() {
-            console.log('시간벌기~');
+        let reviewer = {
+          'yourEmail': item.userEmail,
+          'yourImage': item.userImage,
+          'yourNickname': item.userNickname
         }
+        this.$store.commit("SETYOURINFO", reviewer);
+        this.$router.push('/your-review-detail')
+      }
+    }
   }
 }
 </script>
@@ -103,7 +72,7 @@ export default {
 <style scoped>
 .hot-review {
   padding-left: 0.5rem;
-  /* margin-top: -2.5rem; */
+  margin-top: -2.5rem;
   margin-bottom: 1rem;
   font-size: 1.5rem;
   font-weight: 600;
@@ -115,7 +84,7 @@ export default {
 }
 
 .hot-review-info {
-  margin: 0.5rem 0.5rem 0 0.5rem;
+  margin: 0.5rem 0.5rem -1rem 0.5rem;
   display: flex;
   justify-content: space-between;
   font-size: 1rem;
