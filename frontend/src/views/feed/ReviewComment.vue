@@ -59,6 +59,20 @@ export default {
       comments: [],
     };
   },
+  updated() {
+    if (this.userEmail != null) {
+      this.$Axios
+        .get(`${this.$store.state.host}/v1/users/` + this.userEmail)
+        .then((res) => {
+          if (res.data.status == "success") {
+            this.userImage = res.data.data.userImage;
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  },
   methods: {
     addComment: function () {
       if (this.oneComment.length >= 1) {
