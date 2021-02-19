@@ -128,9 +128,15 @@ public class ReviewService {
 
     @Transactional
     public void deleteReviewComment(ReviewComment reviewComment){
+        Long childCommentsCount = reviewCommentRepository.findChildCommentsCount(reviewComment.getReviewCommentId());
+        for (long i = 0; i < childCommentsCount; ++i) {
+            reviewComment.getReviewId().downCommentCount();
+        }
         reviewComment.getReviewId().downCommentCount();
         reviewCommentRepository.deleteReviewComment(reviewComment);
     }
+
+
     /**
      * remove, findALl()
      */

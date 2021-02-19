@@ -32,4 +32,10 @@ public class ReviewCommentRepository {
     }
 
     public void deleteReviewComment(ReviewComment reviewComment){entityManager.remove(reviewComment);}
+
+    public Long findChildCommentsCount(Long reviewCommentId) {
+        return entityManager.createQuery("select COUNT(rc) from ReviewComment rc where rc.parentCommentId.reviewCommentId = :reviewCommentId", Long.class)
+                .setParameter("reviewCommentId", reviewCommentId)
+                .getSingleResult();
+    }
 }
