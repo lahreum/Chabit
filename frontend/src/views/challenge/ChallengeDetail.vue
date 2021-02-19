@@ -115,7 +115,10 @@
           <span class="py-1">오늘의 제스처와 함께 사진을 찍어 올려주세요.</span>
         </div>
         <p style="margin: 1rem 0 7rem 0"></p>
-        <div style="margin-left: 7%;" v-if="item.challengeJoinStatus === 'NO'">
+      </v-card-text>
+    </v-card>
+    </sequential-entrance> 
+            <div style="margin-left: 7%;" v-if="item.challengeJoinStatus === 'NO'">
           <v-btn
             rounded
             color="red darken-4"
@@ -189,9 +192,6 @@
             종료
           </v-btn>
         </div>
-      </v-card-text>
-    </v-card>
-    </sequential-entrance> 
   </div>
 </template>
 
