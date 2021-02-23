@@ -41,7 +41,7 @@
 ## 실행 화면
 
 1. 메인화면
-![intro](img/0.인트로.gif){: width="100" height="100"}
+![intro](img/0.인트로.gif){: width="50%" height="50%"}
 
 ## 개발환경
 
