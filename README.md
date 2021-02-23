@@ -41,7 +41,7 @@
 ## 실행 화면
 
 1. 메인화면
-<img src="/img/0.인트로.gif" width="250" height="250"/>
+<img src="/img/0.인트로.gif" width="300" height="500"/>
 
 ## 개발환경
 
