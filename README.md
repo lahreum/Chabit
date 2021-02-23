@@ -40,35 +40,35 @@
 
 ## 실행 화면
 
-1. 메인화면
+### 1. 메인화면
 <img src="/img/0.인트로.gif" width="300" height="500"/>
 <img src="/img/1.메인.gif" width="300" height="500"/>
-2. 챌린지
+### 2. 챌린지
 <img src="/img/2.챌린지.gif" width="300" height="500"/>
-3. 챌린지 생성
+### 3. 챌린지 생성
 <img src="/img/3.챌린지생성.gif" width="300" height="500"/>
-4. 챌린지 인증
+### 4. 챌린지 인증
 <img src="/img/4.챌린지인증.gif" width="300" height="500"/>
-5. 챌린지 인증 후
+### 5. 챌린지 인증 후
 <img src="/img/5.챌린지인증후.gif" width="300" height="500"/>
-6.마이피드
+### 6.마이피드
 <img src="/img/6.마이피드소개.gif" width="300" height="500"/>
-7.마이챌린지
+### 7.마이챌린지
 <img src="/img/7.마이챌린지.gif" width="300" height="500"/>
-8.마이리뷰상세보기
+### 8.마이리뷰상세보기
 <img src="/img/8.마이리뷰상세보기.gif" width="300" height="500"/>
-9.마이리뷰댓글
+### 9.마이리뷰댓글
 <img src="/img/9.마이리뷰댓글수정삭제.gif" width="300" height="500"/>
-10.팔로우
+### 10.팔로우
 <img src="/img/10.팔로우.gif" width="300" height="500"/>
-11.팔로우하기 
+### 11.팔로우하기 
 <img src="/img/11.팔로우하기.gif" width="300" height="500"/>
-12.언팔로우하기
+### 12.언팔로우하기
 <img src="/img/12.언팔로우하기.gif" width="300" height="500"/>
-13.랭킹
+### 13.랭킹
 <img src="/img/13.랭킹.gif" width="300" height="500"/>
 <img src="/img/14.랭킹내유저.gif" width="300" height="500"/>
-14.랭킹 조건별 검색
+### 14.랭킹 조건별 검색
 <img src="/img/15.랭킹카테고리별.gif" width="300" height="500"/>
 <img src="/img/16.랭킹내기간검색.gif" width="300" height="500"/>
 
