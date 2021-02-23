@@ -177,116 +177,13 @@ Refac : 기능 변화 없이 코드 내부 구조 변경하는 경우
 ## 프로젝트 일정
 
 **Sub Project2**
-
-```mermaid
-gantt
-    dateFormat  YYYY-MM-DD
-    title       CHABIT 2-3주차 진행상황
-    %% excludes    01-23, 01-24
-    %% (`excludes` accepts specific dates in YYYY-MM-DD format, days of the week ("sunday") or "weekends", but not the word "weekdays".)
-
-    section 프로젝트 기획
-    기능 목록 상세 도출			:done, plan1, 2021-01-18, 2d
-    화면 정의서				  :done, plan2, 2021-01-19, 4d
-    와이어 프레임             :done, plan3, 2021-01-21, 4d
-
-	section Front end
-    UI 설계      	 :done, front1, 2021-01-23, 4d
-    디렉토리 구조 짜기		  	:done,  front2, 2021-01-26, 1d
-    메인 화면 컴포넌트		 	 :done, front3, after front2, 3d
-    헤더 컴포넌트   	  :done, front4, after front2, 2d
-    푸터 컴포넌트         :done, front5, after front2, 1d
-    회원 가입 컴포넌트  :done, front6, after front4, 1d
-
-    section Back end
-    ER 다이어그램 작성     	 :done, back1, 2021-01-21, 2d
-    DB 테이블 설계		:done, back2, after back1, 3d
-    MySQL & Spring Boot 환경 설정     	 :done, back3, after back2, 1d
-    JPA 엔티티 디자인   :done, back4, after back3, 3d
-    회원 CRUD 제작   :done, back5, 2021-01-27, 3d
-
-    section 배포
-    Dockerfile 작성 :done, deploy1, 2021-01-26, 1d
-    배포 환경 설정 :done,    deploy2, 2021-01-26, 2d
-    접속 확인 :done, deploy3, 2021-01-27, 1d
-```
+![img](img/진행상황1.PNG)
 
 **Sub Project3**
 
-```mermaid
-gantt
-    dateFormat  YYYY-MM-DD
-    title       CHABIT 4주차 진행상황
-    %% (`excludes` accepts specific dates in YYYY-MM-DD format, days of the week ("sunday") or "weekends", but not the word "weekdays".)
+![img](img/진행상황2.PNG)
 
-	section Front end
-   시작페이지           : done, front1, 2021-02-01, 1d
-   로그인 & 회원가입    : done, front2, 2021-01-30, 2d
-   네비게이션 바        : done, front3, 2021-02-01, 1d
-   랭킹 페이지          : done, front4, 2021-02-01, 2d
-   메인 화면            : done, front5, after front2, 1d
-   팝업 창              : done, front6, 2021-02-01, 2d
-   회원 관리 페이지      :done, front7, after front3, 1d
-   마이 페이지          :done, front8, after front5, 2d
-   팔로우 페이지        :done, front9, after front6, 3d
-   챌린지 관련 페이지   :done, front10, 2021-02-02, 3d
+![img](img/진행상황3.PNG)
 
-    section Back end
-    팔로잉 기능 :done , back1, 2021-02-01, 1d
-    챌린지 기능 :done, back2, 2021-01-30, 4d
-    챌린지 리뷰 :done, back3, 2021-02-03, 2d
-    해쉬태그 :done, back4, after back2, 1d
-    인증 기능 :done , back5, after back2, 3d
-    업적&뱃지 : done, back6, after back3, 1d
+![img](img/진행상황4.PNG)
 
-    section 배포(예정)
-    Jenkins 세팅 :done, deploy1, 2021-02-02, 3d
-    Dockerfile 수정 :done, deploy2, 2021-02-02, 2d
-```
-
-```mermaid
-gantt
-    dateFormat  YYYY-MM-DD
-    title       CHABIT 5주차 진행상황
-    %% (`excludes` accepts specific dates in YYYY-MM-DD format, days of the week ("sunday") or "weekends", but not the word "weekdays".)
-
-	section Front end
-   로그인 & 회원가입 기능 구현   :done, front1, 2021-02-08, 2d
-   랭킹 페이지 백엔드 연결         :done, front2, 2021-02-09, 1d
-   회원 관리 페이지 백엔드 연결     :done, front3, 2021-02-09, 1d
-   마이 페이지 백엔드 연결         :done, front4, after front2, 2d
-   팔로우 페이지 백엔드 연결        :done, front5, 2021-02-09, 3d
-   챌린지 페이지 백엔드 연결   :done, front6, 2021-02-08, 4d
-   챌린지 리뷰 페이지 백엔드 연결   :done, front7, 2021-02-10, 2d
-
-
-   section Back end
-   챌린지 리뷰 :done, back1, 2021-02-08, 2d
-   사진 업로드 & 다운로드 :done, back2, 2021-02-09, 2d
-   업적&뱃지 :done, back3, after back2, 1d
-   챌린지 종료 알고리즘 구현 :done, back4, 2021-02-08, 1d
-```
-
-```mermaid
-gantt
-   dateFormat  YYYY-MM-DD
-   title       CHABIT 6주차 진행상황
-   %% excludes    01-23, 01-24
-   %% (`excludes` accepts specific dates in YYYY-MM-DD format, days of the week ("sunday") or "weekends", but not the word "weekdays".)
-
-   section UCC
-   UCC 기획 작성			:done, ucc1, 2021-02-15, 1d
-   UCC 촬영				  :done, ucc2, 2021-02-15, 2d
-   UCC 편집             :active, ucc3, 2021-02-16, 3d
-
-	section QA
-   로그인, 회원가입 테스트      	 : done, qa1, 2021-02-15, 3d
-   리뷰 테스트		  	:active, qa2, 2021-02-16, 1d
-   챌린지 테스트		 	 :done, qa3, 2021-02-15, 2d
-   팔로우 테스트   	  :active, qa4, 2021-02-15, 2d
-   랭킹 테스트         :active, qa5, 2021-02-16, 1d
-
-   section Front end
-   업적, 뱃지 백엔드 연동     	 :active, fe1, 2021-02-15, 1d
-   다른 사람 리뷰 확인    	 :active, fe2, 2021-02-15, 1d
-```
