@@ -69,7 +69,7 @@
 <img src="/img/9.마이리뷰댓글수정삭제.gif" width="300" height="500"/>
 
 ### 10.팔로우
-<img src="/img/10.팔로우.gif" width="300" height="500"/>
+<img src="/img/10.팔로우페이지.gif" width="300" height="500"/>
 
 ### 11.팔로우하기 
 <img src="/img/11.팔로우하기.gif" width="300" height="500"/>
