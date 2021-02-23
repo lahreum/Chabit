@@ -37,9 +37,9 @@ spring:
 spring:
   profiles: prod
   datasource:
-    url: "주소"
-    username: "이름"
-    password: "비밀번호"
+    url: jdbc:mysql://chabit-mysql.cqwzhdgaabxu.ap-northeast-2.rds.amazonaws.com:3306/chabit?serverTimezone=UTC&useUniCode=yes&characterEncoding=UTF-8
+    username: ssafy
+    password: ssafyssafy
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
