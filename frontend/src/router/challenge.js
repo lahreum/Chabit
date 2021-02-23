@@ -8,6 +8,7 @@ import Proof from '../views/challenge/Proof.vue'
 import FinishProof from '../views/challenge/FinishProof.vue'
 import ProofList from '../views/challenge/ProofList.vue'
 import WriteChallengeReview from '../views/challenge/WriteChallengeReview.vue'
+import PersonalChallenge from '../views/challenge/PersonalChallenge.vue'
 
 export default [
     {
@@ -30,36 +31,41 @@ export default [
             name: 'SearchChallengeList',
             component: SearchChallengeList
           },
-          { 
-            path: 'create-challenge',
-            name: 'CreateChallenge',
-            component: CreateChallenge
-          },
-          { 
-            path: 'challenge-detail',
-            name: 'ChallengeDetail',
-            component: ChallengeDetail
-          },
-          { 
-            path: 'challenge-detail/write-challenge-review',
-            name: 'WriteChallengeReview',
-            component: WriteChallengeReview
-          },
-          { 
-            path: 'proof',
-            name: 'Proof',
-            component: Proof
-          },
-          { 
-            path: 'proof/finish-proof',
-            name: 'FinishProof',
-            component: FinishProof
-          },
-          { 
-            path: 'proof/finish-proof/proof-list',
-            name: 'ProofList',
-            component: ProofList
-          },
         ]
-      }
+      },
+      { 
+        path: '/create-challenge',
+        name: 'CreateChallenge',
+        component: CreateChallenge
+      },
+      { 
+        path: '/challenge-detail',
+        name: 'ChallengeDetail',
+        component: ChallengeDetail,
+      },
+      { 
+        path: '/write-challenge-review',
+        name: 'WriteChallengeReview',
+        component: WriteChallengeReview
+      },
+      { 
+        path: '/proof',
+        name: 'Proof',
+        component: Proof
+      },
+      { 
+        path: '/finish-proof',
+        name: 'FinishProof',
+        component: FinishProof
+      },
+      { 
+        path: '/proof-list',
+        name: 'ProofList',
+        component: ProofList
+      },
+      {
+        path: '/personal-challenge',
+        name: 'PersonalChallenge',
+        component: PersonalChallenge
+      },
 ]

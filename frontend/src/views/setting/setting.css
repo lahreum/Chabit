@@ -1,0 +1,7 @@
+/* Setting.vue */
+.setting .v-list-item__content {
+  max-width: 90%;
+}
+.setting .v-list-item__subtitle {
+  white-space: normal;
+}

@@ -1,0 +1,14 @@
+/* 회색 : #FF4081
+  빨간색 : #a62f22
+*/
+
+/* Loading.vue */
+.v-progress-circular {
+  margin: 1rem;
+  opacity: 0.6;
+}
+
+/* Calender.vue */
+#calender .v-picker__title {
+  display: none;
+}

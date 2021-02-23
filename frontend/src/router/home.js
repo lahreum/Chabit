@@ -5,7 +5,7 @@ import UpcomingChallengeList from '../views/home/UpcomingChallengeList.vue'
 
 export default[
     {
-      path: '/',
+      path: '/home',
       name: 'Home',
       component: Home,
       children: [

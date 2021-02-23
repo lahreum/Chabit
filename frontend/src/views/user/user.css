@@ -1,0 +1,300 @@
+
+.input-with-btn {
+  width: 80%;
+  padding-right: 5px;
+  display: inline-flex;
+}
+.outside {
+  background-color: #942706;
+  padding: 100px 15px 100px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logo {
+  z-index: 2;
+  text-align: center;
+  background-color: #ffffff;
+  width: 115px;
+  height: 115px;
+  border-radius: 30px;
+  box-shadow: 0px 2px 10px gray;
+  position: absolute;
+  top: 60px;
+}
+.chabit-logo {
+  z-index: 2;
+  width: 95px;
+  height: 70px;
+  position: absolute;
+  top: 90px;
+  margin: 0;
+}
+.inside {
+  background-color: #ffffff;
+  border-radius: 30px;
+  padding: 100px 1% 0px;
+  min-width: 320px;
+  max-width: 320px;
+  
+}
+.text-input {
+  margin: 10px 5% 20px;
+  max-width: 90%;
+}
+.bottom {
+  text-align: center;
+  margin-bottom: 100px;
+}
+.btn-get-check {
+  background-color: #fcc203;
+  color: white;
+  border-radius: 10px;
+  width: 65px;
+  height: 25px;
+  font-size: x-small;
+}
+
+/* Button 10 */
+#button-10 .knobs:before,
+#button-10 .knobs:after,
+#button-10 .knobs span {
+  position: absolute;
+  top: 10px;
+  width: 99.5px;
+  height: 35px;
+  font-size: 10px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1;
+  padding: 9px 4px;
+  border-radius: 20px;
+  transition: 0.3s ease all;
+}
+#button-10 .knobs:before {
+  content: "";
+  left: 4px;
+  background-color: #942706;
+}
+#button-10 .knobs:after {
+  content: "비밀번호";
+  font-size: small;
+  right: 4px;
+  color: #942706;
+}
+#button-10 .knobs span {
+  display: inline-block;
+  left: 4px;
+  color: #fff;
+  z-index: 1;
+  font-size: small;
+}
+#button-10 .checkbox:checked + .knobs span {
+  color: #942706;
+}
+#button-10 .checkbox:checked + .knobs:before {
+  left: 90px;
+  background-color: #942706;
+}
+#button-10 .checkbox:checked + .knobs:after {
+  color: #fff;
+}
+#button-10 .checkbox:checked ~ .layer {
+  background-color: #fcebeb;
+}
+
+/* ChangePw.vue */
+.change-password > p,
+.modify-user > p,
+.signup > p,
+.login > p {
+  font-size: large;
+  font-weight: 600;
+  color: #942706;
+  margin: 0 30px;
+}
+.modify-user .v-input,
+.login .v-input,
+.signup .v-input,
+.find-pw .v-input,
+.find-email .v-input,
+.change-password .v-input {
+  margin-top: 15px;
+}
+/* FindEmail.vue */
+.find-email,
+.find-pw {
+  margin: 70px 0 30px 0;
+}
+.btn-next,
+.btn-ok,
+.btn-signup,
+.btn-skip {
+  background-color: #942706;
+  color: white;
+  border-radius: 30px;
+  width: 215px;
+  height: 40px;
+  font-size: 2vh;
+}
+/* FindEmailFinish.vue */
+.find-email-finish {
+  margin: 40px 30px 70px 30px;
+  text-align: center;
+}
+.find-email-finish > p {
+  font-size: small;
+}
+
+/* FindPw.vue */
+.find-pw .btn-get-check {
+  margin: 0;
+  width: 20%;
+}
+/* ModifyUser.vue */
+.modify-user .btn-left {
+  background-color: white;
+  color: black;
+  border: grey solid 1px;
+}
+.modify-user .btn-get-check {
+  margin: 0;
+  width: 20%;
+}
+.modify-user .origin-avatar {
+  margin-bottom: 12px !important;
+}
+
+.modify-user img {
+  margin: 0;
+}
+/* Join.vue */
+.modify-user .display-timer,
+.signup .display-timer {
+  width: 35%;
+  float: right;
+  margin-top: -1rem;
+}
+.signup .input {
+  color: white;
+}
+.signup .btn-get-check {
+  margin: 0;
+  width: 20%;
+}
+
+/* Login.vue */
+.btn-login {
+  background-color: #942706;
+  color: white;
+  border-radius: 30px;
+  width: 215px;
+  height: 40px;
+}
+.btn-forget-signup {
+  font-size: small;
+  margin: 10px 0;
+}
+.btn-forget-signup > a {
+  color: gray;
+  text-decoration: none;
+}
+.btn-forget-signup > span {
+  color: #942706;
+  font-weight: 600;
+}
+/* Find.vue */
+.btn-login-signup {
+  text-align: center;
+  font-size: small;
+  margin-top: 10px;
+}
+.btn-login-signup > a {
+  color: gray;
+  text-decoration: none;
+}
+.btn-login-signup > span {
+  color: #942706;
+  font-weight: 600;
+}
+
+.email-password-button {
+  position: relative;
+  top: 60px;
+  width: 195px;
+  height: 35px;
+  margin: -20px auto 0 auto;
+  overflow: visible;
+}
+.email-password-button.r,
+.email-password-button.r .layer {
+  border-radius: 100px;
+}
+
+.email-password-button.b2 {
+  border-radius: 40px;
+}
+.checkbox {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 3;
+}
+.knobs {
+  z-index: 2;
+}
+.layer {
+  width: 100%;
+  background-color: #ebf7fc;
+  transition: 0.3s ease all;
+  z-index: 1;
+}
+
+#instruction-headline {
+  margin-bottom: 10vh;
+}
+#instructionImage {
+  width: 80vw;
+  height: 35vh;
+  max-width: 350px;
+  max-height: 240px;
+}
+.instruction-container {
+  padding: 2vh;
+}
+.carousel-container {
+  width: 100vw;
+  height: 90vh;
+  text-align: center;
+}
+.item-content {
+  align-items: center;
+  align-self: center;
+  flex-wrap: wrap;
+  flex: 1 1;
+  overflow: hidden;
+  vertical-align: center;
+}
+.item-title {
+  color: black;
+  font-weight: 700;
+  margin-bottom: 1vh;
+}
+.item-subtitle {
+  color: rgba(0, 0, 0, 0.5);
+  font-weight: 600;
+}
+
+/* ManageMember.vue */
+.manage-member .v-data-table > .v-data-table__wrapper > table > thead > tr > th {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-size: 0.75rem;
+  height: 70px;
+}

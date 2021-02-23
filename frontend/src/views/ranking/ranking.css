@@ -1,0 +1,36 @@
+/* Rnaking.vue */
+.ranking-nav .r-toggle {
+  display: inline-flex;
+  padding-right: 12px;
+}
+.ranking-nav .v-label {
+  margin: 0px 4px;
+}
+.ranking-nav {
+  display: inline-flex;
+}
+.ranking-nav .v-label theme--light {
+  margin-right: 2rem;
+}
+.ranking-nav .-select__selectin.v-select__selection--comma {
+  font-size: 2.1vh;
+}
+.ranking-nav .v-input {
+  font-size: 3.5vmin;
+}
+/* RankingList.vue */
+.ranking-list {
+  position: sticky;
+  margin-bottom: 10px;
+}
+.ranking-list .avatar {
+  border: white solid 1px;
+}
+.ranking-list .v-input {
+  max-width: 80%;
+}
+.ranking-list .searchBox {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}

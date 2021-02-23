@@ -1,0 +1,113 @@
+/* 구글 폰트 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap');
+/* 구글 폰트 : Noto Sans KR */
+/* 공통 */
+/* 폰트 Nanum Gothic*/
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap");
+* {
+  font-family: "Nanum Gothic", sans-serif;
+}
+
+.big-title{
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 5vh;
+}
+.item-title{
+  font-weight: 700;
+  font-size: 2.8vh;
+}
+.item-subtitle{
+  font-size: 2.3vh;
+  font-weight: 600;
+}
+
+.font-size-title{
+  font-size: 2.3vh;
+  font-weight: 700;
+}
+.font-size-subtitle{
+  font-size: 2.0vh;
+  font-weight: 600;
+}
+.font-size-subtitle-bold-half{
+  font-size: 2.3vh;
+  font-weight: 400;
+}
+
+.font-size-sub-subtitle{
+  font-size: 1.5vh;
+  font-weight: 600;
+}
+
+.font-size-mid-subtitle-bold-half{
+  font-size: 2.1vh;
+  font-weight: 400;
+}
+.font-size-sub-subtitle-bold-half{
+  font-size: 1.8vh;
+  font-weight: 400;
+}
+
+.font-title{
+  padding-left: 0.5rem;
+  margin-left: 10px;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+.font-title-none{
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.fix-font-big{
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+.fix-font-big-bold-half{
+  font-size: 1.2rem;
+  font-weight: 300;
+}
+
+.fix-font-semi-big{
+  font-size: 1rem;
+  font-weight: 600;
+}
+.fix-font-semi-big-bold-half{
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.fix-font-mid{
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.fix-font-mid-bold-half{
+  font-size: 0.9rem;
+  font-weight: 300;
+}
+.fix-font-semi-mid{
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.fix-font-semi-mid-bold-half{
+  font-size: 0.8rem;
+  font-weight: 300;
+}
+.fix-font-small{
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.fix-font-small-bold-half{
+  font-size: 0.7rem;
+  font-weight: 300;
+}
+
+a { text-decoration:none }
+.center{
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
